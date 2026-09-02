@@ -15,6 +15,7 @@ import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as groupNextEventDenormalizer from "../groups/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
+import { isEventVenueRef } from "./lib/isEventVenueRef";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { loadRoles } from "/imports/api/regions/loadRoles";
@@ -289,11 +290,14 @@ export const save = ServerMethod(
       }
     }
 
-    if (editFields.venue?._id || event.venue?._id) {
-      const venue = await Venues.findOneAsync(editFields.venue?._id || event.venue?._id);
+    const venueId =
+      (isEventVenueRef(editFields.venue) && editFields.venue?._id) ||
+      (isEventVenueRef(event.venue) && event.venue._id);
+    if (venueId) {
+      const venue = await Venues.findOneAsync(venueId);
 
       if (venue && !venue.allowParallelEvents) {
-        const hasParallelEvents = !!(
+        const hasParallelEvents = (
           await Events.findFilter(
             {
               venue: venue._id,
@@ -302,7 +306,7 @@ export const save = ServerMethod(
             /* take two to check for parallel events, maybe one is the current event */
             2,
           ).fetchAsync()
-        ).find((e) => e._id !== event._id);
+        ).some((e) => e._id !== event._id);
 
         if (hasParallelEvents) {
           throw new Meteor.Error(400, `This venue not allows to have two parallel events.`);
@@ -325,18 +329,18 @@ export const save = ServerMethod(
         }
       }
     }
-
-    if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
-      const venue = await Venues.findOneAsync(editFields.venue._id);
-      if (venue?.restrictedUse && !venue.editableBy(user))
-        throw new Meteor.Error(
-          400,
-          `this venue can only be chosen by its hosts to publish an event.`,
-        );
-    }
+    if (isEventVenueRef(editFields.venue))
+      if (!isEventVenueRef(event.venue) || editFields.venue._id !== event.venue._id) {
+        const venue = await Venues.findOneAsync(editFields.venue._id);
+        if (venue?.restrictedUse && !venue.editableBy(user))
+          throw new Meteor.Error(
+            400,
+            `this venue can only be chosen by its hosts to publish an event.`,
+          );
+      }
 
     if (Meteor.isServer) {
-      const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description as string);
+      const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description);
       editFields.description = HtmlTools.sanitizeHtml(sanitizedDescription);
     }
 

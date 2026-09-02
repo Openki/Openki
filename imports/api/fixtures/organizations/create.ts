@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import {
   OrganizationEntity,
-  OrganizationMemberEntity,
+  OrganizationMember,
   Organizations,
 } from "../../organizations/organizations";
 import { ensure } from "../ensureFixture";
@@ -27,7 +27,7 @@ export async function create() {
             ({
               user: (await ensure.user(name, undefined))._id,
               notify: true,
-            }) as OrganizationMemberEntity,
+            }) as OrganizationMember,
         ) || [],
       ),
       createdby: template.createdby

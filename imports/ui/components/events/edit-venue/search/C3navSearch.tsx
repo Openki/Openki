@@ -2,11 +2,11 @@ import React, { type FocusEventHandler } from "react";
 import { filter, chain } from "lodash-es";
 import useSWR from "swr";
 
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventEntity, EventVenue } from "/imports/api/events/events";
 
 import { SearchBase } from "/imports/ui/components/events/edit-venue/search/SearchBase";
 
-async function requestVenuesFromC3nav(locations: any, query: string): Promise<EventVenueEntity[]> {
+async function requestVenuesFromC3nav(locations: any, query: string): Promise<EventVenue[]> {
   const relevantLocations = chain(locations)
     .filter((l) => !!l.point)
     .map((l) => ({
@@ -47,8 +47,8 @@ export function C3navSearch({
   region: string;
   venues: string[];
   apiUrl: string;
-  value: EventVenueEntity | undefined;
-  onChange: (newValue: EventVenueEntity) => void;
+  value: EventEntity["venue"] | undefined;
+  onChange: (newValue: EventEntity["venue"]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const { data: locations } = useSWR(apiUrl + "/map/locations/", fetcher);

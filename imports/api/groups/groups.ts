@@ -13,32 +13,32 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { OrganizationEntityCustomGroupFields } from "../organizations/organizations";
+import { OrganizationCustomGroupFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-export interface GroupMemberEntity {
+export interface GroupMember {
   user: string;
   roles: string[];
   comment?: string;
 }
 
 export type GroupCustomField = Pick<
-  OrganizationEntityCustomGroupFields,
+  OrganizationCustomGroupFields,
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
   displayValue?: LocalizedValue;
 };
 
-export type GroupNextEventEntity = Pick<
+export type GroupNextEventRef = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "noRsvp" | "participants"
 >;
 
-export type GroupLastEventEntity = Pick<
+export type GroupLastEventRef = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "participants"
 >;
@@ -76,7 +76,7 @@ export interface GroupEntity {
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
-  members: GroupMemberEntity[];
+  members: GroupMember[];
   internal: boolean;
   singleEvent: boolean;
   archived?: boolean;
@@ -95,9 +95,9 @@ export interface GroupEntity {
   /** (calculated) count of events still in the future for this group */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: GroupNextEventEntity | null;
+  nextEvent: GroupNextEventRef | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: GroupLastEventEntity | null;
+  lastEvent: GroupLastEventRef | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
@@ -115,9 +115,9 @@ export class Group {
 
   teamOrganizations: GroupEntity["teamOrganizations"] = [];
 
-  nextEvent: (GroupNextEventEntity & OEvent) | null = null;
+  nextEvent: (GroupNextEventRef & OEvent) | null = null;
 
-  lastEvent: (GroupLastEventEntity & OEvent) | null = null;
+  lastEvent: (GroupLastEventRef & OEvent) | null = null;
 
   /**
    * Check if the group is new (not yet saved).

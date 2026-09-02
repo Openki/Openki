@@ -14,7 +14,7 @@ import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-export type OrganizationEntityCustomGroupFields =
+export type OrganizationCustomGroupFields =
   | {
       /** For internal use, must be unique in the list. */
       name: string;
@@ -61,12 +61,12 @@ export type OrganizationEntityCustomGroupFields =
       defaultValue?: boolean;
     };
 
-export interface OrganizationMemberEntity {
+export interface OrganizationMember {
   user: string;
   notify: boolean;
 }
 
-export type OrganizationEntityDashboard = {
+export type OrganizationDashboard = {
   entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
   title?: string;
   query?: string;
@@ -76,7 +76,7 @@ export type OrganizationEntityDashboard = {
   };
 }[];
 
-export type OrganizationVenueEntity = Pick<VenueEntity, "_id" | "name" | "slug">;
+export type OrganizationVenueRef = Pick<VenueEntity, "_id" | "name" | "slug">;
 
 /** DB-Model */
 export interface OrganizationEntity {
@@ -88,21 +88,21 @@ export interface OrganizationEntity {
   description: string;
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a group. */
-  customGroupFields?: OrganizationEntityCustomGroupFields[];
-  dashboard?: OrganizationEntityDashboard;
+  customGroupFields?: OrganizationCustomGroupFields[];
+  dashboard?: OrganizationDashboard;
   /** Hide some role options in the propose new group. */
   disableCreateRoles?: string[];
   /** When a team organization has this setting set, a message is shown that the registration is closed. */
   registrationClosed?: boolean;
   /** List of userIds with notify */
-  members: OrganizationMemberEntity[];
+  members: OrganizationMember[];
   createdby?: string;
 
   time_created?: Date;
 
   time_lastedit?: Date;
   /** (calculated) venues where the organization is manger */
-  venues?: OrganizationVenueEntity[];
+  venues?: OrganizationVenueRef[];
 }
 export type OrganizationModel = Organization & OrganizationEntity;
 

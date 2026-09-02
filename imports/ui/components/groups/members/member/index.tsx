@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/groups/subscription";
-import { GroupMemberEntity, GroupModel } from "/imports/api/groups/groups";
+import { GroupMember, GroupModel } from "/imports/api/groups/groups";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -20,7 +20,7 @@ import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
-export function Member({ member, group }: { member: GroupMemberEntity; group: GroupModel }) {
+export function Member({ member, group }: { member: GroupMember; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
 

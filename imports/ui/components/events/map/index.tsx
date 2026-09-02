@@ -5,7 +5,9 @@ import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
 import { chain } from "lodash-es";
 
-import { EventModel, EventVenueEntity } from "/imports/api/events/events";
+import { EventModel, EventVenue, EventVenueRef } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
+import { Geodata } from "/imports/api/Geodata";
 
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
@@ -13,7 +15,7 @@ import { TileLayers } from "../../TileLayer";
 import { RegionMapContainer } from "../../location/display/RegionMapContainer";
 
 import { EventList } from "/imports/ui/components/events/list";
-import { VenueTag } from "../../venues/link";
+import { Venue, VenueTag } from "../../venues/link";
 
 import "./styles.scss";
 
@@ -21,16 +23,6 @@ export interface Props {
   events: EventModel[];
   fullscreenControl?: boolean | undefined;
   openLinksInNewTab?: boolean | undefined;
-}
-
-function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
-  return array.reduce(
-    (acc, value, index, array) => {
-      (acc[predicate(value, index, array)] ||= []).push(value);
-      return acc;
-    },
-    {} as Record<string, T[]>,
-  );
 }
 
 export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Props) {
@@ -62,25 +54,42 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
 
   events = events.filter((e) => !(regions.length > 1 && e.venue && isOnCustomMap(e.venue)));
 
-  const markers = Object.entries(
-    groupBy(
-      events.filter((e) => e.venue?._id),
-      (e) => e.venue?._id as string,
-    ),
-  ).map((g) => ({
-    _id: g[1][0].venue?._id as string,
-    loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
-    venue: g[1][0].venue,
-    events: g[1],
-  }));
+  const markers: {
+    key: string;
+    loc: {
+      lat: number;
+      lng: number;
+    };
+    venue: Venue;
+    events: EventModel[];
+  }[] = chain(events)
+    .filter((e) => isEventVenueRef(e.venue))
+    .groupBy((e) => isEventVenueRef(e.venue) && e.venue._id)
+    .map((events) => {
+      const venue = events[0].venue as EventVenueRef;
+
+      return {
+        key: venue._id,
+        loc: {
+          lat: venue.loc.coordinates[1],
+          lng: venue.loc.coordinates[0],
+        },
+        venue,
+        events,
+      };
+    })
+    .value();
+
   markers.push(
     ...events
-      .filter((e) => !e.venue?._id)
+      .filter((e) => !isEventVenueRef(e.venue) && e.venue?.loc)
       .map((event) => {
+        const venue = event.venue as EventVenue;
+        const loc = venue.loc as Geodata;
         return {
-          _id: event._id,
-          loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
-          venue: event.venue,
+          key: event._id,
+          loc: { lat: loc.coordinates[1], lng: loc.coordinates[0] },
+          venue: venue,
           events: [event],
         };
       }),
@@ -89,14 +98,14 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
   const children = (
     <>
       {markers.map((mark) => (
-        <React.Fragment key={mark._id}>
+        <React.Fragment key={mark.key}>
           <Marker
-            position={mark.loc as any}
-            icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
+            position={mark.loc}
+            icon={isEventVenueRef(mark.venue) ? venueMarkerIcon : eventMarkerIcon}
           >
             <Popup>
               <h4>
-                <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
+                <VenueTag venue={mark.venue} openInNewTab={openLinksInNewTab} />
               </h4>
               <div className="group-event-list">
                 <EventList
@@ -110,8 +119,8 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
             </Popup>
           </Marker>
           <Marker
-            position={mark.loc as any}
-            icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
+            position={mark.loc}
+            icon={isEventVenueRef(mark.venue) ? venueMarkerShadowIcon : eventMarkerShadowIcon}
           ></Marker>
         </React.Fragment>
       ))}
