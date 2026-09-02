@@ -83,7 +83,6 @@ export function UserprofilePage({ user }: Props) {
   }
 
   const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(user._id);
-  const showEmailOptions = !ownUser() && !isLoadingMessages() && previousMessages.length === 0;
 
   function sendMessageAttr(): SendMessageProps {
     return {
@@ -94,7 +93,8 @@ export function UserprofilePage({ user }: Props) {
       onSend: async (message, options) => {
         await emailMethods.sendPrivateMessage(user._id, message, options);
       },
-      showEmailOptions,
+      showEmailOptions:
+        Boolean(currentUser) && !ownUser() && !isLoadingMessages() && previousMessages.length === 0,
     };
   }
   function numberOfGroupsAffectedByDelete() {
