@@ -17,6 +17,7 @@ import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { isPrivate } from "./lib/isPrivate";
 
 export interface GroupCustomRole {
   id: string;
