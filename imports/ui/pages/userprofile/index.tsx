@@ -82,7 +82,10 @@ export function UserprofilePage({ user }: Props) {
     return inviteOrganizations.length > 0;
   }
 
-  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(user._id);
+  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(
+    { when: Boolean(currentUser?._id) },
+    user._id,
+  );
 
   function sendMessageAttr(): SendMessageProps {
     return {
