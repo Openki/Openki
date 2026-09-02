@@ -12,7 +12,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Method } from "./methods";
 import * as editorsDenormalizer from "./editorsDenormalizer";
 
-import { hasRole } from "../../utils/group-role-utils";
+import { hasRole } from "./lib/hasRole";
 import { Notification } from "../../startup/both/emails/notification";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 

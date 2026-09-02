@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { GroupMember } from "../../../imports/api/groups/groups";
 
-import { hasRole, hasRoleUser } from "../../../imports/utils/group-role-utils";
+import { hasRole, hasRoleUser } from "../../../imports/api/groups/lib/hasRole";
 
 describe("Role check", () => {
   const members: GroupMember[] = [

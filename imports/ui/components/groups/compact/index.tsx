@@ -6,7 +6,7 @@ import { cx } from "/imports/utils/cx";
 import { GroupModel } from "/imports/api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
-import { hasRole } from "../../../../utils/group-role-utils";
+import { hasRole } from "/imports/api/groups/lib/hasRole";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";

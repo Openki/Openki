@@ -8,7 +8,7 @@ import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasCustomRoleUser, hasRoleUser } from "../../utils/group-role-utils";
+import { hasCustomRoleUser, hasRoleUser } from "./lib/hasRole";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";

@@ -5,7 +5,7 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { Role } from "./role";
-import { hasRoleUser } from "/imports/utils/group-role-utils";
+import { hasRoleUser } from "/imports/api/groups/lib/hasRole";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 

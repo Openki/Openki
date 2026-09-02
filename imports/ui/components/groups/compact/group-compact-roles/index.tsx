@@ -2,7 +2,7 @@ import React from "react";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
-import { hasRole, hasRoleUser } from "../../../../../utils/group-role-utils";
+import { hasRole, hasRoleUser } from "/imports/api/groups/lib/hasRole";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";

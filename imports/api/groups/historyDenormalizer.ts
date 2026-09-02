@@ -93,38 +93,6 @@ export async function afterUnsubscribeFromCustomRole(
   });
 }
 
-export async function afterSubscribeToCustomRole(
-  groupId: GroupEntity["_id"],
-  userId: UserEntity["_id"],
-  roleLabel: GroupCustomRole["label"],
-) {
-  await Groups.updateAsync(groupId, {
-    $addToSet: {
-      history: {
-        dateTime: new Date(),
-        type: "userSubscribedToCustomRole",
-        data: { user: userId, role: roleLabel },
-      },
-    },
-  });
-}
-
-export async function afterUnsubscribeFromCustomRole(
-  groupId: GroupEntity["_id"],
-  userId: UserEntity["_id"],
-  roleLabel: GroupCustomRole["label"],
-) {
-  await Groups.updateAsync(groupId, {
-    $addToSet: {
-      history: {
-        dateTime: new Date(),
-        type: "userUnsubscribedFromCustomRole",
-        data: { user: userId, role: roleLabel },
-      },
-    },
-  });
-}
-
 export async function afterOrganizationPromoteUpdate(
   groupId: string,
   organizationId: string,
