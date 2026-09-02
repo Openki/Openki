@@ -24,11 +24,23 @@ export interface EventParticipant {
   removeToken: string;
 }
 
+/**
+ * This type represents a reference to a venue that is stored in the venues collection.
+ * It is used when an event is created with a venue that exists in the venues collection.
+ * The `_id` field is used to reference the venue in the venues collection, and the other fields
+ * are filled from the venue document.
+ */
 export type EventVenueRef = Pick<
   VenueEntity,
   "_id" | "name" | "address" | "loc" | "level" | "editor" | "restrictedUse"
 >;
 
+/**
+ * This type represents a venue that is only used for a specific event and is not stored in the
+ * venues collection. It is used when an event is created with a venue that does not exist in the
+ * venues collection. The values of the fields are manually entered by the user or pre-filled from
+ * a external location service, eg. nominatim (OpenStreetMap).
+ */
 export interface EventVenue {
   /** Descriptive name for the venue */
   name: string;
@@ -58,8 +70,8 @@ export interface EventEntity {
   /** String of local date & time when event ends */
   endLocal: string;
   /**
-   * Optional reference to a document in the Venues collection. If the _id is set, the fields
-   * name, address, loc, level, editor and restrictedUse are synchronized
+   * Optional reference to a document in the Venues collection. If the `_id` field is set, the fields
+   * name, address, loc, level, editor and restrictedUse are filled from the venue document.
    */
   venue?: EventVenue | EventVenueRef;
   /** (Where inside the building the event will take place) */
