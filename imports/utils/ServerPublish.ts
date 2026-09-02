@@ -64,7 +64,7 @@ export function ServerPublishMany<A extends any[], T, U>(
   ];
 }
 
-export function ServerPublishOne<A extends any[], T, U>(
+export function ServerPublishOne<A extends any[], T, U extends object | undefined>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U>,
   queryBuilder: QueryBuilder<A, U>,

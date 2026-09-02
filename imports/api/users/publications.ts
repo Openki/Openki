@@ -69,18 +69,30 @@ export const [account, useAccount] = ServerPublishOne(
   },
 );
 
-export const [verify, useVerify] = ServerPublishOne(
+export const [verify, useHasVerifiedEmail] = ServerPublishOne(
   "user.verify",
   (email: string) => {
     check(email, String);
 
     return Users.find(
       { "emails.address": email },
-      { projection: { emails: { $elemMatch: { address: email } } as any } },
+      {
+        projection: { emails: { $elemMatch: { address: email } } as any },
+        transform: (user) => ({
+          verified: user.emails?.[0]?.verified,
+        }),
+      },
     );
   },
   (email) => {
-    return Users.findOne({ "emails.address": email });
+    return Users.findOne(
+      { "emails.address": email },
+      {
+        transform: (user) => ({
+          verified: user.emails?.[0]?.verified,
+        }),
+      },
+    );
   },
 );
 

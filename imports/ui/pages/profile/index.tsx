@@ -8,7 +8,7 @@ import * as Organizations from "/imports/api/organizations/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
-import { useVerify } from "/imports/api/users/publications";
+import { useHasVerifiedEmail } from "/imports/api/users/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -41,7 +41,7 @@ function VerifyEmailAlerts() {
   const { t } = useTranslation();
   const query = useSearchParams();
 
-  const [isLoading, user] = useVerify({ when: !!query.email }, query.email);
+  const [isLoading, hasVerifiedEmail] = useHasVerifiedEmail({ when: !!query.email }, query.email);
 
   if (query.verifyEmail === "success") {
     return (
@@ -58,7 +58,7 @@ function VerifyEmailAlerts() {
       return null;
     }
 
-    if (user?.emails?.[0]?.verified) {
+    if (hasVerifiedEmail?.verified) {
       // email was already verified by the user
       return (
         <ActionResult
