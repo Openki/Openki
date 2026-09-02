@@ -88,7 +88,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   function filterPreviewClasses() {
     const classes = [];
 
-    const roles = regionRoles.map((role) => role.type);
+    const roles = regionRoles.map((role) => role.id);
 
     roles.forEach((role) => {
       const roleDisengaged = !hasRole(group.members, role);

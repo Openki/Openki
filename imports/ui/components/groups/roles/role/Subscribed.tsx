@@ -14,13 +14,13 @@ import { Collapse } from "/imports/startup/client/bootstrap";
 import { cx } from "/imports/utils/cx";
 
 export interface Props {
-  roleType: string;
+  roleId: string;
   group: GroupModel;
   showFirstSteps: boolean;
   onToggle: (value: boolean) => void;
 }
 
-export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props) {
+export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const collapseRef = useRef<HTMLDivElement>(null);
@@ -35,14 +35,14 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
     event.stopPropagation();
     routerAutoscroll.cancelNext();
 
-    const change = new Unsubscribe(group, user?._id, roleType);
+    const change = new Unsubscribe(group, user?._id, roleId);
     await processChange(change);
     onToggle(false);
     routerAutoscroll.cancelNext();
 
     Analytics.trackEvent(
       "Unsubscribes from groups",
-      `Unsubscribes from groups as ${roleType}`,
+      `Unsubscribes from groups as ${roleId}`,
       Regions.findOne(group.region)?.nameEn,
     );
   }
@@ -68,8 +68,8 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
     return null;
   }
 
-  const name = `group-${group._id}-role-enrolled-${roleType}-content`;
-  const firstSteps = roleGroupFirstSteps(roleType, { GUIDE: <Guide /> });
+  const name = `group-${group._id}-role-enrolled-${roleId}-content`;
+  const firstSteps = roleGroupFirstSteps(roleId, { GUIDE: <Guide /> });
   return (
     <>
       <button
@@ -83,8 +83,8 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
         aria-controls={name}
         onClick={() => onToggle(!showFirstSteps)}
       >
-        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-        {roleSubscribed(roleType)}
+        <RoleIcon id={roleId} regionId={group.region} className="grouppage-role-icon" />
+        {roleSubscribed(roleId)}
         {!showFirstSteps && (
           <button
             type="button"

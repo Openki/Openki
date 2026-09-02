@@ -8,11 +8,11 @@ import { cx } from "/imports/utils/cx";
 
 export function RoleIcon({
   className,
-  type,
+  id,
   regionId,
 }: {
   className?: string | undefined;
-  type: RoleEntity["type"];
+  id: RoleEntity["id"];
   regionId: RegionEntity["_id"];
 }) {
   const [isLoading, roles] = useRegionRoles(regionId);
@@ -20,7 +20,7 @@ export function RoleIcon({
   if (isLoading()) {
     return null;
   }
-  const role = roles.find((r) => r.type === type);
+  const role = roles.find((r) => r.id === id);
 
   if (!role) {
     return null;

@@ -16,9 +16,9 @@ export function Roles({ group }: { group: GroupModel }) {
   return (
     <div id="subscribe">
       {regionRoles
-        .filter((role) => group.roles?.includes(role.type))
+        .filter((role) => group.roles?.includes(role.id))
         .map((role) => (
-          <Role key={role.type} group={group} roleType={role.type} />
+          <Role key={role.id} group={group} roleId={role.id} />
         ))}
     </div>
   );

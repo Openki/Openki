@@ -7,7 +7,7 @@ import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocaliz
 
 export const RoleEntityPattern = {
   /** A unique name for the role, e.g. "team". This is used to connect the role with i18n strings */
-  type: String,
+  id: String,
   /** Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
   icon: String,
   /**
@@ -604,7 +604,7 @@ const defaults = {
   },
   defaultRoles: [
     {
-      type: "team",
+      id: "team",
       icon: "fa-solid fa-bullhorn",
       proposal: false,
       preset: true,
@@ -639,7 +639,7 @@ publicSettings.defaultRoles = Meteor.settings.public.defaultRoles ?? defaults.de
 
 if (
   !publicSettings.defaultRoles?.some(
-    (role: PublicSettings["defaultRoles"][number]) => role.type === "team",
+    (role: PublicSettings["defaultRoles"][number]) => role.id === "team",
   )
 ) {
   throw new Error(

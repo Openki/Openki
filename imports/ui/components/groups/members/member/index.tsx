@@ -30,7 +30,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
   function subscribeToTeam() {
     return new Subscribe(
       group,
-      roles.map((r) => r.type),
+      roles.map((r) => r.id),
       member.user,
       "team",
       "interested",
@@ -92,11 +92,11 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
                 key={role}
                 className={cx(
                   "group-member-role",
-                  roles.find((r) => r.type === role)?.proposal && "is-proposal",
+                  roles.find((r) => r.id === role)?.proposal && "is-proposal",
                 )}
               >
                 <span className="group-member-role-text">
-                  <RoleIcon type={role} regionId={group.region} />{" "}
+                  <RoleIcon id={role} regionId={group.region} />{" "}
                   <span className="role-short">{roleShort(role)}</span>
                 </span>{" "}
                 {canUnsubscribeFromTeam(role) && (

@@ -8,16 +8,16 @@ import { RoleEntity } from "/imports/utils/PublicSettings";
 
 interface Props {
   value: Record<
-    RoleEntity["type"],
+    RoleEntity["id"],
     {
       enabled: boolean;
       enroll: boolean;
     }
   >;
 
-  defaultRoles?: RoleEntity["type"][] | undefined;
+  defaultRoles?: RoleEntity["id"][] | undefined;
 
-  defaultUsersRoles?: RoleEntity["type"][] | undefined;
+  defaultUsersRoles?: RoleEntity["id"][] | undefined;
 
   disabledCreateRoles: string[];
 
@@ -55,7 +55,7 @@ export function RoleSelect({
         return false;
       }
 
-      if (isNewGroup && disabledCreateRoles.includes(role.type)) {
+      if (isNewGroup && disabledCreateRoles.includes(role.id)) {
         return false;
       }
 
@@ -65,24 +65,24 @@ export function RoleSelect({
 
   function isRoleEnabled(role: RoleEntity) {
     if (defaultRoles) {
-      return defaultRoles.includes(role.type);
+      return defaultRoles.includes(role.id);
     } else if (isNewGroup) {
-      const regionRole = regionRoles.find((regionRole) => regionRole.type === role.type);
+      const regionRole = regionRoles.find((regionRole) => regionRole.id === role.id);
       return regionRole?.preset ?? false;
     }
     return false;
   }
   function groupEditRolesAttr(): Pick<
     GroupEditRoleProps,
-    "type" | "enabled" | "enroll" | "onRole" | "onEnroll"
+    "id" | "enabled" | "enroll" | "onRole" | "onEnroll"
   >[] {
-    return Object.entries(value).map(([type, role]) => {
+    return Object.entries(value).map(([id, role]) => {
       return {
-        type,
+        id,
         ...role,
         onRole(checked: boolean) {
           const newRoles = { ...value };
-          newRoles[type] = {
+          newRoles[id] = {
             ...role,
             enabled: checked,
           };
@@ -90,7 +90,7 @@ export function RoleSelect({
         },
         onEnroll(checked: boolean) {
           const newRoles = { ...value };
-          newRoles[type] = {
+          newRoles[id] = {
             ...role,
             enroll: checked,
           };
@@ -100,10 +100,10 @@ export function RoleSelect({
     });
   }
 
-  function getRoleIcon(type: RoleEntity["type"]) {
-    const role = regionRoles.find((role) => role.type === type);
+  function getRoleIcon(id: RoleEntity["id"]) {
+    const role = regionRoles.find((role) => role.id === id);
     if (!role) {
-      throw new Error(`Missing role "${type}" for regionId ${selectedRegion}`);
+      throw new Error(`Missing role "${id}" for regionId ${selectedRegion}`);
     }
 
     return role.icon;
@@ -113,10 +113,10 @@ export function RoleSelect({
     onChange(
       Object.fromEntries(
         availableRoles().map((role) => [
-          role.type,
+          role.id,
           {
             enabled: isRoleEnabled(role),
-            enroll: defaultUsersRoles?.includes(role.type) ?? false,
+            enroll: defaultUsersRoles?.includes(role.id) ?? false,
           },
         ]),
       ),
@@ -134,11 +134,11 @@ export function RoleSelect({
         <div className="form-label">{t("group.edit.needs.role", "This group might need…")}</div>
         {groupEditRolesAttr().map((groupEditRoleAttr) => (
           <Role
-            key={groupEditRoleAttr.type}
+            key={groupEditRoleAttr.id}
             {...groupEditRoleAttr}
-            description={roleDescription(groupEditRoleAttr.type)}
-            subscribeLabel={roleSubscribe(groupEditRoleAttr.type)}
-            icon={getRoleIcon(groupEditRoleAttr.type)}
+            description={roleDescription(groupEditRoleAttr.id)}
+            subscribeLabel={roleSubscribe(groupEditRoleAttr.id)}
+            icon={getRoleIcon(groupEditRoleAttr.id)}
           />
         ))}
       </div>

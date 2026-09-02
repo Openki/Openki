@@ -22,11 +22,11 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 export interface Props {
   group: GroupModel;
-  roleType: RoleEntity["type"];
+  roleId: RoleEntity["id"];
   afterSubscribe: () => void;
 }
 
-export function Enrolling({ group, roleType, afterSubscribe }: Props) {
+export function Enrolling({ group, roleId, afterSubscribe }: Props) {
   const { t } = useTranslation();
   const [isRolesLoading, roles] = useRegionRoles(group.region);
   const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(roles);
@@ -44,9 +44,9 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
   function groupSubscribe(newComment?: string, currentUser: UserModel | null = user) {
     return new Subscribe(
       group,
-      roles.map((r) => r.type),
+      roles.map((r) => r.id),
       currentUser?._id,
-      roleType,
+      roleId,
       "interested",
       newComment,
     );
@@ -63,7 +63,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     routerAutoscroll.cancelNext();
     setIsBusy(true);
     try {
-      const currentUser = await promptToLogin(roleType === "participant");
+      const currentUser = await promptToLogin(roleId === "participant");
       if (!currentUser) {
         return;
       }
@@ -71,7 +71,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
 
       Analytics.trackEvent(
         "Enrollments in groups",
-        `Enrollments in groups as ${roleType}`,
+        `Enrollments in groups as ${roleId}`,
         Regions.findOne(group.region)?.nameEn,
       );
 
@@ -98,12 +98,12 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     return null;
   }
 
-  const name = `group-role-enroll-${roleType}-content`;
+  const name = `group-role-enroll-${roleId}-content`;
 
   return (
     <>
       <button
-        data-test={`group-role-enroll-${roleType}`}
+        data-test={`group-role-enroll-${roleId}`}
         className="btn btn-success page-component-btn collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
@@ -111,9 +111,9 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
         aria-expanded="false"
         aria-controls={name}
       >
-        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
+        <RoleIcon id={roleId} regionId={group.region} className="grouppage-role-icon" />
         &nbsp;
-        {roleSubscribe(roleType)}
+        {roleSubscribe(roleId)}
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />
@@ -124,7 +124,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
             <div className="mb-3">
               <FormControl
                 id="role-comment"
-                label={roleGroupMessageInfo(roleType)}
+                label={roleGroupMessageInfo(roleId)}
                 onChange={(value) => setComment(value)}
                 type="text"
                 autoFocus
@@ -138,7 +138,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
                 id="group-roles-join"
                 className="btn-save"
                 needsLogin
-                visitorUserAllowed={roleType === "participant"}
+                visitorUserAllowed={roleId === "participant"}
                 isBusy={isBusy}
                 busyText={t("group.roles.join.busy", "Joining…")}
               >

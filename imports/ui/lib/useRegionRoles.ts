@@ -22,11 +22,11 @@ export function useRegionRoles(regionId: RegionEntity["_id"]) {
     return [isLoading, PublicSettings.defaultRoles] as const;
   }
 
-  if (region.roles.some((role) => role.type === "team")) {
+  if (region.roles.some((role) => role.id === "team")) {
     roles = region.roles;
   } else {
     // NOTE: The system expects a `team` role to exist, so we always need to add it.
-    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.type === "team");
+    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.id === "team");
     roles = [...region.roles, teamRole] as const;
   }
 

@@ -569,7 +569,7 @@ export const addParticipant = ServerMethod(
     const roles = await loadRoles(group.region);
     const change = new Subscribe(
       group,
-      roles.map((r) => r.type),
+      roles.map((r) => r.id),
       user._id,
       "participant",
       "rsvp",

@@ -26,21 +26,21 @@ function RolesButton(props: RolesButtonProps) {
   }
 
   return regionRoles
-    .filter((role) => role.type !== "participant")
+    .filter((role) => role.id !== "participant")
     .map((role) => (
       <button
-        key={role.type}
-        className={cx("filter-group-role", props.needsRole?.includes(role.type) && "active")}
+        key={role.id}
+        className={cx("filter-group-role", props.needsRole?.includes(role.id) && "active")}
         type="button"
-        onMouseOver={() => props.onNeedsRoleMouseOver(role.type)}
-        onMouseOut={() => props.onNeedsRoleMouseOut(role.type)}
-        onClick={() => props.onNeedsRoleClick(role.type)}
+        onMouseOver={() => props.onNeedsRoleMouseOver(role.id)}
+        onMouseOut={() => props.onNeedsRoleMouseOut(role.id)}
+        onClick={() => props.onNeedsRoleClick(role.id)}
       >
         <span className="filter-group-role-icon">
           <i className={cx(role.icon, "fa-fw")} />
         </span>
         &nbsp;
-        {roleNeeded(role.type)}
+        {roleNeeded(role.id)}
         &nbsp;
         <i className="fa-solid fa-check" />
       </button>

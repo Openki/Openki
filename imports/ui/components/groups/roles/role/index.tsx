@@ -18,17 +18,17 @@ import "./styles.scss";
 
 export interface Props {
   group: GroupModel;
-  roleType: RoleEntity["type"];
+  roleId: RoleEntity["id"];
 }
 
-export function Role({ group, roleType }: Props) {
+export function Role({ group, roleId }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const searchParams = useSearchParams();
 
   const [showFirstSteps, setShowFirstSteps] = useState(false);
 
-  const subscribed = group.userHasRole(user?._id, roleType);
+  const subscribed = group.userHasRole(user?._id, roleId);
 
   function handleAfterSubscribe() {
     setShowFirstSteps(true);
@@ -40,12 +40,12 @@ export function Role({ group, roleType }: Props) {
 
   return (
     <>
-      {searchParams.unsubscribe === roleType && (
+      {searchParams.unsubscribe === roleId && (
         <Action
           onRender={async () => {
             // unsubscribe by email
             // HACK this is not the right place to act on router actions
-            const change = new Unsubscribe(group, user?._id, roleType);
+            const change = new Unsubscribe(group, user?._id, roleId);
             if (change.validFor(user)) {
               await processChange(change);
               Alert.success(
@@ -66,10 +66,10 @@ export function Role({ group, roleType }: Props) {
       )}
 
       {!subscribed ? (
-        <Enrolling group={group} roleType={roleType} afterSubscribe={handleAfterSubscribe} />
+        <Enrolling group={group} roleId={roleId} afterSubscribe={handleAfterSubscribe} />
       ) : (
         <Subscribed
-          roleType={roleType}
+          roleId={roleId}
           group={group}
           showFirstSteps={showFirstSteps}
           onToggle={handleFirstStepsToggle}

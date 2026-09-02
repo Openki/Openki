@@ -44,7 +44,7 @@ export function Group({ group, hideInterested }: Props) {
             data-bs-title={t("frame.groupList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span>{" "}
-            <RoleIcon type="participant" regionId={group.region} />
+            <RoleIcon id="participant" regionId={group.region} />
           </span>
         )}
         {group.name}
