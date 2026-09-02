@@ -247,22 +247,29 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
                 <MessageContext context={body.context} />
                 <section
                   className={cx(
-                    "py-2 px-3 max-w-75 rounded-3 whitespace-pre-line",
+                    "py-2 px-3 max-w-75 rounded-3",
                     wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
                   )}
                 >
-                  {body.message}
+                  <div className="whitespace-pre-line">{body.message}</div>
+
+                  <time
+                    dateTime={ts.toISOString()}
+                    className={cx(
+                      "small pt-2 fst-italic w-100 d-block",
+                      wasSentByCurrentUser ? "text-end" : "text-start",
+                    )}
+                  >
+                    {ts.toLocaleString(locale, {
+                      day: "numeric",
+                      month: "long",
+                      year: ts.getFullYear() !== currentYear ? "numeric" : undefined,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
+                  </time>
                 </section>
-                <time dateTime={ts.toISOString()} className="small">
-                  {ts.toLocaleString(locale, {
-                    day: "numeric",
-                    month: "long",
-                    year: ts.getFullYear() !== currentYear ? "numeric" : undefined,
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  })}
-                </time>
               </div>
             );
           })}
