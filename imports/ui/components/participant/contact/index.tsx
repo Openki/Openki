@@ -163,7 +163,8 @@ function ParticipantContactModal({
     <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
       <div className="modal-dialog modal-sm" role="document">
         <div className="modal-content">
-          <div className="modal-header">
+          {/* Use a z-index that is higher than the values defined by https://getbootstrap.com/docs/5.3/layout/z-index/ */}
+          <div className="modal-header position-sticky top-0" style={{ zIndex: 1200 }}>
             <h4 className="modal-title">
               <i className="fa-solid fa-paper-plane fa-fw" />
               &nbsp;
