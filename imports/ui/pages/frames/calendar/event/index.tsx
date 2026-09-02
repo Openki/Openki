@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { EventModel, isEventVenueRef } from "/imports/api/events/events";
+import { EventModel } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { Regions } from "/imports/api/regions/regions";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";

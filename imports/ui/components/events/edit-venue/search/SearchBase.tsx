@@ -2,11 +2,12 @@ import React, { FocusEventHandler, useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { differenceBy, uniqBy } from "lodash-es";
+import { differenceBy, isUndefined, omitBy, uniqBy } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
-import { EventEntity, EventVenueRef } from "/imports/api/events/events";
+import { EventVenue, EventVenueRef } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -19,25 +20,33 @@ import {
   RenderMenuProps,
   TypeaheadInputSingle,
 } from "react-bootstrap-typeahead";
-import { ReactJoin } from "../../../../../utils/ReactJoin";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
+import { VenueEntity } from "/imports/api/venues/venues";
+import { cx } from "/imports/utils/cx";
 
-function toEventVenue(venue: EventVenueRef) {
-  return {
-    _id: venue._id,
-    name: venue.name,
-    loc: venue.loc,
-    level: venue.level,
-    address: venue.address,
-    editor: venue.editor,
-    restrictedUse: venue.restrictedUse,
-  } as EventVenueRef;
+function toEventVenue(venue: VenueEntity | EventVenueRef) {
+  // ignore undefined props
+  return omitBy(
+    {
+      _id: venue._id,
+      name: venue.name,
+      loc: venue.loc,
+      level: venue.level,
+      address: venue.address,
+      editor: venue.editor,
+      restrictedUse: venue.restrictedUse,
+    },
+    isUndefined,
+  ) as EventVenueRef;
 }
 
-export function filterUserVenues(user: UserModel | null, venues: EventVenueRef[]) {
+export function filterUserVenues(user: UserModel | null, venues: (EventVenue | EventVenueRef)[]) {
   let userVenues: EventVenueRef[] = [];
   if (user?.venues?.length) {
-    userVenues = venues.filter((v) => v._id && user.venues.includes(v._id)).map(toEventVenue);
+    userVenues = venues
+      .filter((v) => isEventVenueRef(v) && user.venues.includes(v._id))
+      .map((v) => toEventVenue(v as EventVenueRef));
   }
   return userVenues;
 }
@@ -50,7 +59,7 @@ function CustomMenu({
 }: {
   region: string;
   text: string;
-  results: EventVenueRef[];
+  results: (EventVenue | EventVenueRef)[];
   menuProps: RenderMenuProps;
 }) {
   const { t } = useTranslation();
@@ -59,7 +68,7 @@ function CustomMenu({
 
   const userVenues = filterUserVenues(user, results);
 
-  const venues = differenceBy(results, userVenues, (v) => v._id);
+  const venues = differenceBy(results, userVenues, (v) => (isEventVenueRef(v) ? v._id : undefined));
 
   return (
     <Menu {...menuProps} id="event-venue">
@@ -97,15 +106,13 @@ function CustomMenu({
               key={index + userVenues.length}
               option={venue}
               position={index + userVenues.length}
-              className={
-                venue._id
-                  ? !venue.restrictedUse
-                    ? "bg-venue text-truncate"
-                    : "text-venue-restricted-use bg-venue-locked text-truncate"
-                  : ""
-              }
+              className={cx(
+                isEventVenueRef(venue) && !venue.restrictedUse
+                  ? "bg-venue text-truncate"
+                  : "text-venue-restricted-use bg-venue-locked text-truncate",
+              )}
             >
-              {!!venue._id && (
+              {isEventVenueRef(venue) && (
                 <>
                   <VenueIcon id={venue._id} restrictedUse={venue.restrictedUse} />{" "}
                 </>
@@ -114,7 +121,7 @@ function CustomMenu({
                 !!venue.name && (
                   <>
                     <span className="fw-bold">{venue.name}</span>
-                    {!!venue.restrictedUse && (
+                    {isEventVenueRef(venue) && !!venue.restrictedUse && (
                       <> {t("location.link.restrictedUse", "(only restricted use)")}</>
                     )}
                   </>
@@ -128,9 +135,7 @@ function CustomMenu({
       )}
       <MenuItem
         option={
-          isLoading()
-            ? {}
-            : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenueRef)
+          isLoading() ? {} : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenue)
         }
         position={userVenues.length + userVenues.length + 1}
       >
@@ -168,10 +173,10 @@ export function SearchBase({
   autofocus?: boolean | undefined;
   region: string;
   /** A selection of venues proposed to the user. */
-  venues: string[];
-  onRequest: (query: string) => Promise<EventVenueRef[]>;
-  value: EventEntity["venue"] | undefined;
-  onChange: (newValue: EventVenueRef) => void;
+  venues: VenueEntity["_id"][];
+  onRequest: (query: string) => Promise<EventVenue[]>;
+  value: EventVenue | EventVenueRef | undefined;
+  onChange: (newValue: EventVenue | EventVenueRef | undefined) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const { t } = useTranslation();
@@ -181,7 +186,7 @@ export function SearchBase({
 
   const [isLoadingAllVenues, allVenues] = Venues.useFindFilter({ region: region });
 
-  const [options, setOptions] = useState<EventVenueRef[]>([]);
+  const [options, setOptions] = useState<(EventVenue | EventVenueRef)[]>([]);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -196,9 +201,9 @@ export function SearchBase({
         )
         .map(toEventVenue);
 
-      const externalVenues: EventVenueRef[] = await request;
+      const externalVenues = await request;
 
-      setOptions([...filteredVenues, ...externalVenues]);
+      setOptions([...filteredVenues, ...externalVenues] as (EventVenue | EventVenueRef)[]);
     } catch (reason) {
       Alert.serverError(reason);
     }
@@ -222,7 +227,7 @@ export function SearchBase({
       filterBy={() => true}
       isLoading={isLoading}
       labelKey={(option) => {
-        const venue = option as EventVenueRef;
+        const venue = option as VenueEntity;
         return [venue.name, venue.address].filter((v) => v).join(", ");
       }}
       minLength={0}
@@ -251,12 +256,12 @@ export function SearchBase({
       renderMenu={(results, menuProps, state) => (
         <CustomMenu
           region={region}
-          results={results as EventVenueRef[]}
+          results={results as (EventVenue | EventVenueRef)[]}
           menuProps={menuProps}
           text={state.text}
         />
       )}
-      onChange={(newValue) => onChange(newValue[0] as EventVenueRef)}
+      onChange={(newValue) => onChange(newValue[0] as EventVenue | EventVenueRef | undefined)}
       onBlur={onBlur}
     />
   );

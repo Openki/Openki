@@ -5,7 +5,8 @@ import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
 import { chain } from "lodash-es";
 
-import { EventModel, EventVenue, EventVenueRef, isEventVenueRef } from "/imports/api/events/events";
+import { EventModel, EventVenue, EventVenueRef } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { Geodata } from "/imports/api/Geodata";
 
 import { FullscreenControl } from "../../FullscreenControl";
@@ -23,7 +24,6 @@ export interface Props {
   fullscreenControl?: boolean | undefined;
   openLinksInNewTab?: boolean | undefined;
 }
-
 
 export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Props) {
   const locale = useSession("locale");

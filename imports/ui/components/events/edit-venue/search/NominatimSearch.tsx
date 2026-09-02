@@ -1,7 +1,7 @@
 import React, { FocusEventHandler } from "react";
 import { map } from "lodash-es";
 
-import { EventEntity } from "/imports/api/events/events";
+import { EventEntity, EventVenue } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
 
 import { RegionModel } from "/imports/api/regions/regions";
@@ -10,7 +10,7 @@ import { SearchBase } from "/imports/ui/components/events/edit-venue/search/Sear
 async function requestVenuesFromNominatim(
   region: RegionModel | undefined,
   query: string,
-): Promise<EventEntity["venue"][]> {
+): Promise<EventVenue[]> {
   const nominatimQuery: Record<string, any> = {
     format: "json",
     q: query,
@@ -37,7 +37,7 @@ async function requestVenuesFromNominatim(
   const found = await response.json();
 
   return map(found, (foundLocation) => {
-    const a = foundLocation.address;
+    const address = foundLocation.address;
     return {
       loc: {
         type: "Point" as const,
@@ -47,14 +47,17 @@ async function requestVenuesFromNominatim(
         ] as [long: number, lat: number],
       },
       address: [
-        [a.road, a.house_number].filter((v) => v).join(" "),
-        // Nominatim returns addresses at different granularities depending on the country.
+        [address.road, address.house_number].filter((v) => v).join(" "),
+        // Nominatim returns addresses at different granularity's depending on the country.
         // For Switzerland (and similar), `state` is the Kanton (e.g. "Zürich"), which is
         // too coarse for postal addresses. We prefer finer-grained fields first:
         // city → municipality → town → village, falling back to state only if nothing else is available.
         // For Switzerland, `city` is the most relevant prop, based on this wiki page:
         // https://wiki.openstreetmap.org/wiki/Switzerland/Map_Features#Post_code_areas_and_addresses
-        [a.postcode, a.city || a.municipality || a.town || a.village || a.state]
+        [
+          address.postcode,
+          address.city || address.municipality || address.town || address.village || address.state,
+        ]
           .filter((v) => v)
           .join(" "),
       ]

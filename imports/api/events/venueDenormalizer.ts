@@ -1,6 +1,7 @@
 import { Mongo } from "meteor/mongo";
 
-import { EventEntity, Events, isEventVenueRef } from "/imports/api/events/events";
+import { EventEntity, Events } from "/imports/api/events/events";
+import { isEventVenueRef } from "./lib/isEventVenueRef";
 import { VenueModel, Venues } from "/imports/api/venues/venues";
 
 /**

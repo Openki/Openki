@@ -29,7 +29,7 @@ export function Hints({
   regionId,
   event,
 }: {
-  venue: EventVenueRef | undefined;
+  venue: EventVenueRef;
   regionId: string;
   event: {
     _id?: string | undefined;
@@ -41,9 +41,9 @@ export function Hints({
   const { t } = useTranslation();
   const user = useUser();
 
-  const [venueIsLoading, venue] = useVenueDetails(eventVenue?._id || "-1");
-  const parallelEvents = useFindParallelEvents(regionId, eventVenue?._id, event);
-  const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue?._id, event);
+  const [venueIsLoading, venue] = useVenueDetails(eventVenue._id);
+  const parallelEvents = useFindParallelEvents(regionId, eventVenue._id, event);
+  const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue._id, event);
 
   const allParallelEvents = [
     ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),

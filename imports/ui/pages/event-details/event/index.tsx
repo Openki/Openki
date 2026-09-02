@@ -9,6 +9,7 @@ import { useDetails } from "/imports/api/groups/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { cx } from "/imports/utils/cx";
 
 import { EventGroupHeader } from "../../../components/events/display/group-header";
 import { Edit } from "/imports/ui/components/events/edit";
@@ -133,7 +134,7 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
 
         {!!event.groupId && <GroupEvent event={event as WithRequired<EventModel, "groupId">} />}
 
-        <div className={`event${event.groupId ? " group-event" : ""}`}>
+        <div className={cx("event", event.groupId && "group-event")}>
           {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
         </div>
         {!mobileViewport() && !isEditing() && !!event.groupId && (

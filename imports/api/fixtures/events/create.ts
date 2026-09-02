@@ -1,4 +1,4 @@
-import { Events, EventEntity, isEventVenueRef } from "../../events/events";
+import { Events, EventEntity } from "../../events/events";
 import { Log } from "../../log/log";
 import { ensure } from "../ensureFixture";
 import { events as eventsNhw } from "./nachhaltigkeitswoche";

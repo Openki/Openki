@@ -3,8 +3,12 @@ import { useTranslation } from "react-i18next";
 import { isEmpty } from "lodash-es";
 
 import { EventEntity } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+import { OrganizationEntity, OrganizationVenueRef } from "/imports/api/organizations/organizations";
+
+import { cx } from "/imports/utils/cx";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
@@ -14,7 +18,6 @@ import { Search } from "./search";
 import { Timetable } from "./Timetable";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Button } from "/imports/ui/components/Buttons";
-import { OrganizationEntity, OrganizationVenueRef } from "/imports/api/organizations/organizations";
 
 export interface Props {
   region: string;
@@ -74,15 +77,18 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
             value={value}
             onChange={onChange}
             onBlur={onBlur}
-            className={`form-control ${errors.venue || errors.startEndVenue ? "is-invalid" : "mb-md-3"}`}
+            className={cx(
+              "form-control",
+              errors.venue || errors.startEndVenue ? "is-invalid" : "mb-md-3",
+            )}
           />
           {!!errors.venue && <small className="text-danger mb-3">{errors.venue}</small>}
         </div>
       ) : (
         <>
-          <div className={`row ${!errors.venue && !errors.startEndVenue ? "mb-md-3" : ""}`}>
+          <div className={cx("row", !errors.venue && !errors.startEndVenue && "mb-md-3")}>
             <div className="col-md-4 mb-3 mb-md-0">
-              {!value._id ? (
+              {!isEventVenueRef(value) ? (
                 <FormControl
                   id="event-edit-venue-displayVenueAs"
                   type="text"
@@ -97,7 +103,10 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                     {t("group.event.edit.selectedVenue", "Selected venue")}
                   </label>
                   <div
-                    className={`form-control d-flex align-items-center ${errors.venue || errors.startEndVenue ? "is-invalid" : ""}`}
+                    className={cx(
+                      "form-control d-flex align-items-center",
+                      (!!errors.venue || !!errors.startEndVenue) && "is-invalid",
+                    )}
                   >
                     <VenueTag className="flex-fill" venue={value} openInNewTab />
                     <button
@@ -115,8 +124,10 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                 type="text"
                 label={t("group.event.edit.locationAddress", "Address")}
                 value={value.address || ""}
-                onChange={!value._id ? (address) => onChange({ ...value, address }) : undefined}
-                disabled={!!value._id}
+                onChange={
+                  !isEventVenueRef(value) ? (address) => onChange({ ...value, address }) : undefined
+                }
+                disabled={isEventVenueRef(value)}
               />
             </div>
             <div className="col-md-3 mb-3 mb-md-0">
@@ -139,25 +150,27 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
           {!!errors.startEndVenue && (
             <small className="text-danger mb-3">{errors.startEndVenue}</small>
           )}
-          {!errors.venue && !errors.startEndVenue && (
+          {isEventVenueRef(value) && !errors.venue && !errors.startEndVenue && (
             <Hints regionId={regionId} event={event} venue={value} />
           )}
-          {!!value._id && (
+          {isEventVenueRef(value) && (
             <div className="mb-3">
               <Timetable regionId={regionId} event={event} venueId={value._id} />
             </div>
           )}
           {!!value.loc && (
             <div className="mb-3">
-              {!value._id ? (
+              {!isEventVenueRef(value) ? (
                 <>
                   <Map
                     region={regionId}
                     value={{ location: value.loc, level: value.level }}
                     onChange={(newValue) => {
-                      if (newValue.level === undefined)
+                      if (newValue.level === undefined) {
                         onChange({ ...value, loc: newValue.location });
-                      else onChange({ ...value, loc: newValue.location, level: newValue.level });
+                      } else {
+                        onChange({ ...value, loc: newValue.location, level: newValue.level });
+                      }
                     }}
                   />
                   <div className="form-text text-end">

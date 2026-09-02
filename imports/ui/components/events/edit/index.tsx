@@ -21,7 +21,8 @@ import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";
-import { EventModel, isEventVenueRef, OEvent } from "/imports/api/events/events";
+import { EventModel, OEvent } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
@@ -158,7 +159,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const selectedVenueId = isEventVenueRef(selectedVenue) ? selectedVenue._id : undefined;
 
-  const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenue }, selectedVenueId);
+  const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenueId }, selectedVenueId);
 
   const [updateReplicas, setUpdateReplicas] = useState({
     infos: false,

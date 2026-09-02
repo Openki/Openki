@@ -121,10 +121,6 @@ export interface EventEntity {
 
 export type EventModel = OEvent & EventEntity;
 
-export function isEventVenueRef(venue: EventEntity["venue"]): venue is EventVenueRef {
-  return !!(venue && "_id" in venue && venue._id);
-}
-
 // Event is a built-in, so we use a different name for this class
 export class OEvent {
   editors: EventEntity["editors"] = [];

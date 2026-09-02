@@ -2,14 +2,14 @@ import React, { type FocusEventHandler } from "react";
 import { filter, chain } from "lodash-es";
 import useSWR from "swr";
 
-import { EventEntity } from "/imports/api/events/events";
+import { EventEntity, EventVenue } from "/imports/api/events/events";
 
 import { SearchBase } from "/imports/ui/components/events/edit-venue/search/SearchBase";
 
 async function requestVenuesFromC3nav(
   locations: any,
   query: string,
-): Promise<EventEntity["venue"][]> {
+): Promise<EventVenue[]> {
   const relevantLocations = chain(locations)
     .filter((l) => !!l.point)
     .map((l) => ({
