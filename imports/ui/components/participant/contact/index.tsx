@@ -28,7 +28,8 @@ export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const user = useUser();
-  const [showModal, setShowModal] = useState(false);
+  // TODO: Temporary for development
+  const [showModal, setShowModal] = useState(true);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -216,23 +217,24 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   const locale = useSession("locale");
 
   return (
-    <div className="mb-4">
-      <h4>Previous messages:</h4>
-      {previousMessages.length > visibleMessages.length && (
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <span>
-            Showing {visibleMessages.length} / {previousMessages.length}
-          </span>
-          <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
-            Show all
-          </button>
-        </div>
-      )}
+    Boolean(currentUserId) &&
+    !isLoading() &&
+    visibleMessages.length && (
+      <div className="mb-4">
+        <h4>Previous messages:</h4>
+        {previousMessages.length > visibleMessages.length && (
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <span>
+              Showing {visibleMessages.length} / {previousMessages.length}
+            </span>
+            <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
+              Show all
+            </button>
+          </div>
+        )}
 
-      <div className="d-grid gap-3">
-        {!isLoading() &&
-          Boolean(currentUserId) &&
-          visibleMessages.map(({ _id, ts, body }) => {
+        <div className="d-grid gap-3">
+          {visibleMessages.map(({ _id, ts, body }) => {
             const wasSentByCurrentUser = body.sender === currentUserId;
             return (
               <div
@@ -264,8 +266,9 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
               </div>
             );
           })}
+        </div>
       </div>
-    </div>
+    )
   );
 }
 
