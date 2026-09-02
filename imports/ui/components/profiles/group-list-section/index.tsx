@@ -61,7 +61,7 @@ export function GroupListSection({
     return groups.length > 0 || archivedGroups.length > 0;
   }
   function showArchived(role: RoleEntity) {
-    return role.type === "team";
+    return role.id === "team";
   }
 
   if (isLoadingRegion()) {
@@ -86,12 +86,12 @@ export function GroupListSection({
             <>
               <div>
                 {roles
-                  .filter((role) => groupsByRoleCount(role.type, false))
+                  .filter((role) => groupsByRoleCount(role.id, false))
                   .map((role) => (
-                    <React.Fragment key={role.type}>
+                    <React.Fragment key={role.id}>
                       <a
                         className="badge role-label"
-                        href={`#${role.type}`}
+                        href={`#${role.id}`}
                         onClick={(event) => {
                           event.preventDefault();
                           const roleLabel = event.currentTarget;
@@ -103,42 +103,42 @@ export function GroupListSection({
                           });
                         }}
                       >
-                        <i className={`${role.icon} fa-fw`} /> {roleShort(role.type)}
+                        <i className={`${role.icon} fa-fw`} /> {roleShort(role.id)}
                         <i className="fa-solid fa-arrow-down fa-fw" />
-                        {groupsByRoleCount(role.type, false)}
+                        {groupsByRoleCount(role.id, false)}
                       </a>{" "}
                     </React.Fragment>
                   ))}
               </div>
               {roles
-                .filter((role) => groupsByRoleCount(role.type, false))
+                .filter((role) => groupsByRoleCount(role.id, false))
                 .map((role) => (
-                  <React.Fragment key={role.type}>
-                    <h3 id={role.type}>
+                  <React.Fragment key={role.id}>
+                    <h3 id={role.id}>
                       <div className="badge">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? roleProfileMyGroupListCurrent(role.type)
-                        : roleProfileUserGroupListCurrent(role.type, user.getDisplayName())}
+                        ? roleProfileMyGroupListCurrent(role.id)
+                        : roleProfileUserGroupListCurrent(role.id, user.getDisplayName())}
                     </h3>
-                    <GroupList groups={groupsByRole(role.type, false)} small={true} />
+                    <GroupList groups={groupsByRole(role.id, false)} small={true} />
                   </React.Fragment>
                 ))}
 
               {roles
-                .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
+                .filter((role) => groupsByRoleCount(role.id, true) && showArchived(role))
                 .map((role) => (
-                  <React.Fragment key={role.type}>
-                    <h3 id={`${role.type}_archived`}>
+                  <React.Fragment key={role.id}>
+                    <h3 id={`${role.id}_archived`}>
                       <div className="badge is-archived">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? roleProfileMyGroupListPast(role.type)
-                        : roleProfileUserGroupListPast(role.type, user.getDisplayName())}
+                        ? roleProfileMyGroupListPast(role.id)
+                        : roleProfileUserGroupListPast(role.id, user.getDisplayName())}
                     </h3>
-                    <GroupList groups={groupsByRole(role.type, true)} small={true} />
+                    <GroupList groups={groupsByRole(role.id, true)} small={true} />
                   </React.Fragment>
                 ))}
             </>

@@ -34,28 +34,28 @@
     },
     "defaultRoles": [
       {
-        "type": "participant",
+        "id": "participant",
         "icon": "fa-solid fa-thumbs-up",
         "proposal": false,
         "preset": true,
         "editable": false
       },
       {
-        "type": "mentor",
+        "id": "mentor",
         "icon": "fa-solid fa-graduation-cap",
         "proposal": true,
         "preset": false,
         "editable": true
       },
       {
-        "type": "host",
+        "id": "host",
         "icon": "fa-solid fa-house",
         "proposal": true,
         "preset": false,
         "editable": true
       },
       {
-        "type": "team",
+        "id": "team",
         "icon": "fa-solid fa-bullhorn",
         "proposal": false,
         "preset": true,

@@ -184,7 +184,7 @@ export function Edit(props: Props) {
 
   const [roles, setRoles] = useState<
     Record<
-      RoleEntity["type"],
+      RoleEntity["id"],
       {
         enabled: boolean;
         enroll: boolean;

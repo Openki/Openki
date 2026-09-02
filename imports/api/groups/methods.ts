@@ -168,34 +168,33 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
     await Promise.all(
       roles.map(async (role) => {
-        const { type } = role;
+        const { id } = role;
 
         if (group.isNew()) {
-          const shouldHave =
-            !!(role.preset || changes.roles?.[type]) && !disabledRoles.includes(type);
+          const shouldHave = !!(role.preset || changes.roles?.[id]) && !disabledRoles.includes(id);
 
           if (shouldHave) {
             set.roles = set.roles || [];
-            set.roles.push(type);
+            set.roles.push(id);
           }
         } else if (role.editable) {
-          const shouldHave = !!changes.roles?.[type];
-          const have = group.roles.includes(type);
+          const shouldHave = !!changes.roles?.[id];
+          const have = group.roles.includes(id);
           if (have && !shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: type } });
+            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: id } });
 
             // HACK
             // due to a mongo limitation we can't { $pull { 'members.roles': type } }
             // so we keep removing one by one until there are none left
             while (
               await Groups.updateAsync(
-                { _id: groupId, "members.roles": type },
-                { $pull: { "members.$.roles": type } },
+                { _id: groupId, "members.roles": id },
+                { $pull: { "members.$.roles": id } },
               )
             );
           }
           if (!have && shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: type } });
+            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: id } });
           }
         }
       }),
@@ -315,7 +314,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       changes.subs.map(async (role) => {
         const change = new Subscribe(
           changedGroup,
-          roles.map((r) => r.type),
+          roles.map((r) => r.id),
           user._id,
           role,
           "interested",

@@ -11,17 +11,17 @@ import { $Dictionary } from "i18next/typescript/helpers";
 
 export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   function getTranslation(
-    role: RoleEntity["type"],
+    role: RoleEntity["id"],
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, PrimitiveType> | undefined,
   ): string;
   function getTranslation(
-    role: RoleEntity["type"],
+    role: RoleEntity["id"],
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, PrimitiveType | ReactElement> | undefined,
   ): string | ReactElement | (string | ReactElement)[];
   function getTranslation<T extends PrimitiveType | ReactElement>(
-    role: RoleEntity["type"],
+    role: RoleEntity["id"],
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, T> | undefined,
   ) {
@@ -33,7 +33,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     //     integrating more and more standard roles into Openki.
     // (3) When no specific role is defined, fallback to a generic string.
 
-    const customTranslations = roles.find((r) => r.type === role)?.translations;
+    const customTranslations = roles.find((r) => r.id === role)?.translations;
 
     // (1) Check if a custom translation exists
     const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
@@ -67,88 +67,88 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   }
 
   return {
-    roleDescription(type: RoleEntity["type"]) {
-      return getTranslation(type, "description");
+    roleDescription(id: RoleEntity["id"]) {
+      return getTranslation(id, "description");
     },
 
-    roleShort(type: RoleEntity["type"]) {
-      return getTranslation(type, "short");
+    roleShort(id: RoleEntity["id"]) {
+      return getTranslation(id, "short");
     },
 
-    roleProfileUserGroupListCurrent(type: RoleEntity["type"], name: string) {
-      return getTranslation(type, "profile.userGroupListCurrent", { NAME: name });
+    roleProfileUserGroupListCurrent(id: RoleEntity["id"], name: string) {
+      return getTranslation(id, "profile.userGroupListCurrent", { NAME: name });
     },
 
-    roleProfileUserGroupListPast(type: RoleEntity["type"], name: string) {
-      return getTranslation(type, "profile.userGroupListPast", { NAME: name });
+    roleProfileUserGroupListPast(id: RoleEntity["id"], name: string) {
+      return getTranslation(id, "profile.userGroupListPast", { NAME: name });
     },
 
-    roleProfileMyGroupListCurrent(type: RoleEntity["type"]) {
-      return getTranslation(type, "profile.myGroupListCurrent");
+    roleProfileMyGroupListCurrent(id: RoleEntity["id"]) {
+      return getTranslation(id, "profile.myGroupListCurrent");
     },
 
-    roleProfileMyGroupListPast(type: RoleEntity["type"]) {
-      return getTranslation(type, "profile.myGroupListPast");
+    roleProfileMyGroupListPast(id: RoleEntity["id"]) {
+      return getTranslation(id, "profile.myGroupListPast");
     },
 
-    roleSubscribe(type: RoleEntity["type"]) {
-      return getTranslation(type, "subscribe");
+    roleSubscribe(id: RoleEntity["id"]) {
+      return getTranslation(id, "subscribe");
     },
 
-    roleSubscribed(type: RoleEntity["type"]) {
-      return getTranslation(type, "subscribed");
+    roleSubscribed(id: RoleEntity["id"]) {
+      return getTranslation(id, "subscribed");
     },
 
-    roleNeeded(type: RoleEntity["type"]) {
-      return getTranslation(type, "find.roleNeeded");
+    roleNeeded(id: RoleEntity["id"]) {
+      return getTranslation(id, "find.roleNeeded");
     },
 
-    groupListRoleNeeded(type: RoleEntity["type"]) {
-      return getTranslation(type, "groupList.statusTitle.roleNeeded");
+    groupListRoleNeeded(id: RoleEntity["id"]) {
+      return getTranslation(id, "groupList.statusTitle.roleNeeded");
     },
 
-    groupListRoleOccupied(type: RoleEntity["type"], variables: { NUM: number }) {
-      return getTranslation(type, "groupList.statusTitle.roleOccupied", variables);
+    groupListRoleOccupied(id: RoleEntity["id"], variables: { NUM: number }) {
+      return getTranslation(id, "groupList.statusTitle.roleOccupied", variables);
     },
 
-    groupListRoleOccupiedByUser(type: RoleEntity["type"], variables: { NUM: number }) {
-      return getTranslation(type, "groupList.statusTitle.roleOccupiedByUser", variables);
+    groupListRoleOccupiedByUser(id: RoleEntity["id"], variables: { NUM: number }) {
+      return getTranslation(id, "groupList.statusTitle.roleOccupiedByUser", variables);
     },
 
     roleNotificationJoinEmailSubject(
-      type: RoleEntity["type"],
+      id: RoleEntity["id"],
       variables: { USER: string; GROUP: string },
     ) {
-      return getTranslation(type, "notification.join.mail.subject", variables);
+      return getTranslation(id, "notification.join.mail.subject", variables);
     },
 
     roleNotificationJoinEmailIntro(
-      type: RoleEntity["type"],
+      id: RoleEntity["id"],
       variables: { USER: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
-      return getTranslation(type, "notification.join.mail.intro", variables);
+      return getTranslation(id, "notification.join.mail.intro", variables);
     },
 
-    roleGroupFirstSteps(type: RoleEntity["type"], variables: { GUIDE: JSX.Element | string }) {
-      return getTranslation(type, "group.firstSteps", variables);
+    roleGroupFirstSteps(id: RoleEntity["id"], variables: { GUIDE: JSX.Element | string }) {
+      return getTranslation(id, "group.firstSteps", variables);
     },
 
-    roleGroupMessageInfo(type: RoleEntity["type"]) {
-      return getTranslation(type, "group.messageInfo");
+    roleGroupMessageInfo(id: RoleEntity["id"]) {
+      return getTranslation(id, "group.messageInfo");
     },
 
     roleGroupHistoryUserSubscribed(
-      type: RoleEntity["type"],
+      id: RoleEntity["id"],
       variables: { USER: JSX.Element | string },
     ) {
-      return getTranslation(type, "group.history.userSubscribed", variables);
+      return getTranslation(id, "group.history.userSubscribed", variables);
     },
 
     roleGroupHistoryUserUnsubscribed(
-      type: RoleEntity["type"],
+      id: RoleEntity["id"],
       variables: { USER: JSX.Element | string },
     ) {
-      return getTranslation(type, "group.history.userUnsubscribed", variables);
+      return getTranslation(id, "group.history.userUnsubscribed", variables);
     },
   };
 }

@@ -22,7 +22,7 @@ export function GroupCompactRoles({ group }: Props) {
   const { groupListRoleNeeded, groupListRoleOccupied, groupListRoleOccupiedByUser } =
     useRoleDisplay(roles);
 
-  function roleStateClass(role: RoleEntity["type"]) {
+  function roleStateClass(role: RoleEntity["id"]) {
     if (!hasRole(group.members, role)) {
       return "needed";
     } else if (hasRoleUser(group.members, role, userId)) {
@@ -32,7 +32,7 @@ export function GroupCompactRoles({ group }: Props) {
     }
   }
 
-  function roleStateTooltip(role: RoleEntity["type"], numberOf: number) {
+  function roleStateTooltip(role: RoleEntity["id"], numberOf: number) {
     if (!hasRole(group.members, role)) {
       return groupListRoleNeeded(role);
     } else if (hasRoleUser(group.members, role, userId)) {
@@ -46,20 +46,20 @@ export function GroupCompactRoles({ group }: Props) {
     <div className="group-compact-roles col">
       {!isLoading() &&
         roles
-          .filter((role) => group.roles.includes(role.type))
+          .filter((role) => group.roles.includes(role.id))
           .map((role) => {
             const numberOf = group.members.filter((member) =>
-              member.roles.includes(role.type),
+              member.roles.includes(role.id),
             ).length;
 
             return (
               <div
-                key={role.type}
-                className={cx("group-compact-role", roleStateClass(role.type))}
-                data-bs-title={roleStateTooltip(role.type, numberOf)}
+                key={role.id}
+                className={cx("group-compact-role", roleStateClass(role.id))}
+                data-bs-title={roleStateTooltip(role.id, numberOf)}
               >
                 <i className={cx(role.icon, "fa-fw")} />
-                {role.type === "participant" && (
+                {role.id === "participant" && (
                   <>
                     &nbsp;
                     {numberOf}

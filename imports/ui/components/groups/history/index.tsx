@@ -45,7 +45,7 @@ export function UserSubscribedHistoryEntry({
 
   return (
     <>
-      <RoleIcon type={role} regionId={regionId} />{" "}
+      <RoleIcon id={role} regionId={regionId} />{" "}
       {roleGroupHistoryUserSubscribed(role, {
         USER: (
           <>
@@ -75,7 +75,7 @@ export function UserUnsubscribedHistoryEntry({
 
   return (
     <>
-      <RoleIcon type={role} regionId={regionId} />{" "}
+      <RoleIcon id={role} regionId={regionId} />{" "}
       {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>

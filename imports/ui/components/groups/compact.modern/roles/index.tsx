@@ -15,14 +15,14 @@ export function Roles({ group }: { group: GroupModel }) {
 
   const [isLoading, regionRoles] = useRegionRoles(group.region);
 
-  const groupRoles = regionRoles.filter((role) => group.roles?.includes(role.type));
+  const groupRoles = regionRoles.filter((role) => group.roles?.includes(role.id));
 
-  const hasParticipantRole = groupRoles.some((role) => role.type === "participant");
+  const hasParticipantRole = groupRoles.some((role) => role.id === "participant");
 
-  const groupRolesWithoutParticipant = groupRoles.filter((role) => role.type !== "participant");
+  const groupRolesWithoutParticipant = groupRoles.filter((role) => role.id !== "participant");
 
   const userHasOtherRole = groupRolesWithoutParticipant.some((role) =>
-    hasRoleUser(group.members, role.type, userId),
+    hasRoleUser(group.members, role.id, userId),
   );
 
   if (isLoading()) {
@@ -31,12 +31,12 @@ export function Roles({ group }: { group: GroupModel }) {
 
   return (
     <div className="d-grid gap-1">
-      {hasParticipantRole && !userHasOtherRole && <Role group={group} roleType="participant" />}
+      {hasParticipantRole && !userHasOtherRole && <Role group={group} roleId="participant" />}
 
       {groupRolesWithoutParticipant
-        .filter((role) => hasRoleUser(group.members, role.type, userId))
+        .filter((role) => hasRoleUser(group.members, role.id, userId))
         .map((role) => (
-          <Role key={role.type} group={group} roleType={role.type} />
+          <Role key={role.id} group={group} roleId={role.id} />
         ))}
 
       {hasParticipantRole && hasRoleUser(group.members, "participant", userId) && (
@@ -45,9 +45,9 @@ export function Roles({ group }: { group: GroupModel }) {
             {t("groups.details.roles.title", "Do you want to contribute?")}
           </h4>
           {groupRolesWithoutParticipant
-            .filter((role) => !hasRoleUser(group.members, role.type, userId))
+            .filter((role) => !hasRoleUser(group.members, role.id, userId))
             .map((role) => (
-              <Role key={role.type} group={group} roleType={role.type} />
+              <Role key={role.id} group={group} roleId={role.id} />
             ))}
         </>
       )}

@@ -12,15 +12,15 @@ import "./styles.scss";
 
 export interface Props {
   group: GroupModel;
-  roleType: RoleEntity["type"];
+  roleId: RoleEntity["id"];
 }
 
-export function Role({ group, roleType }: Props) {
+export function Role({ group, roleId }: Props) {
   const user = useUser();
 
   const [showFirstSteps, setShowFirstSteps] = useState(false);
 
-  const subscribed = group.userHasRole(user?._id, roleType);
+  const subscribed = group.userHasRole(user?._id, roleId);
 
   function handleAfterSubscribe() {
     setShowFirstSteps(true);
@@ -33,10 +33,10 @@ export function Role({ group, roleType }: Props) {
   return (
     <>
       {!subscribed ? (
-        <Enrolling group={group} roleType={roleType} afterSubscribe={handleAfterSubscribe} />
+        <Enrolling group={group} roleId={roleId} afterSubscribe={handleAfterSubscribe} />
       ) : (
         <Subscribed
-          roleType={roleType}
+          roleId={roleId}
           group={group}
           showFirstSteps={showFirstSteps}
           onToggle={handleFirstStepsToggle}
