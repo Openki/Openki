@@ -1,9 +1,9 @@
-import { Meteor } from "meteor/meteor";
 import { assignIn } from "lodash-es";
 import { i18n } from "/imports/startup/both/i18next";
 import { Tracker } from "meteor/tracker";
 
 import { User, UserEntity, Users } from "/imports/api/users/users";
+import * as UsersPub from "/imports/api/users/publications";
 
 // We cache the username lookups
 // To prevent unlimited cache-growth, after a enough lookups we
@@ -61,7 +61,7 @@ export const getCachedUser = (userId: string) => {
         lookups = 0;
       }
 
-      Meteor.subscribe("user.simple", userId);
+      UsersPub.simple.subscribe(userId);
     }
   }
 
