@@ -6,10 +6,7 @@ import { EventEntity, EventVenue } from "/imports/api/events/events";
 
 import { SearchBase } from "/imports/ui/components/events/edit-venue/search/SearchBase";
 
-async function requestVenuesFromC3nav(
-  locations: any,
-  query: string,
-): Promise<EventVenue[]> {
+async function requestVenuesFromC3nav(locations: any, query: string): Promise<EventVenue[]> {
   const relevantLocations = chain(locations)
     .filter((l) => !!l.point)
     .map((l) => ({

@@ -132,12 +132,10 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
     (organizationId) =>
       !(
         // hide organization where are from the region set
-        (
-          region?.defaultTeamOrganizations?.includes(organizationId) &&
-          // when user ist not member of the organization or a admin
-          !user?.canPromoteWith(organizationId) &&
-          !group.editableBy(user)
-        )
+        region?.defaultTeamOrganizations?.includes(organizationId) &&
+        // when user ist not member of the organization or a admin
+        !user?.canPromoteWith(organizationId) &&
+        !group.editableBy(user)
       ),
   );
 
