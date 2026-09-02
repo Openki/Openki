@@ -27,9 +27,8 @@ export interface Props {
 export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
-  // TODO: Temporary during development
-  const [showModal, setShowModal] = useState(true);
   const user = useUser();
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -57,10 +56,8 @@ export function ParticipantContact(props: Props) {
   }
 
   const userHasVerifiedEmail = Boolean(user?.hasVerifiedEmail());
-  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(props.participant);
-  const showEmailOptions = !isLoadingMessages() && previousMessages.length === 0;
 
-  function sendMessageAttr(): SendMessageProps {
+  function sendMessageAttr(): Omit<SendMessageProps, "showEmailOptions"> {
     return {
       autoFocus: true,
       placeholder: t(
@@ -86,7 +83,6 @@ export function ParticipantContact(props: Props) {
           Modal.getOrCreateInstance(element).hide();
         }
       },
-      showEmailOptions,
     };
   }
 
@@ -154,10 +150,13 @@ function ParticipantContactModal({
   participant,
 }: {
   ref: React.Ref<HTMLDivElement> | null;
-  sendMessageAttr: () => SendMessageProps;
+  sendMessageAttr: () => Omit<SendMessageProps, "showEmailOptions">;
   participant: UserModel;
 }) {
   const { t } = useTranslation();
+
+  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(participant._id);
+  const showEmailOptions = !isLoadingMessages() && previousMessages.length === 0;
 
   return (
     <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
@@ -180,7 +179,7 @@ function ParticipantContactModal({
           </div>
           <div className="modal-body">
             <PreviousDirectMessages otherUser={participant} />
-            <SendMessage {...sendMessageAttr()} />
+            <SendMessage {...sendMessageAttr()} showEmailOptions={showEmailOptions} />
           </div>
         </div>
       </div>

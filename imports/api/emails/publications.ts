@@ -8,7 +8,10 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
   "directMessagesWithUser",
   async (otherUserId: string) => {
     const userId = Meteor.userId();
-    check(userId, String);
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
     check(otherUserId, String);
 
     console.dir({ GET_MESSAGES: true, otherUserId, userId });
@@ -36,7 +39,10 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
   },
   (otherUserId) => {
     const userId = Meteor.userId();
-    check(userId, String);
+    if (!userId) {
+      return Log.findFilter({}, 0);
+    }
+
     check(otherUserId, String);
 
     const query = {
