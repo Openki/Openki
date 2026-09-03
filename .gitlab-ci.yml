@@ -144,6 +144,7 @@ deploy_docker:
       artifacts: true
   trigger:
     project: Openki/sysadmin/deploy
+    branch: dev
     strategy: depend
   variables:
     IMAGE_TAG: $IMAGE_TAG
