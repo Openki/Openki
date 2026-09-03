@@ -97,7 +97,11 @@ export function UserprofilePage({ user }: Props) {
         await emailMethods.sendPrivateMessage(user._id, message, options);
       },
       showEmailOptions:
-        Boolean(currentUser) && !ownUser() && !isLoadingMessages() && previousMessages.length === 0,
+        Boolean(currentUser) &&
+        !ownUser() &&
+        !isLoadingMessages() &&
+        Array.isArray(previousMessages) &&
+        previousMessages.length === 0,
     };
   }
   function numberOfGroupsAffectedByDelete() {
