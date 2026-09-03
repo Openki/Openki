@@ -233,7 +233,7 @@ function PreviousDirectMessages({
   return (
     Boolean(currentUserId) &&
     !isLoading() &&
-    visibleMessages.length && (
+    Boolean(visibleMessages.length) && (
       <div className="mb-4">
         <h4>Previous messages:</h4>
         {previousMessages.length > visibleMessages.length && (
