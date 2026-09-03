@@ -29,7 +29,7 @@ export function ParticipantContact(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   // TODO: Temporary for development
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -150,7 +150,7 @@ function ParticipantContactModal({
   sendMessageAttr,
   participant,
 }: {
-  ref: React.Ref<HTMLDivElement> | null;
+  ref?: React.RefObject<HTMLDivElement | null>;
   sendMessageAttr: () => Omit<SendMessageProps, "showEmailOptions">;
   participant: UserModel;
 }) {
@@ -180,7 +180,16 @@ function ParticipantContactModal({
             ></button>
           </div>
           <div className="modal-body">
-            <PreviousDirectMessages otherUser={participant} />
+            <PreviousDirectMessages
+              otherUser={participant}
+              onContextLinkClick={() => {
+                if (!ref?.current) {
+                  return;
+                }
+                // Close the modal before navigating to another page
+                Modal.getOrCreateInstance(ref.current).hide();
+              }}
+            />
             <SendMessage {...sendMessageAttr()} showEmailOptions={showEmailOptions} />
           </div>
         </div>
@@ -191,8 +200,6 @@ function ParticipantContactModal({
 
 // TODO: Return this type from the Meteor publication instead
 type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
-  // TODO: Handle other kinds of contexts
-  // for example events
   body: {
     message: string;
     sender: string;
@@ -204,7 +211,13 @@ type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
 const DEFAULT_VISIBLE_MESSAGES = 2;
 
 // TODO: Add translation keys
-function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
+function PreviousDirectMessages({
+  otherUser,
+  onContextLinkClick,
+}: {
+  otherUser: UserModel;
+  onContextLinkClick?: () => void;
+}) {
   // TODO: Improve type for returned messages
   const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
   // TODO: Change this back after testing
@@ -245,7 +258,7 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
                   wasSentByCurrentUser ? "align-items-end" : "align-items-start",
                 )}
               >
-                <MessageContext context={body.context} />
+                <MessageContext context={body.context} onContextLinkClick={onContextLinkClick} />
                 <section
                   className={cx(
                     "py-2 px-3 max-w-75 rounded-3",
@@ -280,14 +293,33 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   );
 }
 
-function MessageContext({ context }: { context?: { group?: string; event?: string } | undefined }) {
-  if (context?.group) {
-    return <GroupMessageContext groupId={context.group} />;
-  } else if (context?.event) {
-    return <EventMessageContext eventId={context.event} />;
+function MessageContext({
+  context,
+  onContextLinkClick,
+}: {
+  context?: { group?: string; event?: string } | undefined;
+  onContextLinkClick?: (() => void) | undefined;
+}) {
+  if (!context) {
+    return null;
   }
 
-  return null;
+  return (
+    <div
+      onClickCapture={(event) => {
+        if ((event.target as HTMLElement).tagName !== "A") {
+          return;
+        }
+        onContextLinkClick?.();
+      }}
+    >
+      {context.group ? (
+        <GroupMessageContext groupId={context.group} />
+      ) : context.event ? (
+        <EventMessageContext eventId={context.event} />
+      ) : null}
+    </div>
+  );
 }
 
 function GroupMessageContext({ groupId }: { groupId: string }) {
