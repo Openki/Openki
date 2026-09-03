@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useSession, useUser } from "/imports/utils/react-meteor-data";
-import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
+import { DirectMessage, useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import * as emailMethods from "/imports/api/emails/methods";
@@ -12,7 +12,6 @@ import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { type UserModel } from "/imports/api/users/users";
-import { LogEntity } from "/imports/api/log/factory";
 import { cx } from "/imports/utils/cx";
 import { Router } from "meteor/iron:router";
 import { useDetails as useEventDetails } from "/imports/api/events/publications";
@@ -181,7 +180,7 @@ function ParticipantContactModal({
           </div>
           <div className="modal-body">
             <PreviousDirectMessages
-              otherUser={participant}
+              previousMessages={previousMessages}
               onContextLinkClick={() => {
                 if (!ref?.current) {
                   return;
@@ -198,28 +197,21 @@ function ParticipantContactModal({
   );
 }
 
-// TODO: Return this type from the Meteor publication instead
-type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
-  body: {
-    message: string;
-    sender: string;
-    targetRecipient: string;
-    context?: { group?: string; event?: string };
-  };
-};
-
 const DEFAULT_VISIBLE_MESSAGES = 2;
 
 // TODO: Add translation keys
 function PreviousDirectMessages({
-  otherUser,
+  previousMessages,
   onContextLinkClick,
 }: {
-  otherUser: UserModel;
+  previousMessages: DirectMessage[];
   onContextLinkClick?: () => void;
 }) {
-  // TODO: Improve type for returned messages
-  const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
+  console.log(
+    "Rendering PreviousDirectMessages...",
+    Temporal.Now.plainTimeISO().toLocaleString(),
+    previousMessages,
+  );
   // TODO: Change this back after testing
   const [showAll, setShowAll] = useState(true);
   const visibleMessages = (
@@ -232,7 +224,6 @@ function PreviousDirectMessages({
 
   return (
     Boolean(currentUserId) &&
-    !isLoading() &&
     Boolean(visibleMessages.length) && (
       <div className="mb-4">
         <h4>Previous messages:</h4>
