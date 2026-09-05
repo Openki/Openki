@@ -10,6 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as GroupDiscussionUtils from "../../../../../../utils/group-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
@@ -26,16 +27,6 @@ export function Show({ post, onEdit }: Props) {
   const user = useUser();
   const { t } = useTranslation();
 
-  function postClasses() {
-    const classes = [];
-
-    classes.push(post.parentId ? "discussion-comment" : "discussion-post");
-    if (post.saving) {
-      classes.push("is-saving");
-    }
-
-    return classes.join(" ");
-  }
   function canEdit() {
     return GroupDiscussionUtils.canEditPost(user ?? undefined, post);
   }
@@ -88,7 +79,13 @@ export function Show({ post, onEdit }: Props) {
       </button>
     )
   ) : (
-    <div className={postClasses()} id={`comment${post._id}`}>
+    <div
+      className={cx(
+        post.parentId ? "discussion-comment" : "discussion-post",
+        post.saving && "is-saving",
+      )}
+      id={`comment${post._id}`}
+    >
       <DiscussionProfileIcon userId={post.userId} />
       <div className="discussion-post-content">
         <div className="discussion-post-header">

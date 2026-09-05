@@ -3,12 +3,14 @@ import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
-import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
-import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { cx } from "/imports/utils/cx";
+
+import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
+import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
+import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "../styles.scss";
@@ -103,7 +105,10 @@ export function CalendarNavProgram(props: Props) {
                   {props.selectedDays.find((s) => s.isSame(d)) ? (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg btn-primary text-white border-dark d-block active`}
+                      className={cx(
+                        "btn btn-lg btn-primary text-white border-dark d-block active",
+                        isMobileScreen && "p-1",
+                      )}
                       data-bs-toggle="button"
                       aria-pressed="true"
                       onClick={() => props.onRemoveDay(d)}
@@ -114,7 +119,10 @@ export function CalendarNavProgram(props: Props) {
                   ) : (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg bg-white text-body-secondary d-block`}
+                      className={cx(
+                        "btn btn-lg bg-white text-body-secondary d-block",
+                        isMobileScreen && "p-1",
+                      )}
                       data-bs-toggle="button"
                       onClick={() => props.onAddDay(d)}
                     >

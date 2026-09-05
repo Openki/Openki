@@ -9,6 +9,7 @@ import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods
 import * as GroupDiscussionUtils from "../../../../../../utils/group-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -66,9 +67,7 @@ export function Show({ post, onEdit }: Props) {
       </button>
     )
   ) : (
-    <div
-      className={`list-group-item d-flex align-items-start gap-3${post.parentId ? " ps-5" : ""}`}
-    >
+    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && " ps-5")}>
       <DiscussionProfileIcon userId={post.userId} />
       <div className="flex-grow-1">
         <div className="d-flex justify-content-between">

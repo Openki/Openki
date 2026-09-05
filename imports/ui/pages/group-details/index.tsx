@@ -14,6 +14,7 @@ import { Regions } from "/imports/api/regions/regions";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { MetaTags } from "/imports/ui/components/MetaTags";
+import { cx } from "/imports/utils/cx";
 
 import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Discussion } from "../../components/groups/discussion";
@@ -238,7 +239,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                 <Edit {...group} />
               ) : (
                 <>
-                  <div className={`group-details ${groupStateClasses(group)}`}>
+                  <div className={cx("group-details", groupStateClasses(group))}>
                     <Header group={group} />
                     <Submenu group={group} />
                   </div>

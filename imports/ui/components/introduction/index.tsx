@@ -12,6 +12,7 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -35,7 +36,7 @@ export function Introduction({ hasPricePolicy }: Props) {
   }
 
   return (
-    <div className={`container ${isInCalendar() ? "calendar-introduction" : ""}`}>
+    <div className={cx("container", isInCalendar() && "calendar-introduction")}>
       <div className="introduction">
         <h3>
           <a

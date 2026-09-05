@@ -6,6 +6,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventModel, EventParticipant } from "/imports/api/events/events";
 
 import { ReactJoin } from "/imports/utils/ReactJoin";
+import { cx } from "/imports/utils/cx";
 
 import { UserName } from "/imports/ui/components/UserName";
 
@@ -16,7 +17,7 @@ function EventParticipant({ participant }: { participant: EventParticipant }) {
   const user = useUser();
 
   return (
-    <span className={participant.user === user?._id ? "fw-bold" : ""}>
+    <span className={cx(participant.user === user?._id && "fw-bold")}>
       <UserName userId={participant.user} />
       {!!participant.companions && (
         <>

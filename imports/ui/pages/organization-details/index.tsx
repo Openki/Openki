@@ -13,6 +13,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { cx } from "/imports/utils/cx";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
@@ -71,16 +72,6 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
 
   function isFeatured() {
     return !!region && !organization.isNew() && region.featuredOrganization === organization._id;
-  }
-  function headerClasses() {
-    const classes = [];
-    if (organization.logoUrl) {
-      classes.push("has-logo");
-    }
-    if (canEdit) {
-      classes.push("is-editable");
-    }
-    return classes.join(" ");
   }
 
   function allowEditingSettings() {
@@ -283,7 +274,13 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
               </button>
             )}
           </div>
-          <div className={`details-header organization-details-header clearfix ${headerClasses()}`}>
+          <div
+            className={cx(
+              "details-header organization-details-header clearfix",
+              organization.logoUrl && "has-logo",
+              canEdit && "is-editable",
+            )}
+          >
             {!!organization.publicLogoUrl() && (
               <div className="organization-details-logo">
                 <img src={organization.publicLogoUrl()} />
@@ -298,7 +295,10 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
           </div>
           <div className="details-body organization-details-body">
             <div
-              className={`details-content organization-details-content ${errors.all ? "has-error" : ""}`}
+              className={cx(
+                "details-content organization-details-content",
+                !!errors.all && "has-error",
+              )}
             >
               <div className="organization-details-claim">
                 {canEdit ? <Editable {...editableClaimAttr} /> : organization.claim}

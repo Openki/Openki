@@ -3,6 +3,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
@@ -55,9 +56,6 @@ export function Edit({ post, onSave, onCancel }: Props) {
       : t("group.discussion.text_placeholder", "Your comment");
   };
 
-  function postClass() {
-    return post.parentId ? "discussion-comment" : "discussion-post";
-  }
   function showUserId() {
     return !post.new || !anon;
   }
@@ -101,7 +99,12 @@ export function Edit({ post, onSave, onCancel }: Props) {
   }
 
   return (
-    <div className={`${postClass()} ${post.new && !post.parentId ? "discussion-post-new" : ""}`}>
+    <div
+      className={cx(
+        post.parentId ? "discussion-comment" : "discussion-post",
+        post.new && !post.parentId && "discussion-post-new",
+      )}
+    >
       <DiscussionProfileIcon userId={post.userId} />
       <div className="discussion-edit-content">
         <form

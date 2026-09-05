@@ -7,6 +7,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   event: EventModel;
@@ -34,7 +35,7 @@ export function Event({ event, hideRsvp }: Props) {
   }
 
   return (
-    <div className={`frame-list-item-event ${event.canceled ? "frame-list-item-canceled" : ""}`}>
+    <div className={cx("frame-list-item-event", event.canceled && "frame-list-item-canceled")}>
       <div className="position-relative">
         {new Date() > event.start && (
           <div className="text-primary">
@@ -43,7 +44,7 @@ export function Event({ event, hideRsvp }: Props) {
           </div>
         )}
         <h4
-          className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
+          className={cx("frame-list-item-header", isExpanded && "active")}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="frame-list-item-toggle-indicator">
@@ -73,7 +74,7 @@ export function Event({ event, hideRsvp }: Props) {
             </div>
           )}
 
-          <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
+          <span className={cx("frame-list-item-time", isExpanded && "hidden")}>
             {timeFormat(event.start)}
           </span>
           <span className="fw-bold">{event.title}</span>

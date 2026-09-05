@@ -1,5 +1,6 @@
 import React from "react";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 export function Icon({
   id,
@@ -22,5 +23,5 @@ export function Icon({
     return "fa-house";
   }
 
-  return <i className={`fa-solid ${icon()} fa-fw`} />;
+  return <i className={cx("fa-fw fa-solid", icon())} />;
 }

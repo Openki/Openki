@@ -4,6 +4,8 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 
+import { cx } from "/imports/utils/cx";
+
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
@@ -47,7 +49,7 @@ function IconControl({
       >
         <i className={icons[0]} />
         <i
-          className={`${icons[1]} fa-lg`}
+          className={cx(icons[1], "fa-lg")}
           style={{
             position: "absolute",
             left: "0.7ex",

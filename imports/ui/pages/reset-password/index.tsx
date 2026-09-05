@@ -7,6 +7,7 @@ import { useAccount } from "/imports/api/users/publications";
 
 import { AccountsAsync } from "/imports/utils/promisify";
 import { MetaTags } from "/imports/ui/components/MetaTags";
+import { cx } from "/imports/utils/cx";
 
 import { ButtonCancel } from "../../components/Buttons";
 import { TokenExpired } from "../../components/TokenExpired";
@@ -82,7 +83,7 @@ export function ResetPasswordPage({ token, email }: Props) {
             <div className="btn-group">
               <button
                 type="button"
-                className={`btn btn-secondary ${!showPassword ? "active" : ""}`}
+                className={cx("btn btn-secondary", !showPassword && "active")}
                 onClick={() => {
                   setShowPassword(false);
                   updatePassword(password, passwordConfirm, false);
@@ -92,7 +93,7 @@ export function ResetPasswordPage({ token, email }: Props) {
               </button>
               <button
                 type="button"
-                className={`btn btn-secondary ${showPassword ? "active" : ""}`}
+                className={cx("btn btn-secondary", showPassword && "active")}
                 onClick={() => {
                   setShowPassword(true);
                   updatePassword(password, passwordConfirm, true);

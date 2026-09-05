@@ -11,6 +11,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { GroupList } from "/imports/ui/components/groups/List";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -116,7 +117,7 @@ export function GroupListSection({
                   <React.Fragment key={role.id}>
                     <h3 id={role.id}>
                       <div className="badge">
-                        <i className={`${role.icon} fa-fw`} />
+                        <i className={cx(role.icon, "fa-fw")} />
                       </div>{" "}
                       {ownProfile
                         ? roleProfileMyGroupListCurrent(role.id)
@@ -132,7 +133,7 @@ export function GroupListSection({
                   <React.Fragment key={role.id}>
                     <h3 id={`${role.id}_archived`}>
                       <div className="badge is-archived">
-                        <i className={`${role.icon} fa-fw`} />
+                        <i className={cx(role.icon, "fa-fw")} />
                       </div>{" "}
                       {ownProfile
                         ? roleProfileMyGroupListPast(role.id)

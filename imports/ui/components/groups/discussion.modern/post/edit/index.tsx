@@ -3,6 +3,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
@@ -98,9 +99,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   }
 
   return (
-    <div
-      className={`list-group-item d-flex align-items-start gap-3${post.parentId ? " ps-5" : ""}`}
-    >
+    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && " ps-5")}>
       <DiscussionProfileIcon userId={post.userId} />
 
       <form

@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { cx } from "/imports/utils/cx";
 
 import { AdditionalFilters, Props as AdditionalFiltersProps } from "./additional-filters";
 
@@ -84,21 +85,9 @@ export function Filter(props: Props) {
 
     return classes.join(" ");
   }
-  function archivedFilterClasses() {
-    const classes = ["is-archived"];
-
-    if (props.archived) {
-      classes.push("active");
-    }
-
-    return classes.join(" ");
-  }
-  function additionalFiltersAttr(): AdditionalFiltersProps {
-    return props;
-  }
 
   return (
-    <div className={`filter ${filterClasses()}`}>
+    <div className={cx("filter", filterClasses())}>
       {showingFilters && (
         <h4 className="filter-heading">
           <i className="fa-solid fa-filter fa-fw" />
@@ -127,7 +116,7 @@ export function Filter(props: Props) {
               <div key={stateFilter.name} className="col filter-captions-column">
                 <div className="filter-caption-wrap">
                   <div
-                    className={`filter-caption ${stateFilterClasses(stateFilter)}`}
+                    className={cx("filter-caption", stateFilterClasses(stateFilter))}
                     title={stateFilter.title}
                     onClick={() => {
                       props.onStateClick(stateFilter);
@@ -153,7 +142,7 @@ export function Filter(props: Props) {
               <div className="col-sm-4 offset-sm-8 filter-captions-column">
                 <div className="filter-caption-wrap">
                   <div
-                    className={`filter-caption ${archivedFilterClasses()}`}
+                    className={cx("filter-caption is-archived", props.archived && "active")}
                     title={t("filterCaptions.archived.title", "Show only groups that are archived")}
                     onClick={() => {
                       props.onArchivedClick();
@@ -175,7 +164,7 @@ export function Filter(props: Props) {
             </div>
           )}
         </div>
-        {showingFilters && <AdditionalFilters {...additionalFiltersAttr()} />}
+        {showingFilters && <AdditionalFilters {...props} />}
       </div>
       {!showingFilters && (
         <div className="filter-actions">
