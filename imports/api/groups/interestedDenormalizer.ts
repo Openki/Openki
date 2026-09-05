@@ -27,14 +27,6 @@ export async function afterUnsubscribeFromRole(groupId: string) {
   await updateAsync(groupId);
 }
 
-export async function afterSubscribeToCustomRole(groupId: string) {
-  await updateAsync(groupId);
-}
-
-export async function afterUnsubscribeFromCustomRole(groupId: string) {
-  await updateAsync(groupId);
-}
-
 export async function afterUserAdminRemove(groupId: string) {
   await updateAsync(groupId);
 }

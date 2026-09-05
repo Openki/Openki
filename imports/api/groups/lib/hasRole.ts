@@ -1,46 +1,35 @@
-import { GroupMember } from "/imports/api/groups/groups";
+import { GroupMember, GroupRoleRef } from "/imports/api/groups/groups";
+import { isRole } from "/imports/api/groups/lib/isRole";
 
 /**
  * Determine whether there is a member with the given role
- * @param  members list of members
- * @param roleId role key
+ * @param members list of members
  * @return true if there is a member with the given role, and false otherwise.
  */
-export function hasRole(members: GroupMember[] | undefined, roleId: string | undefined) {
+export function hasRole(members: GroupMember[] | undefined, groupRole: GroupRoleRef | undefined) {
   if (!members) {
     return false;
   }
-  if (!roleId) {
+  if (!groupRole) {
     return false;
   }
-  return members.some((member) => member.roles.includes(roleId));
+  return members.some((member) => member.roles.some((memberRole) => isRole(memberRole, groupRole)));
 }
 
 /**
  * Determine whether a given user has a given role in a members list
- * @param  members list of members
- * @param roleId role key
- * @param userId user ID to check
+ * @param members list of members
  * @return whether the user has this role
  */
 export function hasRoleUser(
   members: GroupMember[],
-  roleId: string,
+  groupRole: GroupRoleRef,
   userId: string | undefined | null,
 ) {
   if (!userId) {
     return false;
   }
-  return members.some((member) => member.user === userId && member.roles.includes(roleId));
-}
-
-export function hasCustomRoleUser(
-  members: GroupMember[],
-  roleId: string,
-  userId: string | undefined | null,
-) {
-  if (!userId) {
-    return false;
-  }
-  return members.some((member) => member.user === userId && member.customRoles?.includes(roleId));
+  return !!members
+    .find((member) => member.user === userId)
+    ?.roles.some((memberRole) => isRole(memberRole, groupRole));
 }

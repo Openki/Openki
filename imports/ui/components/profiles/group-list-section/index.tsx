@@ -14,6 +14,8 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { isPredefined } from "/imports/api/groups/lib/isRole";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 export function GroupListSection({
   regionId,
@@ -51,7 +53,7 @@ export function GroupListSection({
 
   function groupsByRole(role: string, archived: boolean) {
     return (!archived ? groups : archivedGroups).filter((g) =>
-      g.members.find((m) => m.user === id && m.roles.includes(role)),
+      g.members.find((m) => m.user === id && m.roles.some((r) => r.id === role && isPredefined(r))),
     );
   }
 
@@ -104,7 +106,8 @@ export function GroupListSection({
                           });
                         }}
                       >
-                        <i className={`${role.icon} fa-fw`} /> {roleShort(role.id)}
+                        <i className={cx(role.icon, "fa-fw")} />{" "}
+                        {roleShort(predefinedRole(role.id))}{" "}
                         <i className="fa-solid fa-arrow-down fa-fw" />
                         {groupsByRoleCount(role.id, false)}
                       </a>{" "}
@@ -120,8 +123,11 @@ export function GroupListSection({
                         <i className={cx(role.icon, "fa-fw")} />
                       </div>{" "}
                       {ownProfile
-                        ? roleProfileMyGroupListCurrent(role.id)
-                        : roleProfileUserGroupListCurrent(role.id, user.getDisplayName())}
+                        ? roleProfileMyGroupListCurrent(predefinedRole(role.id))
+                        : roleProfileUserGroupListCurrent(
+                            predefinedRole(role.id),
+                            user.getDisplayName(),
+                          )}
                     </h3>
                     <GroupList groups={groupsByRole(role.id, false)} small={true} />
                   </React.Fragment>
@@ -136,8 +142,11 @@ export function GroupListSection({
                         <i className={cx(role.icon, "fa-fw")} />
                       </div>{" "}
                       {ownProfile
-                        ? roleProfileMyGroupListPast(role.id)
-                        : roleProfileUserGroupListPast(role.id, user.getDisplayName())}
+                        ? roleProfileMyGroupListPast(predefinedRole(role.id))
+                        : roleProfileUserGroupListPast(
+                            predefinedRole(role.id),
+                            user.getDisplayName(),
+                          )}
                     </h3>
                     <GroupList groups={groupsByRole(role.id, true)} small={true} />
                   </React.Fragment>

@@ -4,8 +4,8 @@ import { GroupModel } from "/imports/api/groups/groups";
 
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
-import { CustomRole } from "./custom-role";
 import { Role } from "./role";
+import { isPredefined } from "/imports/api/groups/lib/isRole";
 
 export function Roles({ group }: { group: GroupModel }) {
   const [isLoading, regionRoles] = useRegionRoles(group.region);
@@ -16,13 +16,11 @@ export function Roles({ group }: { group: GroupModel }) {
 
   return (
     <div id="subscribe">
-      {group.customRoles?.map((role) => (
-        <CustomRole key={role.id} group={group} role={role} />
-      ))}
-      {regionRoles
-        .filter((role) => group.roles?.includes(role.id))
+      {group.roles
+        /* every predefined role should exist in the region's roles */
+        .filter((role) => !isPredefined(role) || regionRoles.some((r) => r.id === role.id))
         .map((role) => (
-          <Role key={role.id} group={group} roleId={role.id} />
+          <Role key={role.id} group={group} role={role} />
         ))}
     </div>
   );

@@ -10,6 +10,7 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 import { Events } from "../events/events";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
   const saneTitle = StringTools.sanitizeSingleline(comment.title, 200);
@@ -60,7 +61,7 @@ export const postComment = ServerMethod(
       saneComment.notifyAll =
         comment.notifyAll &&
         (user.hasPrivilege("admin") ||
-          group.userHasRole(user._id, "team") ||
+          group.userHasRole(user._id, SystemRoles.Team) ||
           user.organizations.some((g) => group?.teamOrganizations.includes(g)));
     }
 

@@ -188,7 +188,6 @@ export function Edit(props: Props) {
 
     changes.roles = {};
     changes.subs = [];
-    changes.unsubs = [];
 
     if (customFieldValues) {
       changes.customFields = customFieldValues;

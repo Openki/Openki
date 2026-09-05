@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { GroupModel } from "/imports/api/groups/groups";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
 
 import { Member } from "./member";
 
@@ -27,7 +29,7 @@ export function Members({ group }: { group: GroupModel }) {
     }
 
     return !!(
-      group?.userHasRole(user?._id, "team") ||
+      group?.userHasRole(user?._id, SystemRoles.Team) ||
       user?.organizations.some((g) => group?.teamOrganizations.includes(g))
     );
   }
@@ -37,8 +39,8 @@ export function Members({ group }: { group: GroupModel }) {
     }
     const { members } = group;
     members.sort((a, b) => {
-      const aRoles = a.roles.filter((role) => role !== "participant");
-      const bRoles = b.roles.filter((role) => role !== "participant");
+      const aRoles = a.roles.filter((role) => !isParticipant(role));
+      const bRoles = b.roles.filter((role) => !isParticipant(role));
       return bRoles.length - aRoles.length;
     });
     // check if logged-in user is in members and if so put him on top

@@ -5,7 +5,6 @@ import moment from "moment";
 import { Random } from "meteor/random";
 
 import { Groups } from "../groups/groups";
-import { Subscribe, processChange } from "../groups/subscription";
 import * as groupHistoryDenormalizer from "../groups/historyDenormalizer";
 import * as groupTimeLastEditDenormalizer from "../groups/timeLastEditDenormalizer";
 import * as groupImageDenormalizer from "./groupImageDenormalizer";
@@ -18,7 +17,6 @@ import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/eve
 import { isEventVenueRef } from "./lib/isEventVenueRef";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
-import { loadRoles } from "/imports/api/regions/loadRoles";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
@@ -33,6 +31,9 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
 import { UserModel } from "../users/users";
 import { GeodataPattern } from "/imports/api/Geodata";
+import { subscribeToRole } from "/imports/api/groups/methods";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
 
 /**
  * @param updateOptions What should be updated
@@ -566,16 +567,8 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    const roles = await loadRoles(group.region);
-    const change = new Subscribe(
-      group,
-      roles.map((r) => r.id),
-      user._id,
-      "participant",
-      "rsvp",
-    );
-    if (change.validFor(user)) {
-      await processChange(change, { isSimulation: this.isSimulation });
+    if (group.roles.some(isParticipant) && !group.userHasRole(user._id, SystemRoles.Participant)) {
+      await subscribeToRole(group._id, SystemRoles.Participant);
     }
 
     await groupNextEventDenormalizer.updateNextEvent(event.groupId);

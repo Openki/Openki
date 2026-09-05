@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/groups/subscription";
 import { GroupMember, GroupModel } from "/imports/api/groups/groups";
 
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -18,60 +17,42 @@ import { Editable } from "/imports/ui/components/editable";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
+import { isParticipant, isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
+import {
+  addMemberToTeam,
+  removeMemberFromTeam,
+  updateMemberMessage,
+} from "/imports/api/groups/methods";
+import { canAddToTeam, canRemoveFromTeam } from "/imports/api/groups/lib/teamPermissions";
 
 export function Member({ member, group }: { member: GroupMember; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
 
-  const [isRolesLoading, roles] = useRegionRoles(group.region);
-  const { roleShort } = useRoleDisplay(roles);
+  const [isRolesLoading, regionRoles] = useRegionRoles(group.region);
+  const { roleShort } = useRoleDisplay(regionRoles);
 
-  function subscribeToTeam() {
-    return new Subscribe(
-      group,
-      roles.map((r) => r.id),
-      member.user,
-      "team",
-      "interested",
+  function memberRoles() {
+    const roles = member.roles.filter((role) => !isParticipant(role));
+
+    return group.roles.filter((role) =>
+      roles.some((memberRole) => memberRole.id === role.id && memberRole.type === role.type),
     );
   }
 
-  function removeFromTeam() {
-    return new Unsubscribe(group, member.user, "team");
-  }
-
-  function memberRoles() {
-    return member.roles.filter((role) => role !== "participant");
-  }
-  function canSubscribeToTeam() {
-    const change = subscribeToTeam();
-    return change?.validFor(currentUser);
-  }
-
-  function editableMessage() {
-    const canChangeComment = member.user === currentUser?._id;
-    return canChangeComment;
-  }
-  function canUnsubscribeFromTeam(label: string) {
-    if (label !== "team") {
-      return false;
-    }
-    const change = removeFromTeam();
-    return change && change.validFor(currentUser);
-  }
   function showMemberComment() {
     const canChangeComment = member.user === currentUser?._id;
     return member.comment || canChangeComment;
+  }
+
+  async function handleAddToTeamClick() {
+    await addMemberToTeam(group._id, member.user);
   }
   function removeFromTeamDropdownAttr() {
     return {
       member,
       onClick: async () => {
-        const change = removeFromTeam();
-        if (!change) {
-          throw new Error("Unexpected falsy: change");
-        }
-        await processChange(change);
+        await removeMemberFromTeam(group._id, member.user);
       },
     };
   }
@@ -88,33 +69,31 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
           {!isRolesLoading() &&
             memberRoles().map((role) => (
               <div
-                key={role}
+                key={`${role.id}${role.type}`}
                 className={cx(
                   "group-member-role",
-                  roles.find((r) => r.id === role)?.proposal && "is-proposal",
+                  isPredefined(role) &&
+                    regionRoles.find((r) => r.id === role.id)?.proposal &&
+                    "is-proposal",
                 )}
               >
                 <span className="group-member-role-text">
-                  <RoleIcon id={role} regionId={group.region} />{" "}
+                  <RoleIcon role={role} regionId={group.region} />{" "}
                   <span className="role-short">{roleShort(role)}</span>
                 </span>{" "}
-                {canUnsubscribeFromTeam(role) && (
-                  <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
-                )}
+                {isTeam(role) &&
+                  !!currentUser &&
+                  canRemoveFromTeam(currentUser, group, member.user) && (
+                    <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+                  )}
               </div>
             ))}
-          {canSubscribeToTeam() && (
+          {currentUser && canAddToTeam(currentUser, group, member.user) && (
             <button
               type="button"
               className="btn btn-sm btn-add add-to-team-btn"
               data-bs-title={t("group.roles.maketeam", "Add to team")}
-              onClick={async () => {
-                const change = subscribeToTeam();
-                if (!change) {
-                  throw new Error("Unexpected falsy: change");
-                }
-                await processChange(change);
-              }}
+              onClick={handleAddToTeamClick}
             >
               <i className={cx("fa-solid fa-plus", member.user)} />{" "}
               <i className="fa-solid fa-bullhorn fa-fw" />
@@ -127,15 +106,14 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
         <div className="group-member-comment">
           <div className="group-member-comment-arrow"></div>
           <div className="group-member-comment-body">
-            {editableMessage() && currentUser ? (
+            {member.user === currentUser?._id && currentUser ? (
               <Editable
                 {...{
                   multiline: false,
                   placeholderText: t("groupMember.message.placeholder", "My interests…"),
                   store: {
                     onSave: async (newMessage) => {
-                      const change = new Message(group, currentUser._id, newMessage);
-                      await processChange(change);
+                      await updateMemberMessage(group._id, newMessage);
                     },
                     onSuccess: () => {
                       Alert.success(

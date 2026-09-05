@@ -8,7 +8,7 @@ import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasCustomRoleUser, hasRoleUser } from "./lib/hasRole";
+import { hasRoleUser } from "./lib/hasRole";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -18,16 +18,39 @@ import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { isPrivate } from "./lib/isPrivate";
+import { isRole } from "/imports/api/groups/lib/isRole";
+import { RoleType } from "/imports/api/groups/lib/Role";
 
+/**
+ * Predefined roles are defined by the system/instance/region.
+ */
+export interface GroupPredefinedRole {
+  id: string;
+  type: typeof RoleType.Predefined;
+}
+
+/**
+ * Custom roles are defined by the group creator.
+ * The `id` is only unique within the group.
+ */
 export interface GroupCustomRole {
   id: string;
   label: string;
+  type: typeof RoleType.Custom;
+}
+
+export type GroupRole = GroupPredefinedRole | GroupCustomRole;
+
+export type GroupRoleType = GroupRole["type"];
+
+export interface GroupRoleRef {
+  id: string;
+  type: GroupRoleType;
 }
 
 export interface GroupMember {
   user: string;
-  roles: string[];
-  customRoles?: string[];
+  roles: GroupRoleRef[];
   comment?: string;
 }
 
@@ -76,13 +99,9 @@ export interface GroupEntity {
   customFields: GroupCustomField[];
   /** ID_user */
   createdby: string;
-
   time_created: Date;
-
   time_lastedit: Date;
-  /** [role-keys] */
-  roles: string[];
-  customRoles?: GroupCustomRole[];
+  roles: GroupRole[];
   members: GroupMember[];
   internal: boolean;
   singleEvent: boolean;
@@ -149,16 +168,12 @@ export class Group {
    * Get list of members with specified role
    * @param role like 'team'
    */
-  membersWithRole(this: GroupModel, role: string) {
-    return this.members.filter((member) => member.roles.includes(role));
+  membersWithRole(this: GroupModel, role: GroupRoleRef) {
+    return this.members.filter((member) => member.roles.some((r) => isRole(r, role)));
   }
 
-  userHasRole(this: GroupModel, userId: string | undefined | null, role: string) {
+  userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {
     return hasRoleUser(this.members, role, userId);
-  }
-
-  userHasCustomRole(this: GroupModel, userId: string | undefined | null, roleId: string) {
-    return hasCustomRoleUser(this.members, roleId, userId);
   }
 
   publicUrlForCompactImage(this: GroupModel) {

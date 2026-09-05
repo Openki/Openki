@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { uniq, union, chain } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, FindParams } from "/imports/api/groups/groups";
+import { GroupModel, FindParams, GroupRoleRef } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
@@ -40,12 +40,14 @@ import { Filtering } from "/imports/utils/filtering";
 import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 
 import "./styles.scss";
+import { isMentor } from "/imports/api/groups/lib/isRole";
 
 export type Props = {
   isFrame?: boolean;
   organization?: string;
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
+  roles?: GroupRoleRef[];
   creatorsRoles?: string[];
   hideCategories?: boolean;
   groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
@@ -177,7 +179,8 @@ export function Edit({
   const fullRoleSelection = !isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
   // When we're in the propose frame, show a simplified role selection
-  const simpleRoleSelection = isFrame && !hideRoleSelection && !!group.roles?.includes("mentor");
+  const simpleRoleSelection =
+    props.isFrame && !props.hideRoleSelection && !!props.roles?.some(isMentor);
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
@@ -351,9 +354,12 @@ export function Edit({
       changes.organizations = getOrganizations();
     }
 
+    changes.roles = {};
+    changes.subs = [];
+
     if (isFrame) {
       group.roles?.forEach((role) => {
-        changes.roles[role] = true;
+        changes.roles[role.id] = true;
       });
 
       if (simpleRoleSelection && simpleSelectedRole === "mentor") {
@@ -361,23 +367,6 @@ export function Edit({
       }
 
       changes.subs = union(changes.subs, creatorsRoles || []);
-    }
-
-    if (fullRoleSelection) {
-      Object.entries(roles).forEach(function (r) {
-        changes.roles[r[0]] = r[1].enabled;
-      });
-      Object.entries(roles)
-        .filter((r) => r[1].enabled)
-        .forEach(function (r) {
-          const role = r[0];
-          const subscribe = !!r[1].enroll;
-          if (subscribe) {
-            changes.subs.push(role);
-          } else {
-            changes.unsubs.push(role);
-          }
-        });
     }
 
     if (customFieldValues) {

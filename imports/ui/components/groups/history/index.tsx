@@ -10,7 +10,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { useCustomRoleDisplay } from "/imports/utils/getCustomRoleDisplay";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -18,6 +17,7 @@ import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
   return (
@@ -30,11 +30,11 @@ export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
 
 export function UserSubscribedHistoryEntry({
   user,
-  role,
+  roleId,
   regionId,
 }: {
   user: string;
-  role: string;
+  roleId: string;
   regionId: RegionEntity["_id"];
 }) {
   const [isLoading, roles] = useRegionRoles(regionId);
@@ -44,9 +44,10 @@ export function UserSubscribedHistoryEntry({
     return null;
   }
 
+  const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon id={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionId={regionId} />{" "}
       {roleGroupHistoryUserSubscribed(role, {
         USER: (
           <>
@@ -60,11 +61,11 @@ export function UserSubscribedHistoryEntry({
 }
 export function UserUnsubscribedHistoryEntry({
   user,
-  role,
+  roleId,
   regionId,
 }: {
   user: string;
-  role: string;
+  roleId: string;
   regionId: RegionEntity["_id"];
 }) {
   const [isLoading, roles] = useRegionRoles(regionId);
@@ -74,9 +75,10 @@ export function UserUnsubscribedHistoryEntry({
     return null;
   }
 
+  const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon id={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionId={regionId} />{" "}
       {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>
@@ -90,13 +92,14 @@ export function UserUnsubscribedHistoryEntry({
 }
 export function UserSubscribedToCustomRoleHistoryEntry({
   user,
-  role,
+  roleLabel,
 }: {
   user: string;
-  role: GroupCustomRole["label"];
+  roleLabel: GroupCustomRole["label"];
 }) {
-  const { roleGroupHistoryUserSubscribed } = useCustomRoleDisplay();
+  const { roleGroupHistoryUserSubscribed } = useRoleDisplay([]);
 
+  const role = { label: roleLabel, type: RoleType.Custom } as const;
   return (
     <>
       {roleGroupHistoryUserSubscribed(role, {
@@ -112,13 +115,14 @@ export function UserSubscribedToCustomRoleHistoryEntry({
 }
 export function UserUnsubscribedFromCustomRoleHistoryEntry({
   user,
-  role,
+  roleLabel,
 }: {
   user: string;
-  role: GroupCustomRole["label"];
+  roleLabel: GroupCustomRole["label"];
 }) {
-  const { roleGroupHistoryUserUnsubscribed } = useCustomRoleDisplay();
+  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay([]);
 
+  const role = { label: roleLabel, type: RoleType.Custom } as const;
   return (
     <>
       {roleGroupHistoryUserUnsubscribed(role, {

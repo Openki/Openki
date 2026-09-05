@@ -1,27 +1,26 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupModel } from "/imports/api/groups/groups";
-import { Unsubscribe, processChange } from "/imports/api/groups/subscription";
+import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import { Guide } from "/imports/ui/components/groups/roles/role/Guide";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useUser } from "/imports/utils/react-meteor-data";
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { cx } from "/imports/utils/cx";
+import { unsubscribeFromRole } from "/imports/api/groups/methods";
+import { RoleType } from "/imports/api/groups/lib/Role";
 
 export interface Props {
-  roleId: string;
+  role: GroupRole;
   group: GroupModel;
   showFirstSteps: boolean;
   onToggle: (value: boolean) => void;
 }
 
-export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
+export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
   const collapseRef = useRef<HTMLDivElement>(null);
 
   const [isRolesLoading, roles] = useRegionRoles(group.region);
@@ -34,16 +33,30 @@ export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
     event.stopPropagation();
     routerAutoscroll.cancelNext();
 
-    const change = new Unsubscribe(group, user?._id, roleId);
-    await processChange(change);
+    await unsubscribeFromRole(group._id, role);
+
     onToggle(false);
     routerAutoscroll.cancelNext();
 
-    Analytics.trackEvent(
-      "Unsubscribes from groups",
-      `Unsubscribes from groups as ${roleId}`,
-      Regions.findOne(group.region)?.nameEn,
-    );
+    switch (role.type) {
+      case RoleType.Predefined:
+        Analytics.trackEvent(
+          "Unsubscribes from groups",
+          `Unsubscribes from groups as ${role.id}`,
+          Regions.findOne(group.region)?.nameEn,
+        );
+        break;
+      case RoleType.Custom:
+        Analytics.trackEvent(
+          "CustomRoles: Unsubscribes from groups",
+          `Unsubscribes from groups as ${role.label}`,
+          Regions.findOne(group.region)?.nameEn,
+        );
+        break;
+
+      default:
+        throw new Error("Unexpected value for role.type");
+    }
   }
 
   useEffect(() => {
@@ -67,8 +80,8 @@ export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
     return null;
   }
 
-  const name = `group-${group._id}-role-enrolled-${roleId}-content`;
-  const firstSteps = roleGroupFirstSteps(roleId, { GUIDE: <Guide /> });
+  const name = `group-${group._id}-role-enrolled-${role.id}-content`;
+  const firstSteps = roleGroupFirstSteps(role, { GUIDE: <Guide /> });
   return (
     <div className="d-grid">
       <button
@@ -82,7 +95,7 @@ export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
         aria-controls={name}
         onClick={() => onToggle(!showFirstSteps)}
       >
-        <span className="fw-bold text-start">{roleSubscribed(roleId)}</span>
+        <span className="fw-bold text-start">{roleSubscribed(role)}</span>
         {!showFirstSteps && (
           <button
             type="button"

@@ -8,6 +8,7 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 interface RolesButtonProps {
   needsRole: string[];
@@ -40,7 +41,7 @@ function RolesButton(props: RolesButtonProps) {
           <i className={cx(role.icon, "fa-fw")} />
         </span>
         &nbsp;
-        {roleNeeded(role.id)}
+        {roleNeeded(predefinedRole(role.id))}
         &nbsp;
         <i className="fa-solid fa-check" />
       </button>

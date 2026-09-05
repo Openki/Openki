@@ -5,26 +5,41 @@ import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { useRegionRoles } from "../lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
+import { RoleType } from "/imports/api/groups/lib/Role";
+
+export type Role =
+  | { id: RoleEntity["id"]; type: typeof RoleType.Predefined }
+  | { label: string; type: typeof RoleType.Custom };
 
 export function RoleIcon({
   className,
-  id,
+  role,
   regionId,
 }: {
   className?: string | undefined;
-  id: RoleEntity["id"];
+  role: Role;
   regionId: RegionEntity["_id"];
 }) {
   const [isLoading, roles] = useRegionRoles(regionId);
 
-  if (isLoading()) {
-    return null;
-  }
-  const role = roles.find((r) => r.id === id);
+  switch (role.type) {
+    case RoleType.Predefined: {
+      if (isLoading()) {
+        return null;
+      }
+      const regionRole = roles.find((r) => r.id === role.id);
 
-  if (!role) {
-    return null;
-  }
+      if (!regionRole) {
+        return null;
+      }
 
-  return <i className={cx(role.icon, "fa-fw", className)} />;
+      return <i className={cx(regionRole.icon, "fa-fw", className)} />;
+    }
+
+    case RoleType.Custom:
+      return <i className={cx("fa-fw", className)} />;
+
+    default:
+      throw new Error("Unexpected value for role.type");
+  }
 }

@@ -46,20 +46,6 @@ export async function afterUnsubscribeFromRole(groupId: string) {
 }
 
 /**
- * Update the modification date
- */
-export async function afterSubscribeToCustomRole(groupId: string) {
-  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
-}
-
-/**
- * Update the modification date
- */
-export async function afterUnsubscribeFromCustomRole(groupId: string) {
-  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
-}
-
-/**
  * Update the modification date of the group
  */
 export async function afterEventInsert(groupId: string) {

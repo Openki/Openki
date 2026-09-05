@@ -7,6 +7,8 @@ import { Regions } from "/imports/api/regions/regions";
 import { GroupModel } from "/imports/api/groups/groups";
 import { Router } from "meteor/iron:router";
 import { RoleIcon } from "../../../../components/RoleIcon";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
 
 export interface Props {
   group: GroupModel;
@@ -23,7 +25,7 @@ export function Group({ group, hideInterested }: Props) {
     return Regions.findOne(group.region)?.name;
   }
   function interestedPersons() {
-    return group.members.filter((m) => m.roles.includes("participant")).length;
+    return group.membersWithRole(SystemRoles.Participant).length;
   }
 
   return (
@@ -38,13 +40,13 @@ export function Group({ group, hideInterested }: Props) {
         <span className="frame-list-item-toggle-indicator">
           <i className="fa-solid fa-angle-down" />
         </span>
-        {!hideInterested && group.roles.includes("participant") && (
+        {!hideInterested && group.roles.some(isParticipant) && (
           <span
             className="frame-list-item-interested"
             data-bs-title={t("frame.groupList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span>{" "}
-            <RoleIcon id="participant" regionId={group.region} />
+            <RoleIcon role={SystemRoles.Participant} regionId={group.region} />
           </span>
         )}
         {group.name}

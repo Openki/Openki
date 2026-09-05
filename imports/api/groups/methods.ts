@@ -16,11 +16,7 @@ import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
 import * as nextEventDenormalizer from "./nextEventDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsGroupImageDenormalizer from "../events/groupImageDenormalizer";
-import { Log } from "/imports/api/log/log";
-import { UserModel } from "/imports/api/users/users";
 import * as editorsDenormalizer from "./editorsDenormalizer";
-
-import { Subscribe, Unsubscribe, Message } from "./subscription";
 
 import { Notification } from "../../startup/both/emails/notification";
 
@@ -34,60 +30,15 @@ import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { ValidationError } from "meteor/mdg:validation-error";
-
-export interface Method<T> {
-  method: string;
-  read: (params: T) => Promise<{
-    validate(): void;
-    permitted: (user: UserModel | undefined | null) => boolean;
-    provide(
-      rel: string[],
-      body: {
-        operatorId: string | undefined;
-      },
-    ): void;
-    apply(): Promise<void>;
-  }>;
-}
-
-function registerMethod<T>(method: Method<T>): void {
-  const apply = async function (params: T) {
-    const change = await method.read(params);
-    try {
-      change.validate();
-    } catch (message) {
-      throw new Meteor.Error("invalid", `Invalid change ${change}:${message}`, message);
-    }
-
-    const operator = await Meteor.userAsync();
-
-    if (!change.permitted(operator)) {
-      throw new Meteor.Error(
-        "not-permitted",
-        `Change not permitted: ${change}`,
-        `operator: ${operator?._id}`,
-      );
-    }
-
-    const rel = [operator?._id as string];
-    const body = { operatorId: operator?._id };
-    change.provide(rel, body);
-    const result = await Log.record(method.method, rel, body);
-    try {
-      await change.apply();
-    } catch (message) {
-      await result.error(message);
-      throw new Meteor.Error(
-        "error-applying",
-        `Error applying change ${change}: ${message}`,
-        message,
-      );
-    }
-    await result.success();
-  };
-
-  Meteor.methods({ [method.method]: apply });
-}
+import { isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
+import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
+import {
+  predefinedRole,
+  Role,
+  RolePattern,
+  RoleType,
+  SystemRoles,
+} from "/imports/api/groups/lib/Role";
 
 async function loadGroup(id: string) {
   const group = await Groups.findOneAsync({ _id: id });
@@ -111,10 +62,6 @@ async function loadDisabledRoles(organizationIds: string[]) {
   return organizations.flatMap((o) => o.disableCreateRoles).filter((r) => r) as string[];
 }
 
-registerMethod(Subscribe);
-registerMethod(Unsubscribe);
-registerMethod(Message);
-
 export const CustomFieldPattern = {
   name: String,
   displayText: LocalizedValuePattern,
@@ -131,7 +78,6 @@ export const UpdateFieldsPattern = {
   customFields: Match.Optional([CustomFieldPattern]),
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
   subs: Match.Optional([String]),
-  unsubs: Match.Optional([String]),
   organizations: Match.Optional([String]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
@@ -185,31 +131,35 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       roles.map(async (role) => {
         const { id } = role;
 
+        const groupRole = predefinedRole(id);
+
+        const groupRole = predefinedRole(id);
+
         if (isNew) {
           const shouldHave = !!(role.preset || changes.roles?.[id]) && !disabledRoles.includes(id);
 
           if (shouldHave) {
             set.roles = set.roles || [];
-            set.roles.push(id);
+            set.roles.push(groupRole);
           }
         } else if (role.editable) {
           const shouldHave = !!changes.roles?.[id];
-          const have = group.roles.includes(id);
+          const have = group.roles.some((r) => r.id === id && isPredefined(r));
           if (have && !shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: id } });
+            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: groupRole } });
 
             // HACK
             // due to a mongo limitation we can't { $pull { 'members.roles': type } }
             // so we keep removing one by one until there are none left
             while (
               await Groups.updateAsync(
-                { _id: groupId, "members.roles": id },
-                { $pull: { "members.$.roles": id } },
+                { _id: groupId, "members.roles": groupRole },
+                { $pull: { "members.$.roles": groupRole } },
               )
             );
           }
           if (!have && shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: id } });
+            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: groupRole } });
           }
         }
       }),
@@ -281,8 +231,9 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     set.members = [
       {
         user: user._id,
-        roles: ["participant", "team"].filter((r) => !disabledRoles.includes(r)),
-        customRoles: [],
+        roles: [SystemRoles.Participant, SystemRoles.Team].filter(
+          (r) => !disabledRoles.includes(r.id),
+        ),
         comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
           lng: user.locale,
         }),
@@ -319,36 +270,9 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   }
 
   if (changes.subs) {
-    const changedGroup = await Groups.findOneAsync(groupId);
-    if (!changedGroup) {
-      throw new Error("changedGroup is not defined");
-    }
-
-    const roles = await loadRoles(changedGroup.region);
-
     await Promise.all(
       changes.subs.map(async (role) => {
-        const change = new Subscribe(
-          changedGroup,
-          roles.map((r) => r.id),
-          user._id,
-          role,
-          "interested",
-        );
-        if (change.validFor(user)) {
-          await change.apply();
-        }
-      }),
-    );
-  }
-  if (changes.unsubs) {
-    const changedGroup = await Groups.findOneAsync(groupId);
-    await Promise.all(
-      changes.unsubs.map(async (role) => {
-        const change = new Unsubscribe(changedGroup, user._id, role);
-        if (change.validFor(user)) {
-          await change.apply();
-        }
+        await subscribeToRole(groupId, predefinedRole(role));
       }),
     );
   }
@@ -495,13 +419,19 @@ export const editing = ServerMethod(
   },
 );
 
-export const subscribeToCustomRole = ServerMethod(
-  "group.subscribeToCustomRole",
+export const subscribeToRole = ServerMethod(
+  "group.subscribeToRole",
 
-  async (groupId: string, roleId: string, comment?: string | undefined) => {
-    check(groupId, String);
-    check(roleId, String);
+  async (
+    groupId: string,
+    role: Role,
+    comment?: string | undefined,
+    notifyTeam?: boolean | undefined,
+  ) => {
+    check(groupId, NotEmptyString());
+    check(role, RolePattern);
     check(comment, Match.Optional(String));
+    check(notifyTeam, Match.Optional(Boolean));
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -510,27 +440,38 @@ export const subscribeToCustomRole = ServerMethod(
 
     const group = await loadGroup(groupId);
 
-    const role = group.customRoles?.find((r) => r.id === roleId);
+    const groupRole = group.roles?.find((r) => r.id === role.id && r.type === role.type);
 
-    if (!role) {
-      throw new ValidationError([], `No role ${roleId}`);
+    if (!groupRole) {
+      throw new ValidationError([], `No ${role.type} role ${role.id}`);
     }
 
-    // Do not allow subscribing when already subscribed
-    if (group.userHasCustomRole(user._id, roleId)) {
-      throw new ValidationError([], `Already subscribed as ${role.label}`);
+    if (!isTeam(groupRole)) {
+      // Do not allow subscribing when already subscribed
+      if (group.userHasRole(user._id, role)) {
+        if (isPredefined(groupRole)) {
+          throw new ValidationError([], `Already subscribed as ${groupRole.id} (predefined).`);
+        } else {
+          throw new ValidationError([], `Already subscribed as ${groupRole.label} (custom).`);
+        }
+      }
+    } else {
+      // The team role has special restrictions
+      if (!canSubscribeToTeam(group, user)) {
+        throw new ValidationError([], `Cannot subscribe to team role.`);
+      }
     }
 
     // Add the user as member if she's not listed yet
     await Groups.updateAsync(
       { _id: group._id, "members.user": { $ne: user._id } },
-      { $addToSet: { members: { user: user._id, roles: [], customRoles: [] } } },
+      { $addToSet: { members: { user: user._id, roles: [] } } },
     );
 
     // Now that we're sure she's listed, add the role too
     await Groups.updateAsync(
       { _id: group._id, "members.user": user._id },
-      { $addToSet: { "members.$.customRoles": role.id } },
+      { $addToSet: { "members.$.roles": { id: groupRole.id, type: groupRole.type } } },
     );
 
     if (comment) {
@@ -541,21 +482,33 @@ export const subscribeToCustomRole = ServerMethod(
     }
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterSubscribeToCustomRole(group._id);
-    await timeLastEditDenormalizer.afterSubscribeToCustomRole(group._id);
-    await historyDenormalizer.afterSubscribeToCustomRole(group._id, user._id, role.label);
+    await interestedDenormalizer.afterSubscribeToRole(group._id);
+    await editorsDenormalizer.updateEditors(group._id);
 
-    // Send notification to team
+    await timeLastEditDenormalizer.afterSubscribeToRole(group._id);
+    switch (groupRole.type) {
+      case RoleType.Predefined:
+        await historyDenormalizer.afterSubscribeToRole(group._id, user._id, groupRole.id);
+        break;
+      case RoleType.Custom:
+        await historyDenormalizer.afterSubscribeToCustomRole(group._id, user._id, groupRole.label);
+        break;
+      default:
+        throw new Error("Unexpected value for groupRole.type");
+    }
 
-    //await Notification.Join.record(group._id, user._id, role.id, comment);
+    if (notifyTeam) {
+      // Send notification to team
+      await Notification.Join.record(group._id, user._id, role, comment);
+    }
   },
 );
-export const unsubscribeFromCustomRole = ServerMethod(
-  "group.unsubscribeFromCustomRole",
+export const unsubscribeFromRole = ServerMethod(
+  "group.unsubscribeFromRole",
 
-  async (groupId: string, roleId: string) => {
-    check(groupId, String);
-    check(roleId, String);
+  async (groupId: string, role: Role) => {
+    check(groupId, NotEmptyString());
+    check(role, RolePattern);
 
     const userId = Meteor.userId();
     if (!userId) {
@@ -564,40 +517,135 @@ export const unsubscribeFromCustomRole = ServerMethod(
 
     const group = await loadGroup(groupId);
 
-    const role = group.customRoles?.find((r) => r.id === roleId);
+    const groupRole = group.roles?.find((r) => r.id === role.id && r.type === role.type);
 
-    if (!role) {
-      throw new ValidationError([], `No role ${roleId}`);
+    if (!groupRole) {
+      throw new ValidationError([], `No ${role.type} role ${role.id}`);
     }
 
     // Do not allow unsubscribing when not subscribed
-    const userHasRole = group.userHasCustomRole(userId, roleId);
+    const userHasRole = group.userHasRole(userId, { id: groupRole.id, type: groupRole.type });
     if (!userHasRole) {
-      throw new ValidationError([], `not subscribed with role ${role.label}`);
+      switch (groupRole.type) {
+        case RoleType.Predefined:
+          throw new ValidationError([], `Not subscribed with role ${groupRole.id} (predefined).`);
+        case RoleType.Custom:
+          throw new ValidationError([], `Not subscribed with role ${groupRole.label} (custom).`);
+        default:
+          throw new Error("Unexpected value for groupRole.type");
+      }
     }
 
     await Groups.updateAsync(
       { _id: group._id, "members.user": userId },
-      { $pull: { "members.$.customRoles": roleId } },
+      { $pull: { "members.$.roles": { id: groupRole.id, type: groupRole.type } } },
     );
 
     // Housekeeping: Remove members that have no role left
+    await Groups.updateAsync({ _id: group._id }, { $pull: { members: { roles: { $size: 0 } } } });
+
+    // Update member related calculated fields
+    await interestedDenormalizer.afterUnsubscribeFromRole(group._id);
+    await timeLastEditDenormalizer.afterUnsubscribeFromRole(group._id);
+    switch (groupRole.type) {
+      case RoleType.Predefined:
+        await historyDenormalizer.afterUnsubscribeFromRole(group._id, userId, groupRole.id);
+        break;
+      case RoleType.Custom:
+        await historyDenormalizer.afterUnsubscribeFromCustomRole(
+          group._id,
+          userId,
+          groupRole.label,
+        );
+        break;
+      default:
+        throw new Error("Unexpected value for groupRole.type");
+    }
+  },
+);
+
+export const updateMemberMessage = ServerMethod(
+  "Groups.Message",
+  async (groupId: string, message: string) => {
+    check(groupId, NotEmptyString());
+    check(message, Match.Maybe(String));
+
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const group = await loadGroup(groupId);
+
     await Groups.updateAsync(
-      { _id: group._id },
-      {
-        $pull: {
-          members: {
-            roles: { $size: 0 },
-            $or: [{ customRoles: { $exists: false } }, { customRoles: { $size: 0 } }],
-          } as any, // typescript don't know $or
-        },
-      },
+      { _id: group._id, "members.user": userId },
+      { $set: { "members.$.comment": message } },
+    );
+  },
+);
+
+export const addMemberToTeam = ServerMethod(
+  "groups.addMemberToTeam",
+  async (groupId: string, userId: string) => {
+    check(groupId, NotEmptyString());
+    check(userId, NotEmptyString());
+
+    const operator = await Meteor.userAsync();
+    if (!operator) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const group = await loadGroup(groupId);
+
+    if (!canAddToTeam(operator, group, userId)) {
+      throw new ValidationError([], `Cannot subscribe to team role.`);
+    }
+
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": userId },
+      { $addToSet: { "members.$.roles": SystemRoles.Team } },
     );
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterUnsubscribeFromCustomRole(group._id);
-    await timeLastEditDenormalizer.afterUnsubscribeFromCustomRole(group._id);
-    await historyDenormalizer.afterUnsubscribeFromCustomRole(group._id, userId, role.label);
+    await interestedDenormalizer.afterSubscribeToRole(group._id);
+    await editorsDenormalizer.updateEditors(group._id);
+
+    await timeLastEditDenormalizer.afterSubscribeToRole(group._id);
+    await historyDenormalizer.afterSubscribeToRole(group._id, operator._id, SystemRoles.Team.id);
+  },
+);
+
+export const removeMemberFromTeam = ServerMethod(
+  "groups.removeMemberFromTeam",
+  async (groupId: string, userId: string) => {
+    check(groupId, NotEmptyString());
+    check(userId, NotEmptyString());
+
+    const operator = await Meteor.userAsync();
+    if (!operator) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const group = await loadGroup(groupId);
+
+    if (!canRemoveFromTeam(operator, group, userId)) {
+      throw new ValidationError([], `Cannot unsubscribe from team role.`);
+    }
+
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": userId },
+      { $pull: { "members.$.roles": SystemRoles.Team } },
+    );
+
+    // Housekeeping: Remove members that have no role left
+    await Groups.updateAsync({ _id: group._id }, { $pull: { members: { roles: { $size: 0 } } } });
+
+    // Update member related calculated fields
+    await interestedDenormalizer.afterUnsubscribeFromRole(group._id);
+    await editorsDenormalizer.updateEditors(group._id);
+
+    await timeLastEditDenormalizer.afterUnsubscribeFromRole(group._id);
+    await historyDenormalizer.afterUnsubscribeFromRole(group._id, userId, SystemRoles.Team.id);
   },
 );
 
