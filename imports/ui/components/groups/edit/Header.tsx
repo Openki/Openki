@@ -6,17 +6,17 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 interface Props {
-  _id?: string;
-  isFrame?: boolean;
-  organization?: string;
+  groupId?: string | undefined;
+  isFrame?: boolean | undefined;
+  organization?: string | undefined;
 }
 
-export function Header({ _id, isFrame, organization }: Props) {
+export function Header({ groupId, isFrame, organization }: Props) {
   const { t } = useTranslation();
   const siteName = useSiteName();
   const { getLocalizedValue } = useLocalizedSetting();
 
-  return _id ? (
+  return groupId ? (
     <h2>{t("group.edit.editGroup", "Edit group")}</h2>
   ) : (
     !isFrame && (

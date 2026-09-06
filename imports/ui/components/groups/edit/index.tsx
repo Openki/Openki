@@ -42,23 +42,26 @@ import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 import "./styles.scss";
 
 export type Props = {
-  _id?: string;
-  categories?: string[];
   isFrame?: boolean;
   organization?: string;
-  teamOrganizations?: string[];
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
-  roles?: string[];
   creatorsRoles?: string[];
-  singleEvent?: boolean;
   hideCategories?: boolean;
-  internal?: boolean;
   groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
 } & Partial<GroupModel>;
 
-export function Edit(props: Props) {
-  const isNew = !props._id;
+export function Edit({
+  isFrame,
+  organization,
+  hideRoleSelection,
+  hidePricePolicy,
+  creatorsRoles,
+  hideCategories,
+  groupsQuery,
+  ...group
+}: Props) {
+  const isNew = !group._id;
   const { t } = useTranslation();
 
   const user = useUser();
@@ -67,36 +70,36 @@ export function Edit(props: Props) {
   const [regionsIsLoading, regions] = useRegions();
 
   const [isBusy, setIsBusy] = useState(false);
-  const [title, setTitle] = useState(props.name);
+  const [title, setTitle] = useState(group.name);
 
   const { adjustLoginModalPosition, promptToLogin } = useAccountTasks();
 
   function showInternalCheckbox() {
     let internalOption;
 
-    if (!props.isFrame && props.organization && user?.organizations) {
+    if (!isFrame && organization && user?.organizations) {
       // Visible in organization detail page (for creation) if user is in organization
-      internalOption = user.organizations.includes(props.organization);
+      internalOption = user.organizations.includes(organization);
     } else {
       // and visible on edit if group is in a organization
       // For devs: This behavior is not consistent. But we want the creation to be as simple
       // as possible.
-      internalOption = (props.organizations?.length || 0) > 0;
+      internalOption = (group.organizations?.length || 0) > 0;
     }
     return internalOption;
   }
 
-  const hasTeamOrganizations = !!(props.teamOrganizations && props.teamOrganizations?.length > 0);
+  const hasTeamOrganizations = !!(group.teamOrganizations && group.teamOrganizations?.length > 0);
 
   let internalInitialState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a organization can choose
     // whether the group is internal or not.
-    internalInitialState = props.internal;
-  } else if (props.isFrame && hasTeamOrganizations) {
+    internalInitialState = group.internal;
+  } else if (isFrame && hasTeamOrganizations) {
     // When in a frame for a organization, the `internal` query-param can be set to control whether
     // the organization wants the entered groups to be internal.
-    internalInitialState = props.internal;
+    internalInitialState = group.internal;
   }
   // Default is not internal
   internalInitialState = internalInitialState || false;
@@ -104,12 +107,12 @@ export function Edit(props: Props) {
   const [internal, setInternal] = useState(internalInitialState);
 
   useEffect(() => {
-    setTitle(props.name);
-  }, [props.name]);
+    setTitle(group.name);
+  }, [group.name]);
 
   const [savedGroupId, setSavedGroupId] = useState<string | undefined>(undefined);
 
-  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(props.region);
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(group.region);
   // init selected region
   useEffect(() => {
     if (!isNew) {
@@ -117,9 +120,9 @@ export function Edit(props: Props) {
       return;
     }
 
-    if (props.isFrame && props.region) {
+    if (isFrame && group.region) {
       // The region was preset for the frame
-      setSelectedRegion(props.region);
+      setSelectedRegion(group.region);
     } else if (currentRegion) {
       //  If the session sets the region, we use it.
       setSelectedRegion(currentRegion);
@@ -127,7 +130,7 @@ export function Edit(props: Props) {
       // Auto-select the region if there is only one available.
       setSelectedRegion(regions[0]._id);
     }
-  }, [props, currentRegion, regions]);
+  }, [group, currentRegion, regions]);
 
   function getOrganizations() {
     const organizations = [];
@@ -140,13 +143,13 @@ export function Edit(props: Props) {
     }
 
     if (!isNew) {
-      organizations.push(...(props.teamOrganizations || []));
-    } else if (!props.isFrame) {
-      if (props.organization) {
-        organizations.push(props.organization);
+      organizations.push(...(group.teamOrganizations || []));
+    } else if (!isFrame) {
+      if (organization) {
+        organizations.push(organization);
       }
-    } else if (props.teamOrganizations && props.teamOrganizations.length > 0) {
-      organizations.push(...props.teamOrganizations);
+    } else if (group.teamOrganizations && group.teamOrganizations.length > 0) {
+      organizations.push(...group.teamOrganizations);
     }
     // remove double organizations
     return uniq(organizations);
@@ -156,7 +159,7 @@ export function Edit(props: Props) {
     ids: getOrganizations(),
   });
 
-  const [description, setDescription] = useState(props.description);
+  const [description, setDescription] = useState(group.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const {
     start: startMeasureFocusTime,
@@ -166,20 +169,19 @@ export function Edit(props: Props) {
   } = useMeasureTime();
 
   const [editingCategories, setEditingCategories] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState(props.categories || []);
+  const [selectedCategories, setSelectedCategories] = useState(group.categories || []);
   /**
    * fullRoleSelection is used in the group edit view.
    * When disabled, a simpler view is shown. This is used in /frame/propose
    */
-  const fullRoleSelection = !props.isFrame;
+  const fullRoleSelection = !isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
   // When we're in the propose frame, show a simplified role selection
-  const simpleRoleSelection =
-    props.isFrame && !props.hideRoleSelection && !!props.roles?.includes("mentor");
+  const simpleRoleSelection = isFrame && !hideRoleSelection && !!group.roles?.includes("mentor");
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
-  const [customFieldValues, setCustomFieldValues] = useState(props.customFields);
+  const [customFieldValues, setCustomFieldValues] = useState(group.customFields);
 
   const [savedMessage, setSavedMessage] = useState(false);
 
@@ -229,7 +231,7 @@ export function Edit(props: Props) {
       // Region can be set for new groups only.
       isNew &&
       // For the proposal frame we hide the region selection when a region is set.
-      !(props.isFrame && props.region) &&
+      !(isFrame && group.region) &&
       // if the session sets the region we hide the region selection
       !currentRegion &&
       // If there is only one region on this instance or it is visible to this
@@ -261,9 +263,6 @@ export function Edit(props: Props) {
   function showMoreInfo() {
     return showRegionSelection() || customFields().length > 0;
   }
-  function hideCategories() {
-    return props.isFrame && props.hideCategories;
-  }
   function selectCategoriesAttr() {
     return {
       categories: selectedCategories,
@@ -273,27 +272,25 @@ export function Edit(props: Props) {
     };
   }
   function showSavedMessage() {
-    if (props.isFrame) {
+    if (isFrame) {
       return savedMessage;
     }
     return false;
   }
 
   function hasPricePolicy() {
-    const { hidePricePolicy } = props;
-
     if (hidePricePolicy) {
       return false;
     }
 
-    if (props && props._id /* is not new */) {
-      return !(props.tenant && isPrivate(props as { tenant: string }));
+    if (group._id /* is not new */) {
+      return !(group.tenant && isPrivate(group as { tenant: string }));
     }
 
     let regionId;
-    if (props.isFrame && props.region) {
+    if (isFrame && group.region) {
       // The region was preset for the frame
-      regionId = props.region;
+      regionId = group.region;
     } else if (regions.length === 1) {
       // There is only one region
       regionId = regions[0]._id;
@@ -322,11 +319,17 @@ export function Edit(props: Props) {
       return;
     }
 
-    const changes = {
-      internal,
+    const changes: GroupsMethods.SaveFields &
+      Required<
+        Pick<GroupsMethods.SaveFields, "name" | "categories" | "roles" | "subs" | "unsubs">
+      > = {
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
-    } as unknown as Required<GroupsMethods.SaveFields>;
+      internal,
+      roles: {},
+      subs: [],
+      unsubs: [],
+    };
 
     if (description) {
       changes.description = description;
@@ -335,8 +338,8 @@ export function Edit(props: Props) {
     if (isNew) {
       changes.region = selectedRegion || "";
 
-      if (props.singleEvent !== undefined) {
-        changes.singleEvent = props.singleEvent;
+      if (group.singleEvent !== undefined) {
+        changes.singleEvent = group.singleEvent;
       } else {
         const singleEvent = regions.find((r) => r._id === changes.region)?.singleEvents;
 
@@ -348,12 +351,8 @@ export function Edit(props: Props) {
       changes.organizations = getOrganizations();
     }
 
-    changes.roles = {};
-    changes.subs = [];
-    changes.unsubs = [];
-
-    if (props.isFrame) {
-      props.roles?.forEach((role) => {
+    if (isFrame) {
+      group.roles?.forEach((role) => {
         changes.roles[role] = true;
       });
 
@@ -361,7 +360,7 @@ export function Edit(props: Props) {
         changes.subs.push("mentor");
       }
 
-      changes.subs = union(changes.subs, props.creatorsRoles || []);
+      changes.subs = union(changes.subs, creatorsRoles || []);
     }
 
     if (fullRoleSelection) {
@@ -392,16 +391,18 @@ export function Edit(props: Props) {
         return;
       }
 
-      const groupId = await GroupsMethods.save(props._id || "", changes);
+      const groupId = await GroupsMethods.save(group._id || "", changes);
 
-      Analytics.trackEvent(
-        "Group creations",
-        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
-        Regions.findOne(changes.region)?.nameEn,
-        totalFocusTime(),
-      );
+      if (isNew) {
+        Analytics.trackEvent(
+          "Group creations",
+          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : "participant"}`,
+          Regions.findOne(changes.region)?.nameEn,
+          totalFocusTime(),
+        );
+      }
 
-      if (props.isFrame) {
+      if (isFrame) {
         setSavedGroupId(groupId);
         setSavedMessage(true);
         resetFields();
@@ -428,8 +429,6 @@ export function Edit(props: Props) {
   }
 
   function handleCancel() {
-    const group = props;
-
     if (group._id) {
       Router.go("showGroup", group);
     } else {
@@ -451,16 +450,21 @@ export function Edit(props: Props) {
   return (
     <div className="edit-page">
       <form noValidate onSubmit={handleSave}>
-        {props.groupsQuery ? (
-          <FindHeader {...props} groupsQuery={props.groupsQuery} />
+        {groupsQuery ? (
+          <FindHeader
+            groupId={group._id}
+            isFrame={isFrame}
+            organization={organization}
+            groupsQuery={groupsQuery}
+          />
         ) : (
-          <Header {...props} />
+          <Header groupId={group._id} isFrame={isFrame} organization={organization} />
         )}
-        <div className={cx("edit-page-body group-edit-body", props.isFrame && "is-frame")}>
-          {!isNew && !!props.region && <Tag region={props.region} />}
+        <div className={cx("edit-page-body group-edit-body", isFrame && "is-frame")}>
+          {!isNew && !!group.region && <Tag region={group.region} />}
           {showSavedMessage() && !!savedGroupId && (
             <AlertMessage
-              isFrame={props.isFrame}
+              isFrame={isFrame}
               savedGroupId={savedGroupId}
               onClose={() => setSavedMessage(false)}
             />
@@ -539,17 +543,17 @@ export function Edit(props: Props) {
           </div>
           {hasPricePolicy() && <PricePolicy dismissible wrap="mb-3" />}
           <div className="row gap-3 mb-3">
-            {!hideCategories() && (
+            {!(isFrame && hideCategories) && (
               <div className="col-md">
                 {!editingCategories ? (
                   <>
-                    {!!props.categories?.length && (
+                    {!!group.categories?.length && (
                       <>
                         <div className="form-label">
                           {t("group.edit.categories", "Categories")}
                           <small> {t("_inputField.optional")}</small>
                         </div>
-                        <GroupCategories categories={props.categories} />
+                        <GroupCategories categories={group.categories} />
                       </>
                     )}
                     <button
@@ -557,7 +561,7 @@ export function Edit(props: Props) {
                       className="btn btn-sm btn-edit"
                       onClick={() => setEditingCategories(true)}
                     >
-                      {!props.categories?.length
+                      {!group.categories?.length
                         ? t("group.edit.addCategories", "Add categories")
                         : t("_button.edit")}
                     </button>
@@ -611,9 +615,9 @@ export function Edit(props: Props) {
                 value={roles}
                 onChange={setRoles}
                 isNewGroup={isNew}
-                defaultRoles={props.roles}
+                defaultRoles={group.roles}
                 defaultUsersRoles={
-                  props.members?.find((member) => member.user === user?._id)?.roles
+                  group.members?.find((member) => member.user === user?._id)?.roles
                 }
                 fullRoleSelection={fullRoleSelection}
                 disabledCreateRoles={disabledCreateRoles}
@@ -645,7 +649,7 @@ export function Edit(props: Props) {
 
           <div className="form-actions">
             <ButtonSave submit id="groups-edit-save" isBusy={isBusy} />
-            {!props.isFrame && (
+            {!isFrame && (
               <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
             )}
           </div>

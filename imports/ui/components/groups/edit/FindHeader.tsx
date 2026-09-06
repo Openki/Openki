@@ -7,9 +7,9 @@ import { Filtering } from "/imports/utils/filtering";
 import { FindParams } from "/imports/api/groups/groups";
 
 export interface Props {
-  _id?: string;
-  isFrame?: boolean;
-  organization?: string;
+  groupId?: string | undefined;
+  isFrame?: boolean | undefined;
+  organization?: string | undefined;
   groupsQuery: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
 }
 
