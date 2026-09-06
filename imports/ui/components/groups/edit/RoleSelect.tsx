@@ -9,7 +9,7 @@ import { predefinedRole } from "/imports/api/groups/lib/Role";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
-import { isRole } from "/imports/api/groups/lib/isRole";
+import { isCustom, isRole } from "/imports/api/groups/lib/isRole";
 
 interface Props {
   region: string;
@@ -48,8 +48,8 @@ export function RoleSelect({
     return [
       ...regionRoles
         .filter((role) => {
-          // Skip non-editable, preset roles
-          if (!role.editable && role.preset) {
+          // Skip non-editable roles
+          if (!role.editable) {
             return false;
           }
 
@@ -64,11 +64,8 @@ export function RoleSelect({
   }
 
   function isRoleEnabled(roleId: string) {
-    if (isNewGroup) {
-      const regionRole = regionRoles.find((regionRole) => regionRole.id === roleId);
-      return regionRole?.preset ?? false;
-    }
-    return true;
+    const regionRole = regionRoles.find((regionRole) => regionRole.id === roleId);
+    return regionRole?.preset ?? false;
   }
 
   if (isLoadingRegionRoles()) {
@@ -76,10 +73,32 @@ export function RoleSelect({
   }
 
   /** on undefined initialize with the preset region roles */
-  if (!outerValue) {
+  if (!outerValue && isNewGroup) {
     onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
   }
   const value = outerValue || [];
+
+  const options = availableRoles()
+    .filter((r) => !value.some((v) => isRole(r, v)))
+    .map((r) => ({
+      value: r,
+      label: (
+        <>
+          <RoleIcon role={r} regionId={region} /> {roleDescription(r)}
+        </>
+      ),
+    }));
+
+  const selectValue = value
+    .filter((r) => isCustom(r) || availableRoles().some((o) => isRole(r, o)))
+    .map((r) => ({
+      value: r,
+      label: (
+        <>
+          <RoleIcon role={r} regionId={region} /> {roleShort(r)}
+        </>
+      ),
+    }));
 
   return (
     <div className="col-md">
@@ -88,24 +107,8 @@ export function RoleSelect({
         isMulti
         isClearable
         hideSelectedOptions
-        options={availableRoles()
-          .filter((r) => !value.some((v) => isRole(r, v)))
-          .map((r) => ({
-            value: r,
-            label: (
-              <>
-                <RoleIcon role={r} regionId={region} /> {roleDescription(r)}
-              </>
-            ),
-          }))}
-        value={value.map((r) => ({
-          value: r,
-          label: (
-            <>
-              <RoleIcon role={r} regionId={region} /> {roleShort(r)}
-            </>
-          ),
-        }))}
+        options={options}
+        value={selectValue}
         onCreateOption={(newValue) =>
           onChange([...value, { id: "", label: newValue, type: "custom" }])
         }
