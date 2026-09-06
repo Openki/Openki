@@ -46,7 +46,7 @@ export function Role({ group, role }: Props) {
               // unsubscribe by email
               // HACK this is not the right place to act on router actions
               try {
-                await unsubscribeFromRole(group._id, role);
+                await unsubscribeFromRole(group._id, { id: role.id, type: role.type });
 
                 Alert.success(
                   t("group.roles.unsubscribed", "Unsubscribed from {GROUP}", {

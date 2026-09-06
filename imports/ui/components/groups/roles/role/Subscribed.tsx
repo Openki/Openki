@@ -34,7 +34,7 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
     event.stopPropagation();
     routerAutoscroll.cancelNext();
 
-    await unsubscribeFromRole(group._id, role);
+    await unsubscribeFromRole(group._id, { id: role.id, type: role.type });
 
     onToggle(false);
     routerAutoscroll.cancelNext();

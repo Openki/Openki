@@ -50,7 +50,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
         return;
       }
       try {
-        await subscribeToRole(group._id, role, comment.trim(), true);
+        await subscribeToRole(group._id, { id: role.id, type: role.type }, comment.trim(), true);
 
         if (isPredefined(role)) {
           Analytics.trackEvent(

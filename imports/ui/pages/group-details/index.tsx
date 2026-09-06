@@ -12,6 +12,7 @@ import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { hasRole } from "/imports/api/groups/lib/hasRole";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -344,6 +345,5 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 
 // for Blaze
 import "./template.html";
-import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

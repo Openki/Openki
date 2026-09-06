@@ -168,9 +168,9 @@ export function Edit(props: Props) {
       return;
     }
 
-    const changes = {
+    const changes: GroupsMethods.SaveFields = {
       name: StringTools.sanitizeSingleline(title),
-    } as unknown as Required<GroupsMethods.SaveFields>;
+    };
 
     if (description) {
       changes.description = description;
@@ -186,7 +186,6 @@ export function Edit(props: Props) {
 
     changes.organizations = getOrganizations();
 
-    changes.roles = {};
     changes.subs = [];
 
     if (customFieldValues) {

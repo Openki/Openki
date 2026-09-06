@@ -1,15 +1,15 @@
 import { Router } from "meteor/iron:router";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, union, chain } from "lodash-es";
+import { uniq, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, FindParams, GroupRoleRef } from "/imports/api/groups/groups";
+import { GroupModel, FindParams } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { cx } from "/imports/utils/cx";
@@ -38,16 +38,15 @@ import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Filtering } from "/imports/utils/filtering";
 import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
+import { isMentor } from "/imports/api/groups/lib/isRole";
 
 import "./styles.scss";
-import { isMentor } from "/imports/api/groups/lib/isRole";
 
 export type Props = {
   isFrame?: boolean;
   organization?: string;
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
-  roles?: GroupRoleRef[];
   creatorsRoles?: string[];
   hideCategories?: boolean;
   groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
@@ -179,8 +178,7 @@ export function Edit({
   const fullRoleSelection = !isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
   // When we're in the propose frame, show a simplified role selection
-  const simpleRoleSelection =
-    props.isFrame && !props.hideRoleSelection && !!props.roles?.some(isMentor);
+  const simpleRoleSelection = isFrame && !hideRoleSelection && !!group.roles?.some(isMentor);
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
@@ -188,15 +186,7 @@ export function Edit({
 
   const [savedMessage, setSavedMessage] = useState(false);
 
-  const [roles, setRoles] = useState<
-    Record<
-      RoleEntity["id"],
-      {
-        enabled: boolean;
-        enroll: boolean;
-      }
-    >
-  >({});
+  const [roles, setRoles] = useState(group.roles);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -322,16 +312,11 @@ export function Edit({
       return;
     }
 
-    const changes: GroupsMethods.SaveFields &
-      Required<
-        Pick<GroupsMethods.SaveFields, "name" | "categories" | "roles" | "subs" | "unsubs">
-      > = {
+    const changes: GroupsMethods.SaveFields = {
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
       internal,
-      roles: {},
-      subs: [],
-      unsubs: [],
+      roles: roles || [],
     };
 
     if (description) {
@@ -352,21 +337,14 @@ export function Edit({
       }
 
       changes.organizations = getOrganizations();
-    }
 
-    changes.roles = {};
-    changes.subs = [];
-
-    if (isFrame) {
-      group.roles?.forEach((role) => {
-        changes.roles[role.id] = true;
-      });
-
-      if (simpleRoleSelection && simpleSelectedRole === "mentor") {
-        changes.subs.push("mentor");
+      if (isFrame) {
+        const subs = [];
+        if (simpleRoleSelection && simpleSelectedRole === "mentor") {
+          subs.push("mentor");
+        }
+        changes.subs = union(subs, creatorsRoles || []);
       }
-
-      changes.subs = union(changes.subs, creatorsRoles || []);
     }
 
     if (customFieldValues) {
@@ -424,13 +402,6 @@ export function Edit({
       Router.go("home");
     }
   }
-
-  const disabledCreateRoles = useMemo(() => {
-    return chain(organizations)
-      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
-      .uniq()
-      .value();
-  }, [organizations]);
 
   if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
@@ -600,15 +571,11 @@ export function Edit({
 
             {!!selectedRegion && fullRoleSelection && (
               <RoleSelect
-                selectedRegion={selectedRegion}
+                region={selectedRegion}
+                organizations={organizations}
                 value={roles}
                 onChange={setRoles}
                 isNewGroup={isNew}
-                defaultRoles={group.roles}
-                defaultUsersRoles={
-                  group.members?.find((member) => member.user === user?._id)?.roles
-                }
-                disabledCreateRoles={disabledCreateRoles}
               />
             )}
           </div>

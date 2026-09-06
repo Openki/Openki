@@ -14,32 +14,34 @@ import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { OrganizationCustomGroupFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-import { isPrivate } from "./lib/isPrivate";
 import { isRole } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
+export const GroupPredefinedRolePattern = {
+  id: NotEmptyString(),
+  type: StringEnum(RoleType.Predefined),
+};
 /**
  * Predefined roles are defined by the system/instance/region.
  */
-export interface GroupPredefinedRole {
-  id: string;
-  type: typeof RoleType.Predefined;
-}
+export type GroupPredefinedRole = Type<typeof GroupPredefinedRolePattern>;
 
+export const GroupCustomRolePattern = {
+  id: String,
+  label: NotEmptyString(),
+  type: StringEnum(RoleType.Custom),
+};
 /**
  * Custom roles are defined by the group creator.
  * The `id` is only unique within the group.
  */
-export interface GroupCustomRole {
-  id: string;
-  label: string;
-  type: typeof RoleType.Custom;
-}
+export type GroupCustomRole = Type<typeof GroupCustomRolePattern>;
 
-export type GroupRole = GroupPredefinedRole | GroupCustomRole;
+export const GroupRolePattern = Match.OneOf(GroupPredefinedRolePattern, GroupCustomRolePattern);
+export type GroupRole = Type<typeof GroupRolePattern>;
 
 export type GroupRoleType = GroupRole["type"];
 

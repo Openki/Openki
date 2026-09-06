@@ -2,9 +2,10 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
-import { uniq } from "lodash-es";
+import { differenceWith, uniq, uniqBy } from "lodash-es";
+import { Random } from "meteor/random";
 
-import { Groups, Group, GroupEntity, GroupModel } from "./groups";
+import { Groups, Group, GroupEntity, GroupModel, GroupRolePattern, GroupRole } from "./groups";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
@@ -30,7 +31,7 @@ import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { ValidationError } from "meteor/mdg:validation-error";
-import { isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
+import { isPredefined, isRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import {
   predefinedRole,
@@ -76,8 +77,7 @@ export const UpdateFieldsPattern = {
   description: Match.Optional(HtmlString()),
   categories: Match.Optional([String]),
   customFields: Match.Optional([CustomFieldPattern]),
-  roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
-  subs: Match.Optional([String]),
+  roles: Match.Optional([GroupRolePattern]),
   organizations: Match.Optional([String]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
@@ -88,6 +88,11 @@ export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
   name: NotEmptyString(),
   region: NotEmptyString(),
+  /**
+   * Role subscriptions from the current user on create, currently only predefined
+   * roles are supported.
+   */
+  subs: Match.Optional([String]),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -121,49 +126,156 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<GroupEntity>;
 
-  const disabledRoles = await loadDisabledRoles(changes.organizations || []);
-
   if (changes.roles) {
-    // on creation the changes.region is set; on change group.region is set
-    const roles = await loadRoles((group.region || changes.region) as string);
+    if (isNew) {
+      const regionRoles = await loadRoles(changes.region as string);
+      const disabledRoles = await loadDisabledRoles(changes.organizations || []);
+      const notDisabledRoles = regionRoles.filter(
+        (regionRole) => !disabledRoles.includes(regionRole.id),
+      );
 
-    await Promise.all(
-      roles.map(async (role) => {
-        const { id } = role;
+      const groupRoles: GroupRole[] = notDisabledRoles
+        // add all not editable but preset predefined roles
+        .filter((r) => r.preset && !r.editable)
+        .map((r) => predefinedRole(r.id));
 
-        const groupRole = predefinedRole(id);
+      groupRoles.push(
+        ...((changes.roles || []) as GroupRole[])
+          .filter((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // only allow predefined roles that are known and not disabled in a organization
+                return notDisabledRoles.some((regionRole) => regionRole.id === role.id);
 
-        const groupRole = predefinedRole(id);
+              case RoleType.Custom:
+                // allow any custom role
+                return true;
 
-        if (isNew) {
-          const shouldHave = !!(role.preset || changes.roles?.[id]) && !disabledRoles.includes(id);
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          })
+          .map((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // no changes needed for predefined roles
+                return role;
 
-          if (shouldHave) {
-            set.roles = set.roles || [];
-            set.roles.push(groupRole);
-          }
-        } else if (role.editable) {
-          const shouldHave = !!changes.roles?.[id];
-          const have = group.roles.some((r) => r.id === id && isPredefined(r));
-          if (have && !shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: groupRole } });
+              case RoleType.Custom:
+                // add a id to custom roles
+                return { ...role, id: Random.id() };
 
-            // HACK
-            // due to a mongo limitation we can't { $pull { 'members.roles': type } }
-            // so we keep removing one by one until there are none left
-            while (
-              await Groups.updateAsync(
-                { _id: groupId, "members.roles": groupRole },
-                { $pull: { "members.$.roles": groupRole } },
-              )
-            );
-          }
-          if (!have && shouldHave) {
-            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: groupRole } });
-          }
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          }),
+      );
+
+      set.roles = groupRoles;
+
+      /* When a group is created, the creator is automatically added as sole member of the team */
+      set.members = [
+        {
+          user: user._id,
+          roles: uniqBy(
+            [
+              SystemRoles.Participant,
+              SystemRoles.Team,
+              ...(changes.subs || []).map(predefinedRole),
+            ],
+            (role) => role.id,
+            // only allow not disabled predefined roles
+          ).filter((role) => notDisabledRoles.some((regionRole) => regionRole.id === role.id)),
+          comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
+            lng: user.locale,
+          }),
+        },
+      ];
+    } else {
+      const regionRoles = await loadRoles(group.region);
+
+      // handle some lost predefined roles; in the most cases this code is not needed, it is more
+      // for validation or when the role settings are changed
+      const groupRoles: GroupRole[] = group.roles.filter((groupRole) => {
+        if (groupRole.type !== RoleType.Predefined) {
+          return false;
         }
-      }),
-    );
+
+        if ((changes.roles || []).some((role) => isRole(role, groupRole))) {
+          return false;
+        }
+
+        // if a predefined role has been removed we need a deeper look
+
+        const regionRole = regionRoles.find((regionRole) => regionRole.id === groupRole.id);
+
+        // keep it when it is already known in the group and
+        if (!regionRole) {
+          // not exists anymore in the settings
+          return true;
+        } else if (!regionRole.editable) {
+          // or it's not allowed to be removed
+          return true;
+        }
+
+        // the rest we can handle later
+        return false;
+      });
+
+      // the new order is relevant
+      groupRoles.push(
+        ...((changes.roles || []) as GroupRole[])
+          .filter((role) => {
+            if (group.roles.some((groupRole) => isRole(role, groupRole))) {
+              // allow roles that are part of the group already
+              return true;
+            }
+
+            switch (role.type) {
+              case RoleType.Predefined: {
+                // allow predefined roles that are editable
+                return regionRoles.some(
+                  (regionRole) => regionRole.id === role.id && regionRole.editable,
+                );
+              }
+
+              case RoleType.Custom:
+                // allow new custom roles
+                return !role.id;
+
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          })
+          .map((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // no changes needed for predefined roles
+                return role;
+
+              case RoleType.Custom:
+                // add an id to new custom roles
+                return !role.id ? { ...role, id: Random.id() } : role;
+
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          }),
+      );
+
+      set.roles = groupRoles;
+
+      const removedRoles = differenceWith(group.roles, groupRoles, isRole);
+      await Groups.updateAsync(
+        { _id: groupId },
+        {
+          $pull: {
+            roles: { $in: removedRoles } as any,
+            "members.$[].roles": { $in: removedRoles.map((r) => ({ id: r.id, type: r.type })) },
+          },
+        },
+      );
+    }
   }
 
   if (changes.description) {
@@ -227,18 +339,6 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     }
     set.region = region._id;
 
-    /* When a group is created, the creator is automatically added as sole member of the team */
-    set.members = [
-      {
-        user: user._id,
-        roles: [SystemRoles.Participant, SystemRoles.Team].filter(
-          (r) => !disabledRoles.includes(r.id),
-        ),
-        comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
-          lng: user.locale,
-        }),
-      },
-    ];
     set.archived = false;
     set.createdby = user._id;
     set.time_created = new Date();
@@ -267,14 +367,6 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
         categories: changes.categories,
       });
     }
-  }
-
-  if (changes.subs) {
-    await Promise.all(
-      changes.subs.map(async (role) => {
-        await subscribeToRole(groupId, predefinedRole(role));
-      }),
-    );
   }
 
   return groupId;

@@ -1,143 +1,116 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Props as GroupEditRoleProps, Role } from "/imports/ui/components/groups/edit/Role";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { RoleEntity } from "/imports/utils/PublicSettings";
+import { GroupRole } from "/imports/api/groups/groups";
+import { ReactSelectCreate } from "/imports/ui/components/react-select/ReactSelectCreate";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
+import { chain } from "lodash-es";
+import { isRole } from "/imports/api/groups/lib/isRole";
 
 interface Props {
-  value: Record<
-    RoleEntity["id"],
-    {
-      enabled: boolean;
-      enroll: boolean;
-    }
-  >;
+  region: string;
 
-  defaultRoles?: RoleEntity["id"][] | undefined;
+  organizations: OrganizationModel[];
 
-  defaultUsersRoles?: RoleEntity["id"][] | undefined;
-
-  disabledCreateRoles: string[];
-
-  selectedRegion: string;
-
-  onChange: (role: Props["value"]) => void;
+  value: GroupRole[] | undefined;
 
   isNewGroup: boolean;
+
+  onChange: (role: Props["value"]) => void;
 }
 
 export function RoleSelect({
-  value,
-  defaultRoles,
-  defaultUsersRoles,
-  disabledCreateRoles,
-  selectedRegion,
-  onChange,
+  region,
+  organizations,
+  value: outerValue,
   isNewGroup,
+  onChange,
 }: Props) {
   const { t } = useTranslation();
+  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(region);
 
-  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(selectedRegion);
+  const { roleShort, roleDescription } = useRoleDisplay(regionRoles);
 
-  const { roleDescription, roleSubscribe } = useRoleDisplay(regionRoles);
+  const disabledCreateRoles = useMemo(() => {
+    return chain(organizations)
+      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
+      .uniq()
+      .value();
+  }, [organizations]);
 
   function availableRoles() {
     if (isLoadingRegionRoles()) return [];
 
-    return regionRoles.filter((role) => {
-      // Skip non-editable, preset roles
-      if (!role.editable && role.preset) {
-        return false;
-      }
+    return [
+      ...regionRoles
+        .filter((role) => {
+          // Skip non-editable, preset roles
+          if (!role.editable && role.preset) {
+            return false;
+          }
 
-      if (isNewGroup && disabledCreateRoles.includes(role.id)) {
-        return false;
-      }
+          if (isNewGroup && disabledCreateRoles.includes(role.id)) {
+            return false;
+          }
 
-      return true;
-    });
+          return true;
+        })
+        .map((r) => predefinedRole(r.id)),
+    ];
   }
 
-  function isRoleEnabled(role: RoleEntity) {
-    if (defaultRoles) {
-      return defaultRoles.includes(role.id);
-    } else if (isNewGroup) {
-      const regionRole = regionRoles.find((regionRole) => regionRole.id === role.id);
+  function isRoleEnabled(roleId: string) {
+    if (isNewGroup) {
+      const regionRole = regionRoles.find((regionRole) => regionRole.id === roleId);
       return regionRole?.preset ?? false;
     }
-    return false;
+    return true;
   }
-  function groupEditRolesAttr(): Pick<
-    GroupEditRoleProps,
-    "id" | "enabled" | "enroll" | "onRole" | "onEnroll"
-  >[] {
-    return Object.entries(value).map(([id, role]) => {
-      return {
-        id,
-        ...role,
-        onRole(checked: boolean) {
-          const newRoles = { ...value };
-          newRoles[id] = {
-            ...role,
-            enabled: checked,
-          };
-          onChange(newRoles);
-        },
-        onEnroll(checked: boolean) {
-          const newRoles = { ...value };
-          newRoles[id] = {
-            ...role,
-            enroll: checked,
-          };
-          onChange(newRoles);
-        },
-      };
-    });
-  }
-
-  function getRoleIcon(id: RoleEntity["id"]) {
-    const role = regionRoles.find((role) => role.id === id);
-    if (!role) {
-      throw new Error(`Missing role "${id}" for regionId ${selectedRegion}`);
-    }
-
-    return role.icon;
-  }
-
-  useEffect(() => {
-    onChange(
-      Object.fromEntries(
-        availableRoles().map((role) => [
-          role.id,
-          {
-            enabled: isRoleEnabled(role),
-            enroll: defaultUsersRoles?.includes(role.id) ?? false,
-          },
-        ]),
-      ),
-    );
-  }, [isNewGroup, disabledCreateRoles, regionRoles]);
 
   if (isLoadingRegionRoles()) {
     return null;
   }
 
+  /** on undefined initialize with the preset region roles */
+  if (!outerValue) {
+    onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
+  }
+  const value = outerValue || [];
+
   return (
-    availableRoles().length > 0 && (
-      <div className="col-md">
-        <div className="form-label">{t("group.edit.needs.role", "This group might need…")}</div>
-        {groupEditRolesAttr().map((groupEditRoleAttr) => (
-          <Role
-            key={groupEditRoleAttr.id}
-            {...groupEditRoleAttr}
-            description={roleDescription(groupEditRoleAttr.id)}
-            subscribeLabel={roleSubscribe(groupEditRoleAttr.id)}
-            icon={getRoleIcon(groupEditRoleAttr.id)}
-          />
-        ))}
-      </div>
-    )
+    <div className="col-md">
+      <div className="form-label">{t("group.edit.needs.role", "This group might need…")}</div>
+      <ReactSelectCreate
+        isMulti
+        isClearable
+        hideSelectedOptions
+        options={availableRoles()
+          .filter((r) => !value.some((v) => isRole(r, v)))
+          .map((r) => ({
+            value: r,
+            label: (
+              <>
+                <RoleIcon role={r} regionId={region} /> {roleDescription(r)}
+              </>
+            ),
+          }))}
+        value={value.map((r) => ({
+          value: r,
+          label: (
+            <>
+              <RoleIcon role={r} regionId={region} /> {roleShort(r)}
+            </>
+          ),
+        }))}
+        onCreateOption={(newValue) =>
+          onChange([...value, { id: "", label: newValue, type: "custom" }])
+        }
+        onChange={(newValue) => onChange(newValue.map((v) => v.value))}
+      />
+    </div>
   );
 }
