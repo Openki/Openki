@@ -242,7 +242,7 @@ RouterAsync.route("proposeGroup", {
   path: "groups/propose",
   template: "groupProposePage",
   async onRun() {
-    await import("../../ui/pages/group-create");
+    await import("/imports/ui/pages/group-create");
   },
   data() {
     const { query } = this.params;
