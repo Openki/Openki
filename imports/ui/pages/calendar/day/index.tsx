@@ -4,16 +4,19 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { EventModel, Events } from "/imports/api/events/events";
+import { EventModel } from "/imports/api/events/events";
 
 import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
 
-export function Day(data: {
+export function Day({
+  date,
+  events,
+  isAttendeeFilterOn,
+}: {
   date: moment.Moment;
   events: EventModel[];
-  filter: ReturnType<(typeof Events)["Filtering"]>;
   isAttendeeFilterOn: boolean;
 }) {
   const { t } = useTranslation();
@@ -21,7 +24,7 @@ export function Day(data: {
   const { calendarDayFormat } = useDateTimeFormat();
 
   function maybeFilteredEvents(filters: { isAttendeeFilterOn: boolean }) {
-    let evs = [...data.events];
+    let evs = [...events];
     if (filters.isAttendeeFilterOn && userId) {
       evs = evs.filter((event) => event.attendedBy(userId));
     }
@@ -30,14 +33,14 @@ export function Day(data: {
 
   return (
     <>
-      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.date)}</div>
+      <div className="js-calendar-date calendar-date">{calendarDayFormat(date)}</div>
       {maybeFilteredEvents({
-        isAttendeeFilterOn: data.isAttendeeFilterOn,
+        isAttendeeFilterOn,
       }).length > 0 ? (
         <div className="calendar-event-list">
           <EventList
             dataEvents={maybeFilteredEvents({
-              isAttendeeFilterOn: data.isAttendeeFilterOn,
+              isAttendeeFilterOn,
             })}
             withDate={false}
             withImage={true}

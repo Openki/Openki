@@ -18,7 +18,7 @@ import { useFindFilter } from "/imports/api/users/publications";
 
 import {
   type UploadImage,
-  type Data as EditableImageProps,
+  type Props as EditableImageProps,
   EditableImage,
 } from "/imports/ui/components/editable-image";
 import { getUserName } from "/imports/ui/lib/getUserName";

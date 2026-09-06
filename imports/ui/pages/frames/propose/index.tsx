@@ -6,7 +6,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { Edit, Props } from "../../../components/groups/edit";
 
-export function Propose(data: Props) {
+export function Propose(props: Props) {
   const { t } = useTranslation();
 
   return (
@@ -14,7 +14,7 @@ export function Propose(data: Props) {
       <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <AccountTasks />
-      <Edit {...data} />
+      <Edit {...props} />
     </>
   );
 }

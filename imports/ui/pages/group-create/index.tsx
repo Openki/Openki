@@ -5,7 +5,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Edit, Props } from "/imports/ui/components/groups/edit";
 
-export function GroupProposePage(data: Props) {
+export function GroupProposePage(props: Props) {
   const { t } = useTranslation();
 
   return (
@@ -13,7 +13,7 @@ export function GroupProposePage(data: Props) {
       <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <div className="container mw-md">
-        <Edit {...data} />
+        <Edit {...props} />
       </div>
     </>
   );

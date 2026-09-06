@@ -33,13 +33,13 @@ interface Weekday {
   dayEvents: EventModel[];
 }
 
-export function WeekPage(data: Record<string, string>) {
+export function WeekPage(props: Record<string, string>) {
   const { t } = useTranslation();
   const { calendarDayFormat } = useDateTimeFormat();
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
-  const filter = Events.Filtering().read(data);
+  const filter = Events.Filtering().read(props);
 
   const date = filter.get("after") || moment(reactiveNow.get());
 
@@ -61,18 +61,18 @@ export function WeekPage(data: Record<string, string>) {
     new Filtering({
       count: Predicates.integer,
     })
-      .read(data)
+      .read(props)
       .toQuery().count || DefaultLimit;
 
   const [isLoading, events] = useFindFilter(filterQuery, limit + 1);
 
   function control() {
-    return data.control === "1";
+    return props.control === "1";
   }
 
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: data.hideSwitches === "1",
+      hideSwitches: props.hideSwitches === "1",
       search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
         filter.set("search", newValue);
@@ -87,7 +87,7 @@ export function WeekPage(data: Record<string, string>) {
         new Filtering({
           filterOrganizations: Predicates.ids,
         })
-          .read(data)
+          .read(props)
           .get("filterOrganizations") ?? [],
       selectedOrganizations: filter.get("organizations") ?? [],
       onChangeOrganizations: (organizations) => {
@@ -136,18 +136,18 @@ export function WeekPage(data: Record<string, string>) {
   function update() {
     const query: Record<string, string> = filter.toParams();
     query.count = limit.toString();
-    if (data.control) {
-      query.control = data.control;
+    if (props.control) {
+      query.control = props.control;
     } else {
       delete query.control;
     }
-    if (data.hideSwitches) {
-      query.hideSwitches = data.hideSwitches;
+    if (props.hideSwitches) {
+      query.hideSwitches = props.hideSwitches;
     } else {
       delete query.hideSwitches;
     }
-    if (data.filterOrganizations) {
-      query.filterOrganizations = data.filterOrganizations;
+    if (props.filterOrganizations) {
+      query.filterOrganizations = props.filterOrganizations;
     } else {
       delete query.filterOrganizations;
     }

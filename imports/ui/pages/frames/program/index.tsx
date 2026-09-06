@@ -34,7 +34,7 @@ function getDays(start: moment.Moment, end: moment.Moment) {
   return days;
 }
 
-export function ProgramPage(data: Record<string, string>) {
+export function ProgramPage(props: Record<string, string>) {
   const { t } = useTranslation();
   const { dayOfWeekAndMonthShort, dayOfWeekAndMonthLong } = useDateTimeFormat();
   const userId = useUserId();
@@ -50,7 +50,7 @@ export function ProgramPage(data: Record<string, string>) {
     hideSwitches: Predicates.flag,
     hideCategories: Predicates.flag,
     filterOrganizations: Predicates.ids,
-  }).read(data);
+  }).read(props);
 
   const date = moment(reactiveNow.get());
   const start = filter.get("start") || moment(date).startOf("week");
@@ -139,7 +139,7 @@ export function ProgramPage(data: Record<string, string>) {
               .flatMap((day) => {
                 let afternoon;
                 {
-                  const filter = Events.Filtering().read(data);
+                  const filter = Events.Filtering().read(props);
 
                   filter.set("after", day);
                   filter.set("end", moment(day).add(17.75, "hour"));
@@ -155,13 +155,13 @@ export function ProgramPage(data: Record<string, string>) {
                         : dayOfWeekAndMonthLong(day),
                     }),
                     entity:
-                      data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
+                      props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
                     query: UrlTools.paramsToQueryString(filter.toParams()),
                   };
                 }
                 let evening;
                 {
-                  const filter = Events.Filtering().read(data);
+                  const filter = Events.Filtering().read(props);
 
                   filter.set("after", moment(day).add(17.75, "hour"));
                   filter.set("end", moment(day).add(1, "day"));
@@ -177,7 +177,7 @@ export function ProgramPage(data: Record<string, string>) {
                         : dayOfWeekAndMonthLong(day),
                     }),
                     entity:
-                      data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
+                      props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
                     query: UrlTools.paramsToQueryString(filter.toParams()),
                   };
                 }
