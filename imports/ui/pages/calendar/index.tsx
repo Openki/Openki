@@ -89,11 +89,7 @@ export function CalendarPage(props: Record<string, string>) {
           {!isLoading() ? (
             days().map((day) => (
               <React.Fragment key={day.date.toISOString()}>
-                <Day
-                  date={day.date}
-                  events={day.events}
-                  isAttendeeFilterOn={isAttendeeFilterOn}
-                />
+                <Day date={day.date} events={day.events} isAttendeeFilterOn={isAttendeeFilterOn} />
                 <hr />
               </React.Fragment>
             ))
