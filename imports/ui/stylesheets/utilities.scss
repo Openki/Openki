@@ -8,7 +8,7 @@
 $utilities: map.merge(
   $utilities,
   (
-    "border": (
+    "border-style": (
       property: border-style,
       class: border,
       values: (
@@ -63,10 +63,6 @@ $utilities: map.merge(
   )
 );
 
-.truncate {
-  @include ellipsis;
-}
-
 .line-clamp-2 {
   @include ellipsis-multiline(2);
 }
@@ -81,6 +77,10 @@ $utilities: map.merge(
 
 .shadow-md {
   box-shadow: 0.1rem 0.1rem 0.6rem rgb(0 0 0 / 25%);
+}
+
+.truncate {
+  @include ellipsis;
 }
 
 // Optional Bootstrap Utilities
