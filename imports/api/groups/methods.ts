@@ -144,6 +144,8 @@ export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
   check(groupId, String);
+
+  const isNew = groupId === "";
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -170,7 +172,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       roles.map(async (role) => {
         const { id } = role;
 
-        if (group.isNew()) {
+        if (isNew) {
           const shouldHave = !!(role.preset || changes.roles?.[id]) && !disabledRoles.includes(id);
 
           if (shouldHave) {
@@ -236,7 +238,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     set.singleEvent = changes.singleEvent;
   }
 
-  if (group.isNew()) {
+  if (isNew) {
     // You can add newly created groups to any organization
     let organizations = changes.organizations || [];
     organizations = uniq(organizations);
@@ -353,7 +355,7 @@ export const updateImage = ServerMethod(
 
     const group = await loadGroup(groupId);
 
-    if (group.isNew() || !group.editableBy(user)) {
+    if (!group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
     }
 
@@ -402,7 +404,7 @@ export const deleteImage = ServerMethod(
 
     const group = await loadGroup(groupId);
 
-    if (group.isNew() || !group.editableBy(user)) {
+    if (!group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
     }
 
