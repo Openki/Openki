@@ -1,17 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+
+import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
-import { Guide } from "/imports/ui/components/groups/roles/role/Guide";
-import { RoleIcon } from "/imports/ui/components/RoleIcon";
+import { unsubscribeFromRole } from "/imports/api/groups/methods";
+import { RoleType } from "/imports/api/groups/lib/Role";
+
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { cx } from "/imports/utils/cx";
-import { unsubscribeFromRole } from "/imports/api/groups/methods";
-import { RoleType } from "/imports/api/groups/lib/Role";
+
+import { Guide } from "/imports/ui/components/groups/roles/role/Guide";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 export interface Props {
   role: GroupRole;
@@ -34,28 +38,32 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
     event.stopPropagation();
     routerAutoscroll.cancelNext();
 
-    await unsubscribeFromRole(group._id, { id: role.id, type: role.type });
+    try {
+      await unsubscribeFromRole(group._id, { id: role.id, type: role.type });
 
-    onToggle(false);
-    routerAutoscroll.cancelNext();
+      onToggle(false);
+      routerAutoscroll.cancelNext();
 
-    switch (role.type) {
-      case RoleType.Predefined:
-        Analytics.trackEvent(
-          "Unsubscribes from groups",
-          `Unsubscribes from groups as ${role.id}`,
-          Regions.findOne(group.region)?.nameEn,
-        );
-        break;
-      case RoleType.Custom:
-        Analytics.trackEvent(
-          "CustomRoles: Unsubscribes from groups",
-          `Unsubscribes from groups as ${role.label}`,
-          Regions.findOne(group.region)?.nameEn,
-        );
-        break;
-      default:
-        throw new Error("Unexpected value for role.type");
+      switch (role.type) {
+        case RoleType.Predefined:
+          Analytics.trackEvent(
+            "Unsubscribes from groups",
+            `Unsubscribes from groups as ${role.id}`,
+            Regions.findOne(group.region)?.nameEn,
+          );
+          break;
+        case RoleType.Custom:
+          Analytics.trackEvent(
+            "CustomRoles: Unsubscribes from groups",
+            `Unsubscribes from groups as ${role.label}`,
+            Regions.findOne(group.region)?.nameEn,
+          );
+          break;
+        default:
+          throw new Error("Unexpected value for role.type");
+      }
+    } catch (err) {
+      Alert.serverError(err, t("group.roles.unsubscribed.error", "Failed to unsubscribe"));
     }
   }
 

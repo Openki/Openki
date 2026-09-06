@@ -6,13 +6,13 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
+import { unsubscribeFromRole } from "/imports/api/groups/methods";
 
 import { Action } from "/imports/ui/components/PleaseLogin";
 import { Enrolling } from "./Enrolling";
 import { Subscribed } from "./Subscribed";
 
 import "./styles.scss";
-import { unsubscribeFromRole } from "/imports/api/groups/methods";
 
 export interface Props {
   group: GroupModel;
