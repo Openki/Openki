@@ -28,7 +28,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
@@ -138,8 +138,8 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
-  name: String,
-  region: String,
+  name: NotEmptyString(),
+  region: NotEmptyString(),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -356,7 +356,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 export const updateImage = ServerMethod(
   "group.update.image",
   async (groupId: string, file: FileStorage.UploadFile) => {
-    check(groupId, String);
+    check(groupId, NotEmptyString());
     check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -406,7 +406,7 @@ export const updateImage = ServerMethod(
 export const deleteImage = ServerMethod(
   "group.delete.image",
   async (groupId: string) => {
-    check(groupId, String);
+    check(groupId, NotEmptyString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -493,7 +493,7 @@ export const editing = ServerMethod(
 );
 
 export const archive = ServerMethod("group.archive", async (groupId: string) => {
-  check(groupId, String);
+  check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {
@@ -503,7 +503,7 @@ export const archive = ServerMethod("group.archive", async (groupId: string) => 
 });
 
 export const unarchive = ServerMethod("group.unarchive", async (groupId: string) => {
-  check(groupId, String);
+  check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {
@@ -513,7 +513,7 @@ export const unarchive = ServerMethod("group.unarchive", async (groupId: string)
 });
 
 export const remove = ServerMethod("group.remove", async (groupId: string) => {
-  check(groupId, String);
+  check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {

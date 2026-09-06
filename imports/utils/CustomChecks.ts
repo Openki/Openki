@@ -81,6 +81,13 @@ export function HtmlString() {
   }) as Match.Matcher<UnsafeString>;
 }
 
+export function NotEmptyString() {
+  return Match.Where(function (str) {
+    check(str, String);
+    return str.trim().length > 0;
+  }) as Match.Matcher<string>;
+}
+
 export function StringEnum<T extends readonly string[]>(...values: T) {
   return Match.Where(function (str) {
     check(str, String);

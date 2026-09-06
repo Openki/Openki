@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
+import { NotEmptyString } from "/imports/utils/CustomChecks";
+
 import { Organizations } from "/imports/api/organizations/organizations";
 import { UserModel } from "/imports/api/users/users";
 
@@ -30,8 +32,8 @@ export type OrganizationPromoters = Mongo.Collection<
  */
 export function promote(collection: OrganizationPromoters) {
   return async function (docId: string, organizationId: string, enable: boolean) {
-    check(docId, String);
-    check(organizationId, String);
+    check(docId, NotEmptyString());
+    check(organizationId, NotEmptyString());
     check(enable, Boolean);
 
     const doc = await collection.findOneAsync(docId);
@@ -79,8 +81,8 @@ export function promote(collection: OrganizationPromoters) {
  */
 export function editing(collection: OrganizationPromoters) {
   return async function (docId: string, organizationId: string, enable: boolean) {
-    check(docId, String);
-    check(organizationId, String);
+    check(docId, NotEmptyString());
+    check(organizationId, NotEmptyString());
     check(enable, Boolean);
 
     const doc = await collection.findOneAsync(docId);
