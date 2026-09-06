@@ -4,6 +4,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";
+import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 
 import { Description } from "../description";
 import { History } from "../../../components/groups/history";
@@ -145,7 +146,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <Files group={group} />
           </div>
         )}
-        {!group.isPrivate() && <PricePolicy dismissible wrap="mt-3" />}
+        {!isPrivate(group) && <PricePolicy dismissible wrap="mt-3" />}
       </div>
     </>
   );

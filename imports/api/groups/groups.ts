@@ -4,12 +4,11 @@ import { intersection, assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventEntity, OEvent } from "/imports/api/events/events";
+import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
 import { hasRoleUser } from "../../utils/group-role-utils";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -104,10 +103,6 @@ export interface GroupEntity {
 
 export type GroupModel = Group & GroupEntity;
 
-export function isPrivate(group: { tenant: string }) {
-  return !PublicSettings.publicTenants.includes(group.tenant);
-}
-
 export class Group {
   members: GroupEntity["members"] = [];
 
@@ -115,20 +110,9 @@ export class Group {
 
   teamOrganizations: GroupEntity["teamOrganizations"] = [];
 
-  nextEvent: (GroupNextEventRef & OEvent) | null = null;
+  nextEvent: GroupNextEventRef | null = null;
 
-  lastEvent: (GroupLastEventRef & OEvent) | null = null;
-
-  /**
-   * Check if the group is new (not yet saved).
-   */
-  isNew(this: GroupModel) {
-    return !this._id;
-  }
-
-  isPrivate(this: GroupModel) {
-    return isPrivate(this);
-  }
+  lastEvent: GroupLastEventRef | null = null;
 
   hasState(this: GroupModel) {
     if (this.nextEvent) {
@@ -148,7 +132,6 @@ export class Group {
       return false;
     }
     return (
-      this.isNew() /* Anyone can create a new group */ ||
       user.hasPrivilege("admin") /* Admins can edit all groups */ ||
       intersection(user.badges, this.editors).length > 0
     );
@@ -214,17 +197,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
   constructor() {
     super("Groups", {
       transform(group) {
-        const groupModel = assignIn(new Group(), group);
-
-        if (groupModel.nextEvent) {
-          groupModel.nextEvent = assignIn(new OEvent(), groupModel.nextEvent);
-        }
-
-        if (groupModel.lastEvent) {
-          groupModel.lastEvent = assignIn(new OEvent(), groupModel.lastEvent);
-        }
-
-        return groupModel;
+        return assignIn(new Group(), group);
       },
     });
 

@@ -17,6 +17,7 @@ import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
 import { Tuple, Type } from "/imports/utils/CustomChecks";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { VenueEntity } from "/imports/api/venues/venues";
+import { numberOf } from "/imports/api/events/lib/numberOf";
 
 export interface EventParticipant {
   user: string;
@@ -187,7 +188,7 @@ export class OEvent {
   }
 
   numberOfParticipants(this: Pick<EventModel, "participants">) {
-    return this.participants?.map((p) => (p.companions || 0) + 1).reduce((a, b) => a + b, 0) || 0;
+    return numberOf(this.participants);
   }
 
   isFullyBooked(this: EventModel) {

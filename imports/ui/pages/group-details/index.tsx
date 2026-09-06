@@ -8,6 +8,7 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
+import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
@@ -41,7 +42,7 @@ export interface Props {
 }
 
 function canShare(group: GroupModel) {
-  if (group.isPrivate()) {
+  if (isPrivate(group)) {
     return false;
   }
 

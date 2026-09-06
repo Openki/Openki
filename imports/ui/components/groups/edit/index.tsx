@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { uniq, union, chain } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, FindParams, isPrivate } from "/imports/api/groups/groups";
+import { GroupModel, FindParams } from "/imports/api/groups/groups";
+import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
