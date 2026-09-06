@@ -87,15 +87,10 @@ function registerMethod<T>(method: Method<T>): void {
   Meteor.methods({ [method.method]: apply });
 }
 
-async function loadGroup(groupId: string) {
-  // new!
-  if (groupId === "") {
-    return new Group() as GroupModel;
-  }
-
-  const group = await Groups.findOneAsync({ _id: groupId });
+async function loadGroup(id: string) {
+  const group = await Groups.findOneAsync({ _id: id });
   if (!group) {
-    throw new Meteor.Error(404, "Group not found");
+    throw new Meteor.Error(404, "group not found");
   }
   return group;
 }
@@ -127,11 +122,10 @@ export const CustomFieldPattern = {
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 
-export const SaveFieldPattern = {
+export const UpdateFieldsPattern = {
+  name: Match.Optional(String),
   description: Match.Optional(HtmlString()),
   categories: Match.Optional([String]),
-  name: Match.Optional(String),
-  region: Match.Optional(String),
   customFields: Match.Optional([CustomFieldPattern]),
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
   subs: Match.Optional([String]),
@@ -140,23 +134,40 @@ export const SaveFieldPattern = {
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
 };
-export type SaveFields = Type<typeof SaveFieldPattern>;
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
+
+export const CreateFieldsPattern = {
+  ...UpdateFieldsPattern,
+  name: String,
+  region: String,
+};
+export type CreateFields = Type<typeof CreateFieldsPattern>;
+
+/** currently needed because the save method makes currently both create and update */
+export type SaveFields = Partial<CreateFields> & UpdateFields;
 
 export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
   check(groupId, String);
 
   const isNew = groupId === "";
-  check(changes, SaveFieldPattern);
+
+  const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
+  check(changes, expectedFields);
 
   const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  const group = await loadGroup(groupId);
+  let group;
+  if (isNew) {
+    group = new Group() as GroupModel;
+  } else {
+    group = await loadGroup(groupId);
 
-  if (!group.editableBy(user)) {
-    throw new Meteor.Error(401, "edit not permitted");
+    if (!group.editableBy(user)) {
+      throw new Meteor.Error(401, "edit not permitted");
+    }
   }
 
   /* Changes we want to perform */
@@ -484,10 +495,7 @@ export const editing = ServerMethod(
 export const archive = ServerMethod("group.archive", async (groupId: string) => {
   check(groupId, String);
 
-  const group = await Groups.findOneAsync({ _id: groupId });
-  if (!group) {
-    throw new Meteor.Error(404, "no such group");
-  }
+  const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
@@ -497,10 +505,7 @@ export const archive = ServerMethod("group.archive", async (groupId: string) => 
 export const unarchive = ServerMethod("group.unarchive", async (groupId: string) => {
   check(groupId, String);
 
-  const group = await Groups.findOneAsync({ _id: groupId });
-  if (!group) {
-    throw new Meteor.Error(404, "no such group");
-  }
+  const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
@@ -510,10 +515,7 @@ export const unarchive = ServerMethod("group.unarchive", async (groupId: string)
 export const remove = ServerMethod("group.remove", async (groupId: string) => {
   check(groupId, String);
 
-  const group = await Groups.findOneAsync({ _id: groupId });
-  if (!group) {
-    throw new Meteor.Error(404, "no such group");
-  }
+  const group = await loadGroup(groupId);
   if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
