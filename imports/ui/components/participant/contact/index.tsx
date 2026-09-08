@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
-import { DirectMessage, useDirectMessagesWithUser } from "/imports/api/emails/publications";
+import { useSession, useUser, useUserId } from "/imports/utils/react-meteor-data";
+import { type DirectMessage } from "/imports/api/emails/publications";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import * as emailMethods from "/imports/api/emails/methods";
@@ -16,6 +16,9 @@ import { cx } from "/imports/utils/cx";
 import { Router } from "meteor/iron:router";
 import { useDetails as useEventDetails } from "/imports/api/events/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+import { useFind, useSubscribe } from "meteor/react-meteor-data";
+import { Log } from "/imports/api/log/log";
+import { Mongo } from "meteor/mongo";
 
 export interface Props {
   participant: string;
@@ -28,7 +31,7 @@ export function ParticipantContact(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   // TODO: Temporary for development
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -154,9 +157,26 @@ function ParticipantContactModal({
   participant: UserModel;
 }) {
   const { t } = useTranslation();
+  const userId = useUserId();
 
-  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(participant._id);
+  // TODO: Determine if this works
+  // NOTE: No, it made no difference. So this might be a bug in react-meteor-data
+  // OR in our wrapper returning the cursor.
+  const isLoadingMessages = useSubscribe("directMessagesWithUser", participant._id);
+  const previousMessages = useFind(
+    () =>
+      Log.find({
+        tr: "Notification.Send",
+        rel: { $all: [participant._id, userId] },
+        "body.model": "PrivateMessage",
+      }) as Mongo.Cursor<DirectMessage>,
+    [participant._id],
+  );
+
+  // const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(participant._id);
   const showEmailOptions = !isLoadingMessages() && previousMessages.length === 0;
+
+  console.log("Rendering ContactModal…", isLoadingMessages(), previousMessages);
 
   return (
     <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
@@ -207,11 +227,7 @@ function PreviousDirectMessages({
   previousMessages: DirectMessage[];
   onContextLinkClick?: () => void;
 }) {
-  console.log(
-    "Rendering PreviousDirectMessages...",
-    Temporal.Now.plainTimeISO().toLocaleString(),
-    previousMessages,
-  );
+  console.log("Rendering PreviousDirectMessages...", new Date().toLocaleString(), previousMessages);
   // TODO: Change this back after testing
   const [showAll, setShowAll] = useState(true);
   const visibleMessages = (
