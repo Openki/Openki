@@ -32,7 +32,7 @@ export function ServerPublishMany<A extends any[], T, U>(
  * @param name Name of the record set.
  * @param publisher Function called on the server each time a client subscribes. Inside the function,
  * `this` is the publish handler object.
- * @param queryBuilder Function called on the client, this is usefull if the call on the client
+ * @param queryBuilder Function called on the client, this is useful if the call on the client
  * differ from the server eg. `.findOne(...)`.
  * See https://guide.meteor.com/data-loading.html
  * @returns A Publication that a client can subscribe to.
