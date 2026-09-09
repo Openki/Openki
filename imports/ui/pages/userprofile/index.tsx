@@ -22,6 +22,7 @@ import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
 import { ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
 import { GroupListSection } from "../../components/profiles/group-list-section";
+import { PreviousDirectMessages } from "../../components/direct-messages/PreviousDirectMessages";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
 import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
@@ -30,6 +31,7 @@ export interface Props {
 }
 
 export function UserprofilePage({ user }: Props) {
+  debugger;
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
   const [verifyUserDelete, setVerifyUserDelete] = useState(false);
@@ -281,7 +283,14 @@ export function UserprofilePage({ user }: Props) {
                   {t("profile.preferenceslink", "Account settings")}
                 </a>
               ) : (
-                allowPrivateMessages() && <SendMessage {...sendMessageAttr()} />
+                allowPrivateMessages() && (
+                  <>
+                    {Array.isArray(previousMessages) && (
+                      <PreviousDirectMessages previousMessages={previousMessages} />
+                    )}
+                    <SendMessage {...sendMessageAttr()} />
+                  </>
+                )
               )}
             </div>
           </div>
