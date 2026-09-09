@@ -16,7 +16,12 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   useEffect(() => {
     if (Meteor.isClient) {
-      localStorage.setItem(key, JSON.stringify(value));
+      // Clear default values to only keep state the user has modified.
+      if (value === initialValue) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
     }
   }, [key, value, initialValue]);
 
