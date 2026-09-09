@@ -3,10 +3,12 @@ import { useTranslation } from "react-i18next";
 
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { FilterCategories } from "/imports/ui/components/filter-categories";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
+
+import { FilterCategories } from "/imports/ui/components/filter-categories";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
@@ -28,24 +30,25 @@ function RolesButton(props: RolesButtonProps) {
 
   return regionRoles
     .filter((role) => role.id !== SystemRoles.Participant.id)
-    .map((role) => (
-      <button
-        key={role.id}
-        className={cx("filter-group-role", props.needsRole?.includes(role.id) && "active")}
-        type="button"
-        onMouseOver={() => props.onNeedsRoleMouseOver(role.id)}
-        onMouseOut={() => props.onNeedsRoleMouseOut(role.id)}
-        onClick={() => props.onNeedsRoleClick(role.id)}
-      >
-        <span className="filter-group-role-icon">
-          <i className={cx(role.icon, "fa-fw")} />
-        </span>
-        &nbsp;
-        {roleNeeded(predefinedRole(role.id))}
-        &nbsp;
-        <i className="fa-solid fa-check" />
-      </button>
-    ));
+    .map((regionRole) => {
+      const role = predefinedRole(regionRole.id);
+      return (
+        <button
+          key={role.id}
+          className={cx("filter-group-role", props.needsRole?.includes(role.id) && "active")}
+          type="button"
+          onMouseOver={() => props.onNeedsRoleMouseOver(role.id)}
+          onMouseOut={() => props.onNeedsRoleMouseOut(role.id)}
+          onClick={() => props.onNeedsRoleClick(role.id)}
+        >
+          <span className="filter-group-role-icon">
+            <RoleIcon role={role} regionRoles={regionRoles} />
+          </span>
+          {roleNeeded(role)}
+          <i className="fa-solid fa-check" />
+        </button>
+      );
+    });
 }
 
 export interface Props {

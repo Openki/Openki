@@ -90,7 +90,7 @@ export function RoleSelect({
       value: `${r.id}-${r.type}`,
       label: (
         <>
-          <RoleIcon role={r} regionId={region} /> {roleDescription(r)}
+          <RoleIcon role={r} regionRoles={regionRoles} /> {roleDescription(r)}
         </>
       ),
     }));
@@ -102,7 +102,7 @@ export function RoleSelect({
       value: `${r.id}-${r.type}`,
       label: (
         <>
-          <RoleIcon role={r} regionId={region} /> {roleShort(r)}
+          <RoleIcon role={r} regionRoles={regionRoles} /> {roleShort(r)}
         </>
       ),
     }));

@@ -78,7 +78,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
                 )}
               >
                 <span className="group-member-role-text">
-                  <RoleIcon role={role} regionId={group.region} />{" "}
+                  <RoleIcon role={role} regionRoles={regionRoles} />{" "}
                   <span className="role-short">{roleShort(role)}</span>
                 </span>{" "}
                 {isTeam(role) &&

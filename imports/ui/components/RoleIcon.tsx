@@ -1,9 +1,6 @@
 import React from "react";
 
-import { RegionEntity } from "/imports/api/regions/regions";
 import { RoleEntity } from "/imports/utils/PublicSettings";
-
-import { useRegionRoles } from "../lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
@@ -14,19 +11,14 @@ export type Role =
 export function RoleIcon({
   className,
   role,
-  regionId,
+  regionRoles,
 }: {
   className?: string | undefined;
   role: Role;
-  regionId: RegionEntity["_id"];
+  regionRoles: RoleEntity[];
 }) {
-  const [isLoading, regionRoles] = useRegionRoles(regionId);
-
   switch (role.type) {
     case RoleType.Predefined: {
-      if (isLoading()) {
-        return null;
-      }
       const regionRole = regionRoles.find((r) => r.id === role.id);
 
       if (!regionRole) {

@@ -63,7 +63,7 @@ export function GroupCompactRoles({ group }: Props) {
                 className={cx("group-compact-role", roleStateClass(role))}
                 data-bs-title={roleStateTooltip(role, numberOf)}
               >
-                <RoleIcon role={role} regionId={group.region} />
+                <RoleIcon role={role} regionRoles={regionRoles} />
                 {isParticipant(role) && (
                   <>
                     &nbsp;

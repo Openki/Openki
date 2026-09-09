@@ -29,8 +29,8 @@ export interface Props {
 
 export function Enrolling({ group, role, afterSubscribe }: Props) {
   const { t } = useTranslation();
-  const [isRolesLoading, roles] = useRegionRoles(group.region);
-  const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(roles);
+  const [isRolesLoading, regionRoles] = useRegionRoles(group.region);
+  const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(regionRoles);
   const { promptToLogin } = useAccountTasks();
   const collapseRef = useRef<HTMLDivElement>(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -100,12 +100,12 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
     return null;
   }
 
-  const name = `group-role-enroll-${role.id}${role.type}-content`;
+  const name = `group-role-enroll-${role.id}-${role.type}-content`;
 
   return (
     <>
       <button
-        data-test={`group-${group._id}-role-enroll-${role.id}${role.type}`}
+        data-test={`group-${group._id}-role-enroll-${role.id}-${role.type}`}
         className="btn btn-success page-component-btn collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
@@ -113,7 +113,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
         aria-expanded="false"
         aria-controls={name}
       >
-        <RoleIcon role={role} regionId={group.region} className="grouppage-role-icon" />
+        <RoleIcon className="grouppage-role-icon" role={role} regionRoles={regionRoles} />
         &nbsp;
         {roleSubscribe(role)}
         <i

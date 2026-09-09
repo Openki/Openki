@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
-import { useSiteName } from "/imports/utils/getSiteName";
+import { Router } from "meteor/iron:router";
 
 import { Regions } from "/imports/api/regions/regions";
 import { GroupModel } from "/imports/api/groups/groups";
-import { Router } from "meteor/iron:router";
-import { RoleIcon } from "../../../../components/RoleIcon";
+
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { isParticipant } from "/imports/api/groups/lib/isRole";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSiteName } from "/imports/utils/getSiteName";
+
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 export interface Props {
   group: GroupModel;
@@ -17,6 +20,7 @@ export interface Props {
 
 export function Group({ group, hideInterested }: Props) {
   const { t } = useTranslation();
+  const [isRolesLoading, regionRoles] = useRegionRoles(group.region);
   const allRegions = useSessionEquals("region", "all");
   const [isExpanded, setIsExpanded] = useState(false);
   const siteName = useSiteName();
@@ -46,7 +50,9 @@ export function Group({ group, hideInterested }: Props) {
             data-bs-title={t("frame.groupList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span>{" "}
-            <RoleIcon role={SystemRoles.Participant} regionId={group.region} />
+            {isRolesLoading() && (
+              <RoleIcon role={SystemRoles.Participant} regionRoles={regionRoles} />
+            )}
           </span>
         )}
         {group.name}

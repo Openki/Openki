@@ -37,8 +37,8 @@ export function UserSubscribedHistoryEntry({
   roleId: string;
   regionId: RegionEntity["_id"];
 }) {
-  const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleGroupHistoryUserSubscribed } = useRoleDisplay(roles);
+  const [isLoading, regionRoles] = useRegionRoles(regionId);
+  const { roleGroupHistoryUserSubscribed } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
     return null;
@@ -47,7 +47,7 @@ export function UserSubscribedHistoryEntry({
   const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon role={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionRoles={regionRoles} />{" "}
       {roleGroupHistoryUserSubscribed(role, {
         USER: (
           <>
@@ -68,8 +68,8 @@ export function UserUnsubscribedHistoryEntry({
   roleId: string;
   regionId: RegionEntity["_id"];
 }) {
-  const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay(roles);
+  const [isLoading, regionRoles] = useRegionRoles(regionId);
+  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
     return null;
@@ -78,7 +78,7 @@ export function UserUnsubscribedHistoryEntry({
   const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon role={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionRoles={regionRoles} />{" "}
       {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>

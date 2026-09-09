@@ -10,11 +10,11 @@ import { RoleEntity } from "/imports/utils/PublicSettings";
 import { isPredefined } from "/imports/api/groups/lib/isRole";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { cx } from "/imports/utils/cx";
 import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { GroupList } from "/imports/ui/components/groups/List";
 import { LoadingPage } from "/imports/ui/pages/loading";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
@@ -29,7 +29,7 @@ export function GroupListSection({
 }) {
   const { t } = useTranslation();
   const [isLoadingRegion, region] = useDetails(regionId);
-  const [isLoadingRoles, roles] = useRegionRoles(regionId);
+  const [isLoadingRoles, regionRoles] = useRegionRoles(regionId);
 
   const {
     roleShort,
@@ -37,7 +37,7 @@ export function GroupListSection({
     roleProfileUserGroupListCurrent,
     roleProfileMyGroupListPast,
     roleProfileUserGroupListPast,
-  } = useRoleDisplay(roles);
+  } = useRoleDisplay(regionRoles);
   const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
@@ -89,69 +89,74 @@ export function GroupListSection({
           ) : (
             <>
               <div>
-                {roles
-                  .filter((role) => groupsByRoleCount(role.id, false))
-                  .map((role) => (
-                    <React.Fragment key={role.id}>
-                      <a
-                        className="badge role-label"
-                        href={`#${role.id}`}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const roleLabel = event.currentTarget;
-                          const rolePosition =
-                            $(roleLabel.getAttribute("href") || "").offset()?.top || 0;
-                          // subtract the amount of pixels of the height of the navbar
-                          $("html, body").animate({
-                            scrollTop: rolePosition - ScssVars.navbarHeight,
-                          });
-                        }}
-                      >
-                        <i className={cx(role.icon, "fa-fw")} />{" "}
-                        {roleShort(predefinedRole(role.id))}{" "}
-                        <i className="fa-solid fa-arrow-down fa-fw" />
-                        {groupsByRoleCount(role.id, false)}
-                      </a>{" "}
-                    </React.Fragment>
-                  ))}
+                {regionRoles
+                  .filter((regionRole) => groupsByRoleCount(regionRole.id, false))
+                  .map((regionRole) => {
+                    const role = predefinedRole(regionRole.id);
+                    return (
+                      <React.Fragment key={role.id}>
+                        <a
+                          className="badge role-label"
+                          href={`#section-${region?._id}-${role.id}`}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const roleLabel = event.currentTarget;
+                            const rolePosition =
+                              $(roleLabel.getAttribute("href") || "").offset()?.top || 0;
+                            // subtract the amount of pixels of the height of the navbar
+                            $("html, body").animate({
+                              scrollTop: rolePosition - ScssVars.navbarHeight,
+                            });
+                          }}
+                        >
+                          <RoleIcon role={role} regionRoles={regionRoles} /> {roleShort(role)}{" "}
+                          <i className="fa-solid fa-arrow-down fa-fw" />
+                          {groupsByRoleCount(role.id, false)}
+                        </a>{" "}
+                      </React.Fragment>
+                    );
+                  })}
               </div>
-              {roles
-                .filter((role) => groupsByRoleCount(role.id, false))
-                .map((role) => (
-                  <React.Fragment key={role.id}>
-                    <h3 id={role.id}>
-                      <div className="badge">
-                        <i className={cx(role.icon, "fa-fw")} />
-                      </div>{" "}
-                      {ownProfile
-                        ? roleProfileMyGroupListCurrent(predefinedRole(role.id))
-                        : roleProfileUserGroupListCurrent(
-                            predefinedRole(role.id),
-                            user.getDisplayName(),
-                          )}
-                    </h3>
-                    <GroupList groups={groupsByRole(role.id, false)} small={true} />
-                  </React.Fragment>
-                ))}
+              {regionRoles
+                .filter((regionRole) => groupsByRoleCount(regionRole.id, false))
+                .map((regionRole) => {
+                  const role = predefinedRole(regionRole.id);
+                  return (
+                    <React.Fragment key={role.id}>
+                      <h3 id={`section-${region?._id}-${role.id}`}>
+                        <div className="badge">
+                          <RoleIcon role={role} regionRoles={regionRoles} />
+                        </div>{" "}
+                        {ownProfile
+                          ? roleProfileMyGroupListCurrent(role)
+                          : roleProfileUserGroupListCurrent(role, user.getDisplayName())}
+                      </h3>
+                      <GroupList groups={groupsByRole(role.id, false)} small={true} />
+                    </React.Fragment>
+                  );
+                })}
 
-              {roles
-                .filter((role) => groupsByRoleCount(role.id, true) && showArchived(role))
-                .map((role) => (
-                  <React.Fragment key={role.id}>
-                    <h3 id={`${role.id}_archived`}>
-                      <div className="badge is-archived">
-                        <i className={cx(role.icon, "fa-fw")} />
-                      </div>{" "}
-                      {ownProfile
-                        ? roleProfileMyGroupListPast(predefinedRole(role.id))
-                        : roleProfileUserGroupListPast(
-                            predefinedRole(role.id),
-                            user.getDisplayName(),
-                          )}
-                    </h3>
-                    <GroupList groups={groupsByRole(role.id, true)} small={true} />
-                  </React.Fragment>
-                ))}
+              {regionRoles
+                .filter(
+                  (regionRole) =>
+                    groupsByRoleCount(regionRole.id, true) && showArchived(regionRole),
+                )
+                .map((regionRole) => {
+                  const role = predefinedRole(regionRole.id);
+                  return (
+                    <React.Fragment key={role.id}>
+                      <h3 id={`section-${region?._id}-${role.id}-archived`}>
+                        <div className="badge is-archived">
+                          <RoleIcon role={role} regionRoles={regionRoles} />
+                        </div>{" "}
+                        {ownProfile
+                          ? roleProfileMyGroupListPast(role)
+                          : roleProfileUserGroupListPast(role, user.getDisplayName())}
+                      </h3>
+                      <GroupList groups={groupsByRole(role.id, true)} small={true} />
+                    </React.Fragment>
+                  );
+                })}
             </>
           )}
         </>

@@ -28,9 +28,9 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
   const { t } = useTranslation();
   const collapseRef = useRef<HTMLDivElement>(null);
 
-  const [isRolesLoading, roles] = useRegionRoles(group.region);
+  const [isRolesLoading, regionRoles] = useRegionRoles(group.region);
 
-  const { roleSubscribed, roleGroupFirstSteps } = useRoleDisplay(roles);
+  const { roleSubscribed, roleGroupFirstSteps } = useRoleDisplay(regionRoles);
 
   async function handleRoleUnsubscribeClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -103,7 +103,7 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
         aria-controls={name}
         onClick={() => onToggle(!showFirstSteps)}
       >
-        <RoleIcon role={role} regionId={group.region} className="grouppage-role-icon" />
+        <RoleIcon className="grouppage-role-icon" role={role} regionRoles={regionRoles} />
         &nbsp;
         {roleSubscribed(role)}
         {!showFirstSteps && (
