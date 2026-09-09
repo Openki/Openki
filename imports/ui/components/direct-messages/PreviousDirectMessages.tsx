@@ -17,8 +17,7 @@ export function PreviousDirectMessages({
   previousMessages: DirectMessage[];
   onContextLinkClick?: () => void;
 }) {
-  // TODO: Change this back after testing
-  const [showAll, setShowAll] = useState(true);
+  const [showAll, setShowAll] = useState(false);
   const visibleMessages = (
     showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
   ) as DirectMessage[];

@@ -24,8 +24,7 @@ export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const user = useUser();
-  // TODO: Temporary for development
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {

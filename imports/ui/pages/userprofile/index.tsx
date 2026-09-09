@@ -31,7 +31,6 @@ export interface Props {
 }
 
 export function UserprofilePage({ user }: Props) {
-  debugger;
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
   const [verifyUserDelete, setVerifyUserDelete] = useState(false);
