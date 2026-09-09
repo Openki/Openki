@@ -199,7 +199,6 @@ function ParticipantContactModal({
 
 const DEFAULT_VISIBLE_MESSAGES = 2;
 
-// TODO: Add translation keys
 function PreviousDirectMessages({
   previousMessages,
   onContextLinkClick,
@@ -212,6 +211,7 @@ function PreviousDirectMessages({
   const visibleMessages = (
     showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
   ) as DirectMessage[];
+  const { t } = useTranslation();
 
   const currentUserId = Meteor.userId();
   const currentYear = new Date().getFullYear();
@@ -221,14 +221,15 @@ function PreviousDirectMessages({
     Boolean(currentUserId) &&
     Boolean(visibleMessages.length) && (
       <div className="mb-4">
-        <h4>Previous messages:</h4>
+        <h4>{t("previousDirectMessages.title", "Previous messages:")}</h4>
         {previousMessages.length > visibleMessages.length && (
           <div className="d-flex justify-content-between align-items-center mb-4">
             <span>
-              Showing {visibleMessages.length} / {previousMessages.length}
+              {t("previousDirectMessages.showing", "Showing")} {visibleMessages.length} /{" "}
+              {previousMessages.length}
             </span>
             <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
-              Show all
+              {t("previousDirectMessages.showAll", "Show all")}
             </button>
           </div>
         )}
@@ -309,32 +310,32 @@ function MessageContext({
 }
 
 function GroupMessageContext({ groupId }: { groupId: string }) {
-  // eslint-disable-next-line
-  const [isLoading, group] = useGroupDetails(groupId!);
+  const [isLoading, group] = useGroupDetails(groupId);
   const url = !isLoading() && group && Router.url("showGroup", group);
   const label = url && group.name;
+  const { t } = useTranslation();
 
   return (
     url &&
     label && (
       <span className="small">
-        Via <a href={url}>{label}</a>
+        {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
       </span>
     )
   );
 }
 
 function EventMessageContext({ eventId }: { eventId: string }) {
-  // eslint-disable-next-line
-  const [isLoading, event] = useEventDetails(eventId!);
+  const [isLoading, event] = useEventDetails(eventId);
   const url = !isLoading() && event && Router.url("showEvent", event);
   const label = url && event.title;
+  const { t } = useTranslation();
 
   return (
     url &&
     label && (
       <span className="small">
-        Via <a href={url}>{label}</a>
+        {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
       </span>
     )
   );
