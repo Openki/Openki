@@ -46,7 +46,7 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
   (otherUserId) => {
     const userId = Meteor.userId();
     if (!userId) {
-      return Log.findFilter({}, 0) as Mongo.Cursor<LogEntity, DirectMessage>;
+      throw new Meteor.Error(401, "please log in");
     }
 
     check(otherUserId, String);
