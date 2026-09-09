@@ -68,18 +68,9 @@ export function createPublicationMany<A extends any[], T>(
       handleCallback,
     );
     const userId = useUserId();
-    if (name === "directMessagesWithUser")
-      console.log("ServerPublishReact.createPublicationMany called", args);
-    // TODO: The problem is that the data arrives to the client when using server-side projections.
-    // However, useFind() is not called again - maybe because the arguments haven't changed?
-    // TODO: Why is this different when no projection is used?
-    // NOTE: Even when no projection is used, useFind() is only called once.
-    // However, the returned data is reactive, but not when projection is added.
-    // The data update in the client side Minimongo collection does not trigger a re-render even when the data changes.
     return [
       isLoading,
       useFind(() => {
-        if (name === "directMessagesWithUser") console.log("useFind() called", args);
         if (hasCondition && !args[0].when) {
           // return undefined when condition is false
           return undefined;

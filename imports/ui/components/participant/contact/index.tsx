@@ -206,7 +206,6 @@ function PreviousDirectMessages({
   previousMessages: DirectMessage[];
   onContextLinkClick?: () => void;
 }) {
-  console.log("Rendering PreviousDirectMessages...", new Date().toLocaleString(), previousMessages);
   // TODO: Change this back after testing
   const [showAll, setShowAll] = useState(true);
   const visibleMessages = (
