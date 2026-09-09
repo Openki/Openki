@@ -28,27 +28,32 @@ function RolesButton(props: RolesButtonProps) {
     return null;
   }
 
-  return regionRoles
-    .filter((role) => role.id !== SystemRoles.Participant.id)
-    .map((regionRole) => {
-      const role = predefinedRole(regionRole.id);
-      return (
-        <button
-          key={role.id}
-          className={cx("filter-group-role", props.needsRole?.includes(role.id) && "active")}
-          type="button"
-          onMouseOver={() => props.onNeedsRoleMouseOver(role.id)}
-          onMouseOut={() => props.onNeedsRoleMouseOut(role.id)}
-          onClick={() => props.onNeedsRoleClick(role.id)}
-        >
-          <span className="filter-group-role-icon">
-            <RoleIcon role={role} regionRoles={regionRoles} />
-          </span>
-          {roleNeeded(role)}
-          <i className="fa-solid fa-check" />
-        </button>
-      );
-    });
+  return (
+    <div className="d-flex flex-column gap-1">
+      {regionRoles
+        .filter((role) => role.id !== SystemRoles.Participant.id)
+        .map((regionRole) => {
+          const role = predefinedRole(regionRole.id);
+          const active = props.needsRole?.includes(role.id);
+          return (
+            <button
+              key={role.id}
+              className={cx("filter-group-role", active && "active")}
+              type="button"
+              onMouseOver={() => props.onNeedsRoleMouseOver(role.id)}
+              onMouseOut={() => props.onNeedsRoleMouseOut(role.id)}
+              onClick={() => props.onNeedsRoleClick(role.id)}
+            >
+              <span className="filter-group-role-icon me-2 px-2 py-1 d-inline-block">
+                <RoleIcon role={role} regionRoles={regionRoles} />
+              </span>
+              {roleNeeded(role)}
+              {active && <i className="ms-1 fa-solid fa-check" />}
+            </button>
+          );
+        })}
+    </div>
+  );
 }
 
 export interface Props {
