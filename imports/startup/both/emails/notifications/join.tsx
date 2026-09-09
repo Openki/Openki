@@ -18,7 +18,7 @@ import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 import { Role, RolePattern, SystemRoles } from "/imports/api/groups/lib/Role";
-import { isRole } from "/imports/api/groups/lib/isRole";
+import { sameRole } from "/imports/api/groups/lib/isRole";
 
 export const ModelName = "Join";
 
@@ -89,7 +89,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   if (group?.region) {
     roles = await loadRoles(group?.region);
   }
-  const groupRole = group?.roles?.find((r) => isRole(r, body.newRole));
+  const groupRole = group?.roles?.find((r) => sameRole(r, body.newRole));
 
   return {
     accepted(actualRecipient: UserModel) {

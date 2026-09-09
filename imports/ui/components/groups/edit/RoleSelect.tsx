@@ -9,7 +9,7 @@ import { predefinedRole } from "/imports/api/groups/lib/Role";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
-import { isCustom, isRole } from "/imports/api/groups/lib/isRole";
+import { isCustom, sameRole } from "/imports/api/groups/lib/isRole";
 import { createFilter } from "react-select";
 
 interface Props {
@@ -84,7 +84,7 @@ export function RoleSelect({
   const value = outerValue || [];
 
   const options = availableRoles()
-    .filter((r) => !value.some((v) => isRole(r, v)))
+    .filter((r) => !value.some((v) => sameRole(r, v)))
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,
@@ -96,7 +96,7 @@ export function RoleSelect({
     }));
 
   const selectValue = value
-    .filter((r) => isCustom(r) || availableRoles().some((o) => isRole(r, o)))
+    .filter((r) => isCustom(r) || availableRoles().some((o) => sameRole(r, o)))
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,
@@ -123,9 +123,9 @@ export function RoleSelect({
           "Select from the list or type in what is needed...",
         )}
         formatCreateLabel={(inputValue) =>
-          t("group.edit.needs.role.create", `Press enter to add "${inputValue}"`)
+          t("group.edit.needs.role.create", 'Press enter to add "{ROLE}"', { ROLE: inputValue })
         }
-        noOptionsMessage={() => t("group.edit.needs.role.noOptions", `Type in what is needed...`)}
+        noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in what is needed...")}
         options={options}
         value={selectValue}
         filterOption={createFilter({

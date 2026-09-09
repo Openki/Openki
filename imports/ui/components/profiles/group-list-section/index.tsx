@@ -3,19 +3,20 @@ import { useTranslation } from "react-i18next";
 
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/groups/publications";
-import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { RoleEntity } from "/imports/utils/PublicSettings";
 import { useDetails } from "/imports/api/regions/publications";
 
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { RoleEntity } from "/imports/utils/PublicSettings";
+import { isPredefined } from "/imports/api/groups/lib/isRole";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { LoadingPage } from "/imports/ui/pages/loading";
-import { GroupList } from "/imports/ui/components/groups/List";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
+import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
+
+import { GroupList } from "/imports/ui/components/groups/List";
+import { LoadingPage } from "/imports/ui/pages/loading";
 
 import "./styles.scss";
-import { isPredefined } from "/imports/api/groups/lib/isRole";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 export function GroupListSection({
   regionId,
@@ -64,7 +65,7 @@ export function GroupListSection({
     return groups.length > 0 || archivedGroups.length > 0;
   }
   function showArchived(role: RoleEntity) {
-    return role.id === "team";
+    return role.id === SystemRoles.Team.id;
   }
 
   if (isLoadingRegion()) {

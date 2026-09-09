@@ -3,9 +3,9 @@ import React from "react";
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { isPredefined } from "/imports/api/groups/lib/isRole";
 
 import { Role } from "./role";
-import { isPredefined } from "/imports/api/groups/lib/isRole";
 
 export function Roles({ group }: { group: GroupModel }) {
   const [isLoading, regionRoles] = useRegionRoles(group.region);

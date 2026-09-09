@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { RegionModel } from "/imports/api/regions/regions";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export function extractRoles(region: RegionModel | undefined) {
   if (!region) {
@@ -11,9 +12,9 @@ export function extractRoles(region: RegionModel | undefined) {
     return PublicSettings.defaultRoles;
   }
 
-  if (!region.roles.some((r) => r.id === "team")) {
+  if (!region.roles.some((r) => r.id === SystemRoles.Team.id)) {
     // NOTE: The system expects a `team` role to exist, so we always need to add it.
-    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.id === "team");
+    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.id === SystemRoles.Team.id);
 
     return [...region.roles, teamRole];
   }

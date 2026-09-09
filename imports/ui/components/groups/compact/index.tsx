@@ -6,6 +6,7 @@ import { cx } from "/imports/utils/cx";
 import { GroupModel } from "/imports/api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 import { isPredefined } from "/imports/api/groups/lib/isRole";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 import { hasRole } from "/imports/api/groups/lib/hasRole";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
@@ -18,7 +19,6 @@ import { GroupCompactEvent } from "./group-compact-event";
 import { GroupCompactRoles } from "./group-compact-roles";
 
 import "./styles.scss";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 export interface Props {
   group: GroupModel;

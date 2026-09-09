@@ -8,11 +8,11 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 import { isParticipant, isPredefined } from "/imports/api/groups/lib/isRole";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 export interface Props {
   group: GroupModel;

@@ -4,6 +4,7 @@ import merge from "deepmerge";
 
 import { Deprecated, Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export const RoleEntityPattern = {
   /** A unique name for the role, e.g. "team". This is used to connect the role with i18n strings */
@@ -650,7 +651,7 @@ publicSettings.defaultRoles =
 
 if (
   !publicSettings.defaultRoles?.some(
-    (role: PublicSettings["defaultRoles"][number]) => role.id === "team",
+    (role: PublicSettings["defaultRoles"][number]) => role.id === SystemRoles.Team.id,
   )
 ) {
   throw new Error(

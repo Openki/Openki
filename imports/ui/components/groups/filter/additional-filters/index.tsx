@@ -6,9 +6,9 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { FilterCategories } from "/imports/ui/components/filter-categories";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 import "./styles.scss";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 interface RolesButtonProps {
   needsRole: string[];

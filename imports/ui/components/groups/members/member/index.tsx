@@ -3,11 +3,18 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupMember, GroupModel } from "/imports/api/groups/groups";
+import {
+  addMemberToTeam,
+  removeMemberFromTeam,
+  updateMemberMessage,
+} from "/imports/api/groups/methods";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { isParticipant, isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
+import { canAddToTeam, canRemoveFromTeam } from "/imports/api/groups/lib/teamPermissions";
 
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../Contribution";
@@ -17,13 +24,6 @@ import { Editable } from "/imports/ui/components/editable";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
-import { isParticipant, isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
-import {
-  addMemberToTeam,
-  removeMemberFromTeam,
-  updateMemberMessage,
-} from "/imports/api/groups/methods";
-import { canAddToTeam, canRemoveFromTeam } from "/imports/api/groups/lib/teamPermissions";
 
 export function Member({ member, group }: { member: GroupMember; group: GroupModel }) {
   const { t } = useTranslation();
@@ -106,7 +106,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
         <div className="group-member-comment">
           <div className="group-member-comment-arrow"></div>
           <div className="group-member-comment-body">
-            {member.user === currentUser?._id && currentUser ? (
+            {currentUser && member.user === currentUser._id ? (
               <Editable
                 {...{
                   multiline: false,
