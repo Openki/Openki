@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import * as Alert from "/imports/api/alerts/alert";
+import { subscribeToRole } from "/imports/api/groups/methods";
 
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -13,8 +14,8 @@ import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { subscribeToRole } from "/imports/api/groups/methods";
-import { isCustom, isParticipant, isPredefined } from "/imports/api/groups/lib/isRole";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
+import { RoleType } from "/imports/api/groups/lib/Role";
 
 import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
@@ -52,20 +53,24 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
       try {
         await subscribeToRole(group._id, { id: role.id, type: role.type }, comment.trim(), true);
 
-        if (isPredefined(role)) {
-          Analytics.trackEvent(
-            "Enrollments in groups",
-            `Enrollments in groups as ${role.id}`,
-            Regions.findOne(group.region)?.nameEn,
-          );
-        } else if (isCustom(role)) {
-          Analytics.trackEvent(
-            "CustomRoles: Enrollments in groups",
-            `Enrollments in groups as ${role.label}`,
-            Regions.findOne(group.region)?.nameEn,
-          );
-        } else {
-          throw new Error("Unexpected value for role.type");
+        switch (role.type) {
+          case RoleType.Predefined:
+            Analytics.trackEvent(
+              "Enrollments in groups",
+              `Enrollments in groups as ${role.id}`,
+              Regions.findOne(group.region)?.nameEn,
+            );
+            break;
+          case RoleType.Custom:
+            Analytics.trackEvent(
+              "CustomRoles: Enrollments in groups",
+              `Enrollments in groups as ${role.label}`,
+              Regions.findOne(group.region)?.nameEn,
+            );
+            break;
+
+          default:
+            throw new Error("Unexpected value for role.type");
         }
 
         afterSubscribe();

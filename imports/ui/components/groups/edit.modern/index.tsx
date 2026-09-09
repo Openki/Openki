@@ -20,6 +20,7 @@ import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
@@ -203,7 +204,7 @@ export function Edit(props: Props) {
 
       Analytics.trackEvent(
         "Group creations",
-        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
+        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
         Regions.findOne(changes.region)?.nameEn,
         totalFocusTime(),
       );

@@ -6,7 +6,7 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { FilterCategories } from "/imports/ui/components/filter-categories";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
+import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 
 import "./styles.scss";
 
@@ -27,7 +27,7 @@ function RolesButton(props: RolesButtonProps) {
   }
 
   return regionRoles
-    .filter((role) => role.id !== "participant")
+    .filter((role) => role.id !== SystemRoles.Participant.id)
     .map((role) => (
       <button
         key={role.id}

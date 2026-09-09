@@ -20,14 +20,14 @@ export function RoleIcon({
   role: Role;
   regionId: RegionEntity["_id"];
 }) {
-  const [isLoading, roles] = useRegionRoles(regionId);
+  const [isLoading, regionRoles] = useRegionRoles(regionId);
 
   switch (role.type) {
     case RoleType.Predefined: {
       if (isLoading()) {
         return null;
       }
-      const regionRole = roles.find((r) => r.id === role.id);
+      const regionRole = regionRoles.find((r) => r.id === role.id);
 
       if (!regionRole) {
         return null;
@@ -37,6 +37,8 @@ export function RoleIcon({
     }
 
     case RoleType.Custom:
+      // No icon is displayed for custom roles; instead, a blank space is shown
+      // so that they fit into lists.
       return <i className={cx("fa-fw", className)} />;
 
     default:

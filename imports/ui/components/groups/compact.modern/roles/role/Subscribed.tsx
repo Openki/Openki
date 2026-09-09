@@ -87,7 +87,7 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
     return null;
   }
 
-  const name = `group-${group._id}-role-enrolled-${role.id}-content`;
+  const name = `group-${group._id}-role-enrolled-${role.id}-${role.type}-content`;
   const firstSteps = roleGroupFirstSteps(role, { GUIDE: <Guide /> });
   return (
     <div className="d-grid">

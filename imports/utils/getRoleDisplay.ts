@@ -8,7 +8,6 @@ import { RoleEntity } from "/imports/utils/PublicSettings";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { PrimitiveType } from "intl-messageformat";
 import { $Dictionary } from "i18next/typescript/helpers";
-import { isCustom, isPredefined } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
 export type Role =
@@ -32,45 +31,52 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     variables?: Record<string, T> | undefined,
   ) {
     let label: string | undefined;
-    if (isPredefined(role)) {
-      // Translations for custom roles can be defined in multiple locations.
-      // (1) As part of Region.roles in the DB and in the `defaultRoles` in the instance
-      //     settings (`settings.json` file). Region settings overrides instance settings.
-      // (2) In the default translations in the `i18n/roles/*.json` files, translatable by Weblate.
-      //     The idea behind this is to monitor how customers use the role and to support them by
-      //     integrating more and more standard roles into Openki.
-      // (3) When no specific role is defined, fallback to a generic string.
 
-      const customTranslations = roles.find((r) => r.id === role.id)?.translations;
+    switch (role.type) {
+      case RoleType.Predefined:
+        {
+          // Translations for custom roles can be defined in multiple locations.
+          // (1) As part of Region.roles in the DB and in the `defaultRoles` in the instance
+          //     settings (`settings.json` file). Region settings overrides instance settings.
+          // (2) In the default translations in the `i18n/roles/*.json` files, translatable by Weblate.
+          //     The idea behind this is to monitor how customers use the role and to support them by
+          //     integrating more and more standard roles into Openki.
+          // (3) When no specific role is defined, fallback to a generic string.
 
-      // (1) Check if a custom translation exists
-      const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
-      if (translation) {
-        return translation;
-      }
+          const customTranslations = roles.find((r) => r.id === role.id)?.translations;
 
-      // (2) fallback to a i18n translation if exists.
-      // Translations for common default roles exist in the roles namespace.
-      const roleKey = `${role.id}.${key}`;
-      if (i18n.exists(`roles:${roleKey}`)) {
-        return variables
-          ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
-          : i18n.t(`roles:${roleKey}`);
-      }
+          // (1) Check if a custom translation exists
+          const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
+          if (translation) {
+            return translation;
+          }
 
-      // (3) No translation found, just fallback to a generic string. Using short to build the
-      // fallback strings.
-      if (key !== "short") {
-        label = getLocalizedValue(i18n, customTranslations?.["short"]);
-      }
-      if (label === undefined) {
-        label = role.id;
-      }
-    } else if (isCustom(role)) {
-      label = role.label;
-    } else {
-      throw new Error("Unexpected value for role.type");
+          // (2) fallback to a i18n translation if exists.
+          // Translations for common default roles exist in the roles namespace.
+          const roleKey = `${role.id}.${key}`;
+          if (i18n.exists(`roles:${roleKey}`)) {
+            return variables
+              ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
+              : i18n.t(`roles:${roleKey}`);
+          }
+
+          // (3) No translation found, just fallback to a generic string. Using short to build the
+          // fallback strings.
+          if (key !== "short") {
+            label = getLocalizedValue(i18n, customTranslations?.["short"]);
+          }
+          if (label === undefined) {
+            label = role.id;
+          }
+        }
+        break;
+      case RoleType.Custom:
+        label = role.label;
+        break;
+      default:
+        throw new Error("Unexpected value for role.type");
     }
+
     const roleVariables = {
       ROLE: label,
       ROLE_upperFirst: upperFirst(label),

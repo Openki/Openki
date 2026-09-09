@@ -1,13 +1,8 @@
-import { Meteor } from "meteor/meteor";
 import { RegionModel } from "/imports/api/regions/regions";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 
-export function extractRoles(region: RegionModel | undefined) {
-  if (!region) {
-    throw new Meteor.Error(404, "Region not found");
-  }
-
+export function extractRoles(region: RegionModel) {
   if (!region.roles?.length) {
     return PublicSettings.defaultRoles;
   }

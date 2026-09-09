@@ -15,6 +15,10 @@ export function useRegionRoles(regionId: RegionEntity["_id"]) {
     return [isLoading, roles] as const;
   }
 
+  if (!region) {
+    throw new Error(`The current user can not view the regionId: "${regionId}"`);
+  }
+
   roles = extractRoles(region);
 
   return [isLoading, roles] as const;

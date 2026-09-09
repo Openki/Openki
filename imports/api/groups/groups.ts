@@ -36,7 +36,7 @@ export const GroupCustomRolePattern = {
 };
 /**
  * Custom roles are defined by the group creator.
- * The `id` is only unique within the group.
+ * The custom role exists only within the group; therefore, the `id` is valid only within the group.
  */
 export type GroupCustomRole = Type<typeof GroupCustomRolePattern>;
 

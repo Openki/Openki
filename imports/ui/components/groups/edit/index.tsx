@@ -8,25 +8,26 @@ import { GroupModel, FindParams } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { cx } from "/imports/utils/cx";
-
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { isMentor } from "/imports/api/groups/lib/isRole";
+import { Filtering } from "/imports/utils/filtering";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Title } from "./title";
-import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
-import { useAll as useRegions } from "/imports/api/regions/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useValidation } from "/imports/ui/lib/useValidation";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
-
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
 import { GroupCategories } from "../categories";
@@ -36,9 +37,7 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
-import { Filtering } from "/imports/utils/filtering";
 import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
-import { isMentor } from "/imports/api/groups/lib/isRole";
 
 import "./styles.scss";
 
@@ -363,7 +362,7 @@ export function Edit({
       if (isNew) {
         Analytics.trackEvent(
           "Group creations",
-          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : "participant"}`,
+          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
           Regions.findOne(changes.region)?.nameEn,
           totalFocusTime(),
         );

@@ -10,6 +10,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -17,7 +18,6 @@ import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
-import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
   return (
