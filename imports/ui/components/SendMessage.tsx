@@ -67,12 +67,12 @@ export function SendMessage(props: Props) {
 
           await props.onSend(message, { revealAddress, sendCopy });
           Alert.success(t("profile.mail.sent", "Your message was sent"));
+          setMessage("");
         } catch (err) {
           Alert.serverError(err, t("profile.mail.sendFailed", "Your message was not sent"));
         } finally {
           setIsBusy(false);
         }
-        setMessage("");
       }}
     >
       <div className="mb-3">
