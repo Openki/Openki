@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
@@ -15,8 +16,7 @@ export type DirectMessage = Pick<LogEntity, "_id" | "ts" | "rel"> & {
 
 export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublishMany(
   "directMessagesWithUser",
-  // @ts-expect-error TODO: Make sure the returned type can be inferred from the projection
-  async (otherUserId: string) => {
+  (otherUserId: string) => {
     const userId = Meteor.userId();
     if (!userId) {
       throw new Meteor.Error(401, "please log in");
@@ -41,14 +41,12 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
         "body.sender": 1,
         ts: 1,
       },
-    }) as
-      | Mongo.Cursor<DirectMessage, DirectMessage>
-      | Promise<Mongo.Cursor<DirectMessage, DirectMessage>>;
+    }) as Mongo.Cursor<LogEntity, DirectMessage>;
   },
   (otherUserId) => {
     const userId = Meteor.userId();
     if (!userId) {
-      return Log.findFilter({}, 0);
+      return Log.findFilter({}, 0) as Mongo.Cursor<LogEntity, DirectMessage>;
     }
 
     check(otherUserId, String);
@@ -58,6 +56,6 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
         rel: { $all: [otherUserId, userId] },
       },
       { sort: [["ts", "asc"]] },
-    );
+    ) as Mongo.Cursor<LogEntity, DirectMessage>;
   },
 );
