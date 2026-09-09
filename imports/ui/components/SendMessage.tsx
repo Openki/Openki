@@ -11,6 +11,7 @@ import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useLocalStorage } from "/imports/ui/lib/useLocalStorage";
 
 export interface Props {
   autoFocus?: boolean | undefined;
@@ -23,6 +24,10 @@ export interface Props {
     },
   ) => Promise<void>;
   showEmailOptions: boolean;
+  /**
+   * The ID of the user or event that will receive the message. Used for persisting message drafts.
+   */
+  recipientId: string;
 }
 
 export function SendMessage(props: Props) {
@@ -30,7 +35,10 @@ export function SendMessage(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [isBusy, setIsBusy] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage, resetMessage] = useLocalStorage(
+    `SendMessage:${props.recipientId}`,
+    "",
+  );
   const [revealAddress, setRevealAddress] = useState(false);
   const [sendCopy, setSendCopy] = useState(false);
 
@@ -67,7 +75,7 @@ export function SendMessage(props: Props) {
 
           await props.onSend(message, { revealAddress, sendCopy });
           Alert.success(t("profile.mail.sent", "Your message was sent"));
-          setMessage("");
+          resetMessage();
         } catch (err) {
           Alert.serverError(err, t("profile.mail.sendFailed", "Your message was not sent"));
         } finally {

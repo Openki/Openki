@@ -83,6 +83,7 @@ export function ParticipantContact(props: Props) {
           Modal.getOrCreateInstance(element).hide();
         }
       },
+      recipientId: props.participant,
     };
   }
 

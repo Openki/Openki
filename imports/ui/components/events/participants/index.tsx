@@ -97,7 +97,7 @@ export function EventParticipants({ event }: Props) {
     return !!(user && event.editableBy(user));
   }
 
-  function sendMessageAttr(): SendMessageProps {
+  function sendMessageAttr(): Omit<SendMessageProps, "recipientId"> {
     return {
       autoFocus: true,
       placeholder: t(
@@ -160,7 +160,7 @@ export function EventParticipants({ event }: Props) {
                   ></button>
                 </div>
                 <div className="modal-body text-dark">
-                  <SendMessage {...sendMessageAttr()} />
+                  <SendMessage {...sendMessageAttr()} recipientId={`event:${event._id}`} />
                 </div>
               </div>
             </div>

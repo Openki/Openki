@@ -102,6 +102,7 @@ export function UserprofilePage({ user }: Props) {
         !isLoadingMessages() &&
         Array.isArray(previousMessages) &&
         previousMessages.length === 0,
+      recipientId: user._id,
     };
   }
   function numberOfGroupsAffectedByDelete() {
