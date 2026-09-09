@@ -31,7 +31,7 @@ import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { ValidationError } from "meteor/mdg:validation-error";
-import { isPredefined, sameRole, isTeam } from "/imports/api/groups/lib/isRole";
+import { sameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import {
   predefinedRole,
@@ -541,10 +541,13 @@ export const subscribeToRole = ServerMethod(
     if (!isTeam(groupRole)) {
       // Do not allow subscribing when already subscribed
       if (group.userHasRole(user._id, role)) {
-        if (isPredefined(groupRole)) {
-          throw new ValidationError([], `Already subscribed as ${groupRole.id} (predefined).`);
-        } else {
-          throw new ValidationError([], `Already subscribed as ${groupRole.label} (custom).`);
+        switch (groupRole.type) {
+          case RoleType.Predefined:
+            throw new ValidationError([], `Already subscribed as ${groupRole.id} (predefined).`);
+          case RoleType.Custom:
+            throw new ValidationError([], `Already subscribed as ${groupRole.label} (custom).`);
+          default:
+            throw new Error("Unexpected value for groupRole.type");
         }
       }
     } else {
