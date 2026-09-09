@@ -35,8 +35,10 @@ export function PreviousDirectMessages({
         {previousMessages.length > visibleMessages.length && (
           <div className="d-flex justify-content-between align-items-center mb-4">
             <span>
-              {t("previousDirectMessages.showing", "Showing")} {visibleMessages.length} /{" "}
-              {previousMessages.length}
+              {t("previousDirectMessages.showingCount", "Showing {COUNT} / {TOTAL}", {
+                COUNT: visibleMessages.length,
+                TOTAL: previousMessages.length,
+              })}
             </span>
             <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
               {t("previousDirectMessages.showAll", "Show all")}
