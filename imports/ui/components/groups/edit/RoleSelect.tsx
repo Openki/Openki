@@ -10,6 +10,7 @@ import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
 import { isCustom, isRole } from "/imports/api/groups/lib/isRole";
+import { createFilter } from "react-select";
 
 interface Props {
   region: string;
@@ -72,16 +73,21 @@ export function RoleSelect({
     return null;
   }
 
-  /** on undefined initialize with the preset region roles */
+  /**
+   * on undefined: initialize with the preset region roles
+   * maybe this is not the right place to do this...
+   */
   if (!outerValue && isNewGroup) {
     onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
+    return null;
   }
   const value = outerValue || [];
 
   const options = availableRoles()
     .filter((r) => !value.some((v) => isRole(r, v)))
     .map((r) => ({
-      value: r,
+      role: r,
+      value: `${r.id}-${r.type}`,
       label: (
         <>
           <RoleIcon role={r} regionId={region} /> {roleDescription(r)}
@@ -92,7 +98,8 @@ export function RoleSelect({
   const selectValue = value
     .filter((r) => isCustom(r) || availableRoles().some((o) => isRole(r, o)))
     .map((r) => ({
-      value: r,
+      role: r,
+      value: `${r.id}-${r.type}`,
       label: (
         <>
           <RoleIcon role={r} regionId={region} /> {roleShort(r)}
@@ -102,17 +109,33 @@ export function RoleSelect({
 
   return (
     <div className="col-md">
-      <div className="form-label">{t("group.edit.needs.role", "This group might need…")}</div>
+      <label className="form-label" htmlFor="group-edit-role-select">
+        {t("group.edit.needs.role", "This group might need…")}
+      </label>
       <ReactSelectCreate
+        inputId="group-edit-role-select"
         isMulti
         isClearable
+        isSearchable
         hideSelectedOptions
+        placeholder={t(
+          "group.edit.needs.role.placeholder",
+          "Select from the list or type in what is needed...",
+        )}
+        formatCreateLabel={(inputValue) =>
+          t("group.edit.needs.role.create", `Press enter to add "${inputValue}"`)
+        }
+        noOptionsMessage={() => t("group.edit.needs.role.noOptions", `Type in what is needed...`)}
         options={options}
         value={selectValue}
+        filterOption={createFilter({
+          stringify: (option) =>
+            `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
+        })}
         onCreateOption={(newValue) =>
           onChange([...value, { id: "", label: newValue, type: "custom" }])
         }
-        onChange={(newValue) => onChange(newValue.map((v) => v.value))}
+        onChange={(newValue) => onChange(newValue.map((value) => value.role))}
       />
     </div>
   );
