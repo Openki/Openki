@@ -68,10 +68,7 @@ export function PreviousDirectMessages({
 
                   <time
                     dateTime={ts.toISOString()}
-                    className={cx(
-                      "small pt-2 fst-italic w-100 d-block",
-                      wasSentByCurrentUser ? "text-end" : "text-start",
-                    )}
+                    className="small pt-2 fst-italic w-100 d-block text-end"
                   >
                     {ts.toLocaleString(locale, {
                       day: "numeric",
