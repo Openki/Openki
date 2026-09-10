@@ -31,7 +31,7 @@ export function PreviousDirectMessages({
     Boolean(currentUserId) &&
     Boolean(visibleMessages.length) && (
       <div className="mb-4">
-        <h4>{t("previousDirectMessages.title", "Previous messages:")}</h4>
+        <h5>{t("previousDirectMessages.title", "Your previous direct messages:")}</h5>
         {previousMessages.length > visibleMessages.length && (
           <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm mb-4">
             {t("previousDirectMessages.showAll", "Show all")}
