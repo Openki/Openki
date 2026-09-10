@@ -23,9 +23,9 @@ async function getBrowserInfo(
   browserParser: BrowserParser,
 ): Promise<Cypress.Browser | false> {
   try {
-    const unresolvedPath = await x("which", [browserBinaryName]);
+    const unresolvedPath = await x("which", [browserBinaryName], { throwOnError: true });
     const binaryPath = resolveHomedir(unresolvedPath.stdout).trim();
-    const rawVersion = await x(binaryPath, ["--version"]);
+    const rawVersion = await x(binaryPath, ["--version"], { throwOnError: true });
 
     return browserParser(rawVersion.stdout.trim(), binaryPath);
   } catch (error) {
