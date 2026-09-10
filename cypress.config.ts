@@ -65,14 +65,31 @@ async function findAdditionalBrowsers(): Promise<Cypress.Browser[]> {
         family: "chromium",
         channel: "stable",
         path: binaryPath,
-        version: chromiumVersion,
-        majorVersion: parseInt(chromiumVersion.split(".")[0]),
+        version,
+        majorVersion,
         isHeaded: true,
         isHeadless: false,
       };
     },
-    // NOTE: Add brave too.
-    // brave: () => {},
+    brave: (rawVersion, binaryPath) => {
+      // Example: "Brave Browser 77.0.69.135" matches "77.0.69.135"
+      const { version, majorVersion } = parseVersion(
+        rawVersion,
+        /Brave Browser (\d+\.\d+\.\d+\.\d+)/,
+      );
+
+      return {
+        name: "Brave",
+        channel: "stable",
+        family: "chromium",
+        displayName: "Brave",
+        version,
+        path: binaryPath,
+        majorVersion,
+        isHeaded: true,
+        isHeadless: false,
+      };
+    },
   };
 
   const additionalBrowsers = await Promise.all(
