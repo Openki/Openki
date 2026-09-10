@@ -24,7 +24,8 @@ export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const user = useUser();
-  const [showModal, setShowModal] = useState(false);
+  // TODO: Remove before merge
+  const [showModal, setShowModal] = useState(true);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -160,12 +161,13 @@ function ParticipantContactModal({
         <div className="modal-content">
           {/* Use a z-index that is higher than the values defined by https://getbootstrap.com/docs/5.3/layout/z-index/ */}
           <div className="modal-header position-sticky top-0" style={{ zIndex: 1200 }}>
-            <h4 className="modal-title">
+            <h4 className="modal-title d-flex align-items-center gap-2">
               <i className="fa-solid fa-comment fa-fw" />
-              &nbsp;
-              {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
-                USER: participant?.getDisplayName(),
-              })}
+              <span>
+                {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
+                  USER: participant?.getDisplayName(),
+                })}
+              </span>
             </h4>
             <button
               type="button"

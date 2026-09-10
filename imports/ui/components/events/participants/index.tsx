@@ -145,12 +145,14 @@ export function EventParticipants({ event }: Props) {
             <div className="modal-dialog modal-sm" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h4 className="modal-title">
+                  <h4 className="modal-title d-flex align-items-center gap-2">
                     <i className="fa-solid fa-paper-plane fa-fw" />
-                    {t(
-                      "participantContactModal.writeMessageToAllAttendees",
-                      "Write a message to all participants",
-                    )}
+                    <span>
+                      {t(
+                        "participantContactModal.writeMessageToAllAttendees",
+                        "Write a message to all participants",
+                      )}
+                    </span>
                   </h4>
                   <button
                     type="button"
