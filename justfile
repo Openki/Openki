@@ -2,9 +2,7 @@
 #
 # https://github.com/casey/just#readme
 #
-# This file can be executed with the `just` command runner.
-#
-# It is useful for the following reasons:
+# This file can be executed with `just` and is useful for the following reasons:
 # - To reduce repeated typing for common tasks.
 # - To document dev commands.
 #
