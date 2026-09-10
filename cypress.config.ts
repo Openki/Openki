@@ -12,7 +12,6 @@ export default defineConfig({
     // experimentalRunAllSpecs: true,
     screenshotsFolder: "tests/screenshots",
     videosFolder: "tests/videos",
-    allowCypressEnv: false,
     video: false,
     retries: {
       runMode: 2,
