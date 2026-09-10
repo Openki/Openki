@@ -175,7 +175,7 @@ export function EventParticipants({ event }: Props) {
           {canNotifyAll() && (
             <i
               data-test="events-participants-notify-all"
-              className="fa-solid fa-envelope cursor-pointer float-end"
+              className="fa-solid fa-paper-plane cursor-pointer float-end"
               onClick={() => setShowModal(!showModal)}
             />
           )}

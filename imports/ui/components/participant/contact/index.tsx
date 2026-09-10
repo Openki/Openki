@@ -97,7 +97,7 @@ export function ParticipantContact(props: Props) {
                     data-bs-title={t("user.privateMessage", "Contact directly")}
                     onClick={() => setShowModal(true)}
                   >
-                    <i className="fa-solid fa-envelope fa-fw" />
+                    <i className="fa-solid fa-comment fa-fw" />
                   </button>
                 ) : (
                   <span
@@ -109,7 +109,7 @@ export function ParticipantContact(props: Props) {
                     )}
                   >
                     <button className="btn btn-link p-0" type="button" disabled>
-                      <i className="fa-solid fa-envelope fa-fw" />
+                      <i className="fa-solid fa-comment fa-fw" />
                     </button>
                   </span>
                 )
@@ -123,7 +123,7 @@ export function ParticipantContact(props: Props) {
                   )}
                 >
                   <button className="btn btn-link p-0" type="button" disabled>
-                    <i className="fa-solid fa-envelope fa-fw" />
+                    <i className="fa-solid fa-comment fa-fw" />
                   </button>
                 </span>
               ))}
@@ -161,7 +161,7 @@ function ParticipantContactModal({
           {/* Use a z-index that is higher than the values defined by https://getbootstrap.com/docs/5.3/layout/z-index/ */}
           <div className="modal-header position-sticky top-0" style={{ zIndex: 1200 }}>
             <h4 className="modal-title">
-              <i className="fa-solid fa-paper-plane fa-fw" />
+              <i className="fa-solid fa-comment fa-fw" />
               &nbsp;
               {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
                 USER: participant?.getDisplayName(),
