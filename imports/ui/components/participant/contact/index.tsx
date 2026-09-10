@@ -24,8 +24,7 @@ export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const user = useUser();
-  // TODO: Remove before merge
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -159,8 +158,7 @@ function ParticipantContactModal({
     <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
       <div className="modal-dialog modal-sm" role="document">
         <div className="modal-content">
-          {/* Use a z-index that is higher than the values defined by https://getbootstrap.com/docs/5.3/layout/z-index/ */}
-          <div className="modal-header position-sticky top-0" style={{ zIndex: 1200 }}>
+          <div className="modal-header position-sticky top-0 z-1200">
             <h4 className="modal-title d-flex align-items-center gap-2">
               <i className="fa-solid fa-comment fa-fw" />
               <span>
