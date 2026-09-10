@@ -45,13 +45,6 @@ export const sendPrivateMessage = ServerMethod(
     check(message, String);
     check(options, SendPrivateMessageOptionsPattern);
 
-    // Avoid client-side simulations when sending messages to avoid confusing the user
-    // by showing the sent message for a few hundred milliseconds and then immideately
-    // closing the modal.
-    if (this.isSimulation) {
-      return;
-    }
-
     const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
@@ -86,6 +79,10 @@ export const sendPrivateMessage = ServerMethod(
       context,
     );
   },
+  // Avoid client-side simulations when sending messages to avoid confusing the user
+  // by showing the sent message for a few hundred milliseconds and then immideately
+  // closing the modal.
+  { simulation: false },
 );
 
 export const sendReport = ServerMethod(
