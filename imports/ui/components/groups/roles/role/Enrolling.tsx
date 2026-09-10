@@ -114,7 +114,6 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
         aria-controls={name}
       >
         <RoleIcon className="grouppage-role-icon" role={role} regionRoles={regionRoles} />
-        &nbsp;
         {roleSubscribe(role)}
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
