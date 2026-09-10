@@ -62,7 +62,7 @@ async function findAdditionalBrowsers(): Promise<Cypress.Browser[]> {
       const { version, majorVersion } = parseVersion(rawVersion, /Helium \S+ \(Chromium (\S+)\)/);
 
       return {
-        name: "Helium",
+        name: "helium",
         displayName: "Helium",
         family: "chromium",
         channel: "stable",
@@ -81,7 +81,7 @@ async function findAdditionalBrowsers(): Promise<Cypress.Browser[]> {
       );
 
       return {
-        name: "Brave",
+        name: "brave",
         channel: "stable",
         family: "chromium",
         displayName: "Brave",
