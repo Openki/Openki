@@ -80,7 +80,7 @@ export function UserprofilePage({ user }: Props) {
   }
 
   const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(
-    { when: Boolean(currentUser?._id) },
+    { when: Boolean(currentUser) },
     user._id,
   );
 
