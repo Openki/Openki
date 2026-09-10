@@ -50,12 +50,8 @@ export function UserprofilePage({ user }: Props) {
   const alterPrivileges = currentUser?.hasPrivilege("admin") || false;
   const showPrivileges = alterPrivileges || !!user.privileges?.length;
 
-  /**
-   * whether userprofile is for the logged-in user
-   */
-  function ownUser() {
-    return user._id === currentUser?._id;
-  }
+  const isOwnProfile = user._id === currentUser?._id;
+
   function hasContributed() {
     return checkContribution(user.contribution);
   }
@@ -99,7 +95,7 @@ export function UserprofilePage({ user }: Props) {
       },
       showEmailOptions:
         Boolean(currentUser) &&
-        !ownUser() &&
+        !isOwnProfile &&
         !isLoadingMessages() &&
         Array.isArray(previousMessages) &&
         previousMessages.length === 0,
@@ -244,7 +240,7 @@ export function UserprofilePage({ user }: Props) {
                 <Contribution userId={user._id} />
               </h1>
 
-              {ownUser() ? (
+              {isOwnProfile ? (
                 <span className="fst-italic">({t("profile.its_you", "It's you.")})</span>
               ) : (
                 alterPrivileges &&
@@ -276,24 +272,24 @@ export function UserprofilePage({ user }: Props) {
                 dangerouslySetInnerHTML={{ __html: user.description }}
               ></p>
 
-              {ownUser() ? (
+              {isOwnProfile && (
                 <a className="btn btn-primary" href={Router.path("profile")}>
                   <i className="fa-solid fa-gears fa-fw" />{" "}
                   {t("profile.preferenceslink", "Account settings")}
                 </a>
-              ) : (
-                allowPrivateMessages() && (
-                  <>
-                    {Array.isArray(previousMessages) && (
-                      <PreviousDirectMessages previousMessages={previousMessages} />
-                    )}
-                    <SendMessage {...sendMessageAttr()} />
-                  </>
-                )
               )}
             </div>
           </div>
         </div>
+
+        {!isOwnProfile && allowPrivateMessages() && (
+          <div className="page-component page-component-seperated">
+            {Array.isArray(previousMessages) && (
+              <PreviousDirectMessages previousMessages={previousMessages} />
+            )}
+            <SendMessage {...sendMessageAttr()} />
+          </div>
+        )}
 
         {!isLoadingOrganizations() && showSettings() && (
           <div className="page-component page-component-seperated">
