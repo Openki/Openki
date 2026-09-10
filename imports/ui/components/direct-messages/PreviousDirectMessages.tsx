@@ -33,17 +33,9 @@ export function PreviousDirectMessages({
       <div className="mb-4">
         <h4>{t("previousDirectMessages.title", "Previous messages:")}</h4>
         {previousMessages.length > visibleMessages.length && (
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <span>
-              {t("previousDirectMessages.showingCount", "Showing {COUNT} / {TOTAL}", {
-                COUNT: visibleMessages.length,
-                TOTAL: previousMessages.length,
-              })}
-            </span>
-            <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
-              {t("previousDirectMessages.showAll", "Show all")}
-            </button>
-          </div>
+          <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm mb-4">
+            {t("previousDirectMessages.showAll", "Show all")}
+          </button>
         )}
 
         <div className="d-grid gap-3">

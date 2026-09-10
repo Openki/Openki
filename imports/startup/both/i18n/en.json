@@ -816,7 +816,6 @@
   "Please.login": "Please log in or register",
   "previousDirectMessages.messageContext.sentVia": "Via",
   "previousDirectMessages.showAll": "Show all",
-  "previousDirectMessages.showingCount": "Showing {COUNT} / {TOTAL}",
   "previousDirectMessages.title": "Previous messages:",
   "pricePolicy.disclaimer": "Education should be open to everyone. That's why {SITENAME} only allows suggested/orientation prices.",
   "pricePolicy.dontShowAnymore": "Don't show this anymore",
