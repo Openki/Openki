@@ -47,6 +47,7 @@ test:
     meteor npm run test
 
 # List npm dependencies that have new versions available
+[no-exit-message]
 outdated:
     meteor npm outdated
 
