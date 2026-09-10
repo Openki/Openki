@@ -72,7 +72,7 @@ export function UserprofilePage({ user }: Props) {
       return true;
     }
 
-    if (user._id === currentUser?._id) {
+    if (isOwnProfile) {
       return false;
     }
 
