@@ -36,6 +36,16 @@ async function getBrowserInfo(
   return false;
 }
 
+function parseVersion(rawVersion: string, regex: RegExp) {
+  const [version] = rawVersion.match(regex)?.slice(1) ?? [];
+  if (!version) {
+    throw new Error("Failed to match version: " + rawVersion);
+  }
+  const majorVersion = parseInt(version.split(".")[0]);
+
+  return { version, majorVersion };
+}
+
 /**
  * Add custom browsers to allow running tests in specific browsers.
  */
@@ -46,11 +56,8 @@ async function findAdditionalBrowsers(): Promise<Cypress.Browser[]> {
    */
   const potentialBrowsers: Record<string, BrowserParser> = {
     helium: (rawVersion, binaryPath) => {
-      // Example: Helium 0.16.6.1 (Chromium 152.0.7977.82) matches 152.0.7977.82
-      const [chromiumVersion] = rawVersion.match(/Helium \S+ \(Chromium (\S+)\)/)?.slice(1) ?? [];
-      if (!chromiumVersion) {
-        throw new Error("Failed to match version: " + rawVersion);
-      }
+      // Example: "Helium 0.16.6.1 (Chromium 152.0.7977.82)" matches "152.0.7977.82"
+      const { version, majorVersion } = parseVersion(rawVersion, /Helium \S+ \(Chromium (\S+)\)/);
 
       return {
         name: "Helium",
