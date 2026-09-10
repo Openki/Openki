@@ -8,7 +8,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useDetails as useEventDetails } from "/imports/api/events/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 
-const DEFAULT_VISIBLE_MESSAGES = 2;
+const defaultVisibleMessages = 2;
 
 export function PreviousDirectMessages({
   previousMessages,
@@ -19,7 +19,7 @@ export function PreviousDirectMessages({
 }) {
   const [showAll, setShowAll] = useState(false);
   const visibleMessages = (
-    showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
+    showAll ? previousMessages : previousMessages.slice(-defaultVisibleMessages)
   ) as DirectMessage[];
   const { t } = useTranslation();
 
