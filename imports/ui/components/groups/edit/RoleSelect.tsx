@@ -11,6 +11,7 @@ import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
 import { isCustom, sameRole } from "/imports/api/groups/lib/isRole";
 import { createFilter } from "react-select";
+import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 
 interface Props {
   region: string;
@@ -133,7 +134,7 @@ export function RoleSelect({
             `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
         })}
         onCreateOption={(newValue) =>
-          onChange([...value, { id: "", label: newValue, type: "custom" }])
+          onChange(uniqGroupRole([...value, { id: "", label: newValue, type: "custom" }]))
         }
         onChange={(newValue) => onChange(newValue.map((value) => value.role))}
       />

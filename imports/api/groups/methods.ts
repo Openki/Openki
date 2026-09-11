@@ -35,6 +35,7 @@ import { sameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
 import { RolePattern } from "./lib/RolePattern";
+import { uniqGroupRole } from "./lib/uniqGroupRole";
 
 async function loadGroup(id: string) {
   const group = await Groups.findOneAsync({ _id: id });
@@ -121,7 +122,8 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<GroupEntity>;
 
-  const changedRoles = changes.roles as GroupRole[];
+  // validation: only allow uniq roles
+  const changedRoles = uniqGroupRole(changes.roles || []);
   if (changedRoles) {
     if (isNew) {
       const regionRoles = await loadRoles(changes.region as string);
