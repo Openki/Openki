@@ -101,13 +101,13 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
     return null;
   }
 
-  let name;
+  let id;
   switch (role.type) {
     case RoleType.Predefined:
-      name = `group-${group._id}-role-enroll-${role.id}-${role.type}`;
+      id = `group-${group._id}-role-enroll-${role.id}-${role.type}`;
       break;
     case RoleType.Custom:
-      name = `group-${group._id}-role-enroll-${slug(role.label)}-${role.type}`;
+      id = `group-${group._id}-role-enroll-${slug(role.label)}-${role.type}`;
       break;
 
     default:
@@ -117,25 +117,25 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
   return (
     <div className="d-grid">
       <button
-        data-test={`${name}-button`}
+        data-test={`${id}-button`}
         className="group-role-btn btn btn-add btn-lg text-start collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target={`#${name}`}
+        data-bs-target={`#${id}`}
         aria-expanded="false"
-        aria-controls={name}
+        aria-controls={id}
       >
         <span className="fw-bold text-start">{roleSubscribe(role)}</span>
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />
       </button>
-      <div ref={collapseRef} className="collapse" id={name}>
+      <div ref={collapseRef} className="collapse" id={id}>
         <div className="border border-top-0 border-success rounded-bottom-3 bg-success-subtle p-3">
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id={`${name}-comment`}
+                id={`${id}-comment`}
                 label={roleGroupMessageInfo(role)}
                 onChange={(value) => setComment(value)}
                 type="text"
@@ -147,7 +147,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
             <div className="form-actions">
               <Button
                 submit
-                id={`${name}-join`}
+                id={`${id}-join`}
                 className="btn-save"
                 needsLogin
                 visitorUserAllowed={isParticipant(role)}
@@ -160,9 +160,9 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
                 type="reset"
                 className="btn btn-cancel collapsed"
                 data-bs-toggle="collapse"
-                data-bs-target={`#${name}`}
+                data-bs-target={`#${id}`}
                 aria-expanded="false"
-                aria-controls={name}
+                aria-controls={id}
                 disabled={isBusy}
               >
                 {t("_button.cancel")}

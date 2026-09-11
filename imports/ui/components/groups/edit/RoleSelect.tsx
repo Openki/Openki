@@ -5,13 +5,14 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { GroupRole } from "/imports/api/groups/groups";
 import { ReactSelectCreate } from "/imports/ui/components/react-select/ReactSelectCreate";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
 import { isCustom, sameRole } from "/imports/api/groups/lib/isRole";
-import { createFilter } from "react-select";
+import { components, createFilter, MultiValueRemoveProps } from "react-select";
 import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
+import { slug } from "/imports/utils/string-tools";
 
 interface Props {
   region: string;
@@ -24,6 +25,45 @@ interface Props {
 
   onChange: (role: Props["value"]) => void;
 }
+
+interface RoleOption {
+  role: GroupRole;
+  value: string;
+  ariaLabel: string;
+  label: React.JSX.Element;
+}
+
+const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
+  const { t } = useTranslation();
+
+  const { role } = props.data;
+
+  let id;
+  switch (role.type) {
+    case RoleType.Predefined:
+      id = `role-select-${role.id}-${role.type}`;
+      break;
+    case RoleType.Custom:
+      id = `role-select-${slug(role.label)}-${role.type}`;
+      break;
+
+    default:
+      throw new Error("Unexpected value for role.type");
+  }
+
+  return (
+    <components.MultiValueRemove
+      {...props}
+      innerProps={{
+        ...props.innerProps,
+        id,
+        "aria-label": t("group.edit.needs.role.ariaLabel", 'Remove "{ROLE}"', {
+          ROLE: props.data.ariaLabel,
+        }),
+      }}
+    />
+  );
+};
 
 export function RoleSelect({
   region,
@@ -89,6 +129,7 @@ export function RoleSelect({
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,
+      ariaLabel: roleShort(r),
       label: (
         <>
           <RoleIcon role={r} regionRoles={regionRoles} /> {roleDescription(r)}
@@ -101,6 +142,7 @@ export function RoleSelect({
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,
+      ariaLabel: roleShort(r),
       label: (
         <>
           <RoleIcon role={r} regionRoles={regionRoles} /> {roleShort(r)}
@@ -119,6 +161,9 @@ export function RoleSelect({
         isClearable
         isSearchable
         hideSelectedOptions
+        components={{
+          MultiValueRemove: CustomMultiValueRemove,
+        }}
         placeholder={t(
           "group.edit.needs.role.placeholder",
           "Select from the list or type in what is needed...",

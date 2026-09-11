@@ -929,6 +929,7 @@ export const groups: {
     roles: ["team", "participant", "mentor", "host"],
     members: [
       { user: "OliviaTheMan!!!Yeah <!-- Hack -->en", roles: ["participant"] },
+      { user: "Seee", roles: ["team"] },
       { user: "HertsPflaschteren", roles: ["participant"] },
       { user: "DGassen", roles: ["host"] },
     ],
