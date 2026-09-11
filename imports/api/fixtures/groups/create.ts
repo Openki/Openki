@@ -65,11 +65,11 @@ async function createBase(prng: PRNG) {
       createdby: (await ensure.user(template.createdby, region))._id,
       time_created: new Date(new Date().getTime() - age),
       time_lastedit: new Date(new Date().getTime() - age * 0.25),
-      roles: template.roles.map((r) => predefinedRole(r)),
+      roles: template.roles.map((role) => predefinedRole(role)),
       members: await Promise.all(
         template.members.map(async (member) => ({
           ...member,
-          roles: member.roles.map((r) => predefinedRole(r)),
+          roles: member.roles.map((role) => ({ id: role, type: "predefined" })),
           user: (await ensure.user(member.user, region))._id,
         })),
       ),
@@ -105,7 +105,7 @@ async function createZuerichLernt(prng: PRNG) {
       roles: template.roles.map((r) => predefinedRole(r)),
       members: await mapSync(template.members, async (member) => ({
         ...member,
-        roles: member.roles.map((r) => predefinedRole(r)),
+        roles: member.roles.map((r) => ({ id: r, type: "predefined" })),
         user: (await ensure.user(member.user, template.region))._id,
       })),
       internal: template.internal || false,
