@@ -17,7 +17,8 @@ import { Join, Props } from "/imports/emails/notifications/Join";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
-import { Role, RolePattern, SystemRoles } from "/imports/api/groups/lib/Role";
+import { Role, SystemRoles } from "/imports/api/groups/lib/Role";
+import { RolePattern } from "/imports/api/groups/lib/RolePattern";
 import { sameRole } from "/imports/api/groups/lib/isRole";
 
 export const ModelName = "Join";

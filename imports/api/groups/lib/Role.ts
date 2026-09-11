@@ -1,14 +1,10 @@
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { type RolePattern } from "/imports/api/groups/lib/RolePattern";
+import { type Type } from "/imports/utils/CustomChecks";
 
 export const RoleType = {
   Predefined: "predefined",
   Custom: "custom",
 } as const;
-
-export const RolePattern = {
-  id: String,
-  type: StringEnum(...Object.values(RoleType)),
-};
 
 export type Role = Type<typeof RolePattern>;
 

@@ -33,13 +33,8 @@ import { loadRoles } from "/imports/api/regions/loadRoles";
 import { ValidationError } from "meteor/mdg:validation-error";
 import { sameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
-import {
-  predefinedRole,
-  Role,
-  RolePattern,
-  RoleType,
-  SystemRoles,
-} from "/imports/api/groups/lib/Role";
+import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
+import { RolePattern } from "./lib/RolePattern";
 
 async function loadGroup(id: string) {
   const group = await Groups.findOneAsync({ _id: id });
@@ -126,7 +121,8 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<GroupEntity>;
 
-  if (changes.roles) {
+  const changedRoles = changes.roles as GroupRole[];
+  if (changedRoles) {
     if (isNew) {
       const regionRoles = await loadRoles(changes.region as string);
       const disabledRoles = await loadDisabledRoles(changes.organizations || []);
@@ -140,7 +136,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
         .map((r) => predefinedRole(r.id));
 
       groupRoles.push(
-        ...((changes.roles || []) as GroupRole[])
+        ...changedRoles
           .filter((role) => {
             switch (role.type) {
               case RoleType.Predefined:
@@ -201,7 +197,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
           return false;
         }
 
-        if ((changes.roles || []).some((role) => sameRole(role, groupRole))) {
+        if (changedRoles.some((role) => sameRole(role, groupRole))) {
           return false;
         }
 
@@ -224,7 +220,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
       // the new order is relevant
       groupRoles.push(
-        ...((changes.roles || []) as GroupRole[])
+        ...changedRoles
           .filter((role) => {
             if (group.roles.some((groupRole) => sameRole(role, groupRole))) {
               // allow roles that are part of the group already
@@ -232,12 +228,11 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
             }
 
             switch (role.type) {
-              case RoleType.Predefined: {
+              case RoleType.Predefined:
                 // allow predefined roles that are editable
                 return regionRoles.some(
                   (regionRole) => regionRole.id === role.id && regionRole.editable,
                 );
-              }
 
               case RoleType.Custom:
                 // allow new custom roles
@@ -265,16 +260,20 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
       set.roles = groupRoles;
 
-      const removedRoles = differenceWith(group.roles, groupRoles, sameRole);
-      await Groups.updateAsync(
-        { _id: groupId },
-        {
-          $pull: {
-            roles: { $in: removedRoles } as any,
-            "members.$[].roles": { $in: removedRoles.map((r) => ({ id: r.id, type: r.type })) },
-          },
-        },
+      const removedRoles = differenceWith(group.roles, groupRoles, sameRole).map(
+        ({ id, type }) => ({ id, type }),
       );
+      if (removedRoles.length > 0) {
+        await Groups.updateAsync(
+          { _id: groupId },
+          {
+            $pull: {
+              roles: { $or: removedRoles } as any,
+              "members.$[].roles": { $or: removedRoles },
+            },
+          },
+        );
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { GroupMember } from "/imports/api/groups/groups";
+import { type GroupMember } from "/imports/api/groups/groups";
 
 import { hasRole, hasRoleUser } from "/imports/api/groups/lib/hasRole";
 

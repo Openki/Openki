@@ -24,7 +24,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { isMentor } from "/imports/api/groups/lib/isRole";
 import { Filtering } from "/imports/utils/filtering";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { Button, ButtonCancel, ButtonSave } from "../../Buttons";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Title } from "./title";
@@ -515,15 +515,15 @@ export function Edit({
                         <GroupCategories categories={group.categories} />
                       </>
                     )}
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-edit"
+                    <Button
+                      id="groups-edit-add-categories"
+                      className="btn-sm btn-edit"
                       onClick={() => setEditingCategories(true)}
                     >
                       {!group.categories?.length
                         ? t("group.edit.addCategories", "Add categories")
                         : t("_button.edit")}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   <SelectCategories {...selectCategoriesAttr()} />

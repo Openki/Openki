@@ -48,11 +48,11 @@ select:hover {
 }
 
 .bg-user {
-  background: $user-bg;
+  background: $user-bg !important;
 }
 
 .bg-user-subtle {
-  background-color: color.adjust($user-bg, $lightness: 10%);
+  background-color: color.adjust($user-bg, $lightness: 10%) !important;
 }
 
 .action-focus {

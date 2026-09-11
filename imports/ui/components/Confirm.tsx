@@ -5,8 +5,8 @@ export function Confirm({
   variant = "danger",
   children,
 }: {
-  variant?: "danger" | "warning";
-  children?: ReactNode;
+  variant?: "danger" | "warning" | undefined;
+  children?: ReactNode | undefined;
 }) {
   return (
     <div
@@ -20,8 +20,18 @@ export function Confirm({
   );
 }
 
-export function ConfirmText({ children }: { children?: ReactNode }) {
-  return <p className="fs-5 whitespace-pre-line">{children}</p>;
+export function ConfirmText({
+  id,
+  children,
+}: {
+  id?: string | undefined;
+  children?: ReactNode | undefined;
+}) {
+  return (
+    <p id={id} className="fs-5 whitespace-pre-line">
+      {children}
+    </p>
+  );
 }
 
 export function ConfirmActions({ children }: { children?: ReactNode }) {

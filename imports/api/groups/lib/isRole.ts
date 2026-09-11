@@ -1,4 +1,4 @@
-import { Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
+import { type Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
 
 export function sameRole(role1: Role, role2: Role) {
   return role1.id === role2.id && role1.type === role2.type;

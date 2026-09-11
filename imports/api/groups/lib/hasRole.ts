@@ -1,4 +1,4 @@
-import { GroupMember, GroupRoleRef } from "/imports/api/groups/groups";
+import { type GroupMember, type GroupRoleRef } from "/imports/api/groups/groups";
 import { sameRole } from "/imports/api/groups/lib/isRole";
 
 /**

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { slug } from "/imports/utils/string-tools";
 
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -100,12 +101,23 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
     return null;
   }
 
-  const name = `group-${group._id}-role-enroll-${role.id}-${role.type}-content`;
+  let name;
+  switch (role.type) {
+    case RoleType.Predefined:
+      name = `group-${group._id}-role-enroll-${role.id}-${role.type}`;
+      break;
+    case RoleType.Custom:
+      name = `group-${group._id}-role-enroll-${slug(role.label)}-${role.type}`;
+      break;
+
+    default:
+      throw new Error("Unexpected value for role.type");
+  }
 
   return (
     <div className="d-grid">
       <button
-        data-test={`group-${group._id}-role-enroll-${role.id}-${role.type}`}
+        data-test={`${name}-button`}
         className="group-role-btn btn btn-add btn-lg text-start collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
@@ -123,7 +135,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id={`group-${group._id}-role-${role.id}-${role.type}-comment`}
+                id={`${name}-comment`}
                 label={roleGroupMessageInfo(role)}
                 onChange={(value) => setComment(value)}
                 type="text"
@@ -135,7 +147,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
             <div className="form-actions">
               <Button
                 submit
-                id={`group-${group._id}-roles-${role.id}-${role.type}-join`}
+                id={`${name}-join`}
                 className="btn-save"
                 needsLogin
                 visitorUserAllowed={isParticipant(role)}
