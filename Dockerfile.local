@@ -2,26 +2,21 @@
 # See the changelog for more info: https://docs.meteor.com/history
 FROM node:24-trixie-slim
 
-USER node
+RUN apt-get update && \
+  rm -rf /var/lib/apt/lists/* \
+  && useradd --create-home --shell /bin/bash --uid 1001 --user-group app \
+  && mkdir /app \
+  && chown -R app:app /app
+
+USER app
 WORKDIR /app
 
 RUN npx "meteor@$METEOR_VERSION"
 
 # Ensure the `meteor` binary is available in the path
-RUN export PATH=/home/node/.meteor:$PATH
+ENV PATH=/home/app/.meteor:$PATH
 
-# RUN apt-get update && apt-get install -y curl
-
-# Install the defined Meteor version. This should matach ./.meteor/release
-# RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
-
-# Remove temporary packages like curl
-# RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
-
-# USER node
-# WORKDIR /app
-
-# Might be worth trying to explicit bind mounts in the container itself
+# IDEA: Might be worth trying to explicit bind mounts in the container itself
 # RUN --mount=type=cache,target=/root/.npm \
 #     --mount=type=bind,source=package.json,target=package.json \
 #     --mount=type=bind,source=package-lock.json,target=package-lock.json \
@@ -31,11 +26,14 @@ RUN export PATH=/home/node/.meteor:$PATH
 # Source code and other files should be provided via the bind mount,
 # which is defined in `docker-compose.dev.yml`.
 # This approach enables caching for this layer while editing app code.
-COPY --chown=node:node package*.json /app/
-COPY --chown=node:node ./.meteor /app/.meteor/
+COPY --chown=app:app package*.json /app/
+COPY --chown=app:app ./.meteor /app/.meteor/
 
-# TODO: The core issue is that the meteor tool does not have access to the /app directory.
-# TODO: Another error is that npm (or something else) fails with exit code 77.
+# TODO: Debug the error about Error: EACCES: permission denied, stat '/app/.meteor/local/dev_bundle'
+# TODO: Log who owns the /app/.meteor/local directory.
+#
+# IDEA: Do we need to ignore the .meteor/local/dev_bundle so it doesn't get added by accident?
+# Or should we inspect the ownership of it and verify so we run as the right user?
 
 # TODO: Temporarily log as much as possible until everything works as expected
 RUN meteor npm ci --loglevel silly
