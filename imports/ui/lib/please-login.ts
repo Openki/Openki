@@ -16,18 +16,17 @@ export function PleaseLogin(
 
   instance.autorun((computation) => {
     if (Meteor.userId()) {
-      // if the user is loggged in stop the computation and call the save function
+      // If the user is logged in stop the computation and call the save function
 
       computation.stop();
       afterLogin();
     } else if (Session.equals("pleaseLogin", false) && openedLogin) {
-      // also stop the computation but don't save if the user closes the login
+      // Also stop the computation but don't save if the user closes the login
       // window without logging in
 
       computation.stop();
-      instance.busy(false);
     } else {
-      // if the user is not logged in open up the login window
+      // If the user is not logged in open up the login window
 
       Session.set("visitorUserAllowed", visitorUserAllowed);
       Session.set("pleaseLogin", true);

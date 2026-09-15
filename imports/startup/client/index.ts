@@ -5,7 +5,6 @@ import { Session } from "meteor/session";
 import { Alerts } from "/imports/api/alerts/alerts";
 
 import "./client-error";
-import "./extend-instance";
 import "./locale";
 import "./templates";
 import "./template-helpers";
