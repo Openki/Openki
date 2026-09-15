@@ -1,38 +1,41 @@
-# The Node major version should match the Node version supported by the current Meteor release
-FROM node:24-alpine3.24
+# The Node.js major version should be the one supported by our current METEOR_VERSION
+# See the changelog for more info: https://docs.meteor.com/history
+FROM node:24-trixie-slim
 
-RUN apk add --no-cache python3 make g++ git bash curl
+RUN apt-get update && apt-get install -y curl
 
-# Install the defined Meteor version as a non-root user
 ENV METEOR_VERSION=3.5.2
-# ENV METEOR_INSTALL="/usr/local/meteor"
-# ENV PATH="$METEOR_INSTALL/bin:$PATH"
 
+# Install the defined Meteor version. This should match the
 RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
-# && \ mv ~/.meteor $METEOR_INSTALL
 
-# RUN echo 'export METEOR_INSTALL="/usr/local/meteor"' >> /etc/bash.bashrc && \
-#     echo 'export PATH="$METEOR_INSTALL/bin:$PATH"' >> /etc/bash.bashrc
+# Remove temporary packages like curl
+RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 USER node
 WORKDIR /app
+
+# Might be worth trying to explicit bind mounts in the container itself
+# RUN --mount=type=cache,target=/root/.npm \
+#     --mount=type=bind,source=package.json,target=package.json \
+#     --mount=type=bind,source=package-lock.json,target=package-lock.json \
+#   meteor npm ci
 
 # Only copy what's needed to install dependencies.
 # Source code and other files should be provided via the bind mount,
 # which is defined in `docker-compose.dev.yml`.
 # This approach enables caching for this layer while editing app code.
-COPY package*.json ./
-COPY ./.meteor ./.meteor/
+COPY --chown=node:node package*.json /app/
+COPY --chown=node:node ./.meteor /app/.meteor/
 
-# TODO: Temporarily log as much as possible to know what is attempting to use bash and curl.
-# It is the meteor wrapper shell script, which for some reason is installing meteor a second time
-# and then failing with the error:
-# /home/node/.meteor/meteor: line 148: /home/node/.meteor/packages/meteor-tool/.3.5.2.e0rfhnhdewl++os.linux.x86_64+web.browser+web.browser.legacy+web.cordova/mt-os.linux.x86_64/dev_bundle/bin/node: cannot execute: required file not found
-# Error: building at STEP "RUN meteor npm ci --loglevel silly": while running runtime: exit status 127
-RUN meteor npm ci --loglevel silly
+# TODO: The core issue is that the meteor tool does not have access to the /app directory.
+# TODO: Another error is that npm (or something else) fails with exit code 77.
+
+# TODO: Temporarily log as much as possible until everything works as expected
+RUN meteor npm ci --verbose
 
 EXPOSE 3000 9229
 
-# # TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
-# # to start the other dev scripts as expected.
+# TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
+# to start the other dev scripts as expected.
 CMD ["meteor", "--inspect=0.0.0.0:9229", "--settings", "settings/docker-dev.json"]
