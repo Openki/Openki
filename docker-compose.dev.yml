@@ -76,6 +76,7 @@ services:
       ROOT_URL: ${ROOT_URL:-http://localhost:3000}
       PORT: 3000
       MONGO_URL: mongodb://mongo:27017/openki
+      METEOR_VERSION: 3.5.2
       METEOR_NO_RELEASE_CHECK: true # This removes the need for sudo access when running meteor
       DO_NOT_TRACK: 1 # Disable Meteor telemetry
     volumes:

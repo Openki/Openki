@@ -2,18 +2,24 @@
 # See the changelog for more info: https://docs.meteor.com/history
 FROM node:24-trixie-slim
 
-RUN apt-get update && apt-get install -y curl
-
-ENV METEOR_VERSION=3.5.2
-
-# Install the defined Meteor version. This should match the
-RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
-
-# Remove temporary packages like curl
-RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
-
 USER node
 WORKDIR /app
+
+RUN npx "meteor@$METEOR_VERSION"
+
+# Ensure the `meteor` binary is available in the path
+RUN export PATH=/home/node/.meteor:$PATH
+
+# RUN apt-get update && apt-get install -y curl
+
+# Install the defined Meteor version. This should matach ./.meteor/release
+# RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
+
+# Remove temporary packages like curl
+# RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
+
+# USER node
+# WORKDIR /app
 
 # Might be worth trying to explicit bind mounts in the container itself
 # RUN --mount=type=cache,target=/root/.npm \
@@ -32,7 +38,7 @@ COPY --chown=node:node ./.meteor /app/.meteor/
 # TODO: Another error is that npm (or something else) fails with exit code 77.
 
 # TODO: Temporarily log as much as possible until everything works as expected
-RUN meteor npm ci --verbose
+RUN meteor npm ci --loglevel silly
 
 EXPOSE 3000 9229
 
