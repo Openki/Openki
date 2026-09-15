@@ -49,5 +49,9 @@ test:
 outdated:
     meteor npm outdated
 
+# Reset meteor cache. Pass `--db` to also reset the local MongoDB.
+reset *ARGS:
+    meteor reset {{ ARGS }}
+
 alias i := install
 alias o := outdated
