@@ -92,10 +92,10 @@ export function Edit(
 ) {
   const { t } = useTranslation();
   const mapRef = useRef<L.Map>(null);
-  const markerRef = useRef<L.Marker<any>>(null);
+  const markerRef = useRef<L.Marker<unknown>>(null);
   const [level, setLevel] = useState(props.level);
 
-  function toGeoJson(marker: L.Marker<any>): Coordinates {
+  function toGeoJson(marker: L.Marker<unknown>): Coordinates {
     const latLng = marker.getLatLng();
     return [latLng.lng, latLng.lat];
   }
