@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -69,9 +68,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return true;
   }
-  function hasBeenEdited() {
-    return moment(post.time_updated).isAfter(post.time_created);
-  }
+  const hasBeenEdited = post.time_updated.getTime() > post.time_created.getTime();
   function canNotifyAll() {
     if (anon) {
       return false;
@@ -176,7 +173,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   />
                 </>
               )}
-              {hasBeenEdited() && (
+              {hasBeenEdited && (
                 <>
                   {" "}
                   - {t("group.discussion.lastUpdate", "Last update")}:{" "}

@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import { Groups } from "/imports/api/groups/groups";
@@ -37,9 +36,7 @@ export function Show({ post, onEdit }: Props) {
     }
     return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
-  function hasBeenEdited() {
-    return moment(post.time_updated).isAfter(post.time_created);
-  }
+  const hasBeenEdited = post.time_updated.getTime() > post.time_created.getTime();
   function removeDropdownAttr() {
     return {
       async onRemove() {
@@ -108,7 +105,7 @@ export function Show({ post, onEdit }: Props) {
                 />
               </>
             )}
-            {hasBeenEdited() && (
+            {hasBeenEdited && (
               <>
                 {" "}
                 - {t("group.discussion.lastUpdate", "Last update")}:{" "}
