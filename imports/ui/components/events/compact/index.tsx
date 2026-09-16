@@ -55,7 +55,8 @@ export function EventCompact({
       className={cx(
         "event-compact",
         withDate && "has-date",
-        (moment().isAfter(event.end) || event.isFullyBooked() || event.canceled) && "is-past",
+        // eslint-disable-next-line react-hooks/purity
+        (Date.now() > event.end.getTime() || event.isFullyBooked() || event.canceled) && "is-past",
       )}
     >
       {event.canceled ? (

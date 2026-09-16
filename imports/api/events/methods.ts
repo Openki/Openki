@@ -527,8 +527,8 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    // don't allow participant-mutations if event has passed
-    if (moment().isAfter(event.end)) {
+    // Don't allow participant-mutations if event has passed
+    if (Date.now() > event.end.getTime()) {
       throw new Meteor.Error(401, "cannot register, event has already passed");
     }
 
@@ -599,8 +599,8 @@ export const removeParticipant = ServerMethod(
     if (!event) {
       return;
     }
-    // don't allow participant-mutations if event has passed
-    if (moment().isAfter(event.end)) {
+    // Don't allow participant-mutations if event has passed
+    if (Date.now() > event.end.getTime()) {
       throw new Meteor.Error(401, "cannot unregister, event has already passed");
     }
 
