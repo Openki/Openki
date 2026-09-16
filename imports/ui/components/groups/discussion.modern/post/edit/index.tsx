@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -35,7 +35,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
   const [isLoading, group] = Groups.useDetails(post.groupId);
 
-  function notifyAllChecked() {
+  function getNotifyAllDefaultValue() {
     if (!post.new) {
       return false;
     }
@@ -44,10 +44,15 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return false;
   }
-  const [notifyAll, setNotifyAll] = useState(notifyAllChecked());
+  const [notifyAll, setNotifyAll] = useState(getNotifyAllDefaultValue());
+  const isInitialRender = useRef(true);
   // Update notifyAll on prop change
   useEffect(() => {
-    setNotifyAll(!!post.notifyAll);
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+    setNotifyAll(Boolean(post.notifyAll));
   }, [post.notifyAll]);
 
   const richtextPlaceholder = () => {
