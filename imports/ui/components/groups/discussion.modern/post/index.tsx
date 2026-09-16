@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 
-import { Edit } from "./edit";
+import { Edit, type Props as GroupDiscussionEditProps } from "./edit";
 import { Show } from "./show";
 
 import "./styles.scss";
@@ -63,7 +63,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     setEditing(!!edit);
   }, [edit]);
 
-  function newResponse() {
+  function getNewResponse() {
     return {
       new: true,
       parentId: post._id,
@@ -72,7 +72,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       userId,
       title: "",
       text: "",
-    };
+    } as GroupDiscussionEditProps["post"];
   }
   function postShowAttr() {
     return {
@@ -112,7 +112,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       {isParent && (
         <>
           {!!responses && <Responses responses={responses} />}
-          <Post post={newResponse() as any} />
+          <Post post={getNewResponse()} />
         </>
       )}
     </>
