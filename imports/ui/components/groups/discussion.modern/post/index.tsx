@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
@@ -53,8 +53,13 @@ export function Post({ post, responses, edit, onCancel }: Props) {
   const isParent = !post.new && !post.parentId;
   const userId = useUserId();
   const [editing, setEditing] = useState(!!edit);
+  const isInitialRender = useRef(true);
   // Update editing after prop change
   useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
     setEditing(!!edit);
   }, [edit]);
 
