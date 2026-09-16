@@ -47,8 +47,8 @@ export interface GroupEntity {
   _id: string;
   tenant: string;
   name: string;
-  /** ID categories */
-  categories: string[];
+  /** ID categories. This can potentially be undefined because this matches how older groups are stored in the database. */
+  categories?: string[];
   /** (not used) */
   tags: string[];
   /** List ID_organizations ("promote organizations") */

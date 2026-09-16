@@ -29,7 +29,11 @@ export async function beforeInsert(
     throw new Error(`Missing group ${event.groupId} for new event`);
   }
 
-  return { ...event, categories: group.categories };
+  if (group.categories?.length) {
+    return { ...event, categories: group.categories };
+  }
+
+  return event;
 }
 
 export async function afterGroupUpdateCategories(group: { _id: string; categories: string[] }) {
