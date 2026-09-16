@@ -67,7 +67,7 @@ export function Show({ post, onEdit }: Props) {
       </button>
     )
   ) : (
-    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && " ps-5")}>
+    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && "ps-5")}>
       <DiscussionProfileIcon userId={post.userId} />
       <div className="flex-grow-1">
         <div className="d-flex justify-content-between">

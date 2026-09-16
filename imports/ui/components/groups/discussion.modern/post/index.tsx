@@ -53,17 +53,17 @@ export function Post({ post, responses, edit, onCancel }: Props) {
   const isParent = !post.new && !post.parentId;
   const userId = useUserId();
   const [editing, setEditing] = useState(!!edit);
-  const isInitialRender = useRef(true);
+  const isFirstRender = useRef(true);
   // Update editing after prop change
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
       return;
     }
     setEditing(!!edit);
   }, [edit]);
 
-  function getNewResponse() {
+  function getNewPost() {
     return {
       new: true,
       parentId: post._id,
@@ -112,7 +112,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       {isParent && (
         <>
           {!!responses && <Responses responses={responses} />}
-          <Post post={getNewResponse()} />
+          <Post post={getNewPost()} />
         </>
       )}
     </>

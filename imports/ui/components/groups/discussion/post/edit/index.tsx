@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -35,7 +35,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
   const [isLoading, group] = Groups.useDetails(post.groupId);
 
-  function notifyAllChecked() {
+  function getNotifyAllDefaultValue() {
     if (!post.new) {
       return false;
     }
@@ -44,17 +44,20 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return false;
   }
-  const [notifyAll, setNotifyAll] = useState(notifyAllChecked());
+  const [notifyAll, setNotifyAll] = useState(getNotifyAllDefaultValue());
+  const isFirstRender = useRef(true);
   // Update notifyAll on prop change
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setNotifyAll(!!post.notifyAll);
   }, [post.notifyAll]);
 
-  const richtextPlaceholder = () => {
-    return post.parentId
-      ? t("group.discussion.text_placeholder_answer", "Your answer")
-      : t("group.discussion.text_placeholder", "Your comment");
-  };
+  const richtextPlaceholder = post.parentId
+    ? t("group.discussion.text_placeholder_answer", "Your answer")
+    : t("group.discussion.text_placeholder", "Your comment");
 
   function showUserId() {
     return !post.new || !anon;
@@ -90,7 +93,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   function richtextAttr() {
     return {
       text: post.text,
-      placeholder: richtextPlaceholder(),
+      placeholder: richtextPlaceholder,
       onChange(value: string) {
         setValidComment(!!value);
         setCommentText(value);

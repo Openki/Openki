@@ -45,21 +45,19 @@ export function Edit({ post, onSave, onCancel }: Props) {
     return false;
   }
   const [notifyAll, setNotifyAll] = useState(getNotifyAllDefaultValue());
-  const isInitialRender = useRef(true);
+  const isFirstRender = useRef(true);
   // Update notifyAll on prop change
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
       return;
     }
     setNotifyAll(Boolean(post.notifyAll));
   }, [post.notifyAll]);
 
-  const richtextPlaceholder = () => {
-    return post.parentId
-      ? t("group.discussion.text_placeholder_answer", "Your answer")
-      : t("group.discussion.text_placeholder", "Your comment");
-  };
+  const richtextPlaceholder = post.parentId
+    ? t("group.discussion.text_placeholder_answer", "Your answer")
+    : t("group.discussion.text_placeholder", "Your comment");
 
   function showUserId() {
     return !post.new || !anon;
@@ -95,7 +93,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   function richtextAttr() {
     return {
       text: post.text,
-      placeholder: richtextPlaceholder(),
+      placeholder: richtextPlaceholder,
       onChange(value: string) {
         setValidComment(!!value);
         setCommentText(value);
@@ -104,7 +102,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   }
 
   return (
-    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && " ps-5")}>
+    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && "ps-5")}>
       <DiscussionProfileIcon userId={post.userId} />
 
       <form
