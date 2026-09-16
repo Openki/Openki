@@ -229,7 +229,7 @@
   "groups.organizationList.addText": "länk till grupp",
   "introduction.1_teachOrLearn": "Vill du lära dig någonting, eller lära andra.",
   "introduction.2_searchNPropose": "Sök ifall kursen redan existerar. Om inte, bara föreslå den. ",
-  "introduction.3_enrole": "Alla kan delta i din kurs som deltagare, mentor eller värd. ",
+  "introduction.3_enroll": "Alla kan delta i din kurs som deltagare, mentor eller värd. ",
   "introduction.4_schedule": "När alla som behövs är med, så ordnas ett datum.",
   "introduction.5_takePlace": "Kursen anordnas!",
   "introduction.Title": "Vad gör {SITENAME} för dig?",

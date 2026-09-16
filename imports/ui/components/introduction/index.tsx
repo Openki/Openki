@@ -92,7 +92,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                   <i className="fa-solid fa-graduation-cap" />
                 </h2>
                 {t(
-                  "introduction.3_enrole",
+                  "introduction.3_enroll",
                   "Everybody can join your group as participant, mentor or host.",
                 )}
               </div>

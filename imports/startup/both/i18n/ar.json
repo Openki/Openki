@@ -407,7 +407,7 @@
   "groups.organizationList.organizationAdded.error": "فشلت الإضافة",
   "introduction.1_teachOrLearn": "تريد أن تتعلم شيئًا ما ، أو تعلم الآخرين.",
   "introduction.2_searchNPropose": "هل تتطلع لمعرفة ما إذا كان الموضوع موجودًا بالفعل؟ إذا لم يكن كذلك ، فقط اقترحه.",
-  "introduction.3_enrole": "يمكن لأي شخص المشاركة كمتعلم أو مدرس.",
+  "introduction.3_enroll": "يمكن لأي شخص المشاركة كمتعلم أو مدرس.",
   "introduction.4_schedule": "عندما يكون الجميع هناك ، سيتم ترتيب لقاء.",
   "introduction.5_takePlace": "والدورة تجري.",
   "introduction.Title": "ماذا يفعل {SITENAME} من أجلك؟",

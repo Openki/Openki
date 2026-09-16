@@ -509,7 +509,7 @@
   "groups.organizationList.organizationAdded.error": "Échec de l'ajout",
   "introduction.1_teachOrLearn": "Tu souhaites apprendre ou enseigner quelque chose.",
   "introduction.2_searchNPropose": "Cherche si le cours existe déjà. Sinon, propose le.",
-  "introduction.3_enrole": "Toute personne peut se joindre au cours en tant que participant.e, mentor ou hôte.sse.",
+  "introduction.3_enroll": "Toute personne peut se joindre au cours en tant que participant.e, mentor ou hôte.sse.",
   "introduction.4_schedule": "Quand toutes les personnes nécessaires sont inscrites, un rendez-vous est fixé.",
   "introduction.5_takePlace": "Le cours a lieu.",
   "introduction.Title": "Qu'est ce que {SITENAME} fait pour toi ?",

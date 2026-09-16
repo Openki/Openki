@@ -541,7 +541,7 @@
   "ical.event.canceled": "Abgesagt: {EVENT}",
   "introduction.1_teachOrLearn": "Du willst etwas lernen, oder anderen etwas beibringen.",
   "introduction.2_searchNPropose": "Du suchst, ob es das Thema schon gibt. Wenn nicht, schlage es einfach vor.",
-  "introduction.3_enrole": "Alle können mitmachen.",
+  "introduction.3_enroll": "Alle können mitmachen.",
   "introduction.4_schedule": "Der Austragungsort definiert anschliessend Räumlichkeit und Zeit.",
   "introduction.5_takePlace": "Und die Lektion findet statt.",
   "introduction.Title": "Was tut {SITENAME} für dich?",

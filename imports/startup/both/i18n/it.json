@@ -429,7 +429,7 @@
   "groups.organizationList.organizationAdded.error": "Aggiunta fallita",
   "introduction.1_teachOrLearn": "Vuoi imparare qualcosa o insegnare agli altri.",
   "introduction.2_searchNPropose": "Cerca se il corso esiste già. In caso contrario, proponilo.",
-  "introduction.3_enrole": "Tutti possono partecipare al tuo corso come partecipante, relatore/relatrice o ospitante.",
+  "introduction.3_enroll": "Tutti possono partecipare al tuo corso come partecipante, relatore/relatrice o ospitante.",
   "introduction.4_schedule": "Quando tutti i necessari sono dentro, viene fissata una data.",
   "introduction.5_takePlace": "Il corso si svolge.",
   "introduction.Title": "Cosa fa {SITENAME} per te?",
