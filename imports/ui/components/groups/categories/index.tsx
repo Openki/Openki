@@ -62,7 +62,8 @@ export function GroupCategories({
   onMouseOut,
   onClick,
 }: GroupCategoriesProps) {
-  if (categories.length === 0) {
+  // GroupEntity.categories are sometimes missing, so we need to handle this case.
+  if (!categories || categories.length === 0) {
     return null;
   }
   return (
