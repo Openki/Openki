@@ -54,4 +54,5 @@ reset *ARGS:
     meteor reset {{ ARGS }}
 
 alias i := install
+alias d := dev
 alias o := outdated
