@@ -35,7 +35,7 @@ export function Show({ post, onEdit }: Props) {
     }
     return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
-  const hasBeenEdited = post.time_updated.getTime() > post.time_created.getTime();
+  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
   function removeDropdownAttr() {
     return {
       async onRemove() {

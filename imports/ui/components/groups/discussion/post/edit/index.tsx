@@ -68,7 +68,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return true;
   }
-  const hasBeenEdited = post.time_updated.getTime() > post.time_created.getTime();
+  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
   function canNotifyAll() {
     if (anon) {
       return false;
