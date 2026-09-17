@@ -1,9 +1,11 @@
 # The Node.js major version should be the one supported by our current METEOR_VERSION
 # See the changelog for more info: https://docs.meteor.com/history
-FROM node:24-trixie-slim
+# IDEA: Maybe we can just use the embedded NODE_BIN
+FROM debian:trixie-slim
 
-RUN apt-get update && \
-  rm -rf /var/lib/apt/lists/* \
+# TODO: remove strace after debugging is done
+RUN apt-get update && apt-get install strace -y \
+  && rm -rf /var/lib/apt/lists/* \
   && useradd --create-home --shell /bin/bash --uid 1001 --user-group app \
   && mkdir /app \
   && chown -R app:app /app
@@ -38,7 +40,23 @@ COPY --chown=app:app ./.meteor /app/.meteor/
 # TODO: Temporarily log as much as possible until everything works as expected
 RUN meteor npm ci --loglevel silly
 
+# IDEA: Either force meteor to install in a specific directory
+# IDEA: Or change permissions of the directory forcefully.
+RUN echo "1"
+# RUN chown /app/.meteor
+RUN ls -la /home/app/.meteor && ls -la /app/.meteor/local/
+RUN which node && stat $(which node) && whoami
+RUN node --version
+RUN stat /app/.meteor/local/dev_bundle && echo "2"
+
+RUN exit 1
+
 EXPOSE 3000 9229
+
+# Run here to debug which file does not have the right permission
+RUN strace -e trace=stat meteor --inspect=0.0.0.0:9229 --settings settings/docker-dev.json
+
+RUN exit 1
 
 # TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
 # to start the other dev scripts as expected.
