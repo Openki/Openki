@@ -59,6 +59,62 @@ async function loadDisabledRoles(organizationIds: string[]) {
   return organizations.flatMap((o) => o.disableCreateRoles).filter((r) => r) as string[];
 }
 
+export const getGroupHistory = ServerMethod("group.getHistory", async (groupId: string) => {
+  check(groupId, String);
+
+  const group = await loadGroup(groupId);
+  const user = await Meteor.userAsync();
+
+  // Show full history only for admins
+  const history =
+    user && group.editableBy(user)
+      ? group.history
+      : group.history?.filter(
+          (e) => e.type !== "organizationPromote" && e.type !== "organizationTeam",
+        );
+
+  const pastEvents = await Events.find(
+    { groupId: group._id, start: { $lt: new Date() } },
+    {
+      limit: 100, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+      transform: (e) => ({
+        type: "pastEvent" as const,
+        key: "event_" + e._id,
+        dateTime: e.start,
+        data: e,
+      }),
+    },
+  ).fetchAsync();
+
+  // Merge with
+  const remainingHistoryEntries =
+    history?.map((e) => {
+      const key = `${e.type}_${e.dateTime.getTime()}`;
+      console.dir({ event: e, key });
+      return {
+        type: e.type,
+        key,
+        dateTime: e.dateTime,
+        data: { ...e.data, regionId: group.region },
+      };
+    }) ?? [];
+
+  const groupCreated = {
+    type: "groupCreated" as const,
+    key: "group_" + group._id + "_" + group.time_created,
+    dateTime: group.time_created,
+    data: group,
+  };
+
+  // and sort by date time desc
+  const sorted = [...pastEvents, ...remainingHistoryEntries, groupCreated]
+    // NOTE: Maybe we need to slice the array here?
+    .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
+    .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+
+  return sorted;
+});
+
 export const CustomFieldPattern = {
   name: String,
   displayText: LocalizedValuePattern,
