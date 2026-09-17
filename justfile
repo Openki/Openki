@@ -30,7 +30,7 @@ dev:
 
 # Start the containerized local development environment
 docker-dev:
-    docker compose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps
+    docker compose -f docker-compose.dev.yml --env-file .env.dev up --build
 
 # Fully rebuild the docker containers
 docker-dev-rebuild:
