@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
@@ -323,7 +323,7 @@ export function EventRemovedHistoryEntry({
 export function UpdatedHistoryEntry({ updatedBy }: { updatedBy: string }) {
   const { t } = useTranslation();
   return (
-    <>
+    <Fragment key={`group:`}>
       {t("group.history.updated", "Updated by {USER}", {
         USER: (
           <>
@@ -332,23 +332,23 @@ export function UpdatedHistoryEntry({ updatedBy }: { updatedBy: string }) {
           </>
         ),
       })}
-    </>
+    </Fragment>
   );
 }
 
-export function CreatedHistoryEntry({ createdby }: GroupModel) {
+export function CreatedHistoryEntry({ _id, createdby }: GroupModel) {
   const { t } = useTranslation();
   return (
-    <>
+    <Fragment key={`group:${_id}:created`}>
       {t("group.history.created_by", "Created by {USER}", {
         USER: (
-          <>
+          <Fragment key={`group:${_id}:created:user`}>
             <ProfileLink userId={createdby} />
             <Contribution userId={createdby} />
-          </>
+          </Fragment>
         ),
       })}
-    </>
+    </Fragment>
   );
 }
 
@@ -365,23 +365,12 @@ const map = {
   eventRemoved: EventRemovedHistoryEntry,
 } as const;
 
-function useHistoryEvents({ group }: { group: GroupModel }) {
-  const user = useUser();
-
-  // Load the data required for history events and only return data once it's all ready to prevent double renders
-  // Create unique keys for every history entry.
-}
-
 export function History({ group }: { group: GroupModel }) {
   const user = useUser();
 
   function pastEventsList() {
-    const historyEntries: {
-      key: string;
-      dateTime: Date | undefined;
-      template: React.FC<any>;
-      data: EventModel | GroupModel | (object & { regionId: GroupModel["region"] });
-    }[] = [];
+    const historyEntries: { dateTime: Date | undefined; template: React.FC<any>; data: object }[] =
+      [];
 
     const history =
       user && group.editableBy(user)
@@ -396,7 +385,6 @@ export function History({ group }: { group: GroupModel }) {
         { groupId: group._id, start: { $lt: new Date() } },
         { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       ).map((e) => ({
-        key: "event" + e._id,
         dateTime: e.start,
         template: EventHeldHistoryEntry,
         data: e,
@@ -405,48 +393,24 @@ export function History({ group }: { group: GroupModel }) {
 
     // merge with all history entries
     historyEntries.push(
-      ...(history?.map((e) => {
-        const key = `${e.type}_${e.dateTime.getTime()}`;
-        console.dir({ event: e, key });
-        return {
-          key,
-          dateTime: e.dateTime,
-          template: (map as any)[e.type],
-          data: { ...e.data, regionId: group.region },
-        };
-      }) ?? []),
+      ...(history?.map((e) => ({
+        dateTime: e.dateTime,
+        template: (map as any)[e.type],
+        data: { ...e.data, regionId: group.region },
+      })) ?? []),
     );
 
     // and with the group creation
     historyEntries.push({
-      key: "group_" + group._id,
       dateTime: group.time_created,
       template: CreatedHistoryEntry,
       data: group,
     });
 
     // and sort by date time desc
-    const sorted = historyEntries
+    return historyEntries
       .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
       .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
-
-    // TODO: Ensure there are no duplicates - there are none, but some values get repeated as more items are loaded
-
-    const unique = new Map<string, (typeof sorted)[number]>();
-
-    for (const item of sorted) {
-      if (unique.has(item.key)) {
-        console.dir({ existing: unique.get(item.key), new: item });
-        throw new Error("Duplicate key found!");
-      }
-      unique.set(item.key, item);
-    }
-
-    // we render twice. Maybe we should load the data in a different way instead? Then we could
-    // Maybe we could use a react hook to properly wait for the data to load before showing it?
-    console.dir({ sorted });
-
-    return sorted;
   }
   const { dateLong, fromNow } = useDateTimeFormat();
   return (
@@ -456,25 +420,21 @@ export function History({ group }: { group: GroupModel }) {
           <div className="timeline-start"></div>
         </div>
       </div>
-      {pastEventsList().map((event) => {
-        // const key = `${event.dateTime?.getTime() || 0}_${index}`
-        // const key = "regionId" in event.data ? event.data.regionId : "region" in event.data ? event.data.region :
-        return (
-          <div className="row" key={event.key}>
-            <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
-              {fromNow(event.dateTime)}
-            </div>
-            <div className="timeline-eventline-container col-1">
-              <div className="timeline-eventline">
-                <div className="timeline-eventpoint"></div>
-              </div>
-            </div>
-            <div className="grouphistory-event col-8">
-              <event.template {...event.data} />
+      {pastEventsList().map((event, index) => (
+        <div className="row" key={index}>
+          <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
+            {fromNow(event.dateTime)}
+          </div>
+          <div className="timeline-eventline-container col-1">
+            <div className="timeline-eventline">
+              <div className="timeline-eventpoint"></div>
             </div>
           </div>
-        );
-      })}
+          <div className="grouphistory-event col-8">
+            <event.template {...event.data} />
+          </div>
+        </div>
+      ))}
       <div className="timeline-post row">
         <div className="col-1 offset-3">
           <div className="timeline-end"></div>
