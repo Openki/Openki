@@ -1,106 +1,39 @@
-FROM debian:trixie-slim
+FROM node:24-trixie-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-  && apt-get install -y ca-certificates \
-  && apt-get install -y --no-install-recommends build-essential curl git python3 \
-  && apt-get autoclean \
-  && rm -rf /var/lib/apt/lists/* /config/.cache /var/tmp/* /tmp/* \
-  && useradd --uid 1001 --shell /bin/bash --user-group --create-home app \
-  && mkdir /app \
-  && chown -R app:app /app
-
-# Install Node.js with the same major version supported by our current $METEOR_VERSION
-# See the changelog for more info: https://docs.meteor.com/history
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
-  && apt-get install -y nodejs \
-  && node --version
-
-ENV PATH=$PATH:$HOME/.meteor
-
-# Install Meteor
-RUN mkdir -p .meteor/ .npm node_modules/ \
-  && if [ ! -e $HOME/.meteor/meteor ]; then curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh; fi \
+  # Install system dependencies
+  && apt-get install -y --no-install-recommends curl ca-certificates dumb-init build-essential \
+  # Install Meteor
+  && curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh \
   # Reduce container size
-  && rm -rf /var/cache/*
+  && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/*
 
-# Install Meteor
-# RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
+# Create app directory and set permissions
+WORKDIR /app
+RUN chown -R node:node ./ \
+  && ls -la /app/.meteor
 
-# USER app
-# WORKDIR /app
+ENV METEOR_ALLOW_SUPERUSER=true
 
-# TODO: we can't use the npx installer if we don't use the node base image
-# TODO: Better to use the shell script installer instead, and move the node binary similar to what is done in the geofferybooth base image.
-
-# Ensure the `meteor` binary is available in the path
-# ENV PATH=/home/app/.meteor:$PATH
-
-# IDEA: Might be worth trying to explicit bind mounts in the container itself
-# RUN --mount=type=cache,target=/root/.npm \
-#     --mount=type=bind,source=package.json,target=package.json \
-#     --mount=type=bind,source=package-lock.json,target=package-lock.json \
-#   meteor npm ci
+USER node
 
 # Only copy what's needed to install dependencies.
 # Source code and other files should be provided via the bind mount,
 # which is defined in `docker-compose.dev.yml`.
-# This approach enables caching for this layer while editing app code.
-COPY --chown=app:app package*.json /app/
-COPY --chown=app:app ./.meteor /app/.meteor/
+# This approach enables caching for the this layer while making app code editable.
+COPY --chown=node:node package*.json /app/
+COPY --chown=node:node ./.meteor /app/.meteor/
 
-# IDEA: Either force meteor to install in a specific directory
-# IDEA: Or change permissions of the directory forcefully.
-# RUN echo "1"
-# RUN chown /app/.meteor
-# RUN ls -la /home/app/.meteor && ls -la /app/.meteor/local/
-# RUN which node && stat $(which node) && whoami
-# RUN node --version
-# RUN stat /app/.meteor/local/dev_bundle && echo "2"
-
-# RUN exit 1
-
-# RUN set -eu; \
-#   NODE_BIN=$(find /home/app/.meteor -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null); \
-#   echo $NODE_BIN
-
-# RUN ls -la "/home/app/.meteor/packages/meteor-tool/3.5.2/mt-os.linux.x86_64" && exit 1
-
-# RUN echo $(find / -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null) && echo 1
-
-RUN whereis node && whereis meteor && echo "1"
-
-# USER root
-
-# Link the bundled Node version to be used inside the container
-# RUN set -eu; \
-#   NODE_BIN=$(find /home/app/.meteor -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null); \
-#   ln -sf "$NODE_BIN" /usr/local/bin/node
-
-USER app
-WORKDIR /app
+# RUN echo 2 && exit 1
 
 # TODO: Temporarily log as much as possible until everything works as expected
 RUN meteor npm ci --loglevel silly
 
-# Ensure the `node` binary is available in the path
-# ENV PATH=/home/app/.meteor:$PATH
-
-# RUN set -eu; \
-#   NODE_BIN=$(find /home/app/.meteor -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null); \
-#   ln -sf "$NODE_BIN" /usr/local/bin/node
-
-# RUN whereis node && whereis meteor
-# RUN node -v && meteor --version
-
 EXPOSE 3000 9229
 
-# Run here to debug which file does not have the right permission
-# RUN strace -e trace=stat meteor --inspect=0.0.0.0:9229 --settings settings/docker-dev.json
-
-RUN echo 2
-
 # TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
-# to start the other dev scripts as expected.
-CMD ["meteor", "run", "--allow-superuser", "--inspect=0.0.0.0:9229", "--settings", "settings/docker-dev.json"]
+# to start the other dev scripts as expected. For example to extract translations and check types.
+# Run with dumb-init to not start node with PID=1, since Node.js was not designed to run as PID 1
+CMD ["dumb-init", "meteor", "--inspect=0.0.0.0:9229", "--settings", "settings/docker-dev.json"]
