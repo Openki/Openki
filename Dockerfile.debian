@@ -2,22 +2,33 @@ FROM node:24-trixie-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# TODO: When it works, it's better to install everything in one layer
+# RUN apt-get update \
+#   # Install system dependencies
+#   && apt-get install -y --no-install-recommends curl ca-certificates dumb-init build-essential \
+#   # Install Meteor
+#   && curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh \
+#   # Reduce container size
+#   && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/*
+
+# TEMPORARY: Install system deps separately to improve Docker caching
 RUN apt-get update \
   # Install system dependencies
   && apt-get install -y --no-install-recommends curl ca-certificates dumb-init build-essential \
-  # Install Meteor
-  && curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh \
   # Reduce container size
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/*
 
+# TEMPORARY: Install Meteor separately to improve Docker caching
+RUN curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh \
+  # Reduce container size
+  && rm -rf /tmp/* /var/cache/*
+
 # Create app directory and set permissions
 WORKDIR /app
-RUN chown -R node:node ./ \
-  && ls -la /app/.meteor
+RUN chown -R node:node ./
 
+# TODO: Ideally remove this if possible since it's a huge security risk
 ENV METEOR_ALLOW_SUPERUSER=true
-
-USER node
 
 # Only copy what's needed to install dependencies.
 # Source code and other files should be provided via the bind mount,
@@ -26,12 +37,30 @@ USER node
 COPY --chown=node:node package*.json /app/
 COPY --chown=node:node ./.meteor /app/.meteor/
 
+# IDEA: Maybe RUN chown -R to give full access to meteor tool
+
+
+RUN ls -la /app/.meteor
+
 # RUN echo 2 && exit 1
 
 # TODO: Temporarily log as much as possible until everything works as expected
 RUN meteor npm ci --loglevel silly
 
+# TODO: The permission for the bundle is updated correctly. However, we also need to
+# update the installation location of the meteor tool. Why is it installed under `/root/.meteor`?
+# IDEA: Maybe we can copy the meteor bundle to the expected location instead?
+# lrwxrwxrwx. 1 node node 70 Sep 18 07:59 /app/.meteor/local/dev_bundle -> /root/.meteor/packages/meteor-tool/3.5.2/mt-os.linux.x86_64/dev_bundle
+RUN ls -la /app/.meteor/local/dev_bundle \
+  && chown -R node:node /app/.meteor
+
 EXPOSE 3000 9229
+
+RUN ls -la /app/.meteor/local/dev_bundle
+
+# TODO: We should ideally install dependencies as a non-root user...
+# TODO: See if we can move this before executing `meteor npm ci`
+USER node
 
 # TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
 # to start the other dev scripts as expected. For example to extract translations and check types.
