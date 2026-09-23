@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Match, check } from "meteor/check";
+import { serializeError } from "serialize-error";
 
 import { Log } from "/imports/api/log/log";
 
@@ -44,19 +45,7 @@ export const clientError = ServerMethod(
 /** For logging errors on the server that have occurred on the server. */
 export async function serverError(error: unknown) {
   try {
-    if (error instanceof Error) {
-      await Log.record("serverError", [], {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
-    } else {
-      await Log.record("serverError", [], {
-        name: "UnknownError",
-        message: String(error),
-        stack: undefined,
-      });
-    }
+    await Log.record("serverError", [], serializeError(error));
   } catch {
     // ignore
   }

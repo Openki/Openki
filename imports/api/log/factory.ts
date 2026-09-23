@@ -1,6 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
+import { serializeError } from "serialize-error";
+
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -12,14 +14,14 @@ export interface Resolution {
   /** timestamp */
   ts: Date;
   success: boolean;
-  message?: string;
+  message?: string | object;
 }
 export interface LogEntity {
   /** ID */
   _id: string;
   /**
    * This separates log entries into classes.
-   * Entries on the same track are expected to have a similarily structured body, but this
+   * Entries on the same track are expected to have a similarly structured body, but this
    * structure may change over time.
    */
   tr: string;
@@ -49,11 +51,11 @@ class ResultLogger {
   }
 
   async error(error: unknown) {
-    const message = JSON.parse(JSON.stringify(error));
+    const message = serializeError(error);
     await this.record(false, message);
   }
 
-  async record(success: boolean, message?: string) {
+  async record(success: boolean, message?: string | object) {
     const resolution: Resolution = { ts: new Date(), success };
     if (message) resolution.message = message;
 

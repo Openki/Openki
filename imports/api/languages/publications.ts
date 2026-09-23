@@ -1,5 +1,6 @@
 import { Match, check } from "meteor/check";
 import { Mongo } from "meteor/mongo";
+import { serializeError } from "serialize-error";
 
 import { LanguagesRaw, Languages, LanguageEntity } from "/imports/api/languages/languages";
 
@@ -44,7 +45,7 @@ if (Meteor.isServer) {
       });
     } catch (ex) {
       // ignore it
-      console.info("Failed to load Weblate statistics: " + JSON.stringify(ex));
+      console.info(`Failed to load Weblate statistics: ${serializeError(ex)}`);
     }
   })();
 }

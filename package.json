@@ -54,6 +54,7 @@
     "react-select": "5.10.2",
     "sanitize-html": "2.17.7",
     "seedrandom": "3.0.5",
+    "serialize-error": "13.0.1",
     "shareon": "2.8.1",
     "sitemap": "9.0.1",
     "slugify": "1.6.9",
