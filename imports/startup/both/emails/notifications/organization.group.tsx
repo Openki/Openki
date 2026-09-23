@@ -16,10 +16,12 @@ import { OrganizationGroup, Props } from "../../../../emails/notifications/Organ
 import { getSiteName } from "/imports/utils/getSiteName";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 
+export const ModelName = "Organization.Group";
+
 export interface Body {
   groupId: string;
   recipients: string[];
-  model: "Organization.group";
+  model: typeof ModelName;
 }
 
 /**
@@ -48,7 +50,7 @@ export async function record(groupId: string) {
 
     // Don't send to creator
     recipients: recipients.filter((r) => r !== group.createdby),
-    model: "Organization.group",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id], body);

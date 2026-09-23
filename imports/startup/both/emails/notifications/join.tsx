@@ -18,13 +18,15 @@ import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 
+export const ModelName = "Join";
+
 export interface Body {
   groupId: string;
   participantId: string;
   recipients: string[];
   newRole: string;
   message: string | undefined;
-  model: "Join";
+  model: typeof ModelName;
 }
 
 /**
@@ -66,7 +68,7 @@ export async function record(
       .membersWithRole("team")
       .map((m) => m.user)
       .filter((r) => r !== participantId),
-    model: "Join",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id, participant._id], body);

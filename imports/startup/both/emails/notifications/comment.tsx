@@ -16,10 +16,12 @@ import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/Comment";
 import { Events } from "/imports/api/events/events";
 
+export const ModelName = "Comment";
+
 export interface Body {
   commentId: string;
   recipients: string[];
-  model: string;
+  model: typeof ModelName;
 }
 
 /**
@@ -81,7 +83,7 @@ export async function record(commentId: string) {
   const body: Body = {
     commentId: comment._id,
     recipients,
-    model: "Comment",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id, comment._id], body);

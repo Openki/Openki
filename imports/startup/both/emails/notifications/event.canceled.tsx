@@ -20,12 +20,14 @@ import moment from "moment";
 import ical, { ICalCalendarMethod } from "ical-generator";
 import { convertToIcal } from "/imports/utils/convertToIcal";
 
+export const ModelName = "Event.Canceled";
+
 export interface Body {
   sender: string;
   event: string;
   message: string;
   recipients: string[];
-  model: "Event.Canceled";
+  model: typeof ModelName;
 }
 
 /**
@@ -59,7 +61,7 @@ export async function record(senderId: string, eventId: string, message: string)
     sender: senderId,
     message,
     recipients,
-    model: "Event.Canceled",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);

@@ -17,13 +17,15 @@ import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "../utils/getStartEndDate";
 import { Organizations } from "/imports/api/organizations/organizations";
 
+export const ModelName = "Event";
+
 export interface Body {
   isNew: boolean;
   eventId: string;
   replicats: string[];
   additionalMessage: string | undefined;
   recipients: string[];
-  model: "Event";
+  model: typeof ModelName;
 }
 
 /**
@@ -69,7 +71,7 @@ export async function record(
     recipients: uniq([...(group?.members || []), ...(event.participants || [])])?.map(
       (p) => p.user,
     ),
-    model: "Event",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", group ? [group._id] : [], body);

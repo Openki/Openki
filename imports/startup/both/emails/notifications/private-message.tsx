@@ -19,13 +19,15 @@ import { LocalTime } from "/imports/utils/local-time";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { sendAlert } from "../lib/sendAlert";
 
+export const ModelName = "PrivateMessage";
+
 export interface Body {
   message: string;
   sender: string;
   recipients: string[];
   targetRecipient: string;
   revealSenderAddress: boolean;
-  model: "PrivateMessage";
+  model: typeof ModelName;
   context: {
     group?: string | undefined;
     event?: string | undefined;
@@ -79,7 +81,7 @@ export async function record(
     targetRecipient: recipientId,
     revealSenderAddress,
     recipients,
-    model: "PrivateMessage",
+    model: ModelName,
     context,
   };
 

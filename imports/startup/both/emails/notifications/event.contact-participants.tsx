@@ -19,13 +19,15 @@ import {
   Props,
 } from "/imports/emails/notifications/EventContactParticipants";
 
+export const ModelName = "Event.ContactParticipants";
+
 export interface Body {
   sender: string;
   message: string;
   event: string;
   recipients: string[];
   revealSenderAddress: boolean;
-  model: "Event.ContactParticipants";
+  model: typeof ModelName;
 }
 
 /**
@@ -79,7 +81,7 @@ export async function record(
     sender: senderId,
     recipients,
     revealSenderAddress,
-    model: "Event.ContactParticipants",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
