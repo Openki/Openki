@@ -88,7 +88,6 @@
   "deleteEventsModal.deleteEvents": "Lösch {NUM, plural, =0{event} one{event} other{# events} }",
   "deleteEventsModal.title": "Events lösche",
   "discussion.anonymous": "Anonym",
-  "discussionPost.deleted": "Kommentar glöscht.",
   "discussionPost.deleted.error": "Kommentar het nit chönne glöscht wärde",
   "editableImage.accept.error": "Nur Bilder vo ({SUPPORTEDMIME}) si erlaubt.",
   "email.base.farewell": "Bi Froge oder Unklarheite chönnet ihr eus gärn kontaktiere.",

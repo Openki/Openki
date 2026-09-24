@@ -131,7 +131,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{이벤트가} other{#개의 이벤트가} } 성공적으로 삭제되었습니다.",
   "deleteEventsModal.title": "이벤트 삭제",
   "discussion.anonymous": "익명",
-  "discussionPost.deleted": "댓글 삭제됨.",
   "discussionPost.deleted.error": "댓글 삭제 실패",
   "editableImage.accept.error": "이미지 파일만 첨부 가능합니다.",
   "email.base.farewell": "궁금한 점들이나 제안할 사항들은 편하게 문의해주세요.",
