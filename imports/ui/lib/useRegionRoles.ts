@@ -3,16 +3,14 @@ import { useDetails } from "/imports/api/regions/publications";
 import { RegionEntity } from "/imports/api/regions/regions";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 
-/**
- * Load the region roles on the client side
- */
+/** Load the region roles on the client side. */
 export function useRegionRoles(regionId: RegionEntity["_id"]) {
   const [isLoading, region] = useDetails(regionId);
 
   let roles: RoleEntity[] = [];
 
   if (isLoading()) {
-    return [isLoading, roles] as const;
+    return [isLoading, roles, region] as const;
   }
 
   if (!region) {
@@ -21,5 +19,5 @@ export function useRegionRoles(regionId: RegionEntity["_id"]) {
 
   roles = extractRoles(region);
 
-  return [isLoading, roles] as const;
+  return [isLoading, roles, region] as const;
 }

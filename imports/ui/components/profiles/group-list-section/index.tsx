@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/groups/publications";
-import { useDetails } from "/imports/api/regions/publications";
 
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { RoleEntity } from "/imports/utils/PublicSettings";
@@ -28,8 +27,7 @@ export function GroupListSection({
   ownProfile: boolean;
 }) {
   const { t } = useTranslation();
-  const [isLoadingRegion, region] = useDetails(regionId);
-  const [isLoadingRoles, regionRoles] = useRegionRoles(regionId);
+  const [isLoadingRegionRoles, regionRoles, region] = useRegionRoles(regionId);
 
   const {
     roleShort,
@@ -68,7 +66,7 @@ export function GroupListSection({
     return role.id === SystemRoles.Team.id;
   }
 
-  if (isLoadingRegion()) {
+  if (isLoadingRegionRoles()) {
     return null;
   }
 
@@ -84,7 +82,7 @@ export function GroupListSection({
                   NAME: user.getDisplayName(),
                 })}
           </h3>
-          {isLoadingRoles() || isLoadingGroups() || isLoadingArchivedGroups() ? (
+          {isLoadingGroups() || isLoadingArchivedGroups() ? (
             <LoadingPage />
           ) : (
             <>

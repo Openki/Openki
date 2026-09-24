@@ -4,7 +4,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";
-import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 import { isPredefined } from "/imports/api/groups/lib/isRole";
 import { predefinedRole } from "/imports/api/groups/lib/Role";
 
@@ -42,8 +41,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   const elementRef = useRef<HTMLDivElement>(null);
   const user = useUser();
 
-  const [isRegionLoading, region] = useRegionDetails(group?.region);
-  const [isRegionRolesLoading, regionRoles] = useRegionRoles(group?.region);
+  const [isRegionRolesLoading, regionRoles, region] = useRegionRoles(group?.region);
 
   function groupCss() {
     if (!group.nextEvent) {
@@ -179,7 +177,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
       ) : (
         <GroupCompactRoles group={group} />
       )}
-      {!isRegionLoading() && (
+      {!isRegionRolesLoading() && (
         <div className="tag-group group-organizations">
           {organizations.map((organization) => (
             <OrganizationTag key={organization} {...organizationTagAttr(organization)} />
