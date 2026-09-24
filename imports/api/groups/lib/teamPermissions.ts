@@ -3,6 +3,29 @@ import { hasRole } from "/imports/api/groups/lib/hasRole";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { UserModel } from "/imports/api/users/users";
 
+export function isTeamRoleVisible(group: GroupModel, currentUser: UserModel | null) {
+  // If there are no team-members, anybody can join
+  if (!hasRole(group.members, SystemRoles.Team)) {
+    return true;
+  }
+
+  if (!currentUser) {
+    return false;
+  }
+
+  // Visible when already subscribed
+  if (group.userHasRole(currentUser._id, SystemRoles.Team)) {
+    return true;
+  }
+
+  // Admins can subscribe to all roles
+  if (currentUser.hasPrivilege("admin")) {
+    return true;
+  }
+
+  return false;
+}
+
 export function canSubscribeToTeam(group: GroupModel, user: UserModel) {
   // Do not allow subscribing when already subscribed
   if (group.userHasRole(user._id, SystemRoles.Team)) {

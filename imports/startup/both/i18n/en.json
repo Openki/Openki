@@ -185,7 +185,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{Event was} other{# events were} } successfully deleted.",
   "deleteEventsModal.title": "Delete events",
   "discussion.anonymous": "Anonymous",
-  "discussionPost.deleted": "Comment deleted.",
   "discussionPost.deleted.error": "Could not delete comment",
   "editableImage.accept.error": "Only images ({SUPPORTEDMIME}) are allowed.",
   "email.base.farewell": "If you have any questions or suggestions, please do not hesitate contacting us.",

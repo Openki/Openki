@@ -514,7 +514,6 @@ export const editing = ServerMethod(
 
 export const subscribeToRole = ServerMethod(
   "group.subscribeToRole",
-
   async (
     groupId: string,
     role: Role,
@@ -601,7 +600,6 @@ export const subscribeToRole = ServerMethod(
 );
 export const unsubscribeFromRole = ServerMethod(
   "group.unsubscribeFromRole",
-
   async (groupId: string, role: Role) => {
     check(groupId, NotEmptyString());
     check(role, RolePattern);
