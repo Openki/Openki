@@ -22,7 +22,11 @@ export function canSubscribeToTeam(group: GroupModel, user: UserModel) {
   return false;
 }
 
-export function canAddToTeam(operator: UserModel, group: GroupModel, userId: string) {
+export function canAddToTeam(operator: UserModel | null, group: GroupModel, userId: string) {
+  if (!operator) {
+    return false;
+  }
+
   // Do not allow subscribing when already subscribed
   if (group.userHasRole(userId, SystemRoles.Team)) {
     return false;
@@ -41,7 +45,11 @@ export function canAddToTeam(operator: UserModel, group: GroupModel, userId: str
   return false;
 }
 
-export function canRemoveFromTeam(operator: UserModel, group: GroupModel, userId: string) {
+export function canRemoveFromTeam(operator: UserModel | null, group: GroupModel, userId: string) {
+  if (!operator) {
+    return false;
+  }
+
   // Do not allow unsubscribing when not subscribed
   if (!group.userHasRole(userId, SystemRoles.Team)) {
     return false;

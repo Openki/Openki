@@ -1,5 +1,5 @@
 import { type GroupMember, type GroupRoleRef } from "/imports/api/groups/groups";
-import { sameRole } from "/imports/api/groups/lib/isRole";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
 
 /**
  * Determine whether there is a member with the given role
@@ -14,7 +14,7 @@ export function hasRole(members: GroupMember[] | undefined, groupRole: GroupRole
     return false;
   }
   return members.some((member) =>
-    member.roles.some((memberRole) => sameRole(memberRole, groupRole)),
+    member.roles.some((memberRole) => isSameRole(memberRole, groupRole)),
   );
 }
 
@@ -33,5 +33,5 @@ export function hasRoleUser(
   }
   return !!members
     .find((member) => member.user === userId)
-    ?.roles.some((memberRole) => sameRole(memberRole, groupRole));
+    ?.roles.some((memberRole) => isSameRole(memberRole, groupRole));
 }

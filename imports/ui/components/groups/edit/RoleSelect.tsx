@@ -9,7 +9,7 @@ import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
-import { isCustom, sameRole } from "/imports/api/groups/lib/isRole";
+import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
 import { components, createFilter, MultiValueRemoveProps } from "react-select";
 import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 import { slug } from "/imports/utils/string-tools";
@@ -125,7 +125,7 @@ export function RoleSelect({
   const value = outerValue || [];
 
   const options = availableRoles()
-    .filter((r) => !value.some((v) => sameRole(r, v)))
+    .filter((r) => !value.some((v) => isSameRole(r, v)))
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,
@@ -138,7 +138,7 @@ export function RoleSelect({
     }));
 
   const selectValue = value
-    .filter((r) => isCustom(r) || availableRoles().some((o) => sameRole(r, o)))
+    .filter((r) => isCustom(r) || availableRoles().some((o) => isSameRole(r, o)))
     .map((r) => ({
       role: r,
       value: `${r.id}-${r.type}`,

@@ -17,7 +17,7 @@ import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-import { sameRole } from "/imports/api/groups/lib/isRole";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
 export const GroupPredefinedRolePattern = {
@@ -171,7 +171,7 @@ export class Group {
    * @param role like 'team'
    */
   membersWithRole(this: GroupModel, role: GroupRoleRef) {
-    return this.members.filter((m) => m.roles.some((r) => sameRole(r, role)));
+    return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role)));
   }
 
   userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {

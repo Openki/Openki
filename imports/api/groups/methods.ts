@@ -31,7 +31,7 @@ import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { ValidationError } from "meteor/mdg:validation-error";
-import { sameRole, isTeam } from "/imports/api/groups/lib/isRole";
+import { isSameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
 import { RolePattern } from "./lib/RolePattern";
@@ -199,7 +199,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
           return false;
         }
 
-        if (changedRoles.some((role) => sameRole(role, groupRole))) {
+        if (changedRoles.some((role) => isSameRole(role, groupRole))) {
           return false;
         }
 
@@ -224,7 +224,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       groupRoles.push(
         ...changedRoles
           .filter((role) => {
-            if (group.roles.some((groupRole) => sameRole(role, groupRole))) {
+            if (group.roles.some((groupRole) => isSameRole(role, groupRole))) {
               // allow roles that are part of the group already
               return true;
             }
@@ -262,7 +262,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
       set.roles = groupRoles;
 
-      const removedRoles = differenceWith(group.roles, groupRoles, sameRole).map(
+      const removedRoles = differenceWith(group.roles, groupRoles, isSameRole).map(
         ({ id, type }) => ({ id, type }),
       );
       if (removedRoles.length > 0) {

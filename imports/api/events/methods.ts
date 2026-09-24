@@ -567,6 +567,8 @@ export const addParticipant = ServerMethod(
       return;
     }
 
+    // Check whether the "participant" role is enabled for this group and whether
+    // the user is not yet enrolled as a participant.
     if (group.roles.some(isParticipant) && !group.userHasRole(user._id, SystemRoles.Participant)) {
       await subscribeToRole(group._id, SystemRoles.Participant);
     }

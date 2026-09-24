@@ -24,11 +24,11 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { isMentor } from "/imports/api/groups/lib/isRole";
 import { Filtering } from "/imports/utils/filtering";
 
-import { Button, ButtonCancel, ButtonSave } from "../../Buttons";
-import { PricePolicy } from "../../price-policy";
-import { Tag } from "../../regions/tag";
+import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+import { PricePolicy } from "/imports/ui/components/price-policy";
+import { Tag } from "/imports/ui/components/regions/tag";
 import { Title } from "./title";
-import { EditCustomFields } from "../../EditCustomFields";
+import { EditCustomFields } from "/imports/ui/components/EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
 import { GroupCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
@@ -602,7 +602,15 @@ export function Edit({
           )}
 
           <div className="form-actions">
-            <ButtonSave submit id="groups-edit-save" isBusy={isBusy} />
+            <Button
+              submit
+              id="groups-edit-save"
+              className="btn-save"
+              isBusy={isBusy}
+              busyText={t("group.publishing", "Publishing…")}
+            >
+              {t("group.publish", "Publish")}
+            </Button>
             {!isFrame && (
               <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
             )}
