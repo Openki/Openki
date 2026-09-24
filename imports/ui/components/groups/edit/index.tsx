@@ -1,33 +1,34 @@
 import { Router } from "meteor/iron:router";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, union, chain } from "lodash-es";
+import { uniq, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, FindParams } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 
-import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { cx } from "/imports/utils/cx";
-
-import * as Analytics from "/imports/ui/lib/analytics";
-
-import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { PricePolicy } from "../../price-policy";
-import { Tag } from "../../regions/tag";
-import { Title } from "./title";
-import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
-import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import * as Analytics from "/imports/ui/lib/analytics";
+import { isMentor } from "/imports/api/groups/lib/isRole";
+import { Filtering } from "/imports/utils/filtering";
 
-import { EditCustomFields } from "../../EditCustomFields";
+import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+import { PricePolicy } from "/imports/ui/components/price-policy";
+import { Tag } from "/imports/ui/components/regions/tag";
+import { Title } from "./title";
+import { EditCustomFields } from "/imports/ui/components/EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
 import { GroupCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
@@ -36,7 +37,6 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
-import { Filtering } from "/imports/utils/filtering";
 import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 
 import "./styles.scss";
@@ -177,7 +177,7 @@ export function Edit({
   const fullRoleSelection = !isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
   // When we're in the propose frame, show a simplified role selection
-  const simpleRoleSelection = isFrame && !hideRoleSelection && !!group.roles?.includes("mentor");
+  const simpleRoleSelection = isFrame && !hideRoleSelection && !!group.roles?.some(isMentor);
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
@@ -185,15 +185,7 @@ export function Edit({
 
   const [savedMessage, setSavedMessage] = useState(false);
 
-  const [roles, setRoles] = useState<
-    Record<
-      RoleEntity["id"],
-      {
-        enabled: boolean;
-        enroll: boolean;
-      }
-    >
-  >({});
+  const [roles, setRoles] = useState(group.roles);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -319,16 +311,11 @@ export function Edit({
       return;
     }
 
-    const changes: GroupsMethods.SaveFields &
-      Required<
-        Pick<GroupsMethods.SaveFields, "name" | "categories" | "roles" | "subs" | "unsubs">
-      > = {
+    const changes: GroupsMethods.SaveFields = {
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
       internal,
-      roles: {},
-      subs: [],
-      unsubs: [],
+      roles: roles || [],
     };
 
     if (description) {
@@ -349,35 +336,14 @@ export function Edit({
       }
 
       changes.organizations = getOrganizations();
-    }
 
-    if (isFrame) {
-      group.roles?.forEach((role) => {
-        changes.roles[role] = true;
-      });
-
-      if (simpleRoleSelection && simpleSelectedRole === "mentor") {
-        changes.subs.push("mentor");
+      if (isFrame) {
+        const subs = [];
+        if (simpleRoleSelection && simpleSelectedRole === "mentor") {
+          subs.push("mentor");
+        }
+        changes.subs = union(subs, creatorsRoles || []);
       }
-
-      changes.subs = union(changes.subs, creatorsRoles || []);
-    }
-
-    if (fullRoleSelection) {
-      Object.entries(roles).forEach(function (r) {
-        changes.roles[r[0]] = r[1].enabled;
-      });
-      Object.entries(roles)
-        .filter((r) => r[1].enabled)
-        .forEach(function (r) {
-          const role = r[0];
-          const subscribe = !!r[1].enroll;
-          if (subscribe) {
-            changes.subs.push(role);
-          } else {
-            changes.unsubs.push(role);
-          }
-        });
     }
 
     if (customFieldValues) {
@@ -396,7 +362,7 @@ export function Edit({
       if (isNew) {
         Analytics.trackEvent(
           "Group creations",
-          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : "participant"}`,
+          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
           Regions.findOne(changes.region)?.nameEn,
           totalFocusTime(),
         );
@@ -435,13 +401,6 @@ export function Edit({
       Router.go("home");
     }
   }
-
-  const disabledCreateRoles = useMemo(() => {
-    return chain(organizations)
-      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
-      .uniq()
-      .value();
-  }, [organizations]);
 
   if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
@@ -556,15 +515,15 @@ export function Edit({
                         <GroupCategories categories={group.categories} />
                       </>
                     )}
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-edit"
+                    <Button
+                      id="groups-edit-add-categories"
+                      className="btn-sm btn-edit"
                       onClick={() => setEditingCategories(true)}
                     >
                       {!group.categories?.length
                         ? t("group.edit.addCategories", "Add categories")
                         : t("_button.edit")}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   <SelectCategories {...selectCategoriesAttr()} />
@@ -609,18 +568,13 @@ export function Edit({
               </div>
             )}
 
-            {!!selectedRegion && (
+            {!!selectedRegion && fullRoleSelection && (
               <RoleSelect
-                selectedRegion={selectedRegion}
+                regionId={selectedRegion}
+                organizations={organizations}
                 value={roles}
                 onChange={setRoles}
                 isNewGroup={isNew}
-                defaultRoles={group.roles}
-                defaultUsersRoles={
-                  group.members?.find((member) => member.user === user?._id)?.roles
-                }
-                fullRoleSelection={fullRoleSelection}
-                disabledCreateRoles={disabledCreateRoles}
               />
             )}
           </div>
@@ -648,7 +602,15 @@ export function Edit({
           )}
 
           <div className="form-actions">
-            <ButtonSave submit id="groups-edit-save" isBusy={isBusy} />
+            <Button
+              submit
+              id="groups-edit-save"
+              className="btn-save"
+              isBusy={isBusy}
+              busyText={t("group.publishing", "Publishing…")}
+            >
+              {t("group.publish", "Publish")}
+            </Button>
             {!isFrame && (
               <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
             )}

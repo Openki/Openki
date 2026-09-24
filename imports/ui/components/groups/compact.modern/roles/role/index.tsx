@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { GroupModel } from "/imports/api/groups/groups";
-
-import { RoleEntity } from "/imports/utils/PublicSettings";
+import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 
 import { Enrolling } from "./Enrolling";
 import { Subscribed } from "./Subscribed";
@@ -12,15 +10,15 @@ import "./styles.scss";
 
 export interface Props {
   group: GroupModel;
-  roleId: RoleEntity["id"];
+  role: GroupRole;
 }
 
-export function Role({ group, roleId }: Props) {
+export function Role({ group, role }: Props) {
   const user = useUser();
 
   const [showFirstSteps, setShowFirstSteps] = useState(false);
 
-  const subscribed = group.userHasRole(user?._id, roleId);
+  const subscribed = group.userHasRole(user?._id, role);
 
   function handleAfterSubscribe() {
     setShowFirstSteps(true);
@@ -33,10 +31,10 @@ export function Role({ group, roleId }: Props) {
   return (
     <>
       {!subscribed ? (
-        <Enrolling group={group} roleId={roleId} afterSubscribe={handleAfterSubscribe} />
+        <Enrolling group={group} role={role} afterSubscribe={handleAfterSubscribe} />
       ) : (
         <Subscribed
-          roleId={roleId}
+          role={role}
           group={group}
           showFirstSteps={showFirstSteps}
           onToggle={handleFirstStepsToggle}

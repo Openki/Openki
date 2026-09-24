@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { truncate, capitalize } from "lodash-es";
+import { capitalize, truncate } from "lodash-es";
 
 import { Groups } from "/imports/api/groups/groups";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -17,6 +17,9 @@ import { Join, Props } from "/imports/emails/notifications/Join";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
+import { Role, SystemRoles } from "/imports/api/groups/lib/Role";
+import { RolePattern } from "/imports/api/groups/lib/RolePattern";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
 
 export const ModelName = "Join";
 
@@ -24,7 +27,7 @@ export interface Body {
   groupId: string;
   participantId: string;
   recipients: string[];
-  newRole: string;
+  newRole: Role;
   message: string | undefined;
   model: typeof ModelName;
 }
@@ -39,12 +42,12 @@ export interface Body {
 export async function record(
   groupId: string,
   participantId: string,
-  newRole: string,
+  newRole: Role,
   message?: string,
 ) {
   check(groupId, String);
   check(participantId, String);
-  check(newRole, String);
+  check(newRole, RolePattern);
   check(message, Match.Optional(String));
 
   const group = await Groups.findOneAsync(groupId);
@@ -65,7 +68,7 @@ export async function record(
 
     // Don't send to new member, they know
     recipients: group
-      .membersWithRole("team")
+      .membersWithRole(SystemRoles.Team)
       .map((m) => m.user)
       .filter((r) => r !== participantId),
     model: ModelName,
@@ -83,10 +86,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     notifications: true,
   }).fetchAsync();
 
-  let roles: RoleEntity[];
+  let roles: RoleEntity[] | undefined;
   if (group?.region) {
     roles = await loadRoles(group?.region);
   }
+  const groupRole = group?.roles?.find((r) => isSameRole(r, body.newRole));
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -96,9 +100,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     },
 
     async vars(_locale: string, actualRecipient: UserModel, unsubToken: string) {
-      const { roleShort, roleNotificationJoinEmailSubject, roleNotificationJoinEmailIntro } =
-        getRoleDisplay(i18next, roles);
-
       const campaign = "joinNotify";
 
       if (!newParticipant) {
@@ -110,8 +111,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!roles) {
         throw new Error("Roles could not be loaded (0.o)");
       }
+      if (!groupRole) {
+        throw new Error("Role does not exist in group (0.o)");
+      }
 
-      const subject = roleNotificationJoinEmailSubject(body.newRole, {
+      const { roleShort, roleNotificationJoinEmailSubject, roleNotificationJoinEmailIntro } =
+        getRoleDisplay(i18next, roles);
+
+      const subject = roleNotificationJoinEmailSubject(groupRole, {
         GROUP: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
       });
@@ -130,7 +137,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const groupLink = Router.url("showGroup", group, { query: { campaign } });
       const groupName = <a href={groupLink}>{group.name}</a>;
-      const roleIntroduction = roleNotificationJoinEmailIntro(body.newRole, {
+      const roleIntroduction = roleNotificationJoinEmailIntro(groupRole, {
         USER: <span className="fw-bold">{newParticipant.getDisplayName()}</span>,
         GROUP: groupName,
       });

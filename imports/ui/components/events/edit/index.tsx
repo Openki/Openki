@@ -58,13 +58,24 @@ function EditGroupCustomFields({
   values: GroupCustomField[] | undefined;
   onChange: (values: GroupCustomField[]) => void;
 }) {
-  const [isGroupLoading, group] = useGroupDetails(groupId);
-  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
+  const [isLoadingGroup, group] = useGroupDetails(groupId);
+  const [isLoadingOrganizations, organizations] = useOrganizationsFindFilter(
     { when: !!group?.teamOrganizations },
     { ids: group?.teamOrganizations },
   );
 
-  if (isGroupLoading() || organizationsIsLoading()) {
+  // init custom field values
+  useEffect(() => {
+    if (groupId) {
+      if (!group) {
+        // wait until group is loaded
+        return;
+      }
+      onChange(group.customFields);
+    }
+  }, [group]);
+
+  if (isLoadingGroup() || isLoadingOrganizations()) {
     return null;
   }
 
@@ -143,19 +154,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
 
-  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[] | undefined>(
-    undefined,
-  );
-  // init custom field values
-  useEffect(() => {
-    if (event.groupId) {
-      if (!group) {
-        // wait until group is loaded
-        return;
-      }
-      setCustomFieldValues(group.customFields);
-    }
-  }, [group]);
+  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[]>();
 
   const selectedVenueId = isEventVenueRef(selectedVenue) ? selectedVenue._id : undefined;
 

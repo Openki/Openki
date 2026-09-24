@@ -41,6 +41,7 @@ export const regions: {
     /** UI strings in the same format as `RoleEntity["translations"]` */
     translations?: Record<string, Record<string, string>>;
   }[];
+  allowUserCustomRoleCreation: boolean;
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
@@ -48,6 +49,7 @@ export const regions: {
     nameEn: "Testland",
     loc: [47.1375, 7.2472],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "EZqQLGL4PtFCxCNrp",
@@ -94,6 +96,7 @@ export const regions: {
       },
       { entity: "propose" },
     ],
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "MPKEnGGC8T9XyCCRG",
@@ -101,6 +104,7 @@ export const regions: {
     nameEn: "Englistan",
     loc: [40, -100],
     tz: "America/Denver",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "4Je2iee208aLHS1Km",
@@ -109,6 +113,7 @@ export const regions: {
     country: "ID",
     loc: [-7.8014, 110.3644],
     tz: "Asia/Jakarta",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "Siifr2P7drkv66FNA",
@@ -118,6 +123,7 @@ export const regions: {
     region: "BE",
     loc: [46.9511, 7.4386],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "J6GDhEEvdmdSMzPPF",
@@ -127,6 +133,7 @@ export const regions: {
     region: "ZH",
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "doR7JQH0jDE7Uunp3",
@@ -136,6 +143,7 @@ export const regions: {
     region: "TG",
     loc: [47.556, 8.8965],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     name: "Online",
@@ -151,6 +159,7 @@ export const regions: {
       },
       emailLogo: "emails/sveb.png",
     },
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "h4MnI3psRr8hSljk2",
@@ -182,6 +191,7 @@ export const regions: {
         query: "after=now&sort=start&internal=0&canceled=0",
       },
     ],
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "h4MnI3psRddhSljk2",
@@ -217,6 +227,7 @@ export const regions: {
       defaultLevel: 1,
       attribution: "&copy; <a href='https://github.com/c3nav'>c3nav</a>",
     },
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "5JyFCoKwkxnf8LWoh",
@@ -1278,5 +1289,6 @@ export const regions: {
         },
       },
     ],
+    allowUserCustomRoleCreation: true,
   },
 ];

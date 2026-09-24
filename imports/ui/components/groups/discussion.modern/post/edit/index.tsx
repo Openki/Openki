@@ -15,6 +15,7 @@ import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "../../../../Buttons";
 import { UserName } from "/imports/ui/components/UserName";
 import { FormCheck } from "/imports/ui/components/FormCheck";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export interface Props {
   post: GroupDiscussionEntity & { new?: true };
@@ -83,7 +84,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
 
     return !!(
-      group?.userHasRole(user?._id, "team") ||
+      group?.userHasRole(user?._id, SystemRoles.Team) ||
       user?.organizations.some((o) => group?.teamOrganizations.includes(o))
     );
   }

@@ -10,7 +10,9 @@ beforeEach(() => {
  * current time is close to the `startTime`.
  */
 function setStartTimeNextDay(startTime: string) {
-  cy.get("#event-edit-start-date").click();
+  cy.get("#event-edit-start-date").click().wait(2000);
+  cy.get("#event-edit-start-date").type("{downarrow}");
+  cy.get("#event-edit-start-date").type("{downarrow}");
   cy.get(".datepicker-days tr:last-of-type td:last-child").click();
   cy.get("#events-edit-start-end-startTime").type(startTime);
 }

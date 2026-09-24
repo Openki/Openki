@@ -1,13 +1,16 @@
 import React from "react";
 
-import { GroupModel } from "/imports/api/groups/groups";
+import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 
-import { hasRole, hasRoleUser } from "../../../../../utils/group-role-utils";
+import { hasRole, hasRoleUser } from "/imports/api/groups/lib/hasRole";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { RoleEntity } from "/imports/utils/PublicSettings";
 import { cx } from "/imports/utils/cx";
+import { isParticipant, isPredefined } from "/imports/api/groups/lib/isRole";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
+
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
@@ -17,12 +20,12 @@ export interface Props {
 
 export function GroupCompactRoles({ group }: Props) {
   const userId = useUserId();
-  const [isLoading, roles] = useRegionRoles(group.region);
+  const [isLoading, regionRoles] = useRegionRoles(group.region);
 
   const { groupListRoleNeeded, groupListRoleOccupied, groupListRoleOccupiedByUser } =
-    useRoleDisplay(roles);
+    useRoleDisplay(regionRoles);
 
-  function roleStateClass(role: RoleEntity["id"]) {
+  function roleStateClass(role: GroupRole) {
     if (!hasRole(group.members, role)) {
       return "needed";
     } else if (hasRoleUser(group.members, role, userId)) {
@@ -32,7 +35,7 @@ export function GroupCompactRoles({ group }: Props) {
     }
   }
 
-  function roleStateTooltip(role: RoleEntity["id"], numberOf: number) {
+  function roleStateTooltip(role: GroupRole, numberOf: number) {
     if (!hasRole(group.members, role)) {
       return groupListRoleNeeded(role);
     } else if (hasRoleUser(group.members, role, userId)) {
@@ -45,21 +48,23 @@ export function GroupCompactRoles({ group }: Props) {
   return (
     <div className="group-compact-roles col">
       {!isLoading() &&
-        roles
-          .filter((role) => group.roles.includes(role.id))
-          .map((role) => {
-            const numberOf = group.members.filter((member) =>
-              member.roles.includes(role.id),
-            ).length;
+        regionRoles
+          .filter((regionRole) =>
+            group.roles.some((r) => r.id === regionRole.id && isPredefined(r)),
+          )
+          .map((regionRole) => {
+            const role = predefinedRole(regionRole.id);
+
+            const numberOf = group.membersWithRole(role).length;
 
             return (
               <div
                 key={role.id}
-                className={cx("group-compact-role", roleStateClass(role.id))}
-                data-bs-title={roleStateTooltip(role.id, numberOf)}
+                className={cx("group-compact-role", roleStateClass(role))}
+                data-bs-title={roleStateTooltip(role, numberOf)}
               >
-                <i className={cx(role.icon, "fa-fw")} />
-                {role.id === "participant" && (
+                <RoleIcon role={role} regionRoles={regionRoles} />
+                {isParticipant(role) && (
                   <>
                     &nbsp;
                     {numberOf}

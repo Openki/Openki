@@ -3,13 +3,14 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import { EventModel, Events } from "/imports/api/events/events";
-import { GroupModel } from "/imports/api/groups/groups";
+import { GroupCustomRole, GroupModel } from "/imports/api/groups/groups";
 import { RegionEntity } from "/imports/api/regions/regions";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -29,23 +30,24 @@ export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
 
 export function UserSubscribedHistoryEntry({
   user,
-  role,
+  roleId,
   regionId,
 }: {
   user: string;
-  role: string;
+  roleId: string;
   regionId: RegionEntity["_id"];
 }) {
-  const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleGroupHistoryUserSubscribed } = useRoleDisplay(roles);
+  const [isLoading, regionRoles] = useRegionRoles(regionId);
+  const { roleGroupHistoryUserSubscribed } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
     return null;
   }
 
+  const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon id={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionRoles={regionRoles} />{" "}
       {roleGroupHistoryUserSubscribed(role, {
         USER: (
           <>
@@ -59,23 +61,70 @@ export function UserSubscribedHistoryEntry({
 }
 export function UserUnsubscribedHistoryEntry({
   user,
-  role,
+  roleId,
   regionId,
 }: {
   user: string;
-  role: string;
+  roleId: string;
   regionId: RegionEntity["_id"];
 }) {
-  const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay(roles);
+  const [isLoading, regionRoles] = useRegionRoles(regionId);
+  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
     return null;
   }
 
+  const role = predefinedRole(roleId);
   return (
     <>
-      <RoleIcon id={role} regionId={regionId} />{" "}
+      <RoleIcon role={role} regionRoles={regionRoles} />{" "}
+      {roleGroupHistoryUserUnsubscribed(role, {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
+export function UserSubscribedToCustomRoleHistoryEntry({
+  user,
+  roleLabel,
+}: {
+  user: string;
+  roleLabel: GroupCustomRole["label"];
+}) {
+  const { roleGroupHistoryUserSubscribed } = useRoleDisplay([]);
+
+  const role = { label: roleLabel, type: RoleType.Custom } as const;
+  return (
+    <>
+      {roleGroupHistoryUserSubscribed(role, {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
+export function UserUnsubscribedFromCustomRoleHistoryEntry({
+  user,
+  roleLabel,
+}: {
+  user: string;
+  roleLabel: GroupCustomRole["label"];
+}) {
+  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay([]);
+
+  const role = { label: roleLabel, type: RoleType.Custom } as const;
+  return (
+    <>
       {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>
@@ -307,6 +356,8 @@ const map = {
   updated: UpdatedHistoryEntry,
   userSubscribed: UserSubscribedHistoryEntry,
   userUnsubscribed: UserUnsubscribedHistoryEntry,
+  userSubscribedToCustomRole: UserSubscribedToCustomRoleHistoryEntry,
+  userUnsubscribedFromCustomRole: UserUnsubscribedFromCustomRoleHistoryEntry,
   organizationPromote: OrganizationPromoteHistoryEntry,
   organizationTeam: OrganizationTeamHistoryEntry,
   eventInserted: EventInsertedHistoryEntry,

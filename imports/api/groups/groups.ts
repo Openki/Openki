@@ -8,19 +8,51 @@ import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasRoleUser } from "../../utils/group-role-utils";
+import { hasRoleUser } from "./lib/hasRole";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { OrganizationCustomGroupFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
+import { RoleType } from "/imports/api/groups/lib/Role";
+
+export const GroupPredefinedRolePattern = {
+  id: NotEmptyString(),
+  type: StringEnum(RoleType.Predefined),
+};
+/**
+ * Predefined roles are defined by the system/instance/region.
+ */
+export type GroupPredefinedRole = Type<typeof GroupPredefinedRolePattern>;
+
+export const GroupCustomRolePattern = {
+  id: String,
+  label: NotEmptyString(),
+  type: StringEnum(RoleType.Custom),
+};
+/**
+ * Custom roles are defined by the group creator.
+ * The custom role exists only within the group; therefore, the `id` is valid only within the group.
+ */
+export type GroupCustomRole = Type<typeof GroupCustomRolePattern>;
+
+export const GroupRolePattern = Match.OneOf(GroupPredefinedRolePattern, GroupCustomRolePattern);
+export type GroupRole = Type<typeof GroupRolePattern>;
+
+export type GroupRoleType = GroupRole["type"];
+
+export interface GroupRoleRef {
+  id: string;
+  type: GroupRoleType;
+}
 
 export interface GroupMember {
   user: string;
-  roles: string[];
+  roles: GroupRoleRef[];
   comment?: string;
 }
 
@@ -69,12 +101,9 @@ export interface GroupEntity {
   customFields: GroupCustomField[];
   /** ID_user */
   createdby: string;
-
   time_created: Date;
-
   time_lastedit: Date;
-  /** [role-keys] */
-  roles: string[];
+  roles: GroupRole[];
   members: GroupMember[];
   internal: boolean;
   singleEvent: boolean;
@@ -141,11 +170,11 @@ export class Group {
    * Get list of members with specified role
    * @param role like 'team'
    */
-  membersWithRole(this: GroupModel, role: string) {
-    return this.members.filter((member) => member.roles.includes(role));
+  membersWithRole(this: GroupModel, role: GroupRoleRef) {
+    return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role)));
   }
 
-  userHasRole(this: GroupModel, userId: string | undefined | null, role: string) {
+  userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {
     return hasRoleUser(this.members, role, userId);
   }
 

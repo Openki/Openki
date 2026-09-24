@@ -19,11 +19,11 @@ export function beforeInsert(group: Mongo.OptionalId<GroupEntity>) {
   return { ...group, interested: group.members.length };
 }
 
-export async function afterSubscribe(groupId: string) {
+export async function afterSubscribeToRole(groupId: string) {
   await updateAsync(groupId);
 }
 
-export async function afterUnsubscribe(groupId: string) {
+export async function afterUnsubscribeFromRole(groupId: string) {
   await updateAsync(groupId);
 }
 

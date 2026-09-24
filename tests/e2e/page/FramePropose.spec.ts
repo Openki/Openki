@@ -51,9 +51,9 @@ describe("Propose group via frame", function () {
 
   it("should allow to hide categories via url", () => {
     cy.visitOpenki("/frame/propose");
-    cy.get(".category-tag").should("be.visible");
+    cy.get("#groups-edit-add-categories").should("be.visible");
 
     cy.visit("/frame/propose?hideCategories=1");
-    cy.get(".category-tag").should("not.exist");
+    cy.get("#groups-edit-add-categories").should("not.exist");
   });
 });

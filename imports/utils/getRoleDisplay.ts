@@ -8,57 +8,75 @@ import { RoleEntity } from "/imports/utils/PublicSettings";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { PrimitiveType } from "intl-messageformat";
 import { $Dictionary } from "i18next/typescript/helpers";
+import { RoleType } from "/imports/api/groups/lib/Role";
+
+export type Role =
+  | { id: RoleEntity["id"]; type: typeof RoleType.Predefined }
+  | { label: string; type: typeof RoleType.Custom };
 
 export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   function getTranslation(
-    role: RoleEntity["id"],
+    role: Role,
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, PrimitiveType> | undefined,
   ): string;
   function getTranslation(
-    role: RoleEntity["id"],
+    role: Role,
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, PrimitiveType | ReactElement> | undefined,
   ): string | ReactElement | (string | ReactElement)[];
   function getTranslation<T extends PrimitiveType | ReactElement>(
-    role: RoleEntity["id"],
+    role: Role,
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, T> | undefined,
   ) {
-    // Translations for custom roles can be defined in multiple locations.
-    // (1) As part of Region.roles in the DB and in the `defaultRoles` in the instance
-    //     settings (`settings.json` file). Region settings overrides instance settings.
-    // (2) In the default translations in the `i18n/roles/*.json` files, translatable by Weblate.
-    //     The idea behind this is to monitor how customers use the role and to support them by
-    //     integrating more and more standard roles into Openki.
-    // (3) When no specific role is defined, fallback to a generic string.
-
-    const customTranslations = roles.find((r) => r.id === role)?.translations;
-
-    // (1) Check if a custom translation exists
-    const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
-    if (translation) {
-      return translation;
-    }
-
-    // (2) fallback to a i18n translation if exists.
-    // Translations for common default roles exist in the roles namespace.
-    const roleKey = `${role}.${key}`;
-    if (i18n.exists(`roles:${roleKey}`)) {
-      return variables
-        ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
-        : i18n.t(`roles:${roleKey}`);
-    }
-
-    // (3) No translation found, just fallback to a generic string. Using short to build the
-    // fallback strings.
     let label: string | undefined;
-    if (key !== "short") {
-      label = getLocalizedValue(i18n, customTranslations?.["short"]);
+
+    switch (role.type) {
+      case RoleType.Predefined:
+        {
+          // Translations for custom roles can be defined in multiple locations.
+          // (1) As part of Region.roles in the DB and in the `defaultRoles` in the instance
+          //     settings (`settings.json` file). Region settings overrides instance settings.
+          // (2) In the default translations in the `i18n/roles/*.json` files, translatable by Weblate.
+          //     The idea behind this is to monitor how customers use the role and to support them by
+          //     integrating more and more standard roles into Openki.
+          // (3) When no specific role is defined, fallback to a generic string.
+
+          const customTranslations = roles.find((r) => r.id === role.id)?.translations;
+
+          // (1) Check if a custom translation exists
+          const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
+          if (translation) {
+            return translation;
+          }
+
+          // (2) fallback to a i18n translation if exists.
+          // Translations for common default roles exist in the roles namespace.
+          const roleKey = `${role.id}.${key}`;
+          if (i18n.exists(`roles:${roleKey}`)) {
+            return variables
+              ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
+              : i18n.t(`roles:${roleKey}`);
+          }
+
+          // (3) No translation found, just fallback to a generic string. Using short to build the
+          // fallback strings.
+          if (key !== "short") {
+            label = getLocalizedValue(i18n, customTranslations?.["short"]);
+          }
+          if (label === undefined) {
+            label = role.id;
+          }
+        }
+        break;
+      case RoleType.Custom:
+        label = role.label;
+        break;
+      default:
+        throw new Error("Unexpected value for role.type");
     }
-    if (label === undefined) {
-      label = role;
-    }
+
     const roleVariables = {
       ROLE: label,
       ROLE_upperFirst: upperFirst(label),
@@ -67,88 +85,79 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   }
 
   return {
-    roleDescription(id: RoleEntity["id"]) {
-      return getTranslation(id, "description");
+    roleDescription(role: Role) {
+      return getTranslation(role, "description");
     },
 
-    roleShort(id: RoleEntity["id"]) {
-      return getTranslation(id, "short");
+    roleShort(role: Role) {
+      return getTranslation(role, "short");
     },
 
-    roleProfileUserGroupListCurrent(id: RoleEntity["id"], name: string) {
-      return getTranslation(id, "profile.userGroupListCurrent", { NAME: name });
+    roleProfileUserGroupListCurrent(role: Role, name: string) {
+      return getTranslation(role, "profile.userGroupListCurrent", { NAME: name });
     },
 
-    roleProfileUserGroupListPast(id: RoleEntity["id"], name: string) {
-      return getTranslation(id, "profile.userGroupListPast", { NAME: name });
+    roleProfileUserGroupListPast(role: Role, name: string) {
+      return getTranslation(role, "profile.userGroupListPast", { NAME: name });
     },
 
-    roleProfileMyGroupListCurrent(id: RoleEntity["id"]) {
-      return getTranslation(id, "profile.myGroupListCurrent");
+    roleProfileMyGroupListCurrent(role: Role) {
+      return getTranslation(role, "profile.myGroupListCurrent");
     },
 
-    roleProfileMyGroupListPast(id: RoleEntity["id"]) {
-      return getTranslation(id, "profile.myGroupListPast");
+    roleProfileMyGroupListPast(role: Role) {
+      return getTranslation(role, "profile.myGroupListPast");
     },
 
-    roleSubscribe(id: RoleEntity["id"]) {
-      return getTranslation(id, "subscribe");
+    roleSubscribe(role: Role) {
+      return getTranslation(role, "subscribe");
     },
 
-    roleSubscribed(id: RoleEntity["id"]) {
-      return getTranslation(id, "subscribed");
+    roleSubscribed(role: Role) {
+      return getTranslation(role, "subscribed");
     },
 
-    roleNeeded(id: RoleEntity["id"]) {
-      return getTranslation(id, "find.roleNeeded");
+    roleNeeded(role: Role) {
+      return getTranslation(role, "find.roleNeeded");
     },
 
-    groupListRoleNeeded(id: RoleEntity["id"]) {
-      return getTranslation(id, "groupList.statusTitle.roleNeeded");
+    groupListRoleNeeded(role: Role) {
+      return getTranslation(role, "groupList.statusTitle.roleNeeded");
     },
 
-    groupListRoleOccupied(id: RoleEntity["id"], variables: { NUM: number }) {
-      return getTranslation(id, "groupList.statusTitle.roleOccupied", variables);
+    groupListRoleOccupied(role: Role, variables: { NUM: number }) {
+      return getTranslation(role, "groupList.statusTitle.roleOccupied", variables);
     },
 
-    groupListRoleOccupiedByUser(id: RoleEntity["id"], variables: { NUM: number }) {
-      return getTranslation(id, "groupList.statusTitle.roleOccupiedByUser", variables);
+    groupListRoleOccupiedByUser(role: Role, variables: { NUM: number }) {
+      return getTranslation(role, "groupList.statusTitle.roleOccupiedByUser", variables);
     },
 
-    roleNotificationJoinEmailSubject(
-      id: RoleEntity["id"],
-      variables: { USER: string; GROUP: string },
-    ) {
-      return getTranslation(id, "notification.join.mail.subject", variables);
+    roleNotificationJoinEmailSubject(role: Role, variables: { USER: string; GROUP: string }) {
+      return getTranslation(role, "notification.join.mail.subject", variables);
     },
 
     roleNotificationJoinEmailIntro(
-      id: RoleEntity["id"],
+      role: Role,
       variables: { USER: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
-      return getTranslation(id, "notification.join.mail.intro", variables);
+      return getTranslation(role, "notification.join.mail.intro", variables);
     },
 
-    roleGroupFirstSteps(id: RoleEntity["id"], variables: { GUIDE: JSX.Element | string }) {
-      return getTranslation(id, "group.firstSteps", variables);
+    roleGroupFirstSteps(role: Role, variables: { GUIDE: JSX.Element | string }) {
+      return getTranslation(role, "group.firstSteps", variables);
     },
 
-    roleGroupMessageInfo(id: RoleEntity["id"]) {
-      return getTranslation(id, "group.messageInfo");
+    roleGroupMessageInfo(role: Role) {
+      return getTranslation(role, "group.messageInfo");
     },
 
-    roleGroupHistoryUserSubscribed(
-      id: RoleEntity["id"],
-      variables: { USER: JSX.Element | string },
-    ) {
-      return getTranslation(id, "group.history.userSubscribed", variables);
+    roleGroupHistoryUserSubscribed(role: Role, variables: { USER: JSX.Element | string }) {
+      return getTranslation(role, "group.history.userSubscribed", variables);
     },
 
-    roleGroupHistoryUserUnsubscribed(
-      id: RoleEntity["id"],
-      variables: { USER: JSX.Element | string },
-    ) {
-      return getTranslation(id, "group.history.userUnsubscribed", variables);
+    roleGroupHistoryUserUnsubscribed(role: Role, variables: { USER: JSX.Element | string }) {
+      return getTranslation(role, "group.history.userUnsubscribed", variables);
     },
   };
 }

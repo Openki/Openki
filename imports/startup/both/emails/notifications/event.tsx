@@ -16,6 +16,7 @@ import { Model as NotificationModel } from "../notification";
 import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "../utils/getStartEndDate";
 import { Organizations } from "/imports/api/organizations/organizations";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export const ModelName = "Event";
 
@@ -157,7 +158,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: <a href={groupLink}>{group.name}</a>,
         groupName: group.name,
         unsubscribeFromGroupLink: Router.url("showGroup", group, {
-          query: { unsubscribe: "participant", force: 1, campaign },
+          query: { unsubscribe: SystemRoles.Participant.id, force: 1, campaign },
         }),
         isNew: entry.body.isNew,
         replicas,

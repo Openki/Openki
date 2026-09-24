@@ -11,6 +11,8 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { hasRole } from "/imports/api/groups/lib/hasRole";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -32,6 +34,7 @@ import { Submenu } from "./submenu";
 import { ActionResult } from "/imports/ui/components/ActionResult";
 import { Report } from "/imports/ui/components/report";
 import { GroupCategories } from "/imports/ui/components/groups/categories";
+import { isCustom, isTeam } from "/imports/api/groups/lib/isRole";
 
 import "./styles.scss";
 
@@ -47,14 +50,18 @@ function canShare(group: GroupModel) {
   }
 
   // only show share a group if there is a role to subscribe
-  if (!(
-    group.roles.some((r) => r !== "team") ||
-    (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
-  )) {
-    return false;
+  if (
+    // there is a normal role that a user can subscribe
+    group.roles.some((r) => !isTeam(r)) ||
+    // theres is a team role that a user can subscribe
+    (group.roles.some(isTeam) && !hasRole(group.members, SystemRoles.Team)) ||
+    // there is custom role that a user can subscribe
+    group.roles.some(isCustom)
+  ) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 export function GroupDetailsPage({ edit, group, select }: Props) {

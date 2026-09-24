@@ -28,17 +28,16 @@
 
 .group-member-role {
   background: $blue;
-  margin-left: 3px;
   padding: 3px 6px 5px;
   vertical-align: middle;
 
   &.is-proposal {
-    background-color: transparent;
-    border: 3px dashed #a7c9d5;
+    background-color: #ffffffa1;
+    border: 3px dashed $blue;
     padding: 0 3px 2px;
 
     .group-member-role-text {
-      color: #6d9daf;
+      color: $blue;
     }
   }
 }

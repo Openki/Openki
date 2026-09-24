@@ -1,6 +1,7 @@
 import { GroupMember } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
-import { hasRoleUser } from "./group-role-utils";
+import { hasRoleUser } from "../api/groups/lib/hasRole";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export function canDeletePost(
   user: UserModel | undefined | null,
@@ -12,7 +13,7 @@ export function canDeletePost(
   }
   return (
     user.hasPrivilege("admin") /* is admin */ ||
-    hasRoleUser(group.members, "team", user._id) /* is in team of group */ ||
+    hasRoleUser(group.members, SystemRoles.Team, user._id) /* is in team of group */ ||
     post.userId === user._id // is creator
   );
 }

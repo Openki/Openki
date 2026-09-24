@@ -19,7 +19,7 @@ describe("Navbar", () => {
 
       //logout
       cy.get('[data-test="navbar-login-button"]').click();
-      cy.get("#bs-navbar-collapse button.btn").click();
+      cy.get('[data-test="navbar-user-frame-logout-button"]').click();
       cy.get('[data-test="navbar-login-button"] i').should("have.class", "fa-right-to-bracket");
     });
 

@@ -34,14 +34,14 @@ export function beforeDeleteImage() {
 /**
  * Update the modification date
  */
-export async function afterSubscribe(groupId: string) {
+export async function afterSubscribeToRole(groupId: string) {
   await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
 }
 
 /**
  * Update the modification date
  */
-export async function afterUnsubscribe(groupId: string) {
+export async function afterUnsubscribeFromRole(groupId: string) {
   await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
 }
 

@@ -45,6 +45,7 @@ import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
 import { RelStartEnd } from "/imports/ui/pages/kiosk/timetable";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 const makeFilterQuery = function (
   params: Record<string, string | undefined>,
@@ -658,9 +659,9 @@ RouterAsync.route("framePropose", {
     } else {
       query.setCreatorsRoles = [];
     }
-    query.roles = ["mentor", "host"].filter(
-      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
-    );
+    query.roles = ["mentor", "host"]
+      .filter((role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role))
+      .map(predefinedRole);
     delete query.neededRoles;
 
     query.creatorsRoles = ["mentor", "host"].filter((role) =>
