@@ -124,7 +124,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{ تم حذف الحدث} other{# تم حذف الأحداث } } بنجاح .",
   "deleteEventsModal.title": "حذف أحداث",
   "discussion.anonymous": "مجهول",
-  "discussionPost.deleted": "تم حذف التعليق.",
   "discussionPost.deleted.error": "تعذر حذف التعليق",
   "editableImage.accept.error": "يسمح بالصور فقط.",
   "email.base.farewell": "إذا كان لديك أي أسئلة أو اقتراحات، لا تتردد في الاتصال بنا.",

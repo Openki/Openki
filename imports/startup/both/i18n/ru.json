@@ -161,7 +161,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{Event was} other{# events were} } успешно удалено.",
   "deleteEventsModal.title": "Удалить мероприятия",
   "discussion.anonymous": "Анонимный",
-  "discussionPost.deleted": "Комментарий удален.",
   "discussionPost.deleted.error": "Не удалось удалить комментарий",
   "editableImage.accept.error": "Разрешены только изображения.",
   "email.base.farewell": "Если у вас есть вопросы или предложения, пожалуйста, свяжитесь с нами.",

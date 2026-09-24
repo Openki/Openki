@@ -187,7 +187,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{Veranstaltung wurde} other{# Veranstaltungen wurden} } erfolgreich gelöscht.",
   "deleteEventsModal.title": "Veranstaltungen löschen",
   "discussion.anonymous": "Anonym",
-  "discussionPost.deleted": "Kommentar gelöscht.",
   "discussionPost.deleted.error": "Der Kommentar konnte nicht gelöscht werden",
   "editableImage.accept.error": "Nur Bilder ({SUPPORTEDMIME}) sind erlaubt.",
   "email.base.farewell": "Bei Fragen oder Anregungen zögere nicht, uns zu kontaktieren.",

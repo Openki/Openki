@@ -162,7 +162,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, one{L'événement a été supprimé} other{# événements ont été supprimés}} avec succès.",
   "deleteEventsModal.title": "Supprimer les événements",
   "discussion.anonymous": "Anonyme",
-  "discussionPost.deleted": "Commentaire supprimé.",
   "discussionPost.deleted.error": "Le commentaire n'a pu être supprimé",
   "editableImage.accept.error": "Seules les images sont autorisées.",
   "email.base.farewell": "Si tu as des questions ou des suggestions, n'hésite pas à nous contacter.",
