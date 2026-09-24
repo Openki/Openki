@@ -6,8 +6,7 @@ import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-disc
 import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
-import * as GroupDiscussionUtils from "../../../../../../utils/group-discussion-utils";
-import * as Tooltips from "/imports/utils/Tooltips";
+import * as GroupDiscussionUtils from "/imports/utils/group-discussion-utils";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
@@ -15,6 +14,7 @@ import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
+import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 export interface Props {
   post: GroupDiscussionEntity & { new?: true } & { saving?: boolean };
@@ -37,39 +37,24 @@ export function Show({ post, onEdit }: Props) {
     return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
   const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
-  function removeDropdownAttr() {
-    return {
-      async onRemove() {
-        Tooltips.hide();
-
-        try {
-          await GroupDiscussionsMethods.deleteComment(post._id);
-          Alert.success(t("discussionPost.deleted", "Comment deleted."));
-        } catch (err) {
-          Alert.serverError(err, t("discussionPost.deleted.error", "Could not delete comment"));
-        }
-      },
-    };
-  }
-
-  function handleEditClick() {
-    Tooltips.hide();
-    onEdit();
+  async function handleRemove() {
+    try {
+      routerAutoscroll.cancelNext();
+      await GroupDiscussionsMethods.deleteComment(post._id);
+    } catch (err) {
+      Alert.serverError(err, t("discussionPost.deleted.error", "Could not delete comment"));
+    }
   }
 
   return post.new ? (
     post.parentId ? (
       <div className="discussion-reply">
-        <button
-          type="button"
-          className="btn btn-add discussion-reply-btn"
-          onClick={handleEditClick}
-        >
+        <button type="button" className="btn btn-add discussion-reply-btn" onClick={onEdit}>
           {t("group.discussion.comment_answer", "Answer")}
         </button>
       </div>
     ) : (
-      <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
+      <button type="button" className="btn btn-add page-component-btn" onClick={onEdit}>
         <i className="fa-solid fa-comment fa-fw" />
         &nbsp;
         {t("group.discussion.write_comment", "Write a comment")}
@@ -117,11 +102,11 @@ export function Show({ post, onEdit }: Props) {
           </span>
           <span className="discussion-buttons">
             {canEdit() && (
-              <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
+              <button type="button" className="discussion-edit-btn" onClick={onEdit}>
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
-            {canDelete() && <RemoveDropdown {...removeDropdownAttr()} />}
+            {canDelete() && <RemoveDropdown onRemove={handleRemove} />}
           </span>
         </div>
         <div className="discussion-post-body">

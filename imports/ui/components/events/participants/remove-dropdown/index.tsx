@@ -1,11 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import * as Tooltips from "/imports/utils/Tooltips";
-
-import "./styles.scss";
 import { getUserName } from "/imports/ui/lib/getUserName";
 import { useTracker } from "meteor/react-meteor-data";
+
+import "./styles.scss";
 
 export interface Props {
   userId: string;
@@ -23,11 +22,6 @@ export function RemoveDropdown({ userId, onClick }: Props) {
         className="btn btn-link px-0"
         aria-expanded="false"
         data-bs-toggle="dropdown"
-        onClick={() => {
-          setTimeout(() => {
-            Tooltips.hide();
-          }, 0);
-        }}
         /* 
           HACK: Is not possible to combine dropdown and tooltip. 
           So we add aria-description to describe the button. 

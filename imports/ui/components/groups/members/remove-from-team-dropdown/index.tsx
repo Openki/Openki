@@ -4,8 +4,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { GroupMember } from "/imports/api/groups/groups";
 
-import * as Tooltips from "/imports/utils/Tooltips";
-
 import "./styles.scss";
 
 export interface Props {
@@ -30,12 +28,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
         aria-expanded="false"
         data-bs-toggle="dropdown"
         data-bs-theme="dark"
-        onClick={() => {
-          setTimeout(() => {
-            Tooltips.hide();
-          }, 0);
-        }}
-      ></button>
+      />
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
           {isNotPrivilegedSelf()
@@ -59,9 +52,6 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
             type="button"
             className="btn btn-danger"
             onClick={() => {
-              setTimeout(() => {
-                Tooltips.hide();
-              }, 0);
               onClick();
             }}
           >

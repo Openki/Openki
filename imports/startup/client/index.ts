@@ -14,7 +14,6 @@ import "./c3-oauth";
 
 import * as RegionSelection from "/imports/utils/region-selection";
 import * as Theme from "/imports/utils/theme";
-import * as Tooltips from "/imports/utils/Tooltips";
 
 import { Introduction } from "/imports/ui/lib/introduction";
 
@@ -22,8 +21,6 @@ import "./bootstrap";
 import moment from "moment";
 
 Router.onStop(function () {
-  Tooltips.hide();
-
   // Remove success message with proposed actions when the user navigates away
   Alerts.remove({
     actions: { $exists: true },

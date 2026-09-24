@@ -5,7 +5,6 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/groups/subscription";
 import { GroupMember, GroupModel } from "/imports/api/groups/groups";
 
-import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
@@ -110,9 +109,6 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
               className="btn btn-sm btn-add add-to-team-btn"
               data-bs-title={t("group.roles.maketeam", "Add to team")}
               onClick={async () => {
-                setTimeout(() => {
-                  Tooltips.hide();
-                }, 0);
                 const change = subscribeToTeam();
                 if (!change) {
                   throw new Error("Unexpected falsy: change");
