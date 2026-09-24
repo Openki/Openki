@@ -68,7 +68,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
           <Contribution userId={member.user} />
         </div>
         <ParticipantContact participant={member.user} group={group} />
-        <div className="ms-auto d-flex flex-wrap align-items-center">
+        <div className="ms-auto d-flex flex-wrap align-items-center gap-1">
           {!isRolesLoading() &&
             memberRoles.map((role) => (
               <div
