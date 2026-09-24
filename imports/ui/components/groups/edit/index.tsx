@@ -570,7 +570,7 @@ export function Edit({
 
             {!!selectedRegion && fullRoleSelection && (
               <RoleSelect
-                region={selectedRegion}
+                regionId={selectedRegion}
                 organizations={organizations}
                 value={roles}
                 onChange={setRoles}

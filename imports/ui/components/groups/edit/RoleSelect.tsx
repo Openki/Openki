@@ -1,21 +1,24 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { chain } from "lodash-es";
+import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
+
+import { GroupRole } from "/imports/api/groups/groups";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
+import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
+import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { GroupRole } from "/imports/api/groups/groups";
-import { ReactSelectCreate } from "/imports/ui/components/react-select/ReactSelectCreate";
-import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
-import { RoleIcon } from "/imports/ui/components/RoleIcon";
-import { OrganizationModel } from "/imports/api/organizations/organizations";
-import { chain } from "lodash-es";
-import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
-import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
-import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 import { slug } from "/imports/utils/string-tools";
 
+import { ReactSelectCreate } from "/imports/ui/components/react-select/ReactSelectCreate";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
+import { ReactSelect } from "/imports/ui/components/react-select";
+
 interface Props {
-  region: string;
+  regionId: string;
 
   organizations: OrganizationModel[];
 
@@ -75,14 +78,14 @@ const CustomInput = (props: InputProps<RoleOption, true>) => {
 };
 
 export function RoleSelect({
-  region,
+  regionId,
   organizations,
   value: outerValue,
   isNewGroup,
   onChange,
 }: Props) {
   const { t } = useTranslation();
-  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(region);
+  const [isLoadingRegionRoles, regionRoles, region] = useRegionRoles(regionId);
 
   const { roleShort, roleDescription } = useRoleDisplay(regionRoles);
 
@@ -94,7 +97,9 @@ export function RoleSelect({
   }, [organizations]);
 
   function availableRoles() {
-    if (isLoadingRegionRoles()) return [];
+    if (isLoadingRegionRoles()) {
+      return [];
+    }
 
     return [
       ...regionRoles
@@ -159,38 +164,53 @@ export function RoleSelect({
       ),
     }));
 
+  const commonSelectProps = {
+    inputId: "group-edit-role-select",
+    isMulti: true,
+    isClearable: true,
+    isSearchable: true,
+    hideSelectedOptions: true,
+    components: {
+      Input: CustomInput,
+      MultiValueRemove: CustomMultiValueRemove,
+    },
+    options,
+    value: selectValue,
+  } as const;
+
   return (
     <div className="col-md">
       <label className="form-label" htmlFor="group-edit-role-select">
         {t("group.edit.needs.role", "Roles")}
+        <small> {t("_inputField.optional")}</small>
       </label>
-      <ReactSelectCreate
-        inputId="group-edit-role-select"
-        isMulti
-        isClearable
-        isSearchable
-        hideSelectedOptions
-        components={{
-          Input: CustomInput,
-          MultiValueRemove: CustomMultiValueRemove,
-        }}
-        placeholder={t("group.edit.needs.role.placeholder", "Select or type")}
-        formatCreateLabel={(inputValue) =>
-          t("group.edit.needs.role.create", 'Add "{ROLE}"', { ROLE: inputValue })
-        }
-        noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in any role...")}
-        options={options}
-        value={selectValue}
-        filterOption={createFilter({
-          stringify: (option) =>
-            `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
-        })}
-        onCreateOption={(newValue) =>
-          onChange(uniqGroupRole([...value, { id: "", label: newValue, type: "custom" }]))
-        }
-        onChange={(newValue) => onChange(newValue.map((value) => value.role))}
-      />
-
+      {region?.allowUserCustomRoleCreation ? (
+        <ReactSelectCreate
+          {...commonSelectProps}
+          placeholder={t("group.edit.needs.role.placeholder", "Select or type")}
+          formatCreateLabel={(inputValue) =>
+            t("group.edit.needs.role.create", 'Add "{ROLE}"', {
+              ROLE: inputValue,
+            })
+          }
+          noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in any role...")}
+          filterOption={createFilter({
+            stringify: (option) =>
+              `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
+          })}
+          onCreateOption={(newValue) =>
+            onChange(uniqGroupRole([...value, { id: "", label: newValue, type: "custom" }]))
+          }
+          onChange={(newValue) => onChange(newValue.map(({ role }) => role))}
+        />
+      ) : (
+        <ReactSelect
+          {...commonSelectProps}
+          placeholder={t("group.edit.needs.role.selectOnly.placeholder", "Select")}
+          noOptionsMessage={() => t("group.edit.needs.role.selectOnly.noOptions", "No roles")}
+          onChange={(newValue) => onChange(newValue.map(({ role }) => role))}
+        />
+      )}
       <div id="group-edit-role-help" className="form-text">
         {t("group.edit.needs.role.help", "Select roles to share responsibility within the group.")}
       </div>

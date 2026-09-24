@@ -448,6 +448,8 @@
   "group.edit.needs.role.help": "Select roles to share responsibility within the group.",
   "group.edit.needs.role.noOptions": "Type in any role...",
   "group.edit.needs.role.placeholder": "Select or type",
+  "group.edit.needs.role.selectOnly.noOptions": "No roles",
+  "group.edit.needs.role.selectOnly.placeholder": "Select",
   "group.edit.propose": "Propose new group",
   "group.edit.proposeInOrganization": "Propose new group in organization {ORGANIZATION}",
   "group.edit.region": "Region",

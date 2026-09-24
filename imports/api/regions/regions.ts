@@ -45,6 +45,8 @@ export interface RegionEntity {
   description: string;
   /** Region-specific roles to override the default settings */
   roles?: RoleEntity[];
+  /** Allow user on group propose/edit to create custom roles. */
+  allowUserCustomRoleCreation?: boolean;
   /**
    * Number of groups in that region, calculated field (does not count internal or archived
    * groups)
