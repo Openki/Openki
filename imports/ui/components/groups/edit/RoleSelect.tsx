@@ -10,7 +10,7 @@ import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { chain } from "lodash-es";
 import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
-import { components, createFilter, MultiValueRemoveProps } from "react-select";
+import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
 import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 import { slug } from "/imports/utils/string-tools";
 
@@ -61,6 +61,15 @@ const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
           ROLE: props.data.ariaLabel,
         }),
       }}
+    />
+  );
+};
+
+const CustomInput = (props: InputProps<RoleOption, true>) => {
+  return (
+    <components.Input
+      {...props}
+      aria-describedby={`group-edit-role-help ${props["aria-describedby"]}`}
     />
   );
 };
@@ -153,7 +162,7 @@ export function RoleSelect({
   return (
     <div className="col-md">
       <label className="form-label" htmlFor="group-edit-role-select">
-        {t("group.edit.needs.role", "This group might need…")}
+        {t("group.edit.needs.role", "Roles")}
       </label>
       <ReactSelectCreate
         inputId="group-edit-role-select"
@@ -162,16 +171,14 @@ export function RoleSelect({
         isSearchable
         hideSelectedOptions
         components={{
+          Input: CustomInput,
           MultiValueRemove: CustomMultiValueRemove,
         }}
-        placeholder={t(
-          "group.edit.needs.role.placeholder",
-          "Select from the list or type in what is needed...",
-        )}
+        placeholder={t("group.edit.needs.role.placeholder", "Select or type")}
         formatCreateLabel={(inputValue) =>
-          t("group.edit.needs.role.create", 'Press enter to add "{ROLE}"', { ROLE: inputValue })
+          t("group.edit.needs.role.create", 'Add "{ROLE}"', { ROLE: inputValue })
         }
-        noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in what is needed...")}
+        noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in any role...")}
         options={options}
         value={selectValue}
         filterOption={createFilter({
@@ -183,6 +190,10 @@ export function RoleSelect({
         }
         onChange={(newValue) => onChange(newValue.map((value) => value.role))}
       />
+
+      <div id="group-edit-role-help" className="form-text">
+        {t("group.edit.needs.role.help", "Select roles to share responsibility within the group.")}
+      </div>
     </div>
   );
 }
