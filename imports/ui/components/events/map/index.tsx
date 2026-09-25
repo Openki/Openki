@@ -7,7 +7,6 @@ import { chain } from "lodash-es";
 
 import { EventModel, EventVenue, EventVenueRef } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
-import { Geodata } from "/imports/api/Geodata";
 
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
