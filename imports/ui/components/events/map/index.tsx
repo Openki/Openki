@@ -63,10 +63,11 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
     venue: Venue;
     events: EventModel[];
   }[] = chain(events)
-    .filter((e) => isEventVenueRef(e.venue))
-    .groupBy((e) => isEventVenueRef(e.venue) && e.venue._id)
+    /* TypeGuard is not passed on correctly. */
+    .filter((e): e is typeof e & { venue: EventVenueRef } => isEventVenueRef(e.venue))
+    .groupBy((e) => e.venue._id)
     .map((events) => {
-      const venue = events[0].venue as EventVenueRef;
+      const venue = events[0].venue;
 
       return {
         key: venue._id,
