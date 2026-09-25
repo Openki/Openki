@@ -8,12 +8,16 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
+import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { hasRole } from "/imports/api/groups/lib/hasRole";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { MetaTags } from "/imports/ui/components/MetaTags";
+import { cx } from "/imports/utils/cx";
 
 import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Discussion } from "../../components/groups/discussion";
@@ -30,6 +34,7 @@ import { Submenu } from "./submenu";
 import { ActionResult } from "/imports/ui/components/ActionResult";
 import { Report } from "/imports/ui/components/report";
 import { GroupCategories } from "/imports/ui/components/groups/categories";
+import { isCustom, isTeam } from "/imports/api/groups/lib/isRole";
 
 import "./styles.scss";
 
@@ -40,19 +45,23 @@ export interface Props {
 }
 
 function canShare(group: GroupModel) {
-  if (group.isPrivate()) {
+  if (isPrivate(group)) {
     return false;
   }
 
   // only show share a group if there is a role to subscribe
-  if (!(
-    group.roles.some((r) => r !== "team") ||
-    (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
-  )) {
-    return false;
+  if (
+    // there is a normal role that a user can subscribe
+    group.roles.some((r) => !isTeam(r)) ||
+    // theres is a team role that a user can subscribe
+    (group.roles.some(isTeam) && !hasRole(group.members, SystemRoles.Team)) ||
+    // there is custom role that a user can subscribe
+    group.roles.some(isCustom)
+  ) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 export function GroupDetailsPage({ edit, group, select }: Props) {
@@ -238,7 +247,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                 <Edit {...group} />
               ) : (
                 <>
-                  <div className={`group-details ${groupStateClasses(group)}`}>
+                  <div className={cx("group-details", groupStateClasses(group))}>
                     <Header group={group} />
                     <Submenu group={group} />
                   </div>

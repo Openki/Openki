@@ -15,10 +15,12 @@ import { Model as NotificationModel } from "../notification";
 import { EventReminder, Props } from "/imports/emails/notifications/EventReminder";
 import { getStartEndDate } from "../utils/getStartEndDate";
 
+export const ModelName = "Event.Reminder";
+
 export interface Body {
   event: string;
   recipients: string[];
-  model: "Event.Reminder";
+  model: typeof ModelName;
 }
 
 /**
@@ -43,7 +45,7 @@ export async function record(eventId: string) {
   const body: Body = {
     event: eventId,
     recipients,
-    model: "Event.Reminder",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [eventId, ...recipients], body);

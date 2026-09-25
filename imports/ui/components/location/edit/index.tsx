@@ -4,6 +4,8 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 
+import { cx } from "/imports/utils/cx";
+
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
@@ -47,7 +49,7 @@ function IconControl({
       >
         <i className={icons[0]} />
         <i
-          className={`${icons[1]} fa-lg`}
+          className={cx(icons[1], "fa-lg")}
           style={{
             position: "absolute",
             left: "0.7ex",
@@ -90,10 +92,10 @@ export function Edit(
 ) {
   const { t } = useTranslation();
   const mapRef = useRef<L.Map>(null);
-  const markerRef = useRef<L.Marker<any>>(null);
+  const markerRef = useRef<L.Marker<unknown>>(null);
   const [level, setLevel] = useState(props.level);
 
-  function toGeoJson(marker: L.Marker<any>): Coordinates {
+  function toGeoJson(marker: L.Marker<unknown>): Coordinates {
     const latLng = marker.getLatLng();
     return [latLng.lng, latLng.lat];
   }

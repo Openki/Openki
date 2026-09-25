@@ -22,6 +22,7 @@ import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
@@ -57,13 +58,24 @@ function EditGroupCustomFields({
   values: GroupCustomField[] | undefined;
   onChange: (values: GroupCustomField[]) => void;
 }) {
-  const [isGroupLoading, group] = useGroupDetails(groupId);
-  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
+  const [isLoadingGroup, group] = useGroupDetails(groupId);
+  const [isLoadingOrganizations, organizations] = useOrganizationsFindFilter(
     { when: !!group?.teamOrganizations },
     { ids: group?.teamOrganizations },
   );
 
-  if (isGroupLoading() || organizationsIsLoading()) {
+  // init custom field values
+  useEffect(() => {
+    if (groupId) {
+      if (!group) {
+        // wait until group is loaded
+        return;
+      }
+      onChange(group.customFields);
+    }
+  }, [group]);
+
+  if (isLoadingGroup() || isLoadingOrganizations()) {
     return null;
   }
 
@@ -142,21 +154,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
 
-  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[] | undefined>(
-    undefined,
-  );
-  // init custom field values
-  useEffect(() => {
-    if (event.groupId) {
-      if (!group) {
-        // wait until group is loaded
-        return;
-      }
-      setCustomFieldValues(group.customFields);
-    }
-  }, [group]);
+  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[]>();
 
-  const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenue }, selectedVenue?._id);
+  const selectedVenueId = isEventVenueRef(selectedVenue) ? selectedVenue._id : undefined;
+
+  const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenueId }, selectedVenueId);
 
   const [updateReplicas, setUpdateReplicas] = useState({
     infos: false,
@@ -182,11 +184,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     room: event.room || "",
     maxParticipants: event.maxParticipants ?? 0,
   });
-  const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenue?._id, {
+  const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenueId, {
     _id: event._id,
     ...changes,
   });
-  const externalParallelEvents = useFindExternalParallelEvents(selectedRegion, selectedVenue?._id, {
+  const externalParallelEvents = useFindExternalParallelEvents(selectedRegion, selectedVenueId, {
     _id: event._id,
     ...changes,
   });
@@ -294,13 +296,20 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       venueRestrictedUse: {
         field: "venue",
         isValid: () => {
-          return (
-            !selectedVenue?._id ||
-            !selectedVenue.restrictedUse ||
-            // on event creation or venue change for venues with restricted use can only selected by the host
-            (!isNew && selectedVenue._id === event.venue?._id) ||
-            !!user?.venues?.includes(selectedVenue._id)
-          );
+          if (!isEventVenueRef(selectedVenue)) {
+            return true;
+          }
+
+          if (!selectedVenue.restrictedUse) {
+            return true;
+          }
+
+          // on event creation or venue change for venues with restricted use can only selected by the host
+          if (isNew || (isEventVenueRef(event.venue) && selectedVenue._id !== event.venue._id)) {
+            return !!user?.venues?.includes(selectedVenue._id);
+          }
+
+          return true;
         },
         text: () =>
           t(

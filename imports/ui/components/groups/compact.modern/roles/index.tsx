@@ -5,24 +5,30 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { Role } from "./role";
-import { hasRoleUser } from "/imports/utils/group-role-utils";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { hasRoleUser } from "/imports/api/groups/lib/hasRole";
+import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isParticipant, isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
+import { isTeamRoleVisible } from "/imports/api/groups/lib/teamPermissions";
 
 export function Roles({ group }: { group: GroupModel }) {
-  const userId = useUserId();
   const { t } = useTranslation();
-
+  const user = useUser();
   const [isLoading, regionRoles] = useRegionRoles(group.region);
 
-  const groupRoles = regionRoles.filter((role) => group.roles?.includes(role.type));
+  const groupRoles = group.roles
+    /* Show custom roles and predefined roles that exists in the region's roles */
+    .filter((role) => !isPredefined(role) || regionRoles.some((r) => r.id === role.id))
+    /* Team role has special conditions to be visible */
+    .filter((role) => !isTeam(role) || isTeamRoleVisible(group, user));
 
-  const hasParticipantRole = groupRoles.some((role) => role.type === "participant");
+  const hasParticipantRole = groupRoles.some(isParticipant);
 
-  const groupRolesWithoutParticipant = groupRoles.filter((role) => role.type !== "participant");
+  const groupRolesWithoutParticipant = groupRoles.filter((role) => !isParticipant(role));
 
   const userHasOtherRole = groupRolesWithoutParticipant.some((role) =>
-    hasRoleUser(group.members, role.type, userId),
+    hasRoleUser(group.members, role, user?._id),
   );
 
   if (isLoading()) {
@@ -31,23 +37,25 @@ export function Roles({ group }: { group: GroupModel }) {
 
   return (
     <div className="d-grid gap-1">
-      {hasParticipantRole && !userHasOtherRole && <Role group={group} roleType="participant" />}
+      {hasParticipantRole && !userHasOtherRole && (
+        <Role group={group} role={SystemRoles.Participant} />
+      )}
 
       {groupRolesWithoutParticipant
-        .filter((role) => hasRoleUser(group.members, role.type, userId))
+        .filter((role) => hasRoleUser(group.members, role, user?._id))
         .map((role) => (
-          <Role key={role.type} group={group} roleType={role.type} />
+          <Role key={role.id} group={group} role={role} />
         ))}
 
-      {hasParticipantRole && hasRoleUser(group.members, "participant", userId) && (
+      {hasParticipantRole && hasRoleUser(group.members, SystemRoles.Participant, user?._id) && (
         <>
           <h4 className="card-title mt-2">
             {t("groups.details.roles.title", "Do you want to contribute?")}
           </h4>
           {groupRolesWithoutParticipant
-            .filter((role) => !hasRoleUser(group.members, role.type, userId))
+            .filter((role) => !hasRoleUser(group.members, role, user?._id))
             .map((role) => (
-              <Role key={role.type} group={group} roleType={role.type} />
+              <Role key={role.id} group={group} role={role} />
             ))}
         </>
       )}

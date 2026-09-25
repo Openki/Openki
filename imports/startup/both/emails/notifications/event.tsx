@@ -16,6 +16,9 @@ import { Model as NotificationModel } from "../notification";
 import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "../utils/getStartEndDate";
 import { Organizations } from "/imports/api/organizations/organizations";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+
+export const ModelName = "Event";
 
 export interface Body {
   isNew: boolean;
@@ -23,7 +26,7 @@ export interface Body {
   replicats: string[];
   additionalMessage: string | undefined;
   recipients: string[];
-  model: "Event";
+  model: typeof ModelName;
 }
 
 /**
@@ -69,7 +72,7 @@ export async function record(
     recipients: uniq([...(group?.members || []), ...(event.participants || [])])?.map(
       (p) => p.user,
     ),
-    model: "Event",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", group ? [group._id] : [], body);
@@ -155,7 +158,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: <a href={groupLink}>{group.name}</a>,
         groupName: group.name,
         unsubscribeFromGroupLink: Router.url("showGroup", group, {
-          query: { unsubscribe: "participant", force: 1, campaign },
+          query: { unsubscribe: SystemRoles.Participant.id, force: 1, campaign },
         }),
         isNew: entry.body.isNew,
         replicas,

@@ -215,8 +215,7 @@ export function LogPage({
         {isLoading() && (
           <div className="loading">
             <h1>
-              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-              {/* @ts-ignore */}
+              {/* @ts-expect-error react do not known marquee*/}
               <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
             </h1>
           </div>

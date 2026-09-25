@@ -39,12 +39,13 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import * as Analytics from "/imports/ui/lib/analytics";
 import type { Props as GroupEditProps } from "/imports/ui/components/groups/edit";
 
-import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
-import type { Props as KioskDashboardData } from "../../ui/pages/kiosk/dashboard";
-import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
-import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
-import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
+import type { Props as OrganizationDetailsProps } from "../../ui/pages/organization-details";
+import type { Props as KioskDashboardProps } from "../../ui/pages/kiosk/dashboard";
+import type { Props as VenuesMapProps } from "/imports/ui/pages/venues-map";
+import type { Props as EventsMapProps } from "/imports/ui/pages/events-map";
+import type { Props as AdminTenantsProps } from "/imports/ui/pages/admin/tenants";
 import { RelStartEnd } from "/imports/ui/pages/kiosk/timetable";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 const makeFilterQuery = function (
   params: Record<string, string | undefined>,
@@ -149,7 +150,7 @@ RouterAsync.route("organizationDetails", {
   subscriptions() {
     return { details: Organizations.details.subscribe(this.params._id as string) };
   },
-  async data(): Promise<OrganizationDetailsData | undefined> {
+  async data(): Promise<OrganizationDetailsProps | undefined> {
     let organization: OrganizationModel | undefined;
     const isNew = this.params._id === "create";
     if (isNew) {
@@ -242,7 +243,7 @@ RouterAsync.route("proposeGroup", {
   path: "groups/propose",
   template: "groupProposePage",
   async onRun() {
-    await import("../../ui/pages/group-create");
+    await import("/imports/ui/pages/group-create");
   },
   data() {
     const { query } = this.params;
@@ -546,7 +547,7 @@ RouterAsync.route("venuesMap", {
     const query = filter.toQuery();
     return { venues: Venues.findFilter.subscribe(query) };
   },
-  async data(): Promise<VenuesMapData> {
+  async data(): Promise<VenuesMapProps> {
     return {
       region: CleanedRegion(Session.get("region")),
       venues: await this.subscriptions()?.venues(),
@@ -574,7 +575,7 @@ RouterAsync.route("eventsMap", {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
   },
-  async data(): Promise<EventsMapData> {
+  async data(): Promise<EventsMapProps> {
     return {
       region: CleanedRegion(Session.get("region")),
       events: await this.subscriptions()?.events(),
@@ -658,9 +659,9 @@ RouterAsync.route("framePropose", {
     } else {
       query.setCreatorsRoles = [];
     }
-    query.roles = ["mentor", "host"].filter(
-      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
-    );
+    query.roles = ["mentor", "host"]
+      .filter((role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role))
+      .map(predefinedRole);
     delete query.neededRoles;
 
     query.creatorsRoles = ["mentor", "host"].filter((role) =>
@@ -963,7 +964,7 @@ RouterAsync.route("kioskDashboard", {
   async onRun() {
     await import("../../ui/pages/kiosk/dashboard");
   },
-  data(): KioskDashboardData | undefined {
+  data(): KioskDashboardProps | undefined {
     const organization = this.params.query.organization;
 
     if (!organization) {
@@ -1017,7 +1018,7 @@ RouterAsync.route("tenants", {
   subscriptions() {
     return { findFilter: Tenants.findFilter.subscribe() };
   },
-  async data(): Promise<AdminTenantsData> {
+  async data(): Promise<AdminTenantsProps> {
     return { tenants: await this.subscriptions()?.findFilter() };
   },
 });

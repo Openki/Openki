@@ -4,41 +4,72 @@ import { intersection, assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventEntity, OEvent } from "/imports/api/events/events";
+import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasRoleUser } from "../../utils/group-role-utils";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { hasRoleUser } from "./lib/hasRole";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { OrganizationEntityCustomGroupFields } from "../organizations/organizations";
+import { OrganizationCustomGroupFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
+import { RoleType } from "/imports/api/groups/lib/Role";
 
-export interface GroupMemberEntity {
+export const GroupPredefinedRolePattern = {
+  id: NotEmptyString(),
+  type: StringEnum(RoleType.Predefined),
+};
+/**
+ * Predefined roles are defined by the system/instance/region.
+ */
+export type GroupPredefinedRole = Type<typeof GroupPredefinedRolePattern>;
+
+export const GroupCustomRolePattern = {
+  id: String,
+  label: NotEmptyString(),
+  type: StringEnum(RoleType.Custom),
+};
+/**
+ * Custom roles are defined by the group creator.
+ * The custom role exists only within the group; therefore, the `id` is valid only within the group.
+ */
+export type GroupCustomRole = Type<typeof GroupCustomRolePattern>;
+
+export const GroupRolePattern = Match.OneOf(GroupPredefinedRolePattern, GroupCustomRolePattern);
+export type GroupRole = Type<typeof GroupRolePattern>;
+
+export type GroupRoleType = GroupRole["type"];
+
+export interface GroupRoleRef {
+  id: string;
+  type: GroupRoleType;
+}
+
+export interface GroupMember {
   user: string;
-  roles: string[];
+  roles: GroupRoleRef[];
   comment?: string;
 }
 
 export type GroupCustomField = Pick<
-  OrganizationEntityCustomGroupFields,
+  OrganizationCustomGroupFields,
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
   displayValue?: LocalizedValue;
 };
 
-export type GroupNextEventEntity = Pick<
+export type GroupNextEventRef = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "noRsvp" | "participants"
 >;
 
-export type GroupLastEventEntity = Pick<
+export type GroupLastEventRef = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "participants"
 >;
@@ -48,8 +79,8 @@ export interface GroupEntity {
   _id: string;
   tenant: string;
   name: string;
-  /** ID categories */
-  categories: string[];
+  /** ID categories. This can potentially be undefined because this matches how older groups are stored in the database. */
+  categories?: string[];
   /** (not used) */
   tags: string[];
   /** List ID_organizations ("promote organizations") */
@@ -70,13 +101,10 @@ export interface GroupEntity {
   customFields: GroupCustomField[];
   /** ID_user */
   createdby: string;
-
   time_created: Date;
-
   time_lastedit: Date;
-  /** [role-keys] */
-  roles: string[];
-  members: GroupMemberEntity[];
+  roles: GroupRole[];
+  members: GroupMember[];
   internal: boolean;
   singleEvent: boolean;
   archived?: boolean;
@@ -95,18 +123,14 @@ export interface GroupEntity {
   /** (calculated) count of events still in the future for this group */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: GroupNextEventEntity | null;
+  nextEvent: GroupNextEventRef | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: GroupLastEventEntity | null;
+  lastEvent: GroupLastEventRef | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
 
 export type GroupModel = Group & GroupEntity;
-
-export function isPrivate(group: { tenant: string }) {
-  return !PublicSettings.publicTenants.includes(group.tenant);
-}
 
 export class Group {
   members: GroupEntity["members"] = [];
@@ -115,20 +139,9 @@ export class Group {
 
   teamOrganizations: GroupEntity["teamOrganizations"] = [];
 
-  nextEvent: (GroupNextEventEntity & OEvent) | null = null;
+  nextEvent: GroupNextEventRef | null = null;
 
-  lastEvent: (GroupLastEventEntity & OEvent) | null = null;
-
-  /**
-   * Check if the group is new (not yet saved).
-   */
-  isNew(this: GroupModel) {
-    return !this._id;
-  }
-
-  isPrivate(this: GroupModel) {
-    return isPrivate(this);
-  }
+  lastEvent: GroupLastEventRef | null = null;
 
   hasState(this: GroupModel) {
     if (this.nextEvent) {
@@ -148,7 +161,6 @@ export class Group {
       return false;
     }
     return (
-      this.isNew() /* Anyone can create a new group */ ||
       user.hasPrivilege("admin") /* Admins can edit all groups */ ||
       intersection(user.badges, this.editors).length > 0
     );
@@ -158,11 +170,11 @@ export class Group {
    * Get list of members with specified role
    * @param role like 'team'
    */
-  membersWithRole(this: GroupModel, role: string) {
-    return this.members.filter((member) => member.roles.includes(role));
+  membersWithRole(this: GroupModel, role: GroupRoleRef) {
+    return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role)));
   }
 
-  userHasRole(this: GroupModel, userId: string | undefined | null, role: string) {
+  userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {
     return hasRoleUser(this.members, role, userId);
   }
 
@@ -214,17 +226,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
   constructor() {
     super("Groups", {
       transform(group) {
-        const groupModel = assignIn(new Group(), group);
-
-        if (groupModel.nextEvent) {
-          groupModel.nextEvent = assignIn(new OEvent(), groupModel.nextEvent);
-        }
-
-        if (groupModel.lastEvent) {
-          groupModel.lastEvent = assignIn(new OEvent(), groupModel.lastEvent);
-        }
-
-        return groupModel;
+        return assignIn(new Group(), group);
       },
     });
 

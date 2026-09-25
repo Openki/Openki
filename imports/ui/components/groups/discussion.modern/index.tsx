@@ -5,7 +5,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import * as GroupDiscussions from "/imports/api/group-discussions/publications";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
-import { Post } from "./post";
+import { Post, type Props as PostProps } from "./post";
 
 import "./styles.scss";
 
@@ -55,7 +55,7 @@ export function Discussion({ groupId, eventId }: Props) {
         title: "",
         text: "",
         notifyAll,
-      } as any,
+      } as PostProps["post"],
       edit,
       onCancel: () => {
         setEdit(false);

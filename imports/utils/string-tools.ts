@@ -1,35 +1,16 @@
+import slugify from "slugify";
+
 /**
- * Create a URL friendly version from the string. Source: https://stackoverflow.com/questions/37809/how-do-i-generate-a-friendly-url-in-c
+ * Create a URL friendly version from the string.
  */
 export function slug(text: string) {
   return (
-    text
-      // make it all lower case
-      .toLowerCase()
-
-      // https://meta.stackexchange.com/questions/7435/non-us-ascii-characters-dropped-from-full-profile-url/7696#7696
-      .replace(/[ä]/g, "ae")
-      .replace(/[àåáâãåą]/g, "a")
-      .replace(/[èéêëę]/g, "e")
-      .replace(/[ìíîïı]/g, "i")
-      .replace(/[ö]/g, "oe")
-      .replace(/[òóôõøőð]/g, "o")
-      .replace(/[ü]/g, "ue")
-      .replace(/[ùúûŭů]/g, "u")
-      .replace(/[çćčĉ]/g, "c")
-      .replace(/[żźž]/g, "z")
-      .replace(/[śşšŝ]/g, "s")
-      .replace(/[ñń]/g, "n")
-      .replace(/[ýÿ]/g, "y")
-      .replace(/[ğĝ]/g, "g")
-      .replace(/[ř]/g, "r")
-      .replace(/[ł]/g, "l")
-      .replace(/[đ]/g, "d")
-      .replace(/[ß]/g, "ss")
-      .replace(/[Þ]/g, "th")
-      .replace(/[ĥ]/g, "h")
-      .replace(/[ĵ]/g, "j")
-
+    // use slugify to replace special chars
+    slugify(text, {
+      lower: true,
+      strict: true,
+    })
+      // make it even more restrictive
       // replace anything that is not letters or numbers with dashes
       .replace(/[^a-z0-9]/g, "-")
 

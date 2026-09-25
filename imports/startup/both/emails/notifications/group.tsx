@@ -14,10 +14,12 @@ import { Group, Props } from "../../../../emails/notifications/Group";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 
+export const ModelName = "Group";
+
 export interface Body {
   groupId: string;
   recipients: string[];
-  model: "Group";
+  model: typeof ModelName;
 }
 
 /**
@@ -35,7 +37,7 @@ export async function record(groupId: string) {
   const body: Body = {
     groupId: group._id,
     recipients: [group.createdby],
-    model: "Group",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id], body);

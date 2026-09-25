@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
@@ -15,6 +15,7 @@ import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "../../../../Buttons";
 import { UserName } from "/imports/ui/components/UserName";
 import { FormCheck } from "/imports/ui/components/FormCheck";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export interface Props {
   post: GroupDiscussionEntity & { new?: true };
@@ -34,7 +35,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
   const [isLoading, group] = Groups.useDetails(post.groupId);
 
-  function notifyAllChecked() {
+  function getNotifyAllDefaultValue() {
     if (!post.new) {
       return false;
     }
@@ -43,17 +44,20 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return false;
   }
-  const [notifyAll, setNotifyAll] = useState(notifyAllChecked());
+  const [notifyAll, setNotifyAll] = useState(getNotifyAllDefaultValue());
+  const isFirstRender = useRef(true);
   // Update notifyAll on prop change
   useEffect(() => {
-    setNotifyAll(!!post.notifyAll);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    setNotifyAll(Boolean(post.notifyAll));
   }, [post.notifyAll]);
 
-  const richtextPlaceholder = () => {
-    return post.parentId
-      ? t("group.discussion.text_placeholder_answer", "Your answer")
-      : t("group.discussion.text_placeholder", "Your comment");
-  };
+  const richtextPlaceholder = post.parentId
+    ? t("group.discussion.text_placeholder_answer", "Your answer")
+    : t("group.discussion.text_placeholder", "Your comment");
 
   function showUserId() {
     return !post.new || !anon;
@@ -65,9 +69,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return true;
   }
-  function hasBeenEdited() {
-    return moment(post.time_updated).isAfter(post.time_created);
-  }
+  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
   function canNotifyAll() {
     if (anon) {
       return false;
@@ -82,14 +84,14 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
 
     return !!(
-      group?.userHasRole(user?._id, "team") ||
+      group?.userHasRole(user?._id, SystemRoles.Team) ||
       user?.organizations.some((o) => group?.teamOrganizations.includes(o))
     );
   }
   function richtextAttr() {
     return {
       text: post.text,
-      placeholder: richtextPlaceholder(),
+      placeholder: richtextPlaceholder,
       onChange(value: string) {
         setValidComment(!!value);
         setCommentText(value);
@@ -98,9 +100,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   }
 
   return (
-    <div
-      className={`list-group-item d-flex align-items-start gap-3${post.parentId ? " ps-5" : ""}`}
-    >
+    <div className={cx("list-group-item d-flex align-items-start gap-3", post.parentId && "ps-5")}>
       <DiscussionProfileIcon userId={post.userId} />
 
       <form
@@ -174,7 +174,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   />
                 </>
               )}
-              {hasBeenEdited() && (
+              {hasBeenEdited && (
                 <>
                   {" "}
                   - {t("group.discussion.lastUpdate", "Last update")}:{" "}

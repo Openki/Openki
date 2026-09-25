@@ -2,6 +2,7 @@ import { Mongo } from "meteor/mongo";
 
 import { GroupEntity, Groups } from "./groups";
 import * as eventOrganizationsAndEditorsDenormalizer from "../events/organizationsAndEditorsDenormalizer";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 /**
  * Recalculate the editors field
@@ -10,11 +11,7 @@ export async function updateEditors(groupIdOrSelector: string | Mongo.Selector<G
   for (const group of await Groups.find(groupIdOrSelector).fetchAsync()) {
     const editors = group.teamOrganizations.slice();
 
-    group.members.forEach((member) => {
-      if (member.roles.includes("team")) {
-        editors.push(member.user);
-      }
-    });
+    editors.push(...group.membersWithRole(SystemRoles.Team).map((m) => m.user));
 
     const update = { $set: { editors } };
 

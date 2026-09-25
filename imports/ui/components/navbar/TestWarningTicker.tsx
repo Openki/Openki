@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -7,7 +6,7 @@ export function TestWarningTicker() {
 
   return (
     <>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error react do not known marquee */}
       <marquee
         // eslint-disable-next-line react/no-unknown-property
         bgcolor="#000"
@@ -22,7 +21,7 @@ export function TestWarningTicker() {
         <span style={{ paddingLeft: "10em" }}> </span>☠ &nbsp;{" "}
         {t("menue.Testpage2", "All data will be erased regularly.")} &nbsp; ☠
         <span style={{ paddingLeft: "10em" }}> </span>
-        {/* @ts-ignore */}
+        {/* @ts-expect-error react do not known marquee */}
       </marquee>
     </>
   );

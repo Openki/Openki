@@ -1,8 +1,25 @@
 import { Tooltip } from "/imports/startup/client/bootstrap";
 
-export function create(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
-  [...(tooltipTriggerList as any)].map((tooltipTriggerEl) => {
+const TooltipSelector = "[data-bs-title]";
+
+function dispose(node: Node) {
+  if (!(node instanceof HTMLElement)) {
+    return;
+  }
+
+  // The removed node itself may be a tooltip trigger.
+  if (node.matches(TooltipSelector)) {
+    Tooltip.getInstance(node)?.dispose();
+  }
+
+  // The removed node may contain tooltip triggers.
+  node.querySelectorAll<HTMLElement>(TooltipSelector).forEach((element) => {
+    Tooltip.getInstance(element)?.dispose();
+  });
+}
+
+function create(target: ParentNode) {
+  target.querySelectorAll<HTMLElement>(TooltipSelector).forEach((tooltipTriggerEl) => {
     if (!tooltipTriggerEl.dataset.bsTitle) {
       console.warn("[data-bs-title] is expected not to be empty.");
       return;
@@ -12,29 +29,15 @@ export function create(target: ParentNode = document) {
   });
 }
 
-export function update(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
-  [...(tooltipTriggerList as any)].map((tooltipTriggerEl) => {
+function update(target: ParentNode) {
+  target.querySelectorAll<HTMLElement>(TooltipSelector).forEach((tooltipTriggerEl) => {
     if (!tooltipTriggerEl.dataset.bsTitle) {
       console.warn("[data-bs-title] is expected not to be empty.");
       return;
     }
 
-    Tooltip.getOrCreateInstance(tooltipTriggerEl).dispose();
+    Tooltip.getInstance(tooltipTriggerEl)?.dispose();
     Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true });
-  });
-}
-
-export function hide(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
-  [...(tooltipTriggerList as any)].forEach((tooltipTriggerEl) => {
-    if (!tooltipTriggerEl.dataset.bsTitle) {
-      console.warn("[data-bs-title] is expected not to be empty.");
-      return;
-    }
-
-    const tooltip = Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true });
-    tooltip.hide();
   });
 }
 
@@ -51,6 +54,11 @@ export function enable() {
   const callback: MutationCallback = (mutationList) => {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
+        // React may have removed tooltip triggers from the DOM.
+        // Dispose their bootstrap instances before creating new ones.
+        mutation.removedNodes.forEach(dispose);
+
+        // Initialize tooltips for newly added elements.
         create(mutation.target.parentNode || document);
       } else if (mutation.type === "attributes") {
         update(mutation.target.parentNode || document);

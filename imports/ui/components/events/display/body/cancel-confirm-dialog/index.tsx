@@ -25,7 +25,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
 
   return (
     <Confirm variant="warning">
-      <ConfirmText>
+      <ConfirmText id="event-confirm-dialog-text">
         {t(
           "event.reallyCancel",
           'Please confirm the cancellation of this event. It will be displayed as "Canceled" and registration will not be possible anymore. {NUM, plural, =0{} other{{NUM, plural, one{If the attending user has automated notifications enabled} other{Those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.} }',

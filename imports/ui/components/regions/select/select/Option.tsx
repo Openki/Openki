@@ -9,6 +9,7 @@ import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { MarkedName } from "/imports/utils/marked-name";
+import { cx } from "/imports/utils/cx";
 
 export function Option({
   region,
@@ -37,11 +38,11 @@ export function Option({
   return (
     <li
       data-test="region-select-option"
-      className={region.isPrivate() ? "region-link-private" : ""}
+      className={cx(region.isPrivate() && "region-link-private")}
     >
       <a
         href="#"
-        className={`dropdown-item ${isCurrentRegion ? "fw-bold" : ""}`}
+        className={cx("dropdown-item", isCurrentRegion && "fw-bold")}
         title={region.nameEn}
         onClick={onClick}
         onMouseOver={() => handleFocus(true)}

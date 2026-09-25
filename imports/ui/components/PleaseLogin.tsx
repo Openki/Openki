@@ -3,15 +3,19 @@ import React, { SubmitEvent, ReactNode, useLayoutEffect, useState } from "react"
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 import { Content } from "/imports/ui/components/Buttons";
 
-export function Button(
-  props: {
-    visitorUserAllowed?: boolean | undefined;
-    beforeClick?: (() => undefined | boolean) | undefined;
-    onClick: () => void | Promise<void>;
-    onAbort?: (() => void) | undefined;
-    busyText?: string | undefined;
-  } & React.ButtonHTMLAttributes<HTMLButtonElement>,
-) {
+export function Button({
+  visitorUserAllowed,
+  beforeClick,
+  onAbort,
+  busyText,
+  ...props
+}: {
+  visitorUserAllowed?: boolean | undefined;
+  beforeClick?: (() => undefined | boolean) | undefined;
+  onClick: () => void | Promise<void>;
+  onAbort?: (() => void) | undefined;
+  busyText?: string | undefined;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const [actionActive, setActionActive] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
@@ -31,7 +35,7 @@ export function Button(
         })();
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
-        Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
+        Session.set("visitorUserAllowed", visitorUserAllowed || false);
         Session.set("pleaseLogin", true);
         setOpenedLogin(true);
       } else if (notPleaseLogin) {
@@ -39,7 +43,7 @@ export function Button(
         setActionActive(false);
         setOpenedLogin(false);
         setIsBusy(false);
-        props.onAbort?.();
+        onAbort?.();
       }
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
@@ -47,9 +51,9 @@ export function Button(
   async function handleEvent(event: { preventDefault: () => void; target: EventTarget }) {
     event.preventDefault();
 
-    if (props.beforeClick?.() === false) {
+    if (beforeClick?.() === false) {
       // when beforeClick returns false, we abort
-      props.onAbort?.();
+      onAbort?.();
       return;
     }
 
@@ -65,21 +69,24 @@ export function Button(
 
   return (
     <button {...props} onClick={handleEvent}>
-      <Content isBusy={isBusy} busyText={props.busyText}>
+      <Content isBusy={isBusy} busyText={busyText}>
         {props.children}
       </Content>
     </button>
   );
 }
 
-export function Form(
-  props: {
-    visitorUserAllowed?: boolean | undefined;
-    beforeSubmit?: (() => undefined | boolean) | undefined;
-    onSubmit: () => void | Promise<void>;
-    onAbort?: (() => void) | undefined;
-  } & React.FormHTMLAttributes<HTMLFormElement>,
-) {
+export function Form({
+  visitorUserAllowed,
+  beforeSubmit,
+  onAbort,
+  ...props
+}: {
+  visitorUserAllowed?: boolean | undefined;
+  beforeSubmit?: (() => undefined | boolean) | undefined;
+  onSubmit: () => void | Promise<void>;
+  onAbort?: (() => void) | undefined;
+} & React.FormHTMLAttributes<HTMLFormElement>) {
   const [actionActive, setActionActive] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
   const userId = useUserId();
@@ -94,14 +101,14 @@ export function Form(
         })();
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
-        Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
+        Session.set("visitorUserAllowed", visitorUserAllowed || false);
         Session.set("pleaseLogin", true);
         setOpenedLogin(true);
       } else if (notPleaseLogin) {
         // if the user closed the login window without logged in reset without call the save function
         setActionActive(false);
         setOpenedLogin(false);
-        props.onAbort?.();
+        onAbort?.();
       }
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
@@ -109,9 +116,9 @@ export function Form(
   async function handleEvent(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (props.beforeSubmit?.() === false) {
+    if (beforeSubmit?.() === false) {
       // when beforeSubmit returns false, we abort, eg. when validation fails
-      props.onAbort?.();
+      onAbort?.();
       return;
     }
 

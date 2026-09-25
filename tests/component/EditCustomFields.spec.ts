@@ -6,7 +6,7 @@ describe("EditCustomFields", () => {
       username: "Tara",
     });
 
-    cy.get('[data-test="group-details"] button.btn-edit').click();
+    cy.get("#group-details-edit").click();
     cy.get("#group-custom-field-email").clear();
     cy.get("#group-custom-field-email").type("tara@openki.example");
     cy.get("#group-custom-field-instructor").clear();

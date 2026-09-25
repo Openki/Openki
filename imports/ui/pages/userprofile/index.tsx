@@ -16,7 +16,6 @@ import * as Regions from "/imports/api/regions/publications";
 
 import { checkContribution } from "/imports/utils/checkContribution";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import * as Tooltips from "/imports/utils/Tooltips";
 
 import { Avatar } from "../../components/avatar";
 import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
@@ -167,8 +166,6 @@ export function UserprofilePage({ user }: Props) {
   }
 
   async function handleExpelFromOrganization(organization: OrganizationEntity) {
-    Tooltips.hide();
-
     const { _id: organizationId, name } = organization;
     const userId = user._id;
     try {

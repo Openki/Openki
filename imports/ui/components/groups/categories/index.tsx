@@ -2,6 +2,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
 
+import { type GroupEntity } from "/imports/api/groups/groups";
 import "./styles.scss";
 
 export interface CategoryLabelProps {
@@ -50,7 +51,7 @@ function CategoryLabelLinked({
 }
 
 export interface GroupCategoriesProps {
-  categories: string[];
+  categories: GroupEntity["categories"];
   onClick?: (category: string) => Promise<void>;
   onMouseOver?: (category: string) => Promise<void>;
   onMouseOut?: (category: string) => Promise<void>;
@@ -62,7 +63,8 @@ export function GroupCategories({
   onMouseOut,
   onClick,
 }: GroupCategoriesProps) {
-  if (categories.length === 0) {
+  // GroupEntity.categories are sometimes missing, so we need to handle this case.
+  if (!categories || categories.length === 0) {
     return null;
   }
   return (

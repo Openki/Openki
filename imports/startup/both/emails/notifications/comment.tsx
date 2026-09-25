@@ -15,11 +15,14 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/Comment";
 import { Events } from "/imports/api/events/events";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+
+export const ModelName = "Comment";
 
 export interface Body {
   commentId: string;
   recipients: string[];
-  model: string;
+  model: typeof ModelName;
 }
 
 /**
@@ -53,7 +56,7 @@ export async function record(commentId: string) {
       }
     }
   } else {
-    recipients.push(...group.membersWithRole("team").map((m) => m.user));
+    recipients.push(...group.membersWithRole(SystemRoles.Team).map((m) => m.user));
 
     // All participants in the thread are notified.
     const threadId = comment.parentId;
@@ -81,7 +84,7 @@ export async function record(commentId: string) {
   const body: Body = {
     commentId: comment._id,
     recipients,
-    model: "Comment",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id, comment._id], body);

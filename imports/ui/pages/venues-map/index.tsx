@@ -16,16 +16,17 @@ import { FullscreenControl } from "../../components/FullscreenControl";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
 import { AutoInvalidateSize } from "/imports/ui/components/location/display/AutoInvalidateSize";
+import { cx } from "/imports/utils/cx";
 
 import "leaflet/dist/leaflet.css";
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   region: string | undefined;
   venues: Mongo.Cursor<VenueEntity, VenueModel>;
 }
 
-export function VenuesMap({ region: regionId, venues }: Data) {
+export function VenuesMap({ region: regionId, venues }: Props) {
   const { t } = useTranslation();
   const locale = useSession("locale");
   const [selectedVenue, setSelectedVenue] = useState("");
@@ -128,7 +129,10 @@ export function VenuesMap({ region: regionId, venues }: Data) {
                     <a
                       key={venue._id}
                       href={Router.path("venueDetails", venue)}
-                      className={`list-group-item list-group-item-action list-group-item-primary ${selectedVenue === venue._id ? "active" : ""}`}
+                      className={cx(
+                        "list-group-item list-group-item-action list-group-item-primary",
+                        selectedVenue === venue._id && "active",
+                      )}
                       onMouseEnter={() => {
                         setSelectedVenue(venue._id);
                       }}

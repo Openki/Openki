@@ -1,10 +1,10 @@
 import { VenueModel, Venues } from "../venues/venues";
-import { Organizations, OrganizationVenueEntity } from "./organizations";
+import { Organizations, OrganizationVenueRef } from "./organizations";
 
 // Based on the guide from meteor: https://docs.meteor.com/tutorials/collections/collections.html#abstracting-denormalizers
 
 export async function afterVenueAddEditOrganization(
-  venue: OrganizationVenueEntity,
+  venue: OrganizationVenueRef,
   organizationId: string,
 ) {
   await Organizations.updateAsync(

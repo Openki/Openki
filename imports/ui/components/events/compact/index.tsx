@@ -1,5 +1,4 @@
 import { Router } from "meteor/iron:router";
-import moment from "moment";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -55,7 +54,8 @@ export function EventCompact({
       className={cx(
         "event-compact",
         withDate && "has-date",
-        (moment().isAfter(event.end) || event.isFullyBooked() || event.canceled) && "is-past",
+        // eslint-disable-next-line react-hooks/purity
+        (Date.now() > event.end.getTime() || event.isFullyBooked() || event.canceled) && "is-past",
       )}
     >
       {event.canceled ? (

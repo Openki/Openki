@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventVenueRef } from "/imports/api/events/events";
 
 import { OtherEventsMessage } from "/imports/ui/components/events/edit/OtherEventsMessage";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
@@ -29,7 +29,7 @@ export function Hints({
   regionId,
   event,
 }: {
-  venue: EventVenueEntity | undefined;
+  venue: EventVenueRef;
   regionId: string;
   event: {
     _id?: string | undefined;
@@ -41,9 +41,9 @@ export function Hints({
   const { t } = useTranslation();
   const user = useUser();
 
-  const [venueIsLoading, venue] = useVenueDetails(eventVenue?._id || "-1");
-  const parallelEvents = useFindParallelEvents(regionId, eventVenue?._id, event);
-  const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue?._id, event);
+  const [venueIsLoading, venue] = useVenueDetails(eventVenue._id);
+  const parallelEvents = useFindParallelEvents(regionId, eventVenue._id, event);
+  const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue._id, event);
 
   const allParallelEvents = [
     ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),

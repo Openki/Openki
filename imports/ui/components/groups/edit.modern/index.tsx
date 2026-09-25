@@ -20,6 +20,7 @@ import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
@@ -168,9 +169,9 @@ export function Edit(props: Props) {
       return;
     }
 
-    const changes = {
+    const changes: GroupsMethods.SaveFields = {
       name: StringTools.sanitizeSingleline(title),
-    } as unknown as Required<GroupsMethods.SaveFields>;
+    };
 
     if (description) {
       changes.description = description;
@@ -186,9 +187,7 @@ export function Edit(props: Props) {
 
     changes.organizations = getOrganizations();
 
-    changes.roles = {};
     changes.subs = [];
-    changes.unsubs = [];
 
     if (customFieldValues) {
       changes.customFields = customFieldValues;
@@ -205,7 +204,7 @@ export function Edit(props: Props) {
 
       Analytics.trackEvent(
         "Group creations",
-        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
+        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
         Regions.findOne(changes.region)?.nameEn,
         totalFocusTime(),
       );

@@ -10,11 +10,11 @@ import { Regions } from "../../components/tenants/Regions";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   tenant: TenantModel;
 }
 
-export function TenantDetailsPage({ tenant }: Data) {
+export function TenantDetailsPage({ tenant }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 

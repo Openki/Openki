@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { numberOf } from "/imports/api/events/lib/numberOf";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
@@ -28,7 +29,7 @@ export function GroupCompactEvent({ event }: { event: NonNullable<GroupModel["ne
         <div className="truncate">
           <i className="fa-solid fa-user fa-fw" />
           &nbsp;
-          {event?.numberOfParticipants()}
+          {numberOf(event.participants)}
         </div>
       )}
     </div>

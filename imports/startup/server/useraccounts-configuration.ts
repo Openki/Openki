@@ -8,7 +8,7 @@ import { UserModel, UserProfile } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import { NotAllowedCharacter } from "../both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "../both/NotAllowedCharacters";
 import {
   LoginExpirationInDays,
   PasswordResetTokenExpirationInDays,
@@ -82,7 +82,7 @@ Meteor.startup(async () => {
 });
 
 Accounts.validateNewUser((user) => {
-  if (NotAllowedCharacter.find((c) => user.username.includes(c))) {
+  if (NotAllowedCharacters.find((c) => user.username.includes(c))) {
     throw new Meteor.Error(403, "Not allowed character");
   }
 

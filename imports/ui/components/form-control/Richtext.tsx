@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import MediumEditor from "medium-editor";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   id?: string | undefined;
@@ -113,7 +114,7 @@ export function Richtext(props: Props) {
   return (
     <div
       id={id}
-      className={`form-control ${className} ${disabled ? "bg-secondary" : ""}`}
+      className={cx("form-control", className, disabled && "bg-secondary")}
       style={{ minHeight: "100px" }}
       ref={elementRef}
       onFocus={!disabled ? onFocus : undefined}

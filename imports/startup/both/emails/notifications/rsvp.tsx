@@ -19,11 +19,13 @@ import moment from "moment";
 import ical, { ICalCalendarMethod } from "ical-generator";
 import { convertToIcal } from "/imports/utils/convertToIcal";
 
+export const ModelName = "Rsvp";
+
 export interface Body {
   eventId: string;
   participantId: string;
   recipients: string[];
-  model: "Rsvp";
+  model: typeof ModelName;
 }
 
 export async function record(eventId: string, participantId: string) {
@@ -44,7 +46,7 @@ export async function record(eventId: string, participantId: string) {
     eventId: event._id,
     participantId: participant._id,
     recipients: [participant._id],
-    model: "Rsvp",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [event._id, participant._id], body);

@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-import { Groups, GroupLastEventEntity, GroupNextEventEntity, GroupEntity } from "./groups";
+import { Groups, GroupLastEventRef, GroupNextEventRef, GroupEntity } from "./groups";
 import { Events } from "/imports/api/events/events";
 
 /**
@@ -15,7 +15,7 @@ export async function updateNextEvent(groupIdOrSelector: string | Mongo.Selector
         canceled: { $ne: true },
       });
 
-      const nextEvent: GroupNextEventEntity | undefined = await Events.findOneAsync(
+      const nextEvent: GroupNextEventRef | undefined = await Events.findOneAsync(
         { groupId: group._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
@@ -30,7 +30,7 @@ export async function updateNextEvent(groupIdOrSelector: string | Mongo.Selector
         },
       );
 
-      const lastEvent: GroupLastEventEntity | undefined = await Events.findOneAsync(
+      const lastEvent: GroupLastEventRef | undefined = await Events.findOneAsync(
         { groupId: group._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },

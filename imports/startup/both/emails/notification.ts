@@ -1,5 +1,7 @@
-import { UserModel } from "/imports/api/users/users";
-import { Props as RootProps } from "../../../emails/Root";
+import { type JSX } from "react";
+
+import { type UserModel } from "/imports/api/users/users";
+import { type Props as RootProps } from "/imports/emails/Root";
 
 import * as event from "./notifications/event";
 import * as eventCanceled from "./notifications/event.canceled";
@@ -12,7 +14,6 @@ import * as join from "./notifications/join";
 import * as group from "./notifications/group";
 import * as organizationGroup from "./notifications/organization.group";
 import * as privateMessage from "./notifications/private-message";
-import { JSX } from "react";
 
 export interface Model<T> {
   accepted(user: UserModel): void;
@@ -40,15 +41,15 @@ export interface Model<T> {
 }
 
 export const Notification = {
-  Event: event,
-  "Event.Canceled": eventCanceled,
-  "Event.Reminder": eventReminder,
-  "Event.ContactParticipants": eventContactParticipants,
-  Rsvp: rsvp,
-  "Rsvp.Team": rsvpTeam,
-  Comment: comment,
-  Join: join,
-  Group: group,
-  "Organization.Group": organizationGroup,
-  PrivateMessage: privateMessage,
+  [event.ModelName]: event,
+  [eventCanceled.ModelName]: eventCanceled,
+  [eventReminder.ModelName]: eventReminder,
+  [eventContactParticipants.ModelName]: eventContactParticipants,
+  [rsvp.ModelName]: rsvp,
+  [rsvpTeam.ModelName]: rsvpTeam,
+  [comment.ModelName]: comment,
+  [join.ModelName]: join,
+  [group.ModelName]: group,
+  [organizationGroup.ModelName]: organizationGroup,
+  [privateMessage.ModelName]: privateMessage,
 };

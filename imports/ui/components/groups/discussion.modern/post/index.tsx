@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 
-import { Edit } from "./edit";
+import { Edit, type Props as GroupDiscussionEditProps } from "./edit";
 import { Show } from "./show";
 
 import "./styles.scss";
@@ -53,12 +53,17 @@ export function Post({ post, responses, edit, onCancel }: Props) {
   const isParent = !post.new && !post.parentId;
   const userId = useUserId();
   const [editing, setEditing] = useState(!!edit);
+  const isFirstRender = useRef(true);
   // Update editing after prop change
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setEditing(!!edit);
   }, [edit]);
 
-  function newResponse() {
+  function getNewPost() {
     return {
       new: true,
       parentId: post._id,
@@ -67,7 +72,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       userId,
       title: "",
       text: "",
-    };
+    } as GroupDiscussionEditProps["post"];
   }
   function postShowAttr() {
     return {
@@ -107,7 +112,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       {isParent && (
         <>
           {!!responses && <Responses responses={responses} />}
-          <Post post={newResponse() as any} />
+          <Post post={getNewPost()} />
         </>
       )}
     </>

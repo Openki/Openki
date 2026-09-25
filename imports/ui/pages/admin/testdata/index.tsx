@@ -36,7 +36,10 @@ export function TestdataPage() {
             await create();
             Alert.success(t("testdata.finish", "Finish!"));
           } catch (e) {
-            Alert.error(e);
+            Alert.serverError(
+              e,
+              t("testdata.error", "An error occurred while resetting test data."),
+            );
           }
         }}
       >

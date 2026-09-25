@@ -12,6 +12,7 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -35,7 +36,7 @@ export function Introduction({ hasPricePolicy }: Props) {
   }
 
   return (
-    <div className={`container ${isInCalendar() ? "calendar-introduction" : ""}`}>
+    <div className={cx("container", isInCalendar() && "calendar-introduction")}>
       <div className="introduction">
         <h3>
           <a
@@ -91,7 +92,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                   <i className="fa-solid fa-graduation-cap" />
                 </h2>
                 {t(
-                  "introduction.3_enrole",
+                  "introduction.3_enroll",
                   "Everybody can join your group as participant, mentor or host.",
                 )}
               </div>
@@ -105,7 +106,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                 <h2>
                   <i className="fa-solid fa-rocket" />
                 </h2>
-                {t("introduction.5_takePlace", "The group takes place.")}
+                {t("introduction.5_takePlace", "The group meets and events take place.")}
               </div>
               <div className="col">
                 <h2>

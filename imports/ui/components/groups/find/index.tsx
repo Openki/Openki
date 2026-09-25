@@ -6,7 +6,6 @@ import { useFindFilter } from "/imports/api/groups/publications";
 import { FindParams } from "/imports/api/groups/groups";
 
 import { SortSpec } from "/imports/utils/sort-spec";
-import * as Tooltips from "/imports/utils/Tooltips";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
@@ -223,7 +222,6 @@ export function Find({ query }: Props) {
           });
         },
         onClick: async () => {
-          Tooltips.hide();
           window.scrollTo(0, 0);
         },
       };
@@ -251,7 +249,6 @@ export function Find({ query }: Props) {
         },
         onClick: async () => {
           filter.disable("groupsAmount");
-          Tooltips.hide();
           filter.set("categories", [category]);
           window.scrollTo(0, 0);
           update();

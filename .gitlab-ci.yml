@@ -41,14 +41,14 @@ cleanup:
 
 # -------------------------------------------------------------------
 # Stage: prepare
-# Runs update-version.sh, writes server/version.js and build.env
+# Runs ./ci/update-version.sh, writes server/version.js and build.env
 # -------------------------------------------------------------------
 prepare_version:
   stage: prepare
   before_script:
     - git fetch --tags # Required for git describe to find annotated tags
   script:
-    - bash update-version.sh
+    - bash ./ci/update-version.sh
   artifacts:
     reports:
       dotenv: build.env # Exposes IMAGE_TAG to downstream jobs
@@ -144,6 +144,7 @@ deploy_docker:
       artifacts: true
   trigger:
     project: Openki/sysadmin/deploy
+    branch: dev
     strategy: depend
   variables:
     IMAGE_TAG: $IMAGE_TAG
