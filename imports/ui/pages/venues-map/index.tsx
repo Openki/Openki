@@ -21,12 +21,12 @@ import { cx } from "/imports/utils/cx";
 import "leaflet/dist/leaflet.css";
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   region: string | undefined;
   venues: Mongo.Cursor<VenueEntity, VenueModel>;
 }
 
-export function VenuesMap({ region: regionId, venues }: Data) {
+export function VenuesMap({ region: regionId, venues }: Props) {
   const { t } = useTranslation();
   const locale = useSession("locale");
   const [selectedVenue, setSelectedVenue] = useState("");

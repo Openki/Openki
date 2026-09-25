@@ -5,7 +5,7 @@ import { AvatarForm } from "../../components/avatarForm";
 import { Props as EditableProps, Editable } from "/imports/ui/components/editable";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
-import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacters";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 export function ProfileSection() {

@@ -13,7 +13,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { NotAllowedCharacters } from "../../../../startup/both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacters";
 import { DataProtectionLaw } from "../data-protection-law";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { FormControl } from "/imports/ui/components/form-control";

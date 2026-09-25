@@ -39,7 +39,7 @@ function allSet(organization: {
   return Object.values(organization).every((u) => u);
 }
 
-export interface Data {
+export interface Props {
   groupQuery: Record<string, string | undefined> & {
     organization: string;
     region: string | undefined;
@@ -48,7 +48,7 @@ export interface Data {
   showGroups: boolean;
 }
 
-export function OrganizationDetailsPage({ groupQuery, organization, showGroups }: Data) {
+export function OrganizationDetailsPage({ groupQuery, organization, showGroups }: Props) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);

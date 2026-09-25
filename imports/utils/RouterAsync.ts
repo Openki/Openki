@@ -129,8 +129,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     },
     waitOn: waitOn
       ? function () {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           const waitOnResult = waitOn.call(this);
 
           if (Array.isArray(waitOnResult)) {

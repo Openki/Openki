@@ -7,11 +7,11 @@ import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
-export interface Data {
+export interface Props {
   tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
 }
 
-export function Tenants({ tenants }: Data) {
+export function Tenants({ tenants }: Props) {
   const { t } = useTranslation();
 
   return (

@@ -18,7 +18,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { HtmlString, StringEnum, Type, UnsafeString } from "/imports/utils/CustomChecks";
-import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacters";
 
 /**
  * Set user region

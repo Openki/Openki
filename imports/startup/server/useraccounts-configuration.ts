@@ -8,7 +8,7 @@ import { UserModel, UserProfile } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import { NotAllowedCharacters } from "../both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "../both/NotAllowedCharacters";
 import {
   LoginExpirationInDays,
   PasswordResetTokenExpirationInDays,
