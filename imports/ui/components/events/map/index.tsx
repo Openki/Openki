@@ -63,8 +63,13 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
     venue: Venue;
     events: EventModel[];
   }[] = chain(events)
-    /* TypeGuard is not passed on correctly. */
-    .filter((e): e is typeof e & { venue: EventVenueRef } => isEventVenueRef(e.venue))
+    /*
+     * TypeGuard is not passed on correctly. Hard to read. Maybe there will be
+     * a better solution in the future...
+     */
+    .filter((e): e is Omit<typeof e, "venue"> & { venue: EventVenueRef } =>
+      isEventVenueRef(e.venue),
+    )
     .groupBy((e) => e.venue._id)
     .map((events) => {
       const venue = events[0].venue;
@@ -83,10 +88,20 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
 
   markers.push(
     ...events
-      .filter((e) => !isEventVenueRef(e.venue) && e.venue?.loc)
+      .filter(
+        /*
+         * TypeGuard is not passed on correctly. Hard to read. Maybe there will be
+         * a better solution in the future...
+         */
+        (
+          e,
+        ): e is Omit<typeof e, "venue"> & {
+          venue: Omit<EventVenue, "loc"> & { loc: NonNullable<EventVenue["loc"]> };
+        } => !isEventVenueRef(e.venue) && !!e.venue?.loc,
+      )
       .map((event) => {
-        const venue = event.venue as EventVenue;
-        const loc = venue.loc as Geodata;
+        const venue = event.venue;
+        const loc = venue.loc;
         return {
           key: event._id,
           loc: { lat: loc.coordinates[1], lng: loc.coordinates[0] },
