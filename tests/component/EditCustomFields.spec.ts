@@ -32,7 +32,7 @@ describe("EditCustomFields", () => {
     );
   });
 
-  it("should allow to edit option custom field", function () {
+  it("should allow to edit optional custom field", function () {
     cy.visitOpenki("/group/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
       username: "Tonya",
     });
