@@ -34,7 +34,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   function reset() {
     setValue(initialValue);
-    localStorage.removeItem(key);
+    if (Meteor.isClient) {
+      localStorage.removeItem(key);
+    }
   }
 
   return [value, setValue, reset] as const;
