@@ -85,7 +85,7 @@
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.6.1",
     "core-js": "3.50.0",
-    "cypress": "16.0.0",
+    "cypress": "16.1.0",
     "eslint": "9.39.4",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
