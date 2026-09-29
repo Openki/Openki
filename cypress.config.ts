@@ -111,10 +111,10 @@ const fallbackBrowser = "firefox";
 /**
  * Find the best available browser to run tests
  */
-function getDefaultBrowser(detectedBrowsers: Cypress.Browser[]) {
+function getPrioritizedDefaultBrowser(detectedBrowsers: Cypress.Browser[]) {
   for (const browser of detectedBrowsers) {
     // Prioritized order of browsers to use.
-    // chromium is a good option for CI runs and should be first.
+    // 'chromium' is a good option for CI runs and should be first.
     if (["chromium", "helium", "brave", "chrome"].includes(browser.name)) {
       return browser.name;
     }
@@ -124,8 +124,10 @@ function getDefaultBrowser(detectedBrowsers: Cypress.Browser[]) {
 
 export default defineConfig({
   projectId: "4icmbi",
-  // Fallback browser if nothing else is found
-  defaultBrowser: fallbackBrowser,
+  // Uncomment the `defaultBrowser` line to use a specific local browser.
+  // For example, use `firefox-dev` to run tests in Firefox Developer Edition.
+  // The name of the browser should match the name of the executable.
+  // defaultBrowser: 'firefox-dev',
   e2e: {
     baseUrl: "http://localhost:3000",
     // we use cypress e2e environment for all kinds of test
@@ -143,13 +145,12 @@ export default defineConfig({
     },
     async setupNodeEvents(_on, config) {
       const additionalBrowsers = await findAdditionalBrowsers();
-
       const detectedBrowsers = [...config.browsers, ...additionalBrowsers];
-      const defaultBrowser = getDefaultBrowser(detectedBrowsers);
 
       return {
         ...config,
-        defaultBrowser,
+        // Prioritize the explicitly defined default browser to give greater control for local development.
+        defaultBrowser: config.defaultBrowser ?? getPrioritizedDefaultBrowser(detectedBrowsers),
         browsers: detectedBrowsers,
       };
     },
