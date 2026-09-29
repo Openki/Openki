@@ -59,6 +59,10 @@ describe("Navbar", () => {
       cy.get('[data-test="navbar-toggler"] i.fa-bars').should("be.visible").click();
       cy.get('[data-test="navbar-login-button"]').should("have.text", " Seee");
       cy.get('[data-test="navbar-login-button"]').click();
+      // Very important to wait here and let the UI re-render before we log out.
+      // Otherwise, this test fails due to a timing issue: The menu would get _opened_ after the menu was _closed_ by the logout.
+      // NOTE: When removing Bootstrap and using a purely declarative UI, this will hopefully work more reliably.
+      cy.wait(200);
       cy.get('[data-test="navbar-user-frame-logout-button"]').click();
       cy.get(".navbar-collapse")
         .should("not.have.class", "show")
