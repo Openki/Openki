@@ -103,9 +103,29 @@ async function findAdditionalBrowsers(): Promise<Cypress.Browser[]> {
   return additionalBrowsers.filter(Boolean) as Cypress.Browser[];
 }
 
+/**
+ * Default browser if nothing else is detected
+ */
+const fallbackBrowser = "firefox";
+
+/**
+ * Find the best available browser to run tests
+ */
+function getDefaultBrowser(detectedBrowsers: Cypress.Browser[]) {
+  for (const browser of detectedBrowsers) {
+    // Prioritized order of browsers to use.
+    // chromium is a good option for CI runs and should be first.
+    if (["chromium", "helium", "brave", "chrome"].includes(browser.name)) {
+      return browser.name;
+    }
+  }
+  return fallbackBrowser;
+}
+
 export default defineConfig({
   projectId: "4icmbi",
-  defaultBrowser: "firefox",
+  // Fallback browser if nothing else is found
+  defaultBrowser: fallbackBrowser,
   e2e: {
     baseUrl: "http://localhost:3000",
     // we use cypress e2e environment for all kinds of test
@@ -122,19 +142,15 @@ export default defineConfig({
       openMode: 1,
     },
     async setupNodeEvents(_on, config) {
-      // Implement node event listeners here
-      // Register plugins here, if necessary
-      // Example: Code coverage or reporting
-      // return require(“./tests/cypress/plugins/index.ts”)(on, config);
-
       const additionalBrowsers = await findAdditionalBrowsers();
-      if (additionalBrowsers.length === 0) {
-        return config;
-      }
+
+      const detectedBrowsers = [...config.browsers, ...additionalBrowsers];
+      const defaultBrowser = getDefaultBrowser(detectedBrowsers);
 
       return {
         ...config,
-        browsers: [...config.browsers, ...additionalBrowsers],
+        defaultBrowser,
+        browsers: detectedBrowsers,
       };
     },
     env: {
