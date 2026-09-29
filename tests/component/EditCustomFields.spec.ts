@@ -29,7 +29,7 @@ describe("EditCustomFields", () => {
     cy.get(".event-details-body").contains("For: Kinder, mit Begleitperson").should("be.visible");
   });
 
-  it("should allow to edit optional custom field", function () {
+  it("should allow to edit a select custom field", function () {
     cy.visitOpenki("/group/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
       username: "Tonya",
     });
