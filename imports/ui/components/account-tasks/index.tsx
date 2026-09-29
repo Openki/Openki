@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal } from "/imports/startup/client/bootstrap";
+import { Collapse, Modal } from "/imports/startup/client/bootstrap";
 import { useSession, useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { ActionResult } from "/imports/ui/components/ActionResult";
@@ -294,7 +294,15 @@ export function AccountTasks() {
                   onSwitch={(task) => setActiveTask(task)}
                   onLogin={() => {
                     if (viewport.width <= ScssVars.gridFloatBreakpoint) {
-                      $("#bs-navbar-collapse").collapse("hide");
+                      const element = document.querySelector("#bs-navbar-collapse");
+                      if (!element) {
+                        throw new Error("Missing #bs-navbar-collapsible");
+                      }
+                      const instance = Collapse.getInstance(element);
+                      if (!instance) {
+                        throw new Error("Missing Collapse instance");
+                      }
+                      instance.hide();
                     }
 
                     if (elementModalRef.current) {
