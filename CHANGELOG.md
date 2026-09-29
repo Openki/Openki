@@ -1,3 +1,9 @@
+# v0.12.1 2026-09-29
+
+## Fixes
+* **Improved region role setup** — Added the missing region role db migration.
+* **Updated translations** — Improved the help text for selecting roles and updated German and Swedish translations.
+
 # v0.12.0 2026-09-25
 
 ## Highlights
