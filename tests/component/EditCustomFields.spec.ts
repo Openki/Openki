@@ -26,10 +26,7 @@ describe("EditCustomFields", () => {
     cy.get("#group-custom-field-target").clear();
     cy.get("#group-custom-field-target").type("Kinder, mit Begleitperson");
     cy.get("#events-edit-save").click();
-    cy.get("#description div.col-md-7 > p:nth-child(3)").should(
-      "have.text",
-      "For: Kinder, mit Begleitperson",
-    );
+    cy.get(".event-details-body").contains("For: Kinder, mit Begleitperson").should("be.visible");
   });
 
   it("should allow to edit optional custom field", function () {
@@ -39,7 +36,7 @@ describe("EditCustomFields", () => {
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get("#group-custom-field-lang").select("de");
     cy.get("#groups-edit-save").click();
-    cy.get("#description p:nth-child(4)").should("have.text", "Language: German");
+    cy.get(".group-description").contains("Language: German").should("be.visible");
   });
 
   it("should allow to edit boolean custom field", function () {
@@ -47,15 +44,15 @@ describe("EditCustomFields", () => {
       username: "Tonya",
     });
 
-    cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
+    cy.get(".group-description").contains("Recording: No");
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get('[data-test="group-details"] label[for="group-custom-field-recording"]').click();
     cy.get("#group-custom-field-recording").check();
     cy.get("#groups-edit-save").click();
-    cy.get("#description p:nth-child(3)").should("have.text", "Recording: Yes");
+    cy.get(".group-description").contains("Recording: Yes");
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get("#group-custom-field-recording").uncheck();
     cy.get("#groups-edit-save").click();
-    cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
+    cy.get(".group-description").contains("Recording: No").should("be.visible");
   });
 });
