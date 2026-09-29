@@ -4,7 +4,7 @@ describe("Organization edit", () => {
       cy.visitOpenki("/organization/fd3a8d98d4", { username: "Seee" });
 
       cy.get("#group-edit-title").type("Gewaltfreihe Kommunikation lernen");
-      cy.get("#groupEditRolementorCheck").check();
+      cy.get("#group-edit-role-select").type("mentor{enter}");
       cy.get("#groups-edit-save").click();
       cy.get(".alert-success").should("be.visible");
       cy.get('[data-test="organization-tag-fd3a8d98d4"] a').should("be.visible");
@@ -30,8 +30,9 @@ describe("Organization edit", () => {
       cy.get("#group-edit-title").type("Konfliktkommunikation");
       cy.get('#maincontent label[for="group-edit-internal"]').click();
       cy.get("#group-edit-internal").check();
-      cy.get("#groupEditRolehostCheck").uncheck();
+      cy.get("#group-edit-role-select").type("host{enter}");
       cy.get(".introduction a:first-of-type").click();
+      cy.get("#groups-edit-add-categories").click();
       cy.get("#groups-select-categories-misc").check();
       cy.get("#groups-select-subcategories-♥undefined♥").check();
       cy.get("#groups-edit-save").click();

@@ -5,7 +5,6 @@ import moment from "moment";
 import { Random } from "meteor/random";
 
 import { Groups } from "../groups/groups";
-import { Subscribe, processChange } from "../groups/subscription";
 import * as groupHistoryDenormalizer from "../groups/historyDenormalizer";
 import * as groupTimeLastEditDenormalizer from "../groups/timeLastEditDenormalizer";
 import * as groupImageDenormalizer from "./groupImageDenormalizer";
@@ -15,9 +14,9 @@ import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as groupNextEventDenormalizer from "../groups/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
+import { isEventVenueRef } from "./lib/isEventVenueRef";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
-import { loadRoles } from "/imports/api/regions/loadRoles";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
@@ -32,6 +31,9 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
 import { UserModel } from "../users/users";
 import { GeodataPattern } from "/imports/api/Geodata";
+import { subscribeToRole } from "/imports/api/groups/methods";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
 
 /**
  * @param updateOptions What should be updated
@@ -289,11 +291,14 @@ export const save = ServerMethod(
       }
     }
 
-    if (editFields.venue?._id || event.venue?._id) {
-      const venue = await Venues.findOneAsync(editFields.venue?._id || event.venue?._id);
+    const venueId =
+      (isEventVenueRef(editFields.venue) && editFields.venue?._id) ||
+      (isEventVenueRef(event.venue) && event.venue._id);
+    if (venueId) {
+      const venue = await Venues.findOneAsync(venueId);
 
       if (venue && !venue.allowParallelEvents) {
-        const hasParallelEvents = !!(
+        const hasParallelEvents = (
           await Events.findFilter(
             {
               venue: venue._id,
@@ -302,7 +307,7 @@ export const save = ServerMethod(
             /* take two to check for parallel events, maybe one is the current event */
             2,
           ).fetchAsync()
-        ).find((e) => e._id !== event._id);
+        ).some((e) => e._id !== event._id);
 
         if (hasParallelEvents) {
           throw new Meteor.Error(400, `This venue not allows to have two parallel events.`);
@@ -325,18 +330,18 @@ export const save = ServerMethod(
         }
       }
     }
-
-    if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
-      const venue = await Venues.findOneAsync(editFields.venue._id);
-      if (venue?.restrictedUse && !venue.editableBy(user))
-        throw new Meteor.Error(
-          400,
-          `this venue can only be chosen by its hosts to publish an event.`,
-        );
-    }
+    if (isEventVenueRef(editFields.venue))
+      if (!isEventVenueRef(event.venue) || editFields.venue._id !== event.venue._id) {
+        const venue = await Venues.findOneAsync(editFields.venue._id);
+        if (venue?.restrictedUse && !venue.editableBy(user))
+          throw new Meteor.Error(
+            400,
+            `this venue can only be chosen by its hosts to publish an event.`,
+          );
+      }
 
     if (Meteor.isServer) {
-      const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description as string);
+      const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description);
       editFields.description = HtmlTools.sanitizeHtml(sanitizedDescription);
     }
 
@@ -523,8 +528,8 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    // don't allow participant-mutations if event has passed
-    if (moment().isAfter(event.end)) {
+    // Don't allow participant-mutations if event has passed
+    if (Date.now() > event.end.getTime()) {
       throw new Meteor.Error(401, "cannot register, event has already passed");
     }
 
@@ -562,16 +567,10 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    const roles = await loadRoles(group.region);
-    const change = new Subscribe(
-      group,
-      roles.map((r) => r.type),
-      user._id,
-      "participant",
-      "rsvp",
-    );
-    if (change.validFor(user)) {
-      await processChange(change, { isSimulation: this.isSimulation });
+    // Check whether the "participant" role is enabled for this group and whether
+    // the user is not yet enrolled as a participant.
+    if (group.roles.some(isParticipant) && !group.userHasRole(user._id, SystemRoles.Participant)) {
+      await subscribeToRole(group._id, SystemRoles.Participant);
     }
 
     await groupNextEventDenormalizer.updateNextEvent(event.groupId);
@@ -595,8 +594,8 @@ export const removeParticipant = ServerMethod(
     if (!event) {
       return;
     }
-    // don't allow participant-mutations if event has passed
-    if (moment().isAfter(event.end)) {
+    // Don't allow participant-mutations if event has passed
+    if (Date.now() > event.end.getTime()) {
       throw new Meteor.Error(401, "cannot unregister, event has already passed");
     }
 

@@ -31,10 +31,13 @@ function CategoryOptionComponent(props: OptionProps<CategoryOption, true>) {
         ...props.innerProps,
         className: cx(
           props.innerProps.className,
-          props.data.isSubcategory && "ms-4 ps-3 categories-select-sub-option",
+          props.data.isSubcategory && "ps-3 categories-select-sub-option",
         ),
       }}
-    />
+    >
+      {props.children}
+      {props.isSelected && <i className="ms-1 fa-solid fa-check d-inline" />}
+    </components.Option>
   );
 }
 
@@ -71,6 +74,7 @@ export function FilterCategories({ categories, onChange }: Props) {
       components={{
         Option: CategoryOptionComponent,
       }}
+      hideSelectedOptions={false}
       onChange={(newValue) => {
         onChange(newValue.map((o) => o.value));
       }}

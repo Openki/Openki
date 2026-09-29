@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import MediumEditor from "medium-editor";
 
@@ -107,9 +108,7 @@ export function Richtext({ className, text, placeholder, maxLength, onChange }: 
   return (
     <>
       <div
-        className={`richtext form-control ${
-          characterLimitReached() ? "is-invalid" : ""
-        } richtext form-control ${className || ""}`}
+        className={cx("richtext form-control", characterLimitReached() && "is-invalid", className)}
         ref={elementRef}
         onKeyUp={handleChange}
         onChange={handleChange}

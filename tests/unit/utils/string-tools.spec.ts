@@ -8,9 +8,9 @@ describe("String tools", () => {
       assert.equal(StringTools.slug(input), output);
     });
 
-    it("should transforms Ümlauts to Uemlauts", () => {
+    it("should transforms Ümlauts to Umlauts", () => {
       const input = "ötzi";
-      const output = "oetzi";
+      const output = "otzi";
       assert.equal(StringTools.slug(input), output);
     });
 

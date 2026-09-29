@@ -1,4 +1,5 @@
-import { Groups } from "./groups";
+import { GroupCustomRole, GroupEntity, Groups } from "./groups";
+import { UserEntity } from "/imports/api/users/users";
 
 export async function afterUpdate(groupId: string, userId: string) {
   await Groups.updateAsync(groupId, {
@@ -36,25 +37,57 @@ export async function afterDeleteImage(groupId: string, userId: string) {
   });
 }
 
-export async function afterSubscribe(groupId: string, userId: string, roleType: string) {
+export async function afterSubscribeToRole(groupId: string, userId: string, roleId: string) {
   await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
         type: "userSubscribed",
-        data: { user: userId, role: roleType },
+        data: { user: userId, role: roleId },
       },
     },
   });
 }
 
-export async function afterUnsubscribe(groupId: string, userId: string, roleType: string) {
+export async function afterUnsubscribeFromRole(groupId: string, userId: string, roleId: string) {
   await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
         type: "userUnsubscribed",
-        data: { user: userId, role: roleType },
+        data: { user: userId, role: roleId },
+      },
+    },
+  });
+}
+
+export async function afterSubscribeToCustomRole(
+  groupId: GroupEntity["_id"],
+  userId: UserEntity["_id"],
+  roleLabel: GroupCustomRole["label"],
+) {
+  await Groups.updateAsync(groupId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "userSubscribedToCustomRole",
+        data: { user: userId, role: roleLabel },
+      },
+    },
+  });
+}
+
+export async function afterUnsubscribeFromCustomRole(
+  groupId: GroupEntity["_id"],
+  userId: UserEntity["_id"],
+  roleLabel: GroupCustomRole["label"],
+) {
+  await Groups.updateAsync(groupId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "userUnsubscribedFromCustomRole",
+        data: { user: userId, role: roleLabel },
       },
     },
   });

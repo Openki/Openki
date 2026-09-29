@@ -21,6 +21,15 @@ export function Entry({
     return id.substring(0, 8);
   }
 
+  function toggleUnlessTextSelected() {
+    // Abort if text is selected. This prevents unwanted collapsing/expanding of the log entry details
+    if (document.getSelection()?.type === "Range") {
+      return;
+    }
+
+    setExpanded(!expanded);
+  }
+
   return (
     <tr>
       {"interval" in entry ? (
@@ -80,21 +89,10 @@ export function Entry({
           </td>
           <td>
             {expanded ? (
-              <pre
-                onClick={() => {
-                  setExpanded(false);
-                }}
-              >
-                {JSON.stringify(entry, null, "   ")}
-              </pre>
+              <pre onClick={toggleUnlessTextSelected}>{JSON.stringify(entry, null, 3)}</pre>
             ) : (
-              <div
-                className="nowrap"
-                onClick={() => {
-                  setExpanded(true);
-                }}
-              >
-                {JSON.stringify(entry.body, null, "   ")}
+              <div className="nowrap" onClick={toggleUnlessTextSelected}>
+                {JSON.stringify(entry.body, null, 3)}
               </div>
             )}
           </td>

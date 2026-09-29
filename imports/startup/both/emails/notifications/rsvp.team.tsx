@@ -14,13 +14,16 @@ import { RsvpTeam, Props } from "../../../../emails/notifications/RsvpTeam";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+
+export const ModelName = "Rsvp.Team";
 
 export interface Body {
   eventId: string;
   groupId: string;
   participantId: string;
   recipients: string[];
-  model: "Rsvp.Team";
+  model: typeof ModelName;
 }
 
 export async function record(eventId: string, participantId: string) {
@@ -53,10 +56,10 @@ export async function record(eventId: string, participantId: string) {
 
     // Don't send to new member, they know
     recipients: group
-      .membersWithRole("team")
+      .membersWithRole(SystemRoles.Team)
       .map((m) => m.user)
       .filter((r) => r !== participantId),
-    model: "Rsvp.Team",
+    model: ModelName,
   };
 
   await Log.record("Notification.Send", [group._id, event._id, participant._id], body);

@@ -2,4 +2,6 @@
 
 .categories-select-sub-option {
   border-inline-start: 1px solid $blue-light;
+  margin-inline-start: 1.5rem;
+  inline-size: calc(100% - 1.5rem);
 }

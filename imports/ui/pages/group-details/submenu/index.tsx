@@ -4,6 +4,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";
+import { isPrivate } from "/imports/api/groups/lib/isPrivate";
 
 import { Description } from "../description";
 import { History } from "../../../components/groups/history";
@@ -18,10 +19,6 @@ export function Submenu({ group }: { group: GroupModel }) {
   const user = useUser();
   const [descriptionTruncated, setDescriptionTruncated] = useState(true);
   const elementRef = useRef<HTMLDivElement>(null);
-
-  function canEdit() {
-    return group.editableBy(user);
-  }
 
   useEffect(() => {
     // function to check if the description is longer than the div that displays it
@@ -49,7 +46,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               <span className="tab-label">{t("group.subnav.descr", "Description")}</span>
             </button>
           </li>
-          {canEdit() && (
+          {group.editableBy(user) && (
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link"
@@ -111,7 +108,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               />
               <CustomFieldDisplay groupId={group._id} />
             </div>
-            {descriptionTruncated && <div className="group-description-fade-bottom"></div>}
+            {descriptionTruncated && <div className="group-description-fade-bottom" />}
           </div>
           {descriptionTruncated && (
             <div
@@ -134,7 +131,7 @@ export function Submenu({ group }: { group: GroupModel }) {
         >
           <History group={group} />
         </div>
-        {canEdit() && (
+        {group.editableBy(user) && (
           <div
             className="tab-pane max-h-none"
             id="files"
@@ -145,7 +142,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <Files group={group} />
           </div>
         )}
-        {!group.isPrivate() && <PricePolicy dismissible wrap="mt-3" />}
+        {!isPrivate(group) && <PricePolicy dismissible wrap="mt-3" />}
       </div>
     </>
   );

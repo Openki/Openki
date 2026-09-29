@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { EventModel } from "/imports/api/events/events";
+import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { Regions } from "/imports/api/regions/regions";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   event: EventModel;
@@ -33,7 +35,7 @@ export function Event({ event, hideRsvp }: Props) {
   }
 
   return (
-    <div className={`frame-list-item-event ${event.canceled ? "frame-list-item-canceled" : ""}`}>
+    <div className={cx("frame-list-item-event", event.canceled && "frame-list-item-canceled")}>
       <div className="position-relative">
         {new Date() > event.start && (
           <div className="text-primary">
@@ -42,7 +44,7 @@ export function Event({ event, hideRsvp }: Props) {
           </div>
         )}
         <h4
-          className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
+          className={cx("frame-list-item-header", isExpanded && "active")}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="frame-list-item-toggle-indicator">
@@ -72,7 +74,7 @@ export function Event({ event, hideRsvp }: Props) {
             </div>
           )}
 
-          <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
+          <span className={cx("frame-list-item-time", isExpanded && "hidden")}>
             {timeFormat(event.start)}
           </span>
           <span className="fw-bold">{event.title}</span>
@@ -92,7 +94,7 @@ export function Event({ event, hideRsvp }: Props) {
           <div className="row">
             <div className="col-4 col-sm-2 fw-bold">{t("frame.eventsList.where", "Where:")}</div>
             <div className="col-8 col-sm-10">
-              {event.venue?._id ? (
+              {isEventVenueRef(event.venue) ? (
                 <a href={Router.path("venueDetails", event.venue)} target="_blank" rel="noreferrer">
                   {event.venue.name}
                 </a>

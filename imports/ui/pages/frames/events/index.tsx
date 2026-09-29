@@ -21,14 +21,14 @@ import "./styles.scss";
 
 const DefaultLimit = 6;
 
-export function EventsPage(data: Record<string, string>) {
+export function EventsPage(props: Record<string, string>) {
   const { t } = useTranslation();
 
   const reactiveNow = useReactiveNow();
 
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
-  const filter = Events.Filtering().read(data);
+  const filter = Events.Filtering().read(props);
 
   const date = (filter.get("after") || moment(reactiveNow)).startOf("day");
 
@@ -52,7 +52,7 @@ export function EventsPage(data: Record<string, string>) {
     new Filtering({
       count: Predicates.integer,
     })
-      .read(data)
+      .read(props)
       .toQuery().count || DefaultLimit;
 
   const [isLoading, events] = useFindFilter(filterQuery, limit + 1);
@@ -62,18 +62,18 @@ export function EventsPage(data: Record<string, string>) {
   const update = () => {
     const query: Record<string, string> = filter.toParams();
     query.count = limit.toString();
-    if (data.control) {
-      query.control = data.control;
+    if (props.control) {
+      query.control = props.control;
     } else {
       delete query.control;
     }
-    if (data.hideSwitches) {
-      query.hideSwitches = data.hideSwitches;
+    if (props.hideSwitches) {
+      query.hideSwitches = props.hideSwitches;
     } else {
       delete query.hideSwitches;
     }
-    if (data.filterOrganizations) {
-      query.filterOrganizations = data.filterOrganizations;
+    if (props.filterOrganizations) {
+      query.filterOrganizations = props.filterOrganizations;
     } else {
       delete query.filterOrganizations;
     }
@@ -83,11 +83,11 @@ export function EventsPage(data: Record<string, string>) {
   };
 
   function control() {
-    return data.control === "1";
+    return props.control === "1";
   }
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: data.hideSwitches === "1",
+      hideSwitches: props.hideSwitches === "1",
       search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
         filter.set("search", newValue);
@@ -102,7 +102,7 @@ export function EventsPage(data: Record<string, string>) {
         new Filtering({
           filterOrganizations: Predicates.ids,
         })
-          .read(data)
+          .read(props)
           .get("filterOrganizations") ?? [],
       selectedOrganizations: filter.get("organizations") ?? [],
       onChangeOrganizations: (organizations) => {

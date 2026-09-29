@@ -4,15 +4,16 @@ import merge from "deepmerge";
 
 import { Deprecated, Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export const RoleEntityPattern = {
   /** A unique name for the role, e.g. "team". This is used to connect the role with i18n strings */
-  type: String,
+  id: String,
   /** Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
   icon: String,
   /**
    * The role appears as "proposed only" in the member list.
-   * @default false
+   * @default true
    */
   proposal: Match.Maybe(Boolean),
   /**
@@ -23,7 +24,7 @@ export const RoleEntityPattern = {
   /**
    * The role can be edited (added/removed to the group) after a group has been created
    * by the editors of a group.
-   * @default false
+   * @default true
    */
   editable: Match.Maybe(Boolean),
   /**
@@ -99,6 +100,12 @@ export const RoleEntityPattern = {
 };
 
 export type RoleEntity = Type<typeof RoleEntityPattern>;
+
+export const RoleEntityDefault: Pick<RoleEntity, "proposal" | "preset" | "editable"> = {
+  proposal: true,
+  preset: false,
+  editable: true,
+};
 
 /** See `settings-example.jsonc` for full documentation */
 export const PublicSettingsPattern = Match.ObjectIncluding({
@@ -604,7 +611,7 @@ const defaults = {
   },
   defaultRoles: [
     {
-      type: "team",
+      id: "team",
       icon: "fa-solid fa-bullhorn",
       proposal: false,
       preset: true,
@@ -635,11 +642,16 @@ publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo }
 publicSettings.feature.socialMediaButtons =
   Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
 
-publicSettings.defaultRoles = Meteor.settings.public.defaultRoles ?? defaults.defaultRoles;
+publicSettings.defaultRoles =
+  Meteor.settings.public.defaultRoles.map((role: RoleEntity) => ({
+    // set default value for undefined props
+    ...RoleEntityDefault,
+    ...role,
+  })) ?? defaults.defaultRoles;
 
 if (
   !publicSettings.defaultRoles?.some(
-    (role: PublicSettings["defaultRoles"][number]) => role.type === "team",
+    (role: PublicSettings["defaultRoles"][number]) => role.id === SystemRoles.Team.id,
   )
 ) {
   throw new Error(

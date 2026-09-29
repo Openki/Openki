@@ -5,7 +5,7 @@ import { cx } from "/imports/utils/cx";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
-  type: string;
+  id: string;
   icon: string;
   description: string;
   subscribeLabel: string;
@@ -16,7 +16,7 @@ export interface Props {
 }
 
 export function Role({
-  type,
+  id,
   icon,
   description,
   subscribeLabel,
@@ -28,7 +28,7 @@ export function Role({
   return (
     <>
       <FormCheck
-        id={`groupEditRole${type}Check`}
+        id={`groupEditRole${id}Check`}
         type="box"
         label={
           <>
@@ -42,7 +42,7 @@ export function Role({
       {enabled && (
         <div className="ms-4">
           <FormCheck
-            id={`groupEditRole${type}EnrollCheck`}
+            id={`groupEditRole${id}EnrollCheck`}
             type="box"
             label={subscribeLabel}
             checked={enroll}

@@ -1,5 +1,4 @@
 import { Router } from "meteor/iron:router";
-import moment from "moment";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -73,9 +72,8 @@ export function EventRegistration({ event }: Props) {
     }
   }
 
-  function isFuture() {
-    return moment().isBefore(event.end);
-  }
+  // eslint-disable-next-line react-hooks/purity
+  const isFuture = Date.now() < event.end.getTime();
 
   useEffect(() => {
     (async () => {
@@ -97,7 +95,7 @@ export function EventRegistration({ event }: Props) {
 
   return (
     <>
-      {isFuture() && (
+      {isFuture && (
         <>
           <div className="page-component">
             <div className="page-component-header">

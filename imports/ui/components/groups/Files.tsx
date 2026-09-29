@@ -7,14 +7,14 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import {
   UploadImage,
-  Data as EditableImageData,
+  Props as EditableImageProps,
   EditableImage,
 } from "/imports/ui/components/editable-image";
 
 export function Files({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
 
-  function imageUploadArgs(): EditableImageData {
+  function imageUploadArgs(): EditableImageProps {
     return {
       fullImage: { src: group.publicUrlForDetailsImage(), maxSize: 1500 },
       thumbnail: { src: group.publicUrlForCompactImage(), maxSize: 150 },

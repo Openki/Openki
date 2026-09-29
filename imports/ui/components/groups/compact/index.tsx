@@ -4,9 +4,10 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";
-import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
+import { isPredefined } from "/imports/api/groups/lib/isRole";
+import { predefinedRole } from "/imports/api/groups/lib/Role";
 
-import { hasRole } from "../../../../utils/group-role-utils";
+import { hasRole } from "/imports/api/groups/lib/hasRole";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
@@ -40,8 +41,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   const elementRef = useRef<HTMLDivElement>(null);
   const user = useUser();
 
-  const [isRegionLoading, region] = useRegionDetails(group?.region);
-  const [isRegionRolesLoading, regionRoles] = useRegionRoles(group?.region);
+  const [isRegionRolesLoading, regionRoles, region] = useRegionRoles(group?.region);
 
   function groupCss() {
     if (!group.nextEvent) {
@@ -88,11 +88,11 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   function filterPreviewClasses() {
     const classes = [];
 
-    const roles = regionRoles.map((role) => role.type);
+    const roles = regionRoles.map((role) => role.id);
 
     roles.forEach((role) => {
-      const roleDisengaged = !hasRole(group.members, role);
-      if (group.roles.includes(role) && roleDisengaged) {
+      const roleDisengaged = !hasRole(group.members, predefinedRole(role));
+      if (group.roles.some((r) => r.id === role && isPredefined(r)) && roleDisengaged) {
         classes.push(`needs-role-${role}`);
       }
     });
@@ -177,7 +177,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
       ) : (
         <GroupCompactRoles group={group} />
       )}
-      {!isRegionLoading() && (
+      {!isRegionRolesLoading() && (
         <div className="tag-group group-organizations">
           {organizations.map((organization) => (
             <OrganizationTag key={organization} {...organizationTagAttr(organization)} />

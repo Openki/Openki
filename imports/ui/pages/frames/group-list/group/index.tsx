@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
+
+import { GroupModel } from "/imports/api/groups/groups";
+
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isParticipant } from "/imports/api/groups/lib/isRole";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
-import { Regions } from "/imports/api/regions/regions";
-import { GroupModel } from "/imports/api/groups/groups";
-import { Router } from "meteor/iron:router";
-import { RoleIcon } from "../../../../components/RoleIcon";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 export interface Props {
   group: GroupModel;
@@ -15,16 +19,12 @@ export interface Props {
 
 export function Group({ group, hideInterested }: Props) {
   const { t } = useTranslation();
+  const [isRegionRolesLoading, regionRoles, region] = useRegionRoles(group.region);
   const allRegions = useSessionEquals("region", "all");
   const [isExpanded, setIsExpanded] = useState(false);
   const siteName = useSiteName();
 
-  function regionOf() {
-    return Regions.findOne(group.region)?.name;
-  }
-  function interestedPersons() {
-    return group.members.filter((m) => m.roles.includes("participant")).length;
-  }
+  const interestedPersons = group.membersWithRole(SystemRoles.Participant).length;
 
   return (
     <div className="frame-list-item-group">
@@ -38,18 +38,20 @@ export function Group({ group, hideInterested }: Props) {
         <span className="frame-list-item-toggle-indicator">
           <i className="fa-solid fa-angle-down" />
         </span>
-        {!hideInterested && group.roles.includes("participant") && (
+        {!hideInterested && group.roles.some(isParticipant) && (
           <span
             className="frame-list-item-interested"
             data-bs-title={t("frame.groupList.interestedPersons", "Interested people")}
           >
-            <span className="me-1">{interestedPersons()}</span>{" "}
-            <RoleIcon type="participant" regionId={group.region} />
+            <span className="me-1">{interestedPersons}</span>{" "}
+            {!isRegionRolesLoading() && (
+              <RoleIcon role={SystemRoles.Participant} regionRoles={regionRoles} />
+            )}
           </span>
         )}
         {group.name}
-        {!!allRegions && (
-          <span className="badge bg-primary frame-list-item-region">{regionOf()}</span>
+        {allRegions && !isRegionRolesLoading() && (
+          <span className="badge bg-primary frame-list-item-region">{region?.name}</span>
         )}
       </h4>
       {isExpanded && (

@@ -24,6 +24,7 @@ export interface VenueEntity {
   editor: string;
   /** a organization that can edit the venue */
   editOrganization?: string;
+  /** Descriptive name for the venue */
   name: string;
   slug: string;
   /** HTML */
@@ -34,6 +35,7 @@ export interface VenueEntity {
   loc: Geodata;
   /** Floor level for custom maps as integer */
   level?: number;
+  /** Address string */
   address: string;
   route: string;
   /** ID */

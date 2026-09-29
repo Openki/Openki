@@ -14,7 +14,7 @@ import { Multi } from "../../components/calendar-nav/multi";
 
 import "./styles.scss";
 
-export function CalendarPage(data: Record<string, string>) {
+export function CalendarPage(props: Record<string, string>) {
   const { t } = useTranslation();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
@@ -23,9 +23,9 @@ export function CalendarPage(data: Record<string, string>) {
   const filter = Events.Filtering();
   // Read URL state
   const date = region?.calendarStartDate || new Date();
-  filter.set("start", moment(date).startOf("week")).read(data);
+  filter.set("start", moment(date).startOf("week")).read(props);
   // Show internal events only when a organization or venue is specified
-  if (!data.organization && !data.venue && data.internal === undefined) {
+  if (!props.organization && !props.venue && props.internal === undefined) {
     filter.disable("internal");
   }
   filter.set("region", region?._id || "all");
@@ -89,12 +89,7 @@ export function CalendarPage(data: Record<string, string>) {
           {!isLoading() ? (
             days().map((day) => (
               <React.Fragment key={day.date.toISOString()}>
-                <Day
-                  date={day.date}
-                  events={day.events}
-                  filter={filter}
-                  isAttendeeFilterOn={isAttendeeFilterOn}
-                />
+                <Day date={day.date} events={day.events} isAttendeeFilterOn={isAttendeeFilterOn} />
                 <hr />
               </React.Fragment>
             ))

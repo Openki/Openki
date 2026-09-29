@@ -31,7 +31,7 @@ export interface UploadImage {
   content: string;
 }
 
-export interface Data {
+export interface Props {
   /** max allowed image size max*max */
   maxSize?: number | undefined;
   thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
@@ -46,7 +46,7 @@ function changeExt(fileName: string, newExt: string) {
   return `${fileRoot}.${newExt}`;
 }
 
-export function EditableImage(data: Data) {
+export function EditableImage(props: Props) {
   const { t } = useTranslation();
   const [droppedFile, setDroppedFile] = useState<
     | {
@@ -76,11 +76,11 @@ export function EditableImage(data: Data) {
     }
 
     let resizedFile: Blob;
-    if (data.maxSize) {
+    if (props.maxSize) {
       try {
         resizedFile = await imageBlobReduce({
           pica: pica({ features: ["js", "wasm"] }),
-        }).toBlob(file, { max: data.maxSize });
+        }).toBlob(file, { max: props.maxSize });
       } catch (ex) {
         console.info(
           `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
@@ -131,7 +131,7 @@ export function EditableImage(data: Data) {
 
     setProgress("uploading");
 
-    data.onUpload(droppedFile);
+    props.onUpload(droppedFile);
 
     setDroppedFile(undefined);
     setPreview(undefined);
@@ -139,8 +139,8 @@ export function EditableImage(data: Data) {
   }
 
   async function onDelete() {
-    if (data.onDelete) {
-      data.onDelete();
+    if (props.onDelete) {
+      props.onDelete();
     }
     setDroppedFile(undefined);
     setPreview(undefined);
@@ -154,12 +154,15 @@ export function EditableImage(data: Data) {
   }
 
   function thumbnailAttributes() {
-    if (!data.thumbnail?.maxSize) {
+    if (!props.thumbnail?.maxSize) {
       return {};
     }
 
     return {
-      style: { maxWidth: `${data.thumbnail.maxSize}px`, maxHeight: `${data.thumbnail.maxSize}px` },
+      style: {
+        maxWidth: `${props.thumbnail.maxSize}px`,
+        maxHeight: `${props.thumbnail.maxSize}px`,
+      },
     };
   }
   function uploadButtonAttributes() {
@@ -181,7 +184,7 @@ export function EditableImage(data: Data) {
   }
 
   function deleteAllowed() {
-    return !!data.onDelete;
+    return !!props.onDelete;
   }
 
   function handleDragOver(event: DragEvent<HTMLFormElement>) {
@@ -251,8 +254,8 @@ export function EditableImage(data: Data) {
           <div className="mb-1">
             {preview ? (
               <img {...thumbnailAttributes()} src={preview} />
-            ) : data.thumbnail?.src ? (
-              <img {...thumbnailAttributes()} src={data.thumbnail.src} />
+            ) : props.thumbnail?.src ? (
+              <img {...thumbnailAttributes()} src={props.thumbnail.src} />
             ) : (
               <i className="fa-regular fa-image fa-5x" />
             )}
@@ -310,18 +313,18 @@ export function EditableImage(data: Data) {
     </>
   ) : (
     <div className="d-flex align-items-start gap-1">
-      {data.thumbnail?.src ? (
+      {props.thumbnail?.src ? (
         <img
           className="cursor-pointer img-thumbnail"
           {...thumbnailAttributes()}
-          src={data.thumbnail.src}
+          src={props.thumbnail.src}
           onClick={handleEditClick}
         />
       ) : (
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
       <div className="d-flex flex-column gap-1">
-        {!!data.fullImage?.src && (
+        {!!props.fullImage?.src && (
           <>
             {" "}
             <button
@@ -348,7 +351,7 @@ export function EditableImage(data: Data) {
                     ></button>
                   </div>
                   <div className="modal-body text-center">
-                    <img className="mw-100" src={data.fullImage.src} />
+                    <img className="mw-100" src={props.fullImage.src} />
                   </div>
                 </div>
               </div>

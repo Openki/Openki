@@ -9,6 +9,7 @@ import { useDetails } from "/imports/api/groups/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { cx } from "/imports/utils/cx";
 
 import { EventGroupHeader } from "../../../components/events/display/group-header";
 import { Edit } from "/imports/ui/components/events/edit";
@@ -84,39 +85,9 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
   const param = useSearchParams();
   const [editing, setEditing] = useState(isNew || param.edit === "1");
 
-  function mobileViewport() {
-    return viewport.width <= ScssVars.screenMD;
-  }
-  function isEditing() {
-    return isNew || editing;
-  }
-  function eventEditAttr() {
-    return {
-      event,
-      isNew: isNew,
-      afterSave: () => {
-        setEditing(false);
-      },
-      onCancel: () => {
-        if (isNew) {
-          history.back();
-        } else {
-          setEditing(false);
-        }
-      },
-    };
-  }
-  function eventDisplayAttr() {
-    return {
-      event,
-      onRemove: () => {
-        setEditing(false);
-      },
-      onEdit: () => {
-        setEditing(true);
-      },
-    };
-  }
+  const mobileViewport = viewport.width <= ScssVars.screenMD;
+
+  const isEditing = isNew || editing;
 
   return (
     <div className="row">
@@ -133,17 +104,36 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
 
         {!!event.groupId && <GroupEvent event={event as WithRequired<EventModel, "groupId">} />}
 
-        <div className={`event${event.groupId ? " group-event" : ""}`}>
-          {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
+        <div className={cx("event", event.groupId && "group-event")}>
+          {isEditing ? (
+            <Edit
+              event={event}
+              isNew={isNew}
+              afterSave={() => setEditing(false)}
+              onCancel={() => {
+                if (isNew) {
+                  history.back();
+                } else {
+                  setEditing(false);
+                }
+              }}
+            />
+          ) : (
+            <Display
+              event={event}
+              onRemove={() => setEditing(false)}
+              onEdit={() => setEditing(true)}
+            />
+          )}
         </div>
-        {!mobileViewport() && !isEditing() && !!event.groupId && (
+        {!mobileViewport && !isEditing && !!event.groupId && (
           <DisplayDiscussion groupId={event.groupId} eventId={event._id} />
         )}
       </div>
-      {!isEditing() && (
+      {!isEditing && (
         <div className="col-lg-4">
           <EventRegistration event={event} />
-          {mobileViewport() && !!event.groupId && (
+          {mobileViewport && !!event.groupId && (
             <DisplayDiscussion groupId={event.groupId} eventId={event._id} />
           )}
           <div className="page-component mt-5">

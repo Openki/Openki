@@ -33,7 +33,7 @@ export const regions: {
     attribution: string;
   };
   roles?: {
-    type: string;
+    id: string;
     icon: string;
     proposal: boolean;
     preset: boolean;
@@ -41,6 +41,7 @@ export const regions: {
     /** UI strings in the same format as `RoleEntity["translations"]` */
     translations?: Record<string, Record<string, string>>;
   }[];
+  allowUserCustomRoleCreation: boolean;
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
@@ -48,6 +49,7 @@ export const regions: {
     nameEn: "Testland",
     loc: [47.1375, 7.2472],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "EZqQLGL4PtFCxCNrp",
@@ -94,6 +96,7 @@ export const regions: {
       },
       { entity: "propose" },
     ],
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "MPKEnGGC8T9XyCCRG",
@@ -101,6 +104,7 @@ export const regions: {
     nameEn: "Englistan",
     loc: [40, -100],
     tz: "America/Denver",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "4Je2iee208aLHS1Km",
@@ -109,6 +113,7 @@ export const regions: {
     country: "ID",
     loc: [-7.8014, 110.3644],
     tz: "Asia/Jakarta",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "Siifr2P7drkv66FNA",
@@ -118,6 +123,7 @@ export const regions: {
     region: "BE",
     loc: [46.9511, 7.4386],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "J6GDhEEvdmdSMzPPF",
@@ -127,6 +133,7 @@ export const regions: {
     region: "ZH",
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "doR7JQH0jDE7Uunp3",
@@ -136,6 +143,7 @@ export const regions: {
     region: "TG",
     loc: [47.556, 8.8965],
     tz: "Europe/Zurich",
+    allowUserCustomRoleCreation: true,
   },
   {
     name: "Online",
@@ -151,6 +159,7 @@ export const regions: {
       },
       emailLogo: "emails/sveb.png",
     },
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "h4MnI3psRr8hSljk2",
@@ -182,6 +191,7 @@ export const regions: {
         query: "after=now&sort=start&internal=0&canceled=0",
       },
     ],
+    allowUserCustomRoleCreation: false,
   },
   {
     _id: "h4MnI3psRddhSljk2",
@@ -217,6 +227,7 @@ export const regions: {
       defaultLevel: 1,
       attribution: "&copy; <a href='https://github.com/c3nav'>c3nav</a>",
     },
+    allowUserCustomRoleCreation: true,
   },
   {
     _id: "5JyFCoKwkxnf8LWoh",
@@ -226,35 +237,35 @@ export const regions: {
     tz: "Europe/Zurich",
     roles: [
       {
-        type: "participant",
+        id: "participant",
         icon: "fa-solid fa-thumbs-up",
         proposal: false,
         preset: true,
         editable: false,
       },
       {
-        type: "mentor",
+        id: "mentor",
         icon: "fa-solid fa-graduation-cap",
         proposal: true,
         preset: false,
         editable: true,
       },
       {
-        type: "host",
+        id: "host",
         icon: "fa-solid fa-house",
         proposal: true,
         preset: false,
         editable: true,
       },
       {
-        type: "team",
+        id: "team",
         icon: "fa-solid fa-bullhorn",
         proposal: false,
         preset: true,
         editable: false,
       },
       {
-        type: "facilitator",
+        id: "facilitator",
         icon: "fa-solid fa-chalkboard-user",
         proposal: true,
         preset: false,
@@ -318,7 +329,7 @@ export const regions: {
         },
       },
       {
-        type: "builder",
+        id: "builder",
         icon: "fa-solid fa-hammer",
         proposal: true,
         preset: false,
@@ -382,7 +393,7 @@ export const regions: {
         },
       },
       {
-        type: "researcher",
+        id: "researcher",
         icon: "fa-solid fa-microscope",
         proposal: true,
         preset: false,
@@ -446,7 +457,7 @@ export const regions: {
         },
       },
       {
-        type: "editor",
+        id: "editor",
         icon: "fa-solid fa-pen-to-square",
         proposal: true,
         preset: false,
@@ -510,7 +521,7 @@ export const regions: {
         },
       },
       {
-        type: "organizer",
+        id: "organizer",
         icon: "fa-solid fa-sitemap",
         proposal: true,
         preset: false,
@@ -574,7 +585,7 @@ export const regions: {
         },
       },
       {
-        type: "developer",
+        id: "developer",
         icon: "fa-solid fa-code",
         proposal: true,
         preset: false,
@@ -638,7 +649,7 @@ export const regions: {
         },
       },
       {
-        type: "tester",
+        id: "tester",
         icon: "fa-solid fa-vial",
         proposal: true,
         preset: false,
@@ -702,7 +713,7 @@ export const regions: {
         },
       },
       {
-        type: "producer",
+        id: "producer",
         icon: "fa-solid fa-clapperboard",
         proposal: true,
         preset: false,
@@ -766,7 +777,7 @@ export const regions: {
         },
       },
       {
-        type: "moderator",
+        id: "moderator",
         icon: "fa-solid fa-shield-halved",
         proposal: true,
         preset: false,
@@ -830,7 +841,7 @@ export const regions: {
         },
       },
       {
-        type: "planner",
+        id: "planner",
         icon: "fa-solid fa-calendar-days",
         proposal: true,
         preset: false,
@@ -894,7 +905,7 @@ export const regions: {
         },
       },
       {
-        type: "curator",
+        id: "curator",
         icon: "fa-solid fa-vault",
         proposal: true,
         preset: false,
@@ -958,7 +969,7 @@ export const regions: {
         },
       },
       {
-        type: "cook",
+        id: "cook",
         icon: "fa-solid fa-utensils",
         proposal: true,
         preset: false,
@@ -1022,7 +1033,7 @@ export const regions: {
         },
       },
       {
-        type: "designer",
+        id: "designer",
         icon: "fa-solid fa-palette",
         proposal: true,
         preset: false,
@@ -1086,7 +1097,7 @@ export const regions: {
         },
       },
       {
-        type: "technician",
+        id: "technician",
         icon: "fa-solid fa-screwdriver-wrench",
         proposal: true,
         preset: false,
@@ -1150,7 +1161,7 @@ export const regions: {
         },
       },
       {
-        type: "guide",
+        id: "guide",
         icon: "fa-solid fa-compass",
         proposal: true,
         preset: false,
@@ -1214,7 +1225,7 @@ export const regions: {
         },
       },
       {
-        type: "archivist",
+        id: "archivist",
         icon: "fa-solid fa-box-archive",
         proposal: true,
         preset: false,
@@ -1278,5 +1289,6 @@ export const regions: {
         },
       },
     ],
+    allowUserCustomRoleCreation: true,
   },
 ];

@@ -2,14 +2,15 @@
 #
 # https://github.com/casey/just#readme
 #
-# Purpose of this file:
-# This file can be executed by `just` to reduce repeated typing for common tasks.
+# This file can be executed with `just` and is useful for the following reasons:
+# - To reduce repeated typing for common tasks.
+# - To document dev commands.
 #
 # Get started:
 # 1) Install `just` via your package manager: https://github.com/casey/just#installation
 # 2) Run `just` to list available commands.
 # 3) Run commands like for example `just dev` to start the dev server.
-# 4) Update this file and add more useful commands.
+# 4) Update this file so it includes the most useful commands commonly needed for .
 
 set default-list
 
@@ -22,7 +23,7 @@ install:
 dev:
     meteor npm run debug
 
-# Fix linting errors and warn for serious problems
+# Fix linting and formatting errors and warn for serious problems.
 fix:
     meteor npm run lint:fix
 
@@ -42,3 +43,16 @@ test-ui:
 # Run all tests with a headless browser
 test:
     meteor npm run test
+
+# List npm dependencies that have new versions available
+[no-exit-message]
+outdated:
+    meteor npm outdated
+
+# Reset meteor cache. Pass `--db` to also reset the local MongoDB.
+reset *ARGS:
+    meteor reset {{ ARGS }}
+
+alias i := install
+alias d := dev
+alias o := outdated

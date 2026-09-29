@@ -91,12 +91,12 @@ export async function create() {
     } as unknown as EventEntity;
 
     event.venue = {
-      _id: event.venue?._id,
+      _id: (event.venue as any)?._id,
       name: event.venue?.name,
       loc: event.venue?.loc,
       level: event.venue?.level,
       address: event.venue?.address,
-      editor: event.venue?.editor,
+      editor: (event.venue as any)?.editor,
     } as any;
 
     await Events.insertAsync(event);

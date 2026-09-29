@@ -1,9 +1,8 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
-import moment from "moment";
 
+import { useUser } from "/imports/utils/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
@@ -48,9 +47,8 @@ function Registration({ event }: { event: EventModel }) {
     return event.maxParticipants - occupied;
   }
 
-  function isFuture() {
-    return moment().isBefore(event.end);
-  }
+  // eslint-disable-next-line react-hooks/purity
+  const isFuture = Date.now() < event.end.getTime();
 
   async function addParticipant(companions = 0) {
     try {
@@ -115,7 +113,7 @@ function Registration({ event }: { event: EventModel }) {
         )}
       </p>
 
-      {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && (
+      {isFuture && !event.isPrivate() && event.attendedBy(user?._id) && (
         <p className="card-text">
           {t("sharing.title", "Invite your friends")}
           <Sharing
@@ -169,9 +167,8 @@ export function RegistrationParticipants({ event }: Props) {
     ids: event.allTeamOrganizations(),
   });
 
-  function isFuture() {
-    return moment().isBefore(event.end);
-  }
+  // eslint-disable-next-line react-hooks/purity
+  const isFuture = Date.now() < event.end.getTime();
 
   if (organizationsIsLoading()) {
     return null;
@@ -181,7 +178,7 @@ export function RegistrationParticipants({ event }: Props) {
 
   return (
     <>
-      {isFuture() && !event.canceled && (
+      {isFuture && !event.canceled && (
         <>
           <h4 className="card-title">{t("event.details.registration", "Registration")}</h4>
           {event.noRsvp ? (

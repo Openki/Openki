@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FormCheck } from "../../FormCheck";
 import { useAffectedReplica } from "/imports/api/events/publications";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { cx } from "/imports/utils/cx";
 
 export function UpdateAffectedReplica({
   values,
@@ -74,7 +75,7 @@ export function UpdateAffectedReplica({
             </div>
           ) : (
             changedReplicas().length > 0 && (
-              <div className={`card mb-4 changed-replicas ${values.time ? "is-emphasized" : ""}`}>
+              <div className={cx("card mb-4 changed-replicas", values.time && "is-emphasized")}>
                 <div className="card-header bg-warning">
                   <i className="fa-solid fa-triangle-exclamation fa-fw" />
                   {t(

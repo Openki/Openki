@@ -1,7 +1,7 @@
 import React from "react";
 
 import { GroupCustomField } from "/imports/api/groups/groups";
-import { OrganizationEntityCustomGroupFields } from "/imports/api/organizations/organizations";
+import { OrganizationCustomGroupFields } from "/imports/api/organizations/organizations";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
@@ -11,7 +11,7 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 export interface Props {
   /** Filter / Edit only specific field types. Default: all */
   type?: "singleLine" | "multiLine" | "option" | "boolean" | undefined;
-  fields: OrganizationEntityCustomGroupFields[];
+  fields: OrganizationCustomGroupFields[];
   values: GroupCustomField[] | undefined;
   onChange: (values: GroupCustomField[]) => void;
 }

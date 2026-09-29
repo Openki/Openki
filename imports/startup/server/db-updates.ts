@@ -34,6 +34,8 @@ import { update as update20260408renameCourseToGroupInDashboardSettings } from "
 import { update as update20260408renameCourseToGroupInRegionAndOrganization } from "./updates/2026.04.08 renameCourseToGroupInRegionAndOrganization";
 import { update as update20260604renameGroupToOrganizationInEvents } from "./updates/2026.06.04 renameGroupToOrganizationInEvents";
 import { update as update20260709cleanupLogData } from "./updates/2026.07.09 cleanupLogData";
+import { update as update20260906refactorGroupRoles } from "./updates/2026.09.06 refactorGroupRoles";
+import { update as update20260929refactorRegionRoles } from "./updates/2026.09.29 refactorRegionRoles";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -73,6 +75,8 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
     update20260408renameCourseToGroupInDashboardSettings,
   "2026.06.04 renameGroupToOrganizationInEvents": update20260604renameGroupToOrganizationInEvents,
   "2026.07.09 cleanupLogData": update20260709cleanupLogData,
+  "2026.09.06 refactorGroupRoles": update20260906refactorGroupRoles,
+  "2026.09.29 refactorRegionRoles": update20260929refactorRegionRoles,
 };
 
 interface UpdatesAppliedEntity {

@@ -16,29 +16,41 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
 import { Tuple, Type } from "/imports/utils/CustomChecks";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { VenueEntity } from "/imports/api/venues/venues";
+import { numberOf } from "/imports/api/events/lib/numberOf";
 
-export interface EventParticipantEntity {
+export interface EventParticipant {
   user: string;
   companions?: number;
   removeToken: string;
 }
 
-export interface EventVenueEntity {
-  /**
-   * Optional reference to a document in the Venues collection. If this is set, the fields
-   * name, loc, and address are synchronized
-   */
-  _id?: string;
+/**
+ * This type represents a reference to a venue that is stored in the venues collection.
+ * It is used when an event is created with a venue that exists in the venues collection.
+ * The `_id` field is used to reference the venue in the venues collection, and the other fields
+ * are filled from the venue document.
+ */
+export type EventVenueRef = Pick<
+  VenueEntity,
+  "_id" | "name" | "address" | "loc" | "level" | "editor" | "restrictedUse"
+>;
+
+/**
+ * This type represents a venue that is only used for a specific event and is not stored in the
+ * venues collection. It is used when an event is created with a venue that does not exist in the
+ * venues collection. The values of the fields are manually entered by the user or pre-filled from
+ * a external location service, eg. nominatim (OpenStreetMap).
+ */
+export interface EventVenue {
   /** Descriptive name for the venue */
   name: string;
+  /** Address string where the event will take place */
+  address?: string;
   /** Event location in GeoJSON format */
   loc?: Geodata;
   /** Floor level for custom maps as integer */
   level?: number;
-  /** Address string where the event will take place */
-  address?: string;
-  editor?: string;
-  restrictedUse?: boolean;
 }
 
 /** DB-Model */
@@ -58,7 +70,11 @@ export interface EventEntity {
   startLocal: string;
   /** String of local date & time when event ends */
   endLocal: string;
-  venue?: EventVenueEntity;
+  /**
+   * Optional reference to a document in the Venues collection. If the `_id` field is set, the fields
+   * name, address, loc, level, editor and restrictedUse are filled from the venue document.
+   */
+  venue?: EventVenue | EventVenueRef;
   /** (Where inside the building the event will take place) */
   room: string;
   /** userId */
@@ -83,7 +99,7 @@ export interface EventEntity {
   teamOrganizations: string[];
   /** ID of the replication parent, only cloned events have this */
   replicaOf?: string;
-  participants?: EventParticipantEntity[];
+  participants?: EventParticipant[];
   /** Registration is disabled */
   noRsvp: boolean;
   /** maximum participants of event, 0 means no participant limit */
@@ -172,7 +188,7 @@ export class OEvent {
   }
 
   numberOfParticipants(this: Pick<EventModel, "participants">) {
-    return this.participants?.map((p) => (p.companions || 0) + 1).reduce((a, b) => a + b, 0) || 0;
+    return numberOf(this.participants);
   }
 
   isFullyBooked(this: EventModel) {

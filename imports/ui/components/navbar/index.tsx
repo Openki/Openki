@@ -216,7 +216,7 @@ export function Navbar() {
               {links().map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
                   <a href={link.link} className="nav-link text-white" onClick={() => close()}>
-                    <i className={`${link.icon} fa-fw`} /> {link.text}
+                    <i className={cx(link.icon, "fa-fw")} /> {link.text}
                   </a>
                 </li>
               ))}

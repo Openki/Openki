@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { FocusEventHandler, useEffect, useRef } from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 export function DateInput(props: {
   id?: string | undefined;
@@ -68,7 +69,7 @@ export function DateInput(props: {
       ref={elementRef}
       id={id}
       type="text"
-      className={`form-control ${className}`}
+      className={cx("form-control", className)}
       value={toDisplay(value)}
       required={required}
       disabled={disabled}

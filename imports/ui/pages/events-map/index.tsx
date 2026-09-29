@@ -10,12 +10,12 @@ import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   region: string | undefined;
   events: Mongo.Cursor<EventEntity, EventModel>;
 }
 
-export function EventsMapPage(props: Data) {
+export function EventsMapPage(props: Props) {
   const { t } = useTranslation();
   const [isLoading, region] = useDetails(props.region || "-1");
   const now = new Date();

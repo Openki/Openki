@@ -7,6 +7,7 @@ import { Match, check } from "meteor/check";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Model, Notification } from "/imports/startup/both/emails/notification";
 import { fromPairs } from "lodash-es";
+import { serializeError } from "serialize-error";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Log } from "/imports/api/log/log";
@@ -17,6 +18,7 @@ import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { serverError } from "/imports/api/log/methods";
 
 /**
  * Record the result of a notification delivery attempt
@@ -33,7 +35,7 @@ export async function record(
   sent: boolean,
   recipient: string,
   message: unknown,
-  reason: string,
+  reason: object | string,
 ) {
   check(sent, Boolean);
   check(unsubToken, Match.Maybe(String));
@@ -143,23 +145,12 @@ async function send(
 
           await record(entry, unsubToken, true, recipientId, mail, "success");
         } catch (e) {
-          let reason = e;
-          if (typeof e === "object" && "toJSON" in e) {
-            reason = e.toJSON();
-          }
-          await record(entry, unsubToken, false, recipientId, mail, reason);
+          await record(entry, unsubToken, false, recipientId, mail, serializeError(e));
         }
       }
     }
-  } catch (e) {
-    let reason = e;
-    if (e && typeof e === "object" && "toJSON" in e && typeof e.toJSON === "function") {
-      reason = e.toJSON();
-    }
-
-    for (const recipientId of Object.keys(concluded)) {
-      await record(entry, null, false, recipientId, null, reason);
-    }
+  } catch (error) {
+    serverError(error);
   }
 }
 
