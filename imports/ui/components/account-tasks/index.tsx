@@ -294,15 +294,7 @@ export function AccountTasks() {
                   onSwitch={(task) => setActiveTask(task)}
                   onLogin={() => {
                     if (viewport.width <= ScssVars.gridFloatBreakpoint) {
-                      const element = document.querySelector("#bs-navbar-collapse");
-                      if (!element) {
-                        throw new Error("Missing #bs-navbar-collapsible");
-                      }
-                      const instance = Collapse.getInstance(element);
-                      if (!instance) {
-                        throw new Error("Missing Collapse instance");
-                      }
-                      instance.hide();
+                      Collapse.getInstance("#bs-navbar-collapse")?.hide();
                     }
 
                     if (elementModalRef.current) {

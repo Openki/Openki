@@ -56,17 +56,7 @@ export function UserFrame({ onClose }: { onClose: () => void }) {
             className="btn btn-secondary w-100"
             onClick={(event) => {
               event.preventDefault();
-
-              const element = document.querySelector("#bs-navbar-collapse");
-              if (!element) {
-                throw new Error("Missing #bs-navbar-collapsible");
-              }
-              const instance = Collapse.getInstance(element);
-              if (!instance) {
-                throw new Error("Missing Collapse instance");
-              }
-              instance.hide();
-
+              Collapse.getInstance("#bs-navbar-collapse")?.hide();
               Meteor.logout();
 
               if (routeName === "profile") {
