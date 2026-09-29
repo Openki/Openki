@@ -194,7 +194,7 @@ export function AccountTasks() {
       setShow(false);
     }
 
-    if (user && pleaseLogin) {
+    if (user?._id && pleaseLogin) {
       // Logged in after a redirect login flow
       hide();
 
@@ -231,7 +231,7 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  }, [pleaseLogin, user?._id]);
+  }, [pleaseLogin, user?._id, top]);
 
   return (
     <>
