@@ -22,7 +22,9 @@ set -xe
 
 Xvfb "${DISPLAY}" -screen 0 1024x768x24 > /dev/null 2>&1 &
 
-dpkg -l
+# Uncomment if you need to debug which Debian packages are included in the CI container:
+# dpkg -l
+
 meteor npm ci
 meteor node -v && meteor npm version
 
