@@ -1,36 +1,32 @@
 {
+  "group.history.userSubscribed": "{USER} beigetreten als {ROLE}",
+  "group.history.userUnsubscribed": "{USER} Rolle {ROLE} abgegeben",
   "host.description": "einen Gastgeber, der einen Ort zur Verfügung stellt",
   "host.find.roleNeeded": "Noch ohne Raum",
   "host.groupList.statusTitle.roleNeeded": "Braucht eine_n Gastgeber_in",
   "host.groupList.statusTitle.roleOccupied": "Hat eine_n Gastgeber_in",
   "host.groupList.statusTitle.roleOccupiedByUser": "Du bist Gastgeber_in",
-
   "host.short": "Gastgeber_in",
   "host.subscribe": "Ich habe einen Ort, um das zu hosten",
   "host.subscribed": "Du bist als Host eingetragen",
-
   "mentor.description": "eine_n Mentor_in",
   "mentor.find.roleNeeded": "Noch ohne Mentor_in",
   "mentor.groupList.statusTitle.roleNeeded": "Braucht eine_n Mentor_in",
   "mentor.groupList.statusTitle.roleOccupied": "Hat eine_n Mentor_in",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Du bist Mentor_in",
-  "notification.join.mail.subject": "{USER} ist der Gruppe {GROUP} beigetreten: {ROLE}",
-  "group.history.userSubscribed": "{USER} beigetreten als {ROLE}",
-  "group.history.userUnsubscribed": "{USER} Rolle {ROLE} abgegeben",
-
   "mentor.short": "Mentor_in",
   "mentor.subscribe": "Ich kann Mentor_in sein",
   "mentor.subscribed": "Du bist als Mentor_in eingetragen",
-
+  "notification.join.mail.subject": "{USER} ist der Gruppe {GROUP} beigetreten: {ROLE}",
   "participant.short": "interessiert",
   "participant.subscribe": "Interessiert mich",
   "participant.subscribed": "Du bist interessiert",
-
   "team.find.roleNeeded": "Suche nach Organisator_in",
+  "team.group.firstSteps": "Wenn es noch nicht erledigt ist, kannst du mit der Auswahl der Veranstaltungsorte beginnen und falls erforderlich, nach Mentor_in(nen) suchen und dann ein Datum festlegen.\n\n{GUIDE}",
+  "team.group.messageInfo": "Hinterlasse einen Kommentar zu deinen Erfahrungen mit diesem Thema. Der Kommentar wird neben deinem Namen angezeigt.",
   "team.groupList.statusTitle.roleNeeded": "Braucht eine_n Organisator_in",
   "team.groupList.statusTitle.roleOccupied": "Hat ein Organisationsteam",
   "team.groupList.statusTitle.roleOccupiedByUser": "Du bist Organisator_in",
-
   "team.short": "Team",
   "team.subscribe": "Ich helfe organisieren",
   "team.subscribed": "Du bist im Team"
