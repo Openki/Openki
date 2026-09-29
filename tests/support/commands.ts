@@ -135,34 +135,6 @@ Cypress.Commands.add(
   ) => {
     cy.visit(url);
 
-    cy.getMeteor()
-      .then((Meteor) => {
-        let logoutRequest: Cypress.Chainable<void> | undefined = undefined;
-        // Only log out if the previous test had a user signed in.
-        // This reduces the amount of "please log in [401]" errors that otherwise cause
-        // unreliable tests that fail in the `beforeEach()` set up phase.
-        if (Meteor.userId()) {
-          logoutRequest = cy.logout().then(() => {
-            const { locale = "en", region = "all" } = state && "locale" in state ? state : {};
-            localStorage.setItem("locale", locale);
-            localStorage.setItem("region", region);
-          });
-        }
-
-        if (state && "username" in state) {
-          // Wait for any potential logout request to finish before we sign in.
-          (logoutRequest ?? cy).then(() => {
-            cy.login(state.username, state.password);
-          });
-        }
-      })
-      .then(() => {
-        // Wait for authentication to finish before attempting the final calls
-        // Force reload to show the expected region select.
-        cy.reload();
-        cy.allSubscriptionsReady();
-      });
-
     if (state && "username" in state) {
       cy.login(state.username, state.password);
     } else {
@@ -171,6 +143,10 @@ Cypress.Commands.add(
         localStorage.setItem("region", state?.region ?? "all");
       });
     }
+
+    // Force reload to show the expected region select.
+    cy.reload();
+    cy.allSubscriptionsReady();
   },
 );
 
