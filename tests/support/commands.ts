@@ -144,9 +144,8 @@ Cypress.Commands.add(
       });
     }
 
-    // fix showing unexpected region select
+    // Force reload to show the expected region select.
     cy.reload();
-
     cy.allSubscriptionsReady();
   },
 );

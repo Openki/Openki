@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal } from "/imports/startup/client/bootstrap";
+import { Collapse, Modal } from "/imports/startup/client/bootstrap";
 import { useSession, useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { ActionResult } from "/imports/ui/components/ActionResult";
@@ -194,7 +194,7 @@ export function AccountTasks() {
       setShow(false);
     }
 
-    if (user && pleaseLogin) {
+    if (user?._id && pleaseLogin) {
       // Logged in after a redirect login flow
       hide();
 
@@ -231,7 +231,7 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  }, [pleaseLogin, user?._id]);
+  }, [pleaseLogin, user?._id, top]);
 
   return (
     <>
@@ -294,7 +294,7 @@ export function AccountTasks() {
                   onSwitch={(task) => setActiveTask(task)}
                   onLogin={() => {
                     if (viewport.width <= ScssVars.gridFloatBreakpoint) {
-                      $("#bs-navbar-collapse").collapse("hide");
+                      Collapse.getInstance("#bs-navbar-collapse")?.hide();
                     }
 
                     if (elementModalRef.current) {
