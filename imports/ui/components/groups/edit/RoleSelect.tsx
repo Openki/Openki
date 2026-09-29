@@ -212,7 +212,10 @@ export function RoleSelect({
         />
       )}
       <div id="group-edit-role-help" className="form-text">
-        {t("group.edit.needs.role.help", "Choose roles to share responsibilities among group members.")}
+        {t(
+          "group.edit.needs.role.help",
+          "Choose roles to share responsibilities among group members.",
+        )}
       </div>
     </div>
   );
