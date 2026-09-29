@@ -40,7 +40,7 @@ translations:
 check:
     meteor npm run type-check
 
-# Start the Cypress UI for running tests
+# Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
 test-ui:
     meteor npm run test:ui
