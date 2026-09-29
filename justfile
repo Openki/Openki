@@ -49,6 +49,11 @@ test-ui:
 test:
     meteor npm run test
 
+# Run only specific tests in a headless browser.
+# For example, `tests/component/Navbar.spec.ts`
+test-only *ARGS:
+    meteor npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
+
 # List npm dependencies that have new versions available
 [no-exit-message]
 outdated:
@@ -60,4 +65,5 @@ reset *ARGS:
 
 alias i := install
 alias d := dev
+alias t := test-ui
 alias o := outdated
