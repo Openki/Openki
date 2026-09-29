@@ -8,7 +8,7 @@
 
 ## Highlights
 
-* **Generic roles for groups** — Coordination teams can now create custom roles for groups, allowing formats beyond the existing Mentor and Host roles. Users can subscribe to roles such as Moderator, Co-Organizer, Recorder, Chef, or Project Owner. [#1428](https://gitlab.com/Openki/Openki/-/work_items/1428)
+* **Generic roles for groups** — Coordination teams can now create custom roles for groups, allowing formats beyond the existing Mentor and Host roles. Users can subscribe to roles such as Moderator, Recorder or Chef. Can be enabled via the region setting with `allowUserCustomRoleCreation: true`. [#1428](https://gitlab.com/Openki/Openki/-/work_items/1428)
 * **Improved spam cleanup** — Deleting a spam user now also removes their comments, with the removal recorded in the log. [#1734](https://gitlab.com/Openki/Openki/-/work_items/1734)
 * **Better support for non-Western titles** — Fixed empty slugs for events and groups whose titles use Cyrillic or other non-Western characters. [#1872](https://gitlab.com/Openki/Openki/-/work_items/1872)
 * **More robust admin log** — Improved handling of high-load situations that could cause the log view to time out. [#2229](https://gitlab.com/Openki/Openki/-/work_items/2229)
