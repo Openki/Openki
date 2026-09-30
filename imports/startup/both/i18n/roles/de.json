@@ -44,7 +44,7 @@
   "team.groupList.statusTitle.roleNeeded": "Braucht eine_n Organisator_in",
   "team.groupList.statusTitle.roleOccupied": "Hat ein Organisationsteam",
   "team.groupList.statusTitle.roleOccupiedByUser": "Du bist Organisator_in",
-  "team.notification.join.mail.intro": "{BENUTZER} ist gerade als Team an {GROUP} beigetreten",
+  "team.notification.join.mail.intro": "{USER} ist gerade als Team an {GROUP} beigetreten",
   "team.short": "Team",
   "team.subscribe": "Ich helfe organisieren",
   "team.subscribed": "Du bist im Team"
