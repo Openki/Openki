@@ -26,7 +26,7 @@
   "notification.join.mail.intro": "{USER} ist {GROUP} gerade als {ROLE} beigetreten",
   "notification.join.mail.subject": "{USER} ist der Gruppe {GROUP} beigetreten: {ROLE}",
   "participant.group.firstSteps": "Du wirst eine Nachricht per E-Mail erhalten sobald ein nächstes Treffen abgemacht wird.",
-  "participant.group.messageInfo": "Hinterlasse eine Nachricht, zum Beispiel einen Gruß, einen Wunsch oder deine Interessen. Die Nachricht wird neben deinem Namen angezeigt.",
+  "participant.group.messageInfo": "Hinterlasse eine Nachricht, zum Beispiel einen Gruss, einen Wunsch oder deine Interessen. Die Nachricht wird neben deinem Namen angezeigt.",
   "participant.groupList.statusTitle.roleNeeded": "Niemand ist interessiert",
   "participant.notification.join.mail.intro": "{USER} ist gerade {GROUP} beigetreten.",
   "participant.short": "interessiert",
