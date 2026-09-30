@@ -445,7 +445,7 @@
   "group.edit.needs.role": "Roles",
   "group.edit.needs.role.ariaLabel": "Remove \"{ROLE}\"",
   "group.edit.needs.role.create": "Add \"{ROLE}\"",
-  "group.edit.needs.role.help": "Select roles to share responsibility within the group.",
+  "group.edit.needs.role.help": "Choose roles to share responsibilities among group members.",
   "group.edit.needs.role.noOptions": "Type in any role...",
   "group.edit.needs.role.placeholder": "Select or type",
   "group.edit.needs.role.selectOnly.noOptions": "No roles",
