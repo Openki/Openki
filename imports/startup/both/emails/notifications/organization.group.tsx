@@ -59,18 +59,20 @@ export async function record(groupId: string) {
 export async function Model({ body }: { body: Body }): Promise<NotificationModel<Props>> {
   const group = await Groups.findOneAsync(body.groupId);
   if (!group) {
-    throw new Error("Group does not exist (0.o)");
+    throw new Error(`Group does not exist (0.o): ${body.groupId}`);
   }
   const organizations = await Organizations.find({
     _id: { $in: group.teamOrganizations },
   }).fetchAsync();
   if (!(organizations.length > 0)) {
-    throw new Error("Organizations does not exist (0.o)");
+    throw new Error(
+      `Organizations do not exist (0.o): group.teamOrganizations = ${JSON.stringify(group.teamOrganizations)}`,
+    );
   }
 
   const creator = await Users.findOneAsync(group.createdby);
   if (!creator) {
-    throw new Error("Creator does not exist (0.o)");
+    throw new Error(`Creator does not exist (0.o): ${group.createdby}`);
   }
 
   return {
