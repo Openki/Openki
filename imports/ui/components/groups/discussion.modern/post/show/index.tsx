@@ -17,7 +17,7 @@ import { UserName } from "/imports/ui/components/UserName";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 export interface Props {
-  post: GroupDiscussionEntity & { new?: true } & { saving?: boolean };
+  post: GroupDiscussionEntity & { new?: true };
   onEdit: () => void;
 }
 
