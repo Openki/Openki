@@ -106,7 +106,6 @@ export function EventParticipants({ event }: Props) {
       ),
       onSend: async (message, options) => {
         EventsMethods.contactParticipants(event._id, message, options);
-        // eslint-disable-next-line react-hooks/refs
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
       },
