@@ -33,6 +33,8 @@ export function AutoGrowTextArea(
 
       if (props.autoFocus) {
         element.focus();
+        // Move cursor to the end
+        element.setSelectionRange(-1, -1);
       }
     }, 0);
   }, []);

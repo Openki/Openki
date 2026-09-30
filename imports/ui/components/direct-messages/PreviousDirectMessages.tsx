@@ -1,0 +1,141 @@
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
+
+import type { DirectMessage } from "/imports/api/emails/publications";
+import { cx } from "/imports/utils/cx";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useDetails as useEventDetails } from "/imports/api/events/publications";
+import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+
+const defaultVisibleMessages = 2;
+
+export function PreviousDirectMessages({
+  previousMessages,
+  onContextLinkClick,
+}: {
+  previousMessages: DirectMessage[];
+  onContextLinkClick?: () => void;
+}) {
+  const [showAll, setShowAll] = useState(false);
+  const visibleMessages = (
+    showAll ? previousMessages : previousMessages.slice(-defaultVisibleMessages)
+  ) as DirectMessage[];
+  const { t } = useTranslation();
+
+  const currentUserId = Meteor.userId();
+  const currentYear = new Date().getFullYear();
+  const locale = useSession("locale");
+
+  return (
+    Boolean(currentUserId) &&
+    Boolean(visibleMessages.length) && (
+      <div className="mb-4">
+        <h5>{t("previousDirectMessages.title", "Your previous direct messages:")}</h5>
+        {previousMessages.length > visibleMessages.length && (
+          <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm mb-4">
+            {t("previousDirectMessages.showAll", "Show all")}
+          </button>
+        )}
+
+        <div className="d-grid gap-3">
+          {visibleMessages.map(({ _id, ts, body }) => {
+            const wasSentByCurrentUser = body.sender === currentUserId;
+            return (
+              <div
+                key={_id}
+                className={cx(
+                  "d-flex flex-column gap-1",
+                  wasSentByCurrentUser ? "align-items-end" : "align-items-start",
+                )}
+              >
+                <MessageContext context={body.context} onContextLinkClick={onContextLinkClick} />
+                <section
+                  className={cx(
+                    "py-2 px-3 max-w-75 rounded-3",
+                    wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
+                  )}
+                >
+                  <div className="whitespace-pre-line text-dark">{body.message}</div>
+
+                  <time
+                    dateTime={ts.toISOString()}
+                    className="small pt-2 fst-italic w-100 d-block text-end"
+                  >
+                    {ts.toLocaleString(locale, {
+                      day: "numeric",
+                      month: "long",
+                      year: ts.getFullYear() !== currentYear ? "numeric" : undefined,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
+                  </time>
+                </section>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )
+  );
+}
+
+function MessageContext({
+  context,
+  onContextLinkClick,
+}: {
+  context?: { group?: string; event?: string } | undefined;
+  onContextLinkClick?: (() => void) | undefined;
+}) {
+  if (!context) {
+    return null;
+  }
+
+  return (
+    <div
+      onClickCapture={(event) => {
+        if ((event.target as HTMLElement).tagName !== "A") {
+          return;
+        }
+        onContextLinkClick?.();
+      }}
+    >
+      {context.group ? (
+        <GroupMessageContext groupId={context.group} />
+      ) : context.event ? (
+        <EventMessageContext eventId={context.event} />
+      ) : null}
+    </div>
+  );
+}
+
+function GroupMessageContext({ groupId }: { groupId: string }) {
+  const [isLoading, group] = useGroupDetails(groupId);
+  const url = !isLoading() && group && Router.url("showGroup", group);
+  const label = !isLoading() && group && group.name;
+  const { t } = useTranslation();
+
+  return (
+    !!(url && label) && (
+      <span className="small">
+        {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
+      </span>
+    )
+  );
+}
+
+function EventMessageContext({ eventId }: { eventId: string }) {
+  const [isLoading, event] = useEventDetails(eventId);
+  const url = !isLoading() && event && Router.url("showEvent", event);
+  const label = !isLoading() && event && event.title;
+  const { t } = useTranslation();
+
+  return (
+    !!(url && label) && (
+      <span className="small">
+        {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
+      </span>
+    )
+  );
+}

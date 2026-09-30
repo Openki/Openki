@@ -77,7 +77,7 @@ export function Members({ group }: { group: GroupModel }) {
           )}{" "}
           {canNotifyAll() && (
             <i
-              className="fa-solid fa-envelope contact-members"
+              className="fa-solid fa-paper-plane contact-members"
               data-bs-title={t("group.details.members.contact-members", "Contact all members")}
               onClick={handleContactMembersClick}
             />
