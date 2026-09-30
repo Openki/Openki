@@ -15,9 +15,10 @@ import { DiscussionProfileLink } from "../profile-link";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { isNewPost, type NewPost } from "../../../discussion.modern/new-post";
 
 export interface Props {
-  post: GroupDiscussionEntity & { new?: true } & { saving?: boolean };
+  post: (GroupDiscussionEntity | NewPost) & { saving?: boolean };
   onEdit: () => void;
 }
 
@@ -36,8 +37,9 @@ export function Show({ post, onEdit }: Props) {
     }
     return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
-  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
-  async function handleRemove() {
+  const hasBeenEdited =
+    !isNewPost(post) && post.time_updated.getTime() > post.time_created.getTime();
+  async function handleRemove(post: GroupDiscussionEntity) {
     try {
       routerAutoscroll.cancelNext();
       await GroupDiscussionsMethods.deleteComment(post._id);
@@ -46,7 +48,7 @@ export function Show({ post, onEdit }: Props) {
     }
   }
 
-  return post.new ? (
+  return isNewPost(post) ? (
     post.parentId ? (
       <div className="discussion-reply">
         <button type="button" className="btn btn-add discussion-reply-btn" onClick={onEdit}>
@@ -106,7 +108,9 @@ export function Show({ post, onEdit }: Props) {
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
-            {canDelete() && <RemoveDropdown onRemove={handleRemove} />}
+            {!isNewPost(post) && canDelete() && (
+              <RemoveDropdown onRemove={() => handleRemove(post)} />
+            )}
           </span>
         </div>
         <div className="discussion-post-body">
