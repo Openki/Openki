@@ -113,12 +113,11 @@ function MessageContext({
 function GroupMessageContext({ groupId }: { groupId: string }) {
   const [isLoading, group] = useGroupDetails(groupId);
   const url = !isLoading() && group && Router.url("showGroup", group);
-  const label = url && group.name;
+  const label = !isLoading() && group && group.name;
   const { t } = useTranslation();
 
   return (
-    url &&
-    label && (
+    !!(url && label) && (
       <span className="small">
         {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
       </span>
@@ -129,12 +128,11 @@ function GroupMessageContext({ groupId }: { groupId: string }) {
 function EventMessageContext({ eventId }: { eventId: string }) {
   const [isLoading, event] = useEventDetails(eventId);
   const url = !isLoading() && event && Router.url("showEvent", event);
-  const label = url && event.title;
+  const label = !isLoading() && event && event.title;
   const { t } = useTranslation();
 
   return (
-    url &&
-    label && (
+    !!(url && label) && (
       <span className="small">
         {t("previousDirectMessages.messageContext.sentVia", "Via")} <a href={url}>{label}</a>
       </span>
