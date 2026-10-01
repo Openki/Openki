@@ -1,5 +1,8 @@
 import React, { Fragment, type JSX } from "react";
 
+/**
+ * Like `Array.prototype.join()`, but used for joining React elements together with a separator.
+ */
 export function ReactJoin(
   elements: (string | false | JSX.Element | undefined)[],
   separator: JSX.Element = <>, </>,
