@@ -10,6 +10,7 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
+import { getGroupHistory } from "/imports/api/groups/methods";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -17,8 +18,8 @@ import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
-import { getGroupHistory } from "/imports/api/groups/methods";
 
+/** Used to add a generated key to HistoryEntry props */
 interface WithHistoryEntryKey {
   _key: string;
 }
@@ -52,14 +53,16 @@ export function UserSubscribedHistoryEntry({
   return (
     <Fragment key={`subscribed:${userId}:${regionId}`}>
       <RoleIcon role={role} regionRoles={regionRoles} />{" "}
-      {roleGroupHistoryUserSubscribed(role, {
-        USER: (
-          <Fragment key="subscribed:user">
-            <ProfileLink userId={userId} />
-            <Contribution userId={userId} />
-          </Fragment>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        roleGroupHistoryUserSubscribed(role, {
+          USER: (
+            <Fragment key="subscribed:user">
+              <ProfileLink userId={userId} />
+              <Contribution userId={userId} />
+            </Fragment>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -106,14 +109,16 @@ export function UserSubscribedToCustomRoleHistoryEntry({
   const role = { label: roleLabel, type: RoleType.Custom } as const;
   return (
     <Fragment key={`subscribed:customRole:${userId}`}>
-      {roleGroupHistoryUserSubscribed(role, {
-        USER: (
-          <Fragment key="subscribed:customRole">
-            <ProfileLink userId={userId} />
-            <Contribution userId={userId} />
-          </Fragment>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        roleGroupHistoryUserSubscribed(role, {
+          USER: (
+            <Fragment key="subscribed:customRole">
+              <ProfileLink userId={userId} />
+              <Contribution userId={userId} />
+            </Fragment>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -129,14 +134,16 @@ export function UserUnsubscribedFromCustomRoleHistoryEntry({
   const role = { label: roleLabel, type: RoleType.Custom } as const;
   return (
     <Fragment key={`unsubscribed:customRole:${userId}`}>
-      {roleGroupHistoryUserUnsubscribed(role, {
-        USER: (
-          <>
-            <ProfileLink userId={userId} />
-            <Contribution userId={userId} />
-          </>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        roleGroupHistoryUserUnsubscribed(role, {
+          USER: (
+            <>
+              <ProfileLink userId={userId} />
+              <Contribution userId={userId} />
+            </>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -162,17 +169,19 @@ export function OrganizationPromoteHistoryEntry({
   };
   return (
     <Fragment key={`organizationPromote:${organizationId}:${enable}`}>
-      {enable
-        ? t(
-            "group.history.organizationPromote.added",
-            "{ORGANIZATION} got added by {USER}",
-            tOptions,
-          )
-        : t(
-            "group.history.organizationPromote.removed",
-            "{ORGANIZATION} got removed by {USER}",
-            tOptions,
-          )}
+      {getFragmentsWithKeys(
+        enable
+          ? t(
+              "group.history.organizationPromote.added",
+              "{ORGANIZATION} got added by {USER}",
+              tOptions,
+            )
+          : t(
+              "group.history.organizationPromote.removed",
+              "{ORGANIZATION} got removed by {USER}",
+              tOptions,
+            ),
+      )}
     </Fragment>
   );
 }
@@ -198,17 +207,19 @@ export function OrganizationTeamHistoryEntry({
   };
   return (
     <Fragment key={`organizationTeam:${organization}:${enable}`}>
-      {enable
-        ? t(
-            "group.history.organizationTeam.added",
-            "{ORGANIZATION} got added as coordination-organization by {USER}",
-            tOptions,
-          )
-        : t(
-            "group.history.organizationTeam.removed",
-            "{ORGANIZATION} got removed as coordination-organization by {USER}",
-            tOptions,
-          )}
+      {getFragmentsWithKeys(
+        enable
+          ? t(
+              "group.history.organizationTeam.added",
+              "{ORGANIZATION} got added as coordination-organization by {USER}",
+              tOptions,
+            )
+          : t(
+              "group.history.organizationTeam.removed",
+              "{ORGANIZATION} got removed as coordination-organization by {USER}",
+              tOptions,
+            ),
+      )}
     </Fragment>
   );
 }
@@ -232,19 +243,21 @@ export function EventInsertedHistoryEntry({
   return (
     <Fragment key={`eventInserted:${startLocal}:${title}`}>
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
-      {t("group.history.eventInserted", "{EVENT} created by {USER}", {
-        EVENT: (
-          <a href={Router.path("showEvent", { _id, slug })}>
-            {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
-          </a>
-        ),
-        USER: (
-          <Fragment key="eventInserted">
-            <ProfileLink userId={createdBy} />
-            <Contribution userId={createdBy} />
-          </Fragment>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        t("group.history.eventInserted", "{EVENT} created by {USER}", {
+          EVENT: (
+            <a href={Router.path("showEvent", { _id, slug })}>
+              {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
+            </a>
+          ),
+          USER: (
+            <Fragment key="eventInserted">
+              <ProfileLink userId={createdBy} />
+              <Contribution userId={createdBy} />
+            </Fragment>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -266,6 +279,7 @@ export function EventUpdatedHistoryEntry({
 }) {
   const { t } = useTranslation();
   const { dayOfWeek, calendarDayShort } = useDateTimeFormat();
+  const key = `eventUpdated:${_id}:${title}:${startLocal}:${updatedBy}`;
   const tOptions = {
     EVENT: (
       <a href={Router.path("showEvent", { _id, slug })}>
@@ -273,24 +287,38 @@ export function EventUpdatedHistoryEntry({
       </a>
     ),
     USER: (
-      <Fragment key="eventUpdated">
-        <ProfileLink userId={updatedBy} />
-        <Contribution userId={updatedBy} />
+      <Fragment key={`${key}:user`}>
+        <ProfileLink userId={updatedBy} key={`${key}:profileLink`} />
+        <Contribution userId={updatedBy} key={`${key}:contribution`} />
       </Fragment>
     ),
   };
   return (
-    <Fragment key={`eventUpdated:${_id}:${title}:${startLocal}:${updatedBy}`}>
+    <Fragment key={key}>
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
-      {replicasUpdated
-        ? t(
-            "group.history.eventAndRepeatsUpdated",
-            "{EVENT} and repeats updated by {USER}",
-            tOptions,
-          )
-        : t("group.history.eventUpdated", "{EVENT} updated by {USER}", tOptions)}
+      {getFragmentsWithKeys(
+        replicasUpdated
+          ? t(
+              "group.history.eventAndRepeatsUpdated",
+              "{EVENT} and repeats updated by {USER}",
+              tOptions,
+            )
+          : t("group.history.eventUpdated", "{EVENT} updated by {USER}", tOptions),
+      )}
     </Fragment>
   );
+}
+
+/**
+ * Wrap an array of React nodes with a keyed fragment.
+ * This is required when using JSX Elements as variable substitiutions from the i18next `t()` function.
+ */
+function getFragmentsWithKeys(
+  // In this case, we truly want the `any` type.
+  // eslint-disable-next-line
+  items: any,
+) {
+  return Array.isArray(items) ? items.map((item, i) => <Fragment key={i}>{item}</Fragment>) : items;
 }
 
 export function EventRemovedHistoryEntry({
@@ -307,19 +335,21 @@ export function EventRemovedHistoryEntry({
   return (
     <Fragment key={`eventRemoved:${title}:${startLocal}`}>
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
-      {t("group.history.eventRemoved", "{EVENT} removed by {USER}", {
-        EVENT: (
-          <>
-            {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
-          </>
-        ),
-        USER: (
-          <>
-            <ProfileLink userId={removedBy} />
-            <Contribution userId={removedBy} />
-          </>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        t("group.history.eventRemoved", "{EVENT} removed by {USER}", {
+          EVENT: (
+            <>
+              {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
+            </>
+          ),
+          USER: (
+            <>
+              <ProfileLink userId={removedBy} />
+              <Contribution userId={removedBy} />
+            </>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -347,14 +377,16 @@ export function CreatedHistoryEntry({ _id, createdby, _key }: GroupModel & WithH
   const { t } = useTranslation();
   return (
     <Fragment key={_key}>
-      {t("group.history.created_by", "Created by {USER}", {
-        USER: (
-          <Fragment key={`group:${_id}:created:user`}>
-            <ProfileLink userId={createdby} />
-            <Contribution userId={createdby} />
-          </Fragment>
-        ),
-      })}
+      {getFragmentsWithKeys(
+        t("group.history.created_by", "Created by {USER}", {
+          USER: (
+            <Fragment key={`group:${_id}:created:user`}>
+              <ProfileLink userId={createdby} />
+              <Contribution userId={createdby} />
+            </Fragment>
+          ),
+        }),
+      )}
     </Fragment>
   );
 }
@@ -549,8 +581,6 @@ export function History({ group }: { group: GroupModel }) {
   // const [isLoading, historyEvents] = useHistoryEvents({ group });
   // const historyEvents = useHistoryEvents({ group });
   const [isLoading, historyEvents] = useGroupHistory(group._id);
-
-  console.dir({ isLoading, historyEvents });
 
   const { dateLong, fromNow } = useDateTimeFormat();
   return (
