@@ -20,7 +20,7 @@ import "./styles.scss";
 import { getGroupHistory } from "/imports/api/groups/methods";
 
 interface WithHistoryEntryKey {
-  key: string;
+  _key: string;
 }
 
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
@@ -326,15 +326,14 @@ export function EventRemovedHistoryEntry({
 
 export function UpdatedHistoryEntry({
   updatedBy,
-  key,
+  _key,
 }: { updatedBy: string } & WithHistoryEntryKey) {
   const { t } = useTranslation();
-  console.dir({ groupUpdatedKey: key });
   return (
-    <Fragment key={key}>
+    <Fragment key={_key + `:${updatedBy}`}>
       {t("group.history.updated", "Updated by {USER}", {
         USER: (
-          <Fragment key={key}>
+          <Fragment key={_key}>
             <ProfileLink userId={updatedBy} />
             <Contribution userId={updatedBy} />
           </Fragment>
@@ -344,11 +343,10 @@ export function UpdatedHistoryEntry({
   );
 }
 
-export function CreatedHistoryEntry({ _id, createdby }: GroupModel) {
+export function CreatedHistoryEntry({ _id, createdby, _key }: GroupModel & WithHistoryEntryKey) {
   const { t } = useTranslation();
-  console.log("CreatedHistoryEntry", _id);
   return (
-    <Fragment key={`group:${_id}:created`}>
+    <Fragment key={_key}>
       {t("group.history.created_by", "Created by {USER}", {
         USER: (
           <Fragment key={`group:${_id}:created:user`}>
@@ -577,9 +575,8 @@ export function History({ group }: { group: GroupModel }) {
                 </div>
               </div>
               <div className="grouphistory-event col-8">
-                {/* IDEA: We could pass down the event.key from here: `key={event.key}` */}
                 {/* @ts-expect-error Ignore the event data error for now */}
-                <event.template {...event.data} key={event.key} />
+                <event.template {...event.data} _key={event.key} />
               </div>
             </div>
           );

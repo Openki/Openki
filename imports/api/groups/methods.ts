@@ -96,7 +96,7 @@ export const getGroupHistory = ServerMethod("group.getHistory", async (groupId: 
 
   const groupCreated = {
     type: "groupCreated" as const,
-    key: `groupCreated:${group._id}:${group.time_created}`,
+    key: `groupCreated:${group._id}:${group.time_created.getTime()}`,
     dateTime: group.time_created,
     data: group,
   };

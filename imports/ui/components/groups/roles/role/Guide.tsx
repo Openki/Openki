@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useTranslation } from "react-i18next";
@@ -10,13 +10,13 @@ export function Guide() {
   const { getLocalizedValue } = useLocalizedSetting();
 
   return (
-    <>
+    <Fragment key="role-guide">
       {t("group.roles.firstSteps.guide", "Further info")}:&nbsp;
       <a href={getLocalizedValue(PublicSettings.groupGuideLink)} target="_blank" rel="noreferrer">
         {t("group.roles.firstSteps.guideLink", "How to organize my first {SITENAME} group?", {
           SITENAME: siteName,
         })}
       </a>
-    </>
+    </Fragment>
   );
 }
