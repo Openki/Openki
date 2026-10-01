@@ -572,7 +572,7 @@ RouterAsync.route("eventsMap", {
     const query = filter.toQuery();
     query.after = moment().startOf("day").toDate();
     return {
-      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
+      events: Events.findFilter.subscribe({ canceled: false, ...query }),
     };
   },
   async data(): Promise<EventsMapProps> {
@@ -738,9 +738,9 @@ RouterAsync.route("kioskEvents", {
     queryNow.ongoing = now;
 
     return {
-      today: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryToday }, limit),
-      future: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryFuture }, limit),
-      ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
+      today: Events.findFilter.subscribe({ canceled: false, ...queryToday }, limit),
+      future: Events.findFilter.subscribe({ canceled: false, ...queryFuture }, limit),
+      ongoing: Events.findFilter.subscribe({ canceled: false, ...queryNow }),
     };
   },
   async data() {
@@ -989,7 +989,7 @@ RouterAsync.route("kioskRummage", {
   template: "kioskRummagePage",
   layoutTemplate: "kioskLayout",
   async onRun() {
-    await import("../../ui/pages/kiosk/rummage");
+    await import("/imports/ui/pages/kiosk/rummage");
   },
 });
 

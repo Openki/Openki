@@ -7,7 +7,7 @@ import { publish, QueryBuilder } from "./ServerPublishUtils";
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
  *
- * This helps to make the publish type safe and usable via a JS module.
+ * This helps to make the publication type safe and usable via a JS module.
  *
  * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
  * https://guide.meteor.com/methods.html#advanced-boilerplate
@@ -24,15 +24,18 @@ export function ServerPublishMany<A extends any[], T, U>(
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
  *
- * This helps to make the publish type safe and usable via a JS module.
+ * This helps to make the publication type safe and usable via a JS module.
  *
  * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
  * https://guide.meteor.com/methods.html#advanced-boilerplate
  *
  * @param name Name of the record set.
- * @param publisher Function called on the server each time a client subscribes. Inside the function,
- * `this` is the publish handler object.
- * @param queryBuilder Function called on the client, this is usefull if the call on the client
+ * @param publisher Function called on the server each time a client subscribes.
+ * Inside the function, `this` is the publish handler object.
+ * NOTE: When using MongoDB `projection` in the `publisher` function,
+ * make sure the `projection` includes all properties needed for MongoDB queries
+ * (using `.find()` and similar) in the `queryBuilder` function.
+ * @param queryBuilder Function called on the client, this is useful if the call on the client
  * differ from the server eg. `.findOne(...)`.
  * See https://guide.meteor.com/data-loading.html
  * @returns A Publication that a client can subscribe to.

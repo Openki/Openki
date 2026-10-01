@@ -27,4 +27,4 @@ Before opening a new issue, please search for keywords in the issues to make sur
 
 <!-- Put here some references and links (ex. link this issue to already existing issues that concern this one or have similar approaches) -->
 
-/label ~"type::feature" 
+/label ~"type::feature"

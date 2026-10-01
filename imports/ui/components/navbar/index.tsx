@@ -86,12 +86,11 @@ export function Navbar() {
   }
 
   function close() {
-    const collapseElement = collapseRef.current;
-    if (!collapseElement) {
-      throw new Error("Unexpected falsy: collapseElement");
+    if (collapseRef.current) {
+      Collapse.getInstance(collapseRef.current)?.hide();
+    } else {
+      console.error("Unexpected falsy: collapseRef.current");
     }
-
-    Collapse.getInstance(collapseElement)?.hide();
   }
 
   useEventListener(collapseRef, "show.bs.collapse", () => {
@@ -239,7 +238,7 @@ export function Navbar() {
               <li className="dropdown login-link">
                 <LoginButton />
                 <div className="dropdown-menu dropdown-menu-end login-dropdown">
-                  <UserFrame />
+                  <UserFrame onClose={close} />
                 </div>
               </li>
             </ul>

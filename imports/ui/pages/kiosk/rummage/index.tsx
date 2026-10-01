@@ -29,23 +29,28 @@ export function OrganizationDetails({ organizationId }: { organizationId?: strin
     return null;
   }
 
+  const organizationLogoUrl = organization.publicLogoUrl();
+
   return (
     <>
       <MetaTags
         title={organization.name}
         description={organization.claim}
-        image={organization.publicLogoUrl()}
+        image={organizationLogoUrl}
       />
       <div className="d-flex gap-3">
         <div className="flex-grow-1">
+          {organizationLogoUrl && (
+            <img
+              className="float-end"
+              style={{ maxWidth: "150px" }}
+              src={organizationLogoUrl}
+              alt={organization.name}
+            />
+          )}
           <h1>{organization.name}</h1>
           <p className="lead" dangerouslySetInnerHTML={{ __html: organization.description }} />
         </div>
-        {organization.publicLogoUrl() && (
-          <div>
-            <img src={organization.publicLogoUrl()} alt={organization.name} />
-          </div>
-        )}
       </div>
     </>
   );

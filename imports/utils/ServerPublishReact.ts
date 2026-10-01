@@ -2,7 +2,7 @@ import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { useUserId } from "./react-meteor-data";
-import { isObject, slice } from "lodash-es";
+import { isObject } from "lodash-es";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
 import { publish, QueryBuilder } from "./ServerPublishUtils";
@@ -64,7 +64,7 @@ export function createPublicationMany<A extends any[], T>(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
-      ...(hasCondition ? slice(args, 1) : args),
+      ...(hasCondition ? args.slice(1) : args),
       handleCallback,
     );
     const userId = useUserId();
@@ -76,7 +76,7 @@ export function createPublicationMany<A extends any[], T>(
           return undefined;
         }
         try {
-          return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+          return queryBuilder.call({ userId }, ...(hasCondition ? args.slice(1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.
           console.debug(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
@@ -125,7 +125,7 @@ export function createPublicationOne<A extends any[], T>(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
-      ...(hasCondition ? slice(args, 1) : args),
+      ...(hasCondition ? args.slice(1) : args),
       handleCallback,
     );
     const userId = useUserId();
@@ -139,7 +139,7 @@ export function createPublicationOne<A extends any[], T>(
         }
 
         try {
-          return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+          return queryBuilder.call({ userId }, ...(hasCondition ? args.slice(1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.
           console.debug(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");

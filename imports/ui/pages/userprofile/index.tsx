@@ -22,7 +22,9 @@ import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
 import { ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
 import { GroupListSection } from "../../components/profiles/group-list-section";
+import { PreviousDirectMessages } from "../../components/direct-messages/PreviousDirectMessages";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
+import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
 export interface Props {
   user: UserModel;
@@ -48,12 +50,8 @@ export function UserprofilePage({ user }: Props) {
   const alterPrivileges = currentUser?.hasPrivilege("admin") || false;
   const showPrivileges = alterPrivileges || !!user.privileges?.length;
 
-  /**
-   * whether userprofile is for the logged-in user
-   */
-  function ownUser() {
-    return user._id === currentUser?._id;
-  }
+  const isOwnProfile = user._id === currentUser?._id;
+
   function hasContributed() {
     return checkContribution(user.contribution);
   }
@@ -74,12 +72,18 @@ export function UserprofilePage({ user }: Props) {
       return true;
     }
 
-    if (user._id === currentUser?._id) {
+    if (isOwnProfile) {
       return false;
     }
 
     return inviteOrganizations.length > 0;
   }
+
+  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(
+    { when: Boolean(currentUser) },
+    user._id,
+  );
+
   function sendMessageAttr(): SendMessageProps {
     return {
       autoFocus: false,
@@ -89,6 +93,13 @@ export function UserprofilePage({ user }: Props) {
       onSend: async (message, options) => {
         await emailMethods.sendPrivateMessage(user._id, message, options);
       },
+      showEmailOptions:
+        Boolean(currentUser) &&
+        !isOwnProfile &&
+        !isLoadingMessages() &&
+        Array.isArray(previousMessages) &&
+        previousMessages.length === 0,
+      recipientId: user._id,
     };
   }
   function numberOfGroupsAffectedByDelete() {
@@ -229,7 +240,7 @@ export function UserprofilePage({ user }: Props) {
                 <Contribution userId={user._id} />
               </h1>
 
-              {ownUser() ? (
+              {isOwnProfile ? (
                 <span className="fst-italic">({t("profile.its_you", "It's you.")})</span>
               ) : (
                 alterPrivileges &&
@@ -261,17 +272,24 @@ export function UserprofilePage({ user }: Props) {
                 dangerouslySetInnerHTML={{ __html: user.description }}
               ></p>
 
-              {ownUser() ? (
+              {isOwnProfile && (
                 <a className="btn btn-primary" href={Router.path("profile")}>
                   <i className="fa-solid fa-gears fa-fw" />{" "}
                   {t("profile.preferenceslink", "Account settings")}
                 </a>
-              ) : (
-                allowPrivateMessages() && <SendMessage {...sendMessageAttr()} />
               )}
             </div>
           </div>
         </div>
+
+        {!isOwnProfile && allowPrivateMessages() && (
+          <div className="page-component page-component-seperated">
+            {Array.isArray(previousMessages) && (
+              <PreviousDirectMessages previousMessages={previousMessages} />
+            )}
+            <SendMessage {...sendMessageAttr()} />
+          </div>
+        )}
 
         {!isLoadingOrganizations() && showSettings() && (
           <div className="page-component page-component-seperated">

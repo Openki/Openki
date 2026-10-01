@@ -158,7 +158,7 @@ export function EmailSection() {
             type="switch"
             label={t(
               "profile.toggle.allowPrivateMessages",
-              "Receive messages from other users (your email address will not be revealed)",
+              "Receive email notifications for direct messages from other users. (Your email address will not be revealed)",
             )}
             checked={user.allowPrivateMessages}
             onChange={handleAllowPrivateMessagesChange}
