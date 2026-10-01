@@ -4,7 +4,7 @@ import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { useValidation } from "../../../lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { promisify } from "es6-promisify";

@@ -4,7 +4,7 @@ import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import { useEventListener } from "/imports/utils/useEventListener";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "../../lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";

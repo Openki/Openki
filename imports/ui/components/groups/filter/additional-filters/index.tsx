@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 

@@ -12,7 +12,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";

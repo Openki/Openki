@@ -11,7 +11,7 @@ import * as UsersMethods from "/imports/api/users/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 
 import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacters";
 import { DataProtectionLaw } from "../data-protection-law";

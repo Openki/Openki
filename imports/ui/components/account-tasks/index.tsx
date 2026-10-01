@@ -8,7 +8,7 @@ import { ActionResult } from "/imports/ui/components/ActionResult";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../hooks/useViewportSize";
 import { isEmail } from "/imports/utils/email-tools";
 
 import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";

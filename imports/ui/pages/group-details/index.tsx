@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { intersection } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useViewportSize } from "../../lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 

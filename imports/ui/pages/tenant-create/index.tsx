@@ -5,7 +5,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useTranslation } from "react-i18next";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantModel } from "/imports/api/tenants/tenants";

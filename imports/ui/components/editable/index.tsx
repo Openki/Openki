@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-error";
 import MediumEditor from "medium-editor";
 
-import { Mapping, useValidation } from "../../lib/useValidation";
+import { Mapping, useValidation } from "/imports/ui/hooks/useValidation";
 import { useSession, useSessionEquals } from "../../../utils/react-meteor-data";
 import { Store } from "../../lib/editable";
 import { cx } from "/imports/utils/cx";

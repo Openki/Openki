@@ -10,7 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { cx } from "/imports/utils/cx";
 
 import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacters";

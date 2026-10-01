@@ -9,7 +9,7 @@ import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
 import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "../../../hooks/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { slug } from "/imports/utils/string-tools";
 

@@ -6,7 +6,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { TenantEntity } from "/imports/api/tenants/tenants";
 
 import { isEmail } from "/imports/utils/email-tools";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Button } from "/imports/ui/components/Buttons";
 

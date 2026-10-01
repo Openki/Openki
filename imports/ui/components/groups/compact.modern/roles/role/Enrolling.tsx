@@ -14,7 +14,7 @@ import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "../../../../../hooks/useRegionRoles";
 import { isParticipant } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 

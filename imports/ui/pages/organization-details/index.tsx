@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
 import { useTranslation } from "react-i18next";
-import { useValidation } from "../../lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";

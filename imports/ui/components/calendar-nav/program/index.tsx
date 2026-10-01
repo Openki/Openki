@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../../hooks/useViewportSize";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { cx } from "/imports/utils/cx";
 

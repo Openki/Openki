@@ -19,7 +19,7 @@ import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Props {

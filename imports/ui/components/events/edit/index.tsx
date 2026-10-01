@@ -10,7 +10,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";

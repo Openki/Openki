@@ -12,7 +12,7 @@ import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Add } from "./add";

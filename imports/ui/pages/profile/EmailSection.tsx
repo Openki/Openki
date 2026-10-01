@@ -5,7 +5,7 @@ import { Button } from "../../components/Buttons";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
-import { useValidation } from "../../lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
 import { useUser } from "/imports/utils/react-meteor-data";

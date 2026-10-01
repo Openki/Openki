@@ -17,9 +17,9 @@ import { Button } from "../../Buttons";
 import { Title } from "./title";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "../../../hooks/useValidation";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { useMeasureTime } from "/imports/ui/hooks/useMeasureTime";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { EditCustomFields } from "../../EditCustomFields";

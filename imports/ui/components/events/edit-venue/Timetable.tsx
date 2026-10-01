@@ -8,7 +8,7 @@ import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFin
 import { useLocalTimeZone } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
-import { useData } from "../../../lib/useData";
+import { useData } from "/imports/ui/hooks/useData";
 
 function ScrollIntoView({ children }: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -82,14 +82,18 @@ export function useFindNearExternalEvents(
   params.append("start", start.subtract(18, "hours").toISOString());
   params.append("end", end.add(18, "hours").toISOString());
 
-  return (useData(`/api/venue/${venueId}/external-bookings?${params}`)?.data || []) as {
-    id: string;
-    summary: string;
-    location: string;
-    start: string;
-    end: string;
-    url: string;
-  }[];
+  return (
+    useData<{
+      data: {
+        id: string;
+        summary: string;
+        location: string;
+        start: string;
+        end: string;
+        url: string;
+      }[];
+    }>(`/api/venue/${venueId}/external-bookings?${params}`)?.data || []
+  );
 }
 
 function getDaysBetween(startDate: moment.MomentInput, endDate: moment.MomentInput) {

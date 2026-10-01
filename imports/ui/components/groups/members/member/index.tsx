@@ -13,7 +13,7 @@ import { RoleType } from "/imports/api/groups/lib/Role";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { isParticipant, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam } from "/imports/api/groups/lib/teamPermissions";
 

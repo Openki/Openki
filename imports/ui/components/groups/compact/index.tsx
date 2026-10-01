@@ -8,7 +8,7 @@ import { isPredefined } from "/imports/api/groups/lib/isRole";
 import { predefinedRole } from "/imports/api/groups/lib/Role";
 
 import { hasRole } from "/imports/api/groups/lib/hasRole";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "../../../hooks/useRegionRoles";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";

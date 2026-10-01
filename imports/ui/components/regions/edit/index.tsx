@@ -10,7 +10,7 @@ import { Fields } from "./Fields";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 
 import "./styles.scss";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 
 export interface Props {
   title: string;

@@ -13,7 +13,7 @@ import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { subscribeToRole } from "/imports/api/groups/methods";
 import { isParticipant } from "/imports/api/groups/lib/isRole";
 
