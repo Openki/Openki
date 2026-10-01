@@ -1,16 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
-import { type EventModel } from "/imports/api/events/events";
-import { GroupCustomRole, GroupModel } from "/imports/api/groups/groups";
-import { RegionEntity } from "/imports/api/regions/regions";
+import { Events, type EventModel } from "/imports/api/events/events";
+import { GroupCustomRole, type GroupModel } from "/imports/api/groups/groups";
+import { type RegionEntity } from "/imports/api/regions/regions";
+import { type UserModel } from "/imports/api/users/users";
 
+import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
-import { getGroupHistory } from "/imports/api/groups/methods";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -403,100 +404,61 @@ function getHistoryEntryTemplate(key: string) {
   return template;
 }
 
-function useGroupHistory(groupId: string) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [groupHistory, setGroupHistory] = useState<Awaited<ReturnType<typeof getGroupHistory>>>([]);
-
-  useEffect(() => {
-    getGroupHistory(groupId)
-      .then((historyEntries) => {
-        setGroupHistory(
-          historyEntries.map((entry) => ({
-            ...entry,
-            template: getHistoryEntryTemplate(entry.type),
-          })),
+const NEW_getGroupHistory = (group: GroupModel, user: UserModel | null) => {
+  // Show full history only for admins
+  const history =
+    user && group.editableBy(user)
+      ? group.history
+      : group.history?.filter(
+          (e) => e.type !== "organizationPromote" && e.type !== "organizationTeam",
         );
-      })
-      .finally(() => setIsLoading(false));
-  }, [groupId]);
 
-  return [isLoading, groupHistory] as const;
-}
+  const pastEvents = Events.find(
+    { groupId: group._id, start: { $lt: new Date() } },
+    {
+      limit: 100, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+      transform: (e) => ({
+        type: "pastEvent" as const,
+        key: `pastEvent:${e._id}:${e.start.getTime()}`,
+        dateTime: e.start,
+        data: e,
+      }),
+    },
+  ).fetch();
+
+  const remainingHistoryEntries =
+    history?.map((e) => ({
+      type: e.type,
+      key: `${e.type}:${e.dateTime.getTime()}`,
+      dateTime: e.dateTime,
+      data: { ...e.data, regionId: group.region },
+    })) ?? [];
+
+  const groupCreated = {
+    type: "groupCreated" as const,
+    key: `groupCreated:${group._id}:${group.time_created.getTime()}`,
+    dateTime: group.time_created,
+    data: group,
+  };
+
+  // Merge events and sort so recent events appear at the top of the history
+  const sortedHistory = [...pastEvents, ...remainingHistoryEntries, groupCreated]
+    .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
+    .slice(0, 200) // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+    // Map to the right renderer
+    .map((entry) => ({
+      ...entry,
+      template: getHistoryEntryTemplate(entry.type),
+    }));
+
+  return sortedHistory;
+};
 
 export function History({ group }: { group: GroupModel }) {
-  // const user = useUser();
+  const user = useUser();
 
-  // function pastEventsList() {
-  //   const history =
-  //     user && group.editableBy(user)
-  //       ? group.history
-  //       : group.history?.filter(
-  //           (e) => e.type !== "organizationPromote" && e.type !== "organizationTeam",
-  //         );
-
-  //   // add past events
-  //   historyEntries.push(
-  //     ...Events.find(
-  //       { groupId: group._id, start: { $lt: new Date() } },
-  //       { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
-  //     ).map((e) => ({
-  //       key: "event" + e._id,
-  //       dateTime: e.start,
-  //       template: EventHeldHistoryEntry,
-  //       data: e,
-  //     })),
-  //   );
-
-  //   // merge with all history entries
-  //   historyEntries.push(
-  //     ...(history?.map((e) => {
-  //       const key = `${e.type}_${e.dateTime.getTime()}`;
-  //       console.dir({ event: e, key });
-  //       return {
-  //         key,
-  //         dateTime: e.dateTime,
-  //         template: (map as any)[e.type],
-  //         data: { ...e.data, regionId: group.region },
-  //       };
-  //     }) ?? []),
-  //   );
-
-  //   // and with the group creation
-  //   historyEntries.push({
-  //     key: "group_" + group._id,
-  //     dateTime: group.time_created,
-  //     template: CreatedHistoryEntry,
-  //     data: group,
-  //   });
-
-  //   // and sort by date time desc
-  //   const sorted = historyEntries
-  //     .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
-  //     .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
-
-  //   // TODO: Ensure there are no duplicates - there are none, but some values get repeated as more items are loaded
-  //   // IDEA: The likely cause could be that we mutate the array during re-renders, which might cause side-effects that break the rendering.
-
-  //   const unique = new Map<string, (typeof sorted)[number]>();
-
-  //   for (const item of sorted) {
-  //     if (unique.has(item.key)) {
-  //       console.dir({ existing: unique.get(item.key), new: item });
-  //       throw new Error("Duplicate key found!");
-  //     }
-  //     unique.set(item.key, item);
-  //   }
-
-  //   // we render twice. Maybe we should load the data in a different way instead? Then we could
-  //   // Maybe we could use a react hook to properly wait for the data to load before showing it?
-  //   console.dir({ sorted });
-
-  //   return sorted;
-  // }
-
-  // const [isLoading, historyEvents] = useHistoryEvents({ group });
-  // const historyEvents = useHistoryEvents({ group });
-  const [isLoading, historyEvents] = useGroupHistory(group._id);
+  // NOTE: If this works better than the server method, then rename the variable from historyEvents to historyEntries instead.
+  const historyEvents = NEW_getGroupHistory(group, user);
 
   const { dateLong, fromNow } = useDateTimeFormat();
   return (
@@ -506,27 +468,24 @@ export function History({ group }: { group: GroupModel }) {
           <div className="timeline-start"></div>
         </div>
       </div>
-      {!isLoading &&
-        historyEvents.map((event, index) => {
-          // const key = `${event.dateTime?.getTime() || 0}_${index}`
-          // const key = "regionId" in event.data ? event.data.regionId : "region" in event.data ? event.data.region :
-          return (
-            <div className="row" key={`history:${event.key}:${index}`}>
-              <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
-                {fromNow(event.dateTime)}
-              </div>
-              <div className="timeline-eventline-container col-1">
-                <div className="timeline-eventline">
-                  <div className="timeline-eventpoint"></div>
-                </div>
-              </div>
-              <div className="grouphistory-event col-8">
-                {/* @ts-expect-error Ignore the event data error for now */}
-                <event.template {...event.data} _key={event.key} />
+      {historyEvents.map((event, index) => {
+        return (
+          <div className="row" key={`history:${event.key}:${index}`}>
+            <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
+              {fromNow(event.dateTime)}
+            </div>
+            <div className="timeline-eventline-container col-1">
+              <div className="timeline-eventline">
+                <div className="timeline-eventpoint"></div>
               </div>
             </div>
-          );
-        })}
+            <div className="grouphistory-event col-8">
+              {/* @ts-expect-error Ignore the event data error for now since we don't know what is stored in the DB */}
+              <event.template {...event.data} _key={event.key} />
+            </div>
+          </div>
+        );
+      })}
       <div className="timeline-post row">
         <div className="col-1 offset-3">
           <div className="timeline-end"></div>
