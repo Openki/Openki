@@ -11,6 +11,8 @@ Openki is an interactive web platform that provides barrier‑free access to edu
 
 <div align="right"> (★ Star us if you like the idea)</div>
 
+Something _
+
 ## Try it!
 
 Live version: [openki.net](https://openki.net)  
@@ -101,7 +103,7 @@ Free software built with love and care. We use:
 ### Installation (Linux, macOS and Windows)
 
 1. To install Meteor, run: `curl https://install.meteor.com | sh`  
-  (In case you use Windows: download the [Meteor for Windows](https://install.meteor.com/windows) and we recomend using  [Git Bash](https://about.gitlab.com/blog/git-command-line-on-windows-with-git-bash/) as your terminal for development)
+   (In case you use Windows: download the [Meteor for Windows](https://install.meteor.com/windows) and we recomend using [Git Bash](https://about.gitlab.com/blog/git-command-line-on-windows-with-git-bash/) as your terminal for development)
 1. [Download and unzip](https://gitlab.com/Openki/Openki/-/archive/main/Openki-main.zip) or `git clone https://gitlab.com/Openki/Openki.git` Openki repository into `/some/path`.
 1. `cd /some/path/Openki`
 1. `meteor npm install --verbose` (sometimes twice)
