@@ -12,6 +12,7 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -19,11 +20,12 @@ import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
-import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
-/** Used to add a generated key to HistoryEntry props */
-interface WithHistoryEntryKey {
-  _key: string;
+/**
+ * Some HistoryEntry renderers need an additional `keyPrefix` to create unique React `key`s for their content.
+ */
+interface WithHistoryEntryKeyPrefix {
+  keyPrefix: string;
 }
 
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
@@ -346,14 +348,14 @@ export function EventRemovedHistoryEntry({
 
 export function UpdatedHistoryEntry({
   updatedBy,
-  _key,
-}: { updatedBy: string } & WithHistoryEntryKey) {
+  keyPrefix,
+}: { updatedBy: string } & WithHistoryEntryKeyPrefix) {
   const { t } = useTranslation();
   return (
-    <Fragment key={_key + `:${updatedBy}`}>
+    <Fragment key={`${keyPrefix}:${updatedBy}`}>
       {t("group.history.updated", "Updated by {USER}", {
         USER: (
-          <Fragment key={_key}>
+          <Fragment key={keyPrefix}>
             <ProfileLink userId={updatedBy} />
             <Contribution userId={updatedBy} />
           </Fragment>
@@ -363,10 +365,14 @@ export function UpdatedHistoryEntry({
   );
 }
 
-export function CreatedHistoryEntry({ _id, createdby, _key }: GroupModel & WithHistoryEntryKey) {
+export function CreatedHistoryEntry({
+  _id,
+  createdby,
+  keyPrefix,
+}: GroupModel & WithHistoryEntryKeyPrefix) {
   const { t } = useTranslation();
   return (
-    <Fragment key={_key}>
+    <Fragment key={keyPrefix}>
       {getFragmentsWithKeys(
         t("group.history.created_by", "Created by {USER}", {
           USER: (
@@ -424,7 +430,7 @@ const getGroupHistoryEntries = (group: GroupModel, user: UserModel | null) => {
       limit: 100, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       transform: (e) => ({
         type: "pastEvent" as const,
-        key: `pastEvent:${e._id}:${e.start.getTime()}`,
+        keyPrefix: `pastEvent:${e._id}:${e.start.getTime()}`,
         dateTime: e.start,
         data: e,
       }),
@@ -434,14 +440,14 @@ const getGroupHistoryEntries = (group: GroupModel, user: UserModel | null) => {
   const remainingHistoryEntries =
     history?.map((e) => ({
       type: e.type,
-      key: `${e.type}:${e.dateTime.getTime()}`,
+      keyPrefix: `${e.type}:${e.dateTime.getTime()}`,
       dateTime: e.dateTime,
       data: { ...e.data, regionId: group.region },
     })) ?? [];
 
   const groupCreated = {
     type: "groupCreated" as const,
-    key: `groupCreated:${group._id}:${group.time_created.getTime()}`,
+    keyPrefix: `groupCreated:${group._id}:${group.time_created.getTime()}`,
     dateTime: group.time_created,
     data: group,
   };
@@ -473,7 +479,7 @@ export function History({ group }: { group: GroupModel }) {
       </div>
       {historyEntries.map((event, index) => {
         return (
-          <div className="row" key={`history:${event.key}:${index}`}>
+          <div className="row" key={`history:${event.keyPrefix}:${index}`}>
             <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
               {fromNow(event.dateTime)}
             </div>
@@ -484,7 +490,7 @@ export function History({ group }: { group: GroupModel }) {
             </div>
             <div className="grouphistory-event col-8">
               {/* @ts-expect-error Ignore the event data error for now since we don't know what is stored in the DB */}
-              <event.template {...event.data} _key={event.key} />
+              <event.template {...event.data} keyPrefix={event.keyPrefix} />
             </div>
           </div>
         );
