@@ -1,6 +1,15 @@
+# v0.13.0 - 2026-10-01
+
+## Highlights
+
+- **Private chat history** — Direct messages now show previous messages in a chat-style layout, making it possible to see the communication history with another user.
+
 # v0.12.1 - 2026-09-29
 
 ## Fixes
+
+- **Improved region role setup** — Added the missing region role db migration.
+- **Updated translations** — Improved the help text for selecting roles and updated German and Swedish translations.
 
 # v0.12.0 - 2026-09-25
 
