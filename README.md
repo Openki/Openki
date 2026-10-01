@@ -11,8 +11,6 @@ Openki is an interactive web platform that provides barrier‑free access to edu
 
 <div align="right"> (★ Star us if you like the idea)</div>
 
-Something _
-
 ## Try it!
 
 Live version: [openki.net](https://openki.net)  
