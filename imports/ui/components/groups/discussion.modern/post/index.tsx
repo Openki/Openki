@@ -6,9 +6,9 @@ import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-disc
 
 import { Edit } from "./edit";
 import { Show } from "./show";
+import { isNewPost, type NewPost } from "../new-post";
 
 import "./styles.scss";
-import { isNewPost, type NewPost } from "../new-post";
 
 function Responses({ responses: replies }: { responses: GroupDiscussionEntity[] }) {
   const { t } = useTranslation();

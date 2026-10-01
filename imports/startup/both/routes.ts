@@ -989,7 +989,7 @@ RouterAsync.route("kioskRummage", {
   template: "kioskRummagePage",
   layoutTemplate: "kioskLayout",
   async onRun() {
-    await import("../../ui/pages/kiosk/rummage");
+    await import("/imports/ui/pages/kiosk/rummage");
   },
 });
 
