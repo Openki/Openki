@@ -3,7 +3,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import { useUser } from "/imports/utils/react-meteor-data";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { Control } from "./Control";

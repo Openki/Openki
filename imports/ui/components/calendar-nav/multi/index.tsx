@@ -7,7 +7,7 @@ import moment from "moment";
 
 import { Events } from "/imports/api/events/events";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 

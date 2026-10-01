@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import moment from "moment";

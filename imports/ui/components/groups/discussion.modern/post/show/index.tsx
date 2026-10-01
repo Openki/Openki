@@ -11,7 +11,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { RemoveDropdown } from "./remove-dropdown";
 import { UserName } from "/imports/ui/components/UserName";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";

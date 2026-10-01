@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 

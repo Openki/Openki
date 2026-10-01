@@ -12,7 +12,7 @@ import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { RemoveDropdown } from "./remove-dropdown";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { isNewPost, type NewPost } from "../../../discussion.modern/new-post";

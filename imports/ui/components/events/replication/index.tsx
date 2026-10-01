@@ -7,7 +7,7 @@ import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
 import { LocalTime } from "/imports/utils/local-time";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { FormCheckGroup } from "../../FormCheckGroup";

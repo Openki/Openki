@@ -6,7 +6,7 @@ import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useLocalTimeZone } from "/imports/utils/local-time";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 import { useData } from "/imports/ui/hooks/useData";
 

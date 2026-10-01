@@ -1,7 +1,7 @@
 import { MomentInput } from "moment";
 import React from "react";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { Tag } from "/imports/ui/components/regions/tag";
 

@@ -14,7 +14,7 @@ import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
 import { Sharing } from "../../../sharing";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";

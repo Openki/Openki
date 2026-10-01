@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "../../../hooks/useViewportSize";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";

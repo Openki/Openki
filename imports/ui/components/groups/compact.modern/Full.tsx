@@ -9,7 +9,7 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { Discussion } from "../../groups/discussion.modern";
