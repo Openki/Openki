@@ -66,9 +66,9 @@ export async function record(commentId: string) {
       };
 
       await GroupDiscussions.find(threadSelector).forEachAsync((threadComment) => {
-        const partId = threadComment.userId;
-        if (partId) {
-          recipients.push(partId);
+        const participantId = threadComment.userId;
+        if (participantId) {
+          recipients.push(participantId);
         }
       });
     }
