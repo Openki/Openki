@@ -1,3 +1,10 @@
+# v0.13.1 - 2026-10-01
+
+## Fixes
+
+- **Rummage view layout improvement** — Limit the size of logo in rummage kiosk view
+- **Updated translations** — Added some German translations.
+
 # v0.13.0 - 2026-10-01
 
 ## Highlights
