@@ -18,6 +18,7 @@ import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 /** Used to add a generated key to HistoryEntry props */
 interface WithHistoryEntryKey {
@@ -307,18 +308,6 @@ export function EventUpdatedHistoryEntry({
       )}
     </Fragment>
   );
-}
-
-/**
- * Wrap an array of React nodes with a keyed fragment.
- * This is required when using JSX Elements as variable substitiutions from the i18next `t()` function.
- */
-function getFragmentsWithKeys(
-  // In this case, we truly want the `any` type.
-  // eslint-disable-next-line
-  items: any,
-) {
-  return Array.isArray(items) ? items.map((item, i) => <Fragment key={i}>{item}</Fragment>) : items;
 }
 
 export function EventRemovedHistoryEntry({
