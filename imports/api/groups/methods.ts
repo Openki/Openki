@@ -79,36 +79,30 @@ export const getGroupHistory = ServerMethod("group.getHistory", async (groupId: 
       limit: 100, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       transform: (e) => ({
         type: "pastEvent" as const,
-        key: "event_" + e._id,
+        key: `pastEvent:${e._id}:${e.start.getTime()}`,
         dateTime: e.start,
         data: e,
       }),
     },
   ).fetchAsync();
 
-  // Merge with
   const remainingHistoryEntries =
-    history?.map((e) => {
-      const key = `${e.type}_${e.dateTime.getTime()}`;
-      console.dir({ event: e, key });
-      return {
-        type: e.type,
-        key,
-        dateTime: e.dateTime,
-        data: { ...e.data, regionId: group.region },
-      };
-    }) ?? [];
+    history?.map((e) => ({
+      type: e.type,
+      key: `${e.type}:${e.dateTime.getTime()}`,
+      dateTime: e.dateTime,
+      data: { ...e.data, regionId: group.region },
+    })) ?? [];
 
   const groupCreated = {
     type: "groupCreated" as const,
-    key: "group_" + group._id + "_" + group.time_created,
+    key: `groupCreated:${group._id}:${group.time_created}`,
     dateTime: group.time_created,
     data: group,
   };
 
-  // and sort by date time desc
+  // Merge events and sort so recent events appear at the top of the history
   const sorted = [...pastEvents, ...remainingHistoryEntries, groupCreated]
-    // NOTE: Maybe we need to slice the array here?
     .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
     .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
 

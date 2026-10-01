@@ -90,7 +90,7 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
   const name = `group-${group._id}-role-enrolled-${role.id}-${role.type}-content`;
   const firstSteps = roleGroupFirstSteps(role, { GUIDE: <Guide /> });
   return (
-    <div className="d-grid">
+    <div className="d-grid" key={name}>
       <button
         className={cx(
           "group-role-btn btn btn-user btn-lg d-flex flex-row align-items-center gap-1",
