@@ -105,9 +105,7 @@ export function Show({ post, onEdit }: Props) {
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
-            {!isNewPost(post) && canDelete() && (
-              <RemoveDropdown onRemove={() => handleRemove(post)} />
-            )}
+            {canDelete() && <RemoveDropdown onRemove={() => handleRemove(post)} />}
           </span>
         </div>
         {!!post.title && <h4>{post.title}</h4>}
