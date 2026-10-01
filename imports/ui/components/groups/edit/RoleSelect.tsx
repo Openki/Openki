@@ -167,7 +167,7 @@ export function RoleSelect({
   const commonSelectProps = {
     inputId: "group-edit-role-select",
     isMulti: true,
-    isClearable: true,
+    isClearable: false,
     isSearchable: true,
     hideSelectedOptions: true,
     components: {
