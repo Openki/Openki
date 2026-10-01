@@ -1,8 +1,8 @@
-import fs from "fs";
+import fs from "node:fs";
 import { Meteor } from "meteor/meteor";
 import { Email } from "meteor/email";
 import { normalize } from "node:path";
-import { mkdir } from "fs/promises";
+import { mkdir } from "node:fs/promises";
 
 if (Meteor.isDevelopment) {
   const debugEmailDir = normalize(`${process.env.PWD}/.temp/`);

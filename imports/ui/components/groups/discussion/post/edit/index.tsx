@@ -16,9 +16,10 @@ import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "../../../../Buttons";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { isNewPost, type NewPost } from "../../../discussion.modern/new-post";
 
 export interface Props {
-  post: GroupDiscussionEntity & { new?: true };
+  post: GroupDiscussionEntity | NewPost;
   onSave: () => void;
   onCancel: () => void;
 }
@@ -36,7 +37,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   const [isLoading, group] = Groups.useDetails(post.groupId);
 
   function getNotifyAllDefaultValue() {
-    if (!post.new) {
+    if (!isNewPost(post)) {
       return false;
     }
     if (post.notifyAll) {
@@ -60,7 +61,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     : t("group.discussion.text_placeholder", "Your comment");
 
   function showUserId() {
-    return !post.new || !anon;
+    return !isNewPost(post) || !anon;
   }
 
   function anonDisabled() {
@@ -69,7 +70,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
     return true;
   }
-  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
+  const hasBeenEdited =
+    !isNewPost(post) && post.time_updated.getTime() > post.time_created.getTime();
   function canNotifyAll() {
     if (anon) {
       return false;
@@ -103,7 +105,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
     <div
       className={cx(
         post.parentId ? "discussion-comment" : "discussion-post",
-        post.new && !post.parentId && "discussion-post-new",
+        isNewPost(post) && !post.parentId && "discussion-post-new",
       )}
     >
       <DiscussionProfileIcon userId={post.userId} />
@@ -119,7 +121,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             comment.text = commentText;
 
             try {
-              if (post.new) {
+              if (isNewPost(post)) {
                 const postComment = comment as PostCommentFields;
                 postComment.groupId = post.groupId;
                 if (post.eventId) {
@@ -156,7 +158,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             ) : (
               t("discussion.anonymous", "Anonymous")
             )}
-            {!post.new && (
+            {!isNewPost(post) && (
               <span className="discussion-post-header-sub">
                 {" "}
                 <span data-bs-title={dateFormat(post.time_created)}>
@@ -206,7 +208,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             <div className="mb-3">
               <Richtext {...richtextAttr()} />
             </div>
-            {!!post.new && (
+            {isNewPost(post) && (
               <>
                 {canNotifyAll() && (
                   <FormCheck
@@ -247,7 +249,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 disabled={!validComment || isBusy}
               >
                 <i className="fa-solid fa-paper-plane fa-fw" />{" "}
-                {post.new
+                {isNewPost(post)
                   ? post.parentId
                     ? t("group.discussion.comment_btn.answer", "Answer")
                     : t("group.discussion.comment_btn.write", "Write")

@@ -37,11 +37,8 @@ describe("group details page", () => {
   });
 
   describe("Archive group", function () {
-    beforeEach(() => {
-      cy.visitOpenki("/group/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
-    });
-
     it("should allow to archive and unarchive a group", () => {
+      cy.visitOpenki("/group/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
       cy.get("button.btn-archive").click();
       cy.get('[data-test="group-details"] div.alert').should("have.class", "alert-archived");
       cy.get("#group-details-group-unarchive").click();
@@ -49,11 +46,11 @@ describe("group details page", () => {
   });
 
   describe("Single event", function () {
-    beforeEach(() => {
-      cy.visitOpenki("/group/LZCJQmLzr9d6gcrhH/hochsensibilitaet-was-ist-das-und-die-unterschiede");
-    });
-
     it("should redirect to single event page", () => {
+      cy.visitOpenki("/group/LZCJQmLzr9d6gcrhH/hochsensibilitaet-was-ist-das-und-die-unterschiede");
+      // Explicitly wait for the redirect to complete. This allows the router to re-render the app with the expected state.
+      // NOTE: Once we replace `iron:router`, we should try to remove this artificial delay.
+      cy.wait(500);
       cy.get(".details-header").should("have.class", "event-details-header");
     });
   });

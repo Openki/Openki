@@ -97,7 +97,7 @@ export function EventParticipants({ event }: Props) {
     return !!(user && event.editableBy(user));
   }
 
-  function sendMessageAttr(): SendMessageProps {
+  function sendMessageAttr(): Omit<SendMessageProps, "recipientId"> {
     return {
       autoFocus: true,
       placeholder: t(
@@ -109,6 +109,10 @@ export function EventParticipants({ event }: Props) {
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
       },
+      // When sending a message to all participants, show the email options
+      // to allow the event organizer to send an email notification and include their email
+      // for easy communication with the participants.
+      showEmailOptions: true,
     };
   }
 
@@ -140,12 +144,14 @@ export function EventParticipants({ event }: Props) {
             <div className="modal-dialog modal-sm" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h4 className="modal-title">
+                  <h4 className="modal-title d-flex align-items-center gap-2">
                     <i className="fa-solid fa-paper-plane fa-fw" />
-                    {t(
-                      "participantContactModal.writeMessageToAllAttendees",
-                      "Write a message to all participants",
-                    )}
+                    <span>
+                      {t(
+                        "participantContactModal.writeMessageToAllAttendees",
+                        "Write a message to all participants",
+                      )}
+                    </span>
                   </h4>
                   <button
                     type="button"
@@ -155,7 +161,7 @@ export function EventParticipants({ event }: Props) {
                   ></button>
                 </div>
                 <div className="modal-body text-dark">
-                  <SendMessage {...sendMessageAttr()} />
+                  <SendMessage {...sendMessageAttr()} recipientId={`event:${event._id}`} />
                 </div>
               </div>
             </div>
@@ -170,7 +176,7 @@ export function EventParticipants({ event }: Props) {
           {canNotifyAll() && (
             <i
               data-test="events-participants-notify-all"
-              className="fa-solid fa-envelope cursor-pointer float-end"
+              className="fa-solid fa-paper-plane cursor-pointer float-end"
               onClick={() => setShowModal(!showModal)}
             />
           )}

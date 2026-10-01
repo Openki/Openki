@@ -40,7 +40,7 @@ export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPat
 
 export const sendPrivateMessage = ServerMethod(
   "sendEmail",
-  async (userId: string, message: string, options: SendPrivateMessageOptions) => {
+  async function (userId: string, message: string, options: SendPrivateMessageOptions) {
     check(userId, String);
     check(message, String);
     check(options, SendPrivateMessageOptionsPattern);
@@ -79,6 +79,10 @@ export const sendPrivateMessage = ServerMethod(
       context,
     );
   },
+  // Avoid client-side simulations when sending messages to avoid confusing the user
+  // by showing the sent message for a few hundred milliseconds and then immideately
+  // closing the modal.
+  { simulation: false },
 );
 
 export const sendReport = ServerMethod(

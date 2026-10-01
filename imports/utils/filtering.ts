@@ -185,7 +185,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     return params;
   }
 
-  /** Convert to a filter object that can be send to a server method oder publisher */
+  /** Convert to a filter object that can be send to a server method or publisher */
   toQuery() {
     if (Tracker.active) {
       this._dep.depend();

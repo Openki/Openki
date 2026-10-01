@@ -20,4 +20,4 @@ All reviewers can help ensure accuracy, clarity, completeness, and adherence to 
 **1. Primary Reviewer**
 
 - [ ] Review by a code reviewer or other selected colleague to confirm accuracy, clarity, and completeness. This can be skipped for minor fixes without substantive content changes.
-- [ ] Make sure you have only your 1-10 commits as part of the diff. If you have 7000+ commits, please follow the [instructions for cleaning up the git history](https://gitlab.com/Openki/Openki/-/wikis/git-history-issue).
+- [ ] Make sure your merge request only includes the commits you expect to avoid duplicate commits. If you have 7000+ commits, please follow the [instructions for cleaning up the git history](https://gitlab.com/Openki/Openki/-/wikis/git-history-issue).

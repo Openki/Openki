@@ -17,8 +17,7 @@ echo -e "${HINT}"
 
 set -xe
 
-meteor update --patch
-meteor npm i
+meteor npm ci
 meteor node -v && meteor npm version
 
 meteor npm run lint
@@ -28,4 +27,3 @@ echo -e "${YELLOW}${BOLD}If you have random errors and problems inside the gitla
 meteor npm run type-check
 
 echo -e "${HINT}"
-

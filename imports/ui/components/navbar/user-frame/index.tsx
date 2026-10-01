@@ -6,12 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
+import { Collapse } from "/imports/startup/client/bootstrap";
 
-function collapse() {
-  $(".collapse").collapse("hide");
-}
-
-export function UserFrame() {
+export function UserFrame({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
   const currentUser = useUser();
   const routeName = useCurrentRouteName();
@@ -31,7 +28,7 @@ export function UserFrame() {
             className="btn btn-secondary w-100"
             href={Router.path("userprofile", currentUser)}
             onClick={() => {
-              collapse();
+              onClose();
             }}
           >
             <i className="fa-solid fa-user fa-fw" />
@@ -44,7 +41,7 @@ export function UserFrame() {
             className="btn btn-secondary w-100"
             href={Router.path("profile")}
             onClick={() => {
-              collapse();
+              onClose();
             }}
           >
             <i className="fa-solid fa-gears fa-fw" />
@@ -59,7 +56,7 @@ export function UserFrame() {
             className="btn btn-secondary w-100"
             onClick={(event) => {
               event.preventDefault();
-              collapse();
+              Collapse.getInstance("#bs-navbar-collapse")?.hide();
               Meteor.logout();
 
               if (routeName === "profile") {

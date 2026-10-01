@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 
-import { Edit, type Props as GroupDiscussionEditProps } from "./edit";
+import { Edit } from "./edit";
 import { Show } from "./show";
+import { isNewPost, type NewPost } from "../../discussion.modern/new-post";
 
 import "./styles.scss";
 
@@ -41,14 +42,14 @@ function Responses({ responses: replies }: { responses: GroupDiscussionEntity[] 
 }
 
 export interface Props {
-  post: GroupDiscussionEntity & { new?: true };
+  post: GroupDiscussionEntity | NewPost;
   responses?: GroupDiscussionEntity[];
   edit?: boolean;
   onCancel?: () => void;
 }
 
 export function Post({ post, responses, edit, onCancel }: Props) {
-  const isParent = !post.new && !post.parentId;
+  const isParent = !isNewPost(post) && !post.parentId;
   const userId = useUserId();
   const [editing, setEditing] = useState(!!edit);
   const isFirstRender = useRef(true);
@@ -61,16 +62,16 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     setEditing(!!edit);
   }, [edit]);
 
-  function getNewPost() {
+  function getNewPost(): NewPost {
     return {
       new: true,
-      parentId: post._id,
       groupId: post.groupId,
       eventId: post.eventId,
-      userId,
       title: "",
       text: "",
-    } as GroupDiscussionEditProps["post"];
+      ...(userId ? { userId } : {}),
+      ...(post._id ? { parentId: post._id } : {}),
+    };
   }
   function postShowAttr() {
     return {

@@ -167,7 +167,7 @@ export function RoleSelect({
   const commonSelectProps = {
     inputId: "group-edit-role-select",
     isMulti: true,
-    isClearable: true,
+    isClearable: false,
     isSearchable: true,
     hideSelectedOptions: true,
     components: {
@@ -212,7 +212,10 @@ export function RoleSelect({
         />
       )}
       <div id="group-edit-role-help" className="form-text">
-        {t("group.edit.needs.role.help", "Choose roles to share responsibilities among group members.")}
+        {t(
+          "group.edit.needs.role.help",
+          "Choose roles to share responsibilities among group members.",
+        )}
       </div>
     </div>
   );

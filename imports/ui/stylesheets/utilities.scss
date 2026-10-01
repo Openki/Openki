@@ -1,7 +1,7 @@
 @use "sass:map";
 
-/* 
- * Utilities (named like in Tailwind CSS) created with the bootstrap api 
+/*
+ * Utilities (named like in Tailwind CSS) created with the bootstrap api
  * See: https://getbootstrap.com/docs/5.3/utilities/api/
  */
 
@@ -39,6 +39,13 @@ $utilities: map.merge(
         \[2lh\]: 2lh,
       ),
     ),
+    "max-w": (
+      property: max-width,
+      class: max-w,
+      values: (
+        75: 75%,
+      ),
+    ),
     "touch": (
       property: touch-action,
       class: touch,
@@ -59,6 +66,27 @@ $utilities: map.merge(
       values: (
         pre-line: pre-line,
       ),
+    ),
+    "justify-self": (
+      property: justify-self,
+      class: justify-self,
+      values: (
+        start: start,
+        end: end,
+      ),
+    ),
+    "z-index": (
+      property: z-index,
+      class: z,
+      values: map.merge(
+          // Extend with existing Bootstrap values
+          map.get(map.get($utilities, "z-index"), "values"),
+          (
+            // Use a z-index that is higher than all values defined by
+            // https://getbootstrap.com/docs/5.3/layout/z-index/
+            1200: 1200
+          )
+        ),
     ),
   )
 );
