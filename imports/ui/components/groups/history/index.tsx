@@ -569,6 +569,7 @@ export function History({ group }: { group: GroupModel }) {
                 </div>
               </div>
               <div className="grouphistory-event col-8">
+                {/* @ts-expect-error Ignore the event data error for now */}
                 <event.template {...event.data} />
               </div>
             </div>
