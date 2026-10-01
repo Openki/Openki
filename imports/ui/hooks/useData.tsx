@@ -6,7 +6,12 @@ export function useData<T>(url: string | URL, init?: RequestInit) {
   useEffect(() => {
     let ignore = false;
     fetch(url, init)
-      .then((response) => response.json())
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("Failed to request data:", { cause: response });
+        }
+        return response.json();
+      })
       .then((json) => {
         if (!ignore) {
           setData(json);
