@@ -404,7 +404,12 @@ function getHistoryEntryTemplate(key: string) {
   return template;
 }
 
-const NEW_getGroupHistory = (group: GroupModel, user: UserModel | null) => {
+/**
+ * Get a sorted list of history entries for a specific group.
+ * The result varies based on user permissions because some events are internal to group admins.
+ * @returns An array of sorted history entries, mapped to their respective React component to use for rendering
+ */
+const getGroupHistoryEntries = (group: GroupModel, user: UserModel | null) => {
   // Show full history only for admins
   const history =
     user && group.editableBy(user)
@@ -456,9 +461,7 @@ const NEW_getGroupHistory = (group: GroupModel, user: UserModel | null) => {
 
 export function History({ group }: { group: GroupModel }) {
   const user = useUser();
-
-  // NOTE: If this works better than the server method, then rename the variable from historyEvents to historyEntries instead.
-  const historyEvents = NEW_getGroupHistory(group, user);
+  const historyEntries = getGroupHistoryEntries(group, user);
 
   const { dateLong, fromNow } = useDateTimeFormat();
   return (
@@ -468,7 +471,7 @@ export function History({ group }: { group: GroupModel }) {
           <div className="timeline-start"></div>
         </div>
       </div>
-      {historyEvents.map((event, index) => {
+      {historyEntries.map((event, index) => {
         return (
           <div className="row" key={`history:${event.key}:${index}`}>
             <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
