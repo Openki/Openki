@@ -47,12 +47,12 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const { body } = entry;
   const group = await Groups.findOneAsync(body.groupId);
   if (!group) {
-    throw new Error("Group does not exist (0.o)");
+    throw new Error(`Group does not exist (0.o): ${body.groupId}`);
   }
 
   const creator = await Users.findOneAsync(group.createdby);
   if (!creator) {
-    throw new Error("Creator does not exist (0.o)");
+    throw new Error(`Creator does not exist (0.o): ${group.createdby}`);
   }
 
   return {

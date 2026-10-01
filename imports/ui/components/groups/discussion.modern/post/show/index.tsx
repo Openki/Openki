@@ -15,9 +15,10 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 import { UserName } from "/imports/ui/components/UserName";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { isNewPost, NewPost } from "../../new-post";
 
 export interface Props {
-  post: GroupDiscussionEntity & { new?: true } & { saving?: boolean };
+  post: GroupDiscussionEntity | NewPost;
   onEdit: () => void;
 }
 
@@ -36,8 +37,9 @@ export function Show({ post, onEdit }: Props) {
     }
     return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
-  const hasBeenEdited = !post.new && post.time_updated.getTime() > post.time_created.getTime();
-  async function handleRemove() {
+  const hasBeenEdited =
+    !isNewPost(post) && post.time_updated.getTime() > post.time_created.getTime();
+  async function handleRemove(post: GroupDiscussionEntity) {
     try {
       routerAutoscroll.cancelNext();
 
@@ -47,7 +49,7 @@ export function Show({ post, onEdit }: Props) {
     }
   }
 
-  return post.new ? (
+  return isNewPost(post) ? (
     post.parentId ? (
       <div className="list-group-item ps-5">
         <button type="button" className="btn btn-secondary" onClick={onEdit}>
@@ -103,7 +105,7 @@ export function Show({ post, onEdit }: Props) {
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
-            {canDelete() && <RemoveDropdown onRemove={handleRemove} />}
+            {canDelete() && <RemoveDropdown onRemove={() => handleRemove(post)} />}
           </span>
         </div>
         {!!post.title && <h4>{post.title}</h4>}
