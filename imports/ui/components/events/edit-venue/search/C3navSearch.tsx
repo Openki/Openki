@@ -1,10 +1,10 @@
 import React, { type FocusEventHandler } from "react";
 import { filter, chain } from "lodash-es";
-import useSWR from "swr";
 
 import { EventEntity, EventVenue } from "/imports/api/events/events";
 
 import { SearchBase } from "/imports/ui/components/events/edit-venue/search/SearchBase";
+import { useData } from "/imports/ui/hooks/useData";
 
 async function requestVenuesFromC3nav(locations: any, query: string): Promise<EventVenue[]> {
   const relevantLocations = chain(locations)
@@ -25,10 +25,6 @@ async function requestVenuesFromC3nav(locations: any, query: string): Promise<Ev
   query = query.toUpperCase();
   return filter(relevantLocations, (l) => l.searchIndex.includes(query));
 }
-
-const fetcher = (input: URL | RequestInfo) =>
-  // header is needed for c3nav
-  fetch(input, { headers: { "X-API-Key": "anonymous" } }).then((res) => res.json());
 
 export function C3navSearch({
   id,
@@ -51,7 +47,10 @@ export function C3navSearch({
   onChange: (newValue: EventEntity["venue"]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
-  const { data: locations } = useSWR(apiUrl + "/map/locations/", fetcher);
+  const locations = useData(apiUrl + "/map/locations/", {
+    // The header is needed for c3nav
+    headers: { "X-API-Key": "anonymous" },
+  });
 
   async function handleRequest(query: string) {
     return await requestVenuesFromC3nav(locations, query);

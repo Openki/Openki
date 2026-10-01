@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 // from https://de.react.dev/learn/you-might-not-need-an-effect#fetching-data
-export function useData<T>(url: string) {
+export function useData<T>(url: string | URL, init?: RequestInit) {
   const [data, setData] = useState<T | null>(null);
   useEffect(() => {
     let ignore = false;
-    fetch(url)
+    fetch(url, init)
       .then((response) => response.json())
       .then((json) => {
         if (!ignore) {
@@ -15,6 +15,6 @@ export function useData<T>(url: string) {
     return () => {
       ignore = true;
     };
-  }, [url]);
+  }, [url, init]);
   return data;
 }
