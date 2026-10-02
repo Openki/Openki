@@ -13,10 +13,17 @@ if (Meteor.isDevelopment) {
   };
 
   // Create /.temp to output emails as html files for testing
-  Email.hookSend((email: any) => {
+  Email.hookSend((email) => {
+    if ("mailComposer" in email) {
+      throw new Error("Expected HTML email but got mailComposer");
+    }
+    const emailContent = email.html?.toString();
+    if (!emailContent) {
+      throw new Error("Failed to render email", { cause: email });
+    }
     fs.writeFile(
       normalize(`${debugEmailDir}/${new Date().toISOString()} ${email.subject}.html`),
-      email.html,
+      emailContent,
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       () => {},
     );
