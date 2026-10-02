@@ -11,7 +11,7 @@ if (Meteor.isServer) {
   // Always publish their own data for logged-in users
   // https://github.com/meteor/guide/issues/651
   Meteor.publish(null, function () {
-    return Users.find(this.userId as any);
+    return Users.find(this.userId ?? undefined);
   });
 }
 
