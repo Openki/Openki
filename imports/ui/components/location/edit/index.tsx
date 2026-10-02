@@ -10,7 +10,6 @@ import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 import { RegionMapContainer } from "../display/RegionMapContainer";
-import { ClassName } from "./ClassName";
 import { Props } from "./Props";
 import { Events } from "./Events";
 import { AutoInvalidateSize } from "../display/AutoInvalidateSize";
@@ -115,6 +114,8 @@ export function Edit(
     className: "leaflet-marker-icon-pin",
   });
 
+  const mapContainerClasses = cx("location-map focus-ring", props.className);
+
   const children = (
     <>
       {props.coordinates ? (
@@ -148,7 +149,6 @@ export function Edit(
           }}
         />
       )}
-      <ClassName value={`location-map focus-ring ${props.className}`} />
       <Props
         id={props.id}
         aria-labelledby={props["aria-labelledby"]}
@@ -166,6 +166,7 @@ export function Edit(
     <RegionMapContainer
       region={props.region}
       ref={mapRef}
+      className={mapContainerClasses}
       {...(!props.coordinates && !props.center
         ? {}
         : {
@@ -191,6 +192,7 @@ export function Edit(
   ) : (
     <MapContainer
       ref={mapRef}
+      className={mapContainerClasses}
       {...(!props.coordinates && !props.center
         ? {}
         : {
