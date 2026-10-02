@@ -17,7 +17,7 @@ import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 import { cx } from "/imports/utils/cx";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useValidation } from "/imports/ui/hooks/useValidation";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useMeasureTime } from "/imports/ui/hooks/useMeasureTime";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import * as Analytics from "/imports/ui/lib/analytics";

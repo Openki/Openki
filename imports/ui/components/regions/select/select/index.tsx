@@ -6,7 +6,7 @@ import { Mongo } from "meteor/mongo";
 import { RegionEntity, RegionModel, Regions } from "/imports/api/regions/regions";
 
 import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import * as RegionSelectionUtils from "/imports/utils/region-selection";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";

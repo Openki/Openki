@@ -6,7 +6,7 @@ import { RegionModel } from "/imports/api/regions/regions";
 import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import { MarkedName } from "/imports/ui/components/MarkedName";
 import { cx } from "/imports/utils/cx";

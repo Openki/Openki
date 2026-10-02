@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession, useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useValidation } from "/imports/ui/hooks/useValidation";

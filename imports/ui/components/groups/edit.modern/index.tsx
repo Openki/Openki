@@ -18,7 +18,7 @@ import { Title } from "./title";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useValidation } from "../../../hooks/useValidation";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useMeasureTime } from "/imports/ui/hooks/useMeasureTime";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 

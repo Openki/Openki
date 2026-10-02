@@ -7,7 +7,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { useMeteorStatus } from "/imports/ui/hooks/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { cx } from "/imports/utils/cx";

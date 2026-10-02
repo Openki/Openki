@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import { useDetails } from "/imports/api/organizations/publications";
 

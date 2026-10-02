@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import * as UsersMethods from "/imports/api/users/methods";
 import * as Alert from "/imports/api/alerts/alert";

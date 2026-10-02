@@ -5,7 +5,7 @@ import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
 import { useDetails } from "/imports/api/organizations/publications";
 
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { Filtering } from "/imports/utils/filtering";

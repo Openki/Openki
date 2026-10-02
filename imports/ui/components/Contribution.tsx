@@ -2,7 +2,7 @@ import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { checkContribution } from "/imports/utils/checkContribution";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getCachedUser } from "/imports/ui/lib/getUserName";

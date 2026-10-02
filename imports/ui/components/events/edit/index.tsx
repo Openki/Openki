@@ -16,7 +16,7 @@ import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";

@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
