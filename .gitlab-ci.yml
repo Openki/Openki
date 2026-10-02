@@ -2,8 +2,9 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-    - if: $CI_COMMIT_BRANCH
+    # Only run CI pipelines for specific branches and open merge requests.
+    # This prevents duplicate CI pipelines for source branches in merge requests.
+    - if: $CI_COMMIT_BRANCH =~ /^dev|staging|main$/ || $CI_MERGE_REQUEST_ID
 
 stages:
   - lint
