@@ -112,7 +112,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
    * @param rel related ID
    * @param body log body depending on track
    */
-  async record(track: string, rel: string[], body: Record<string, any>) {
+  async record(track: string, rel: string[], body: Record<string, unknown>) {
     check(track, String);
     check(rel, [String]);
     check(body, Object);
@@ -137,7 +137,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
     check(filter, FindFilterPattern);
     check(limit, Match.Integer);
 
-    const query: any = {};
+    const query: Parameters<typeof this.find>[0] = {};
     if (filter.start) query.ts = { $lte: filter.start };
     if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
     if (filter.tr) query.tr = { $in: filter.tr };
