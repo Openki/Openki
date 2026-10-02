@@ -3,7 +3,8 @@ import { isEmail } from "/imports/utils/email-tools";
 describe("Email validation", () => {
   const expectEmail = (str: string) => expect(isEmail(str)).to.be.true;
   const expectNotEmail = (str: string) => expect(isEmail(str)).to.be.false;
-  const fails = (notaString: any) => expect(() => isEmail(notaString)).to.throw();
+  // @ts-expect-error Testing invalid input
+  const fails = (notaString?: unknown) => expect(() => isEmail(notaString)).to.throw();
 
   it("accepts normal emails", () => {
     expectEmail("Jah7reix.poo0Ooz0@geemail.com");
@@ -46,7 +47,7 @@ describe("Email validation", () => {
   });
 
   it("fails on non-strings", () => {
-    (fails as any)();
+    fails();
     fails(undefined);
     fails(true);
     fails(false);
