@@ -9,7 +9,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
-import { useMeteorStatus } from "/imports/utils/react-meteor-data";
+import { useMeteorStatus } from "/imports/ui/hooks/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Introduction } from "../../lib/introduction";
 import { cx } from "/imports/utils/cx";

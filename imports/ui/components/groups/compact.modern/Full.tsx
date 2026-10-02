@@ -7,7 +7,7 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { useSiteName } from "/imports/utils/getSiteName";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";

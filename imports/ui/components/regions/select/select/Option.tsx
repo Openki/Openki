@@ -3,7 +3,7 @@ import React from "react";
 
 import { RegionModel } from "/imports/api/regions/regions";
 
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";

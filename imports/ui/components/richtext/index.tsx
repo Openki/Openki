@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import MediumEditor from "medium-editor";

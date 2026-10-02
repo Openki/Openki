@@ -1,6 +1,6 @@
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
-import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 export function useShownIntro() {

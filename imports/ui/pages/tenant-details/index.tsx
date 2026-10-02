@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { TenantModel } from "/imports/api/tenants/tenants";
 

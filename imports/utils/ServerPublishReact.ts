@@ -1,7 +1,7 @@
 import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useUserId } from "./react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { isObject } from "lodash-es";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 

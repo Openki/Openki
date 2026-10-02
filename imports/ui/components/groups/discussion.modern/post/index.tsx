@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";

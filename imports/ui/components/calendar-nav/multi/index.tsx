@@ -1,7 +1,7 @@
 import $ from "jquery";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 

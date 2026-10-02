@@ -1,6 +1,6 @@
 import React from "react";
 import { GroupModel } from "/imports/api/groups/groups";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
 

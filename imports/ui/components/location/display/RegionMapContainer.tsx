@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 import { MapContainer, LayersControl, TileLayer, useMapEvent } from "react-leaflet";
 import { TileLayers } from "../../TileLayer";
 import { useDetails } from "/imports/api/regions/publications";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 function LayerEventListener({ onChange }: { onChange: (newValue: string) => void }) {
   useMapEvent("baselayerchange", (e) => {

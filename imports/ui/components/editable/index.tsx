@@ -4,7 +4,7 @@ import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-er
 import MediumEditor from "medium-editor";
 
 import { Mapping, useValidation } from "/imports/ui/hooks/useValidation";
-import { useSession, useSessionEquals } from "../../../utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { Store } from "../../lib/editable";
 import { cx } from "/imports/utils/cx";
 

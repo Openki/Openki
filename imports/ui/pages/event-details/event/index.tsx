@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
 

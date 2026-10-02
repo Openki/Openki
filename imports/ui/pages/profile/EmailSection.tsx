@@ -8,7 +8,7 @@ import { routerAutoscroll } from "../../lib/router-autoscroll";
 import { useValidation } from "/imports/ui/hooks/useValidation";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { FormControl } from "/imports/ui/components/form-control";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 

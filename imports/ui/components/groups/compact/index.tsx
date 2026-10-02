@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Router } from "meteor/iron:router";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";

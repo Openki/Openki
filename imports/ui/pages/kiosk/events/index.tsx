@@ -1,7 +1,7 @@
 import React from "react";
 import { Mongo } from "meteor/mongo";
 import moment from "moment";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";

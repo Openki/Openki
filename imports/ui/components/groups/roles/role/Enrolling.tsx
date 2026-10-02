@@ -7,7 +7,7 @@ import { Regions } from "/imports/api/regions/regions";
 import * as Alert from "/imports/api/alerts/alert";
 
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";

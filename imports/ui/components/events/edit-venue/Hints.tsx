@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { EventVenueRef } from "/imports/api/events/events";

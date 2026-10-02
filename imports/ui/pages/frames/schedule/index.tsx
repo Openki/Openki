@@ -1,5 +1,5 @@
 import React from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useSearchParams } from "/imports/utils/react-meteor-router";

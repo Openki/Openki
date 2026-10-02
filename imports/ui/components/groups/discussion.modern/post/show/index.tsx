@@ -7,7 +7,7 @@ import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods
 import * as Alert from "/imports/api/alerts/alert";
 
 import * as GroupDiscussionUtils from "/imports/utils/group-discussion-utils";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { useUser, useUserId } from "/imports/utils/react-meteor-data";
+import { useUser, useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useTracker } from "meteor/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useSession } from "../../utils/react-meteor-data";
+import { useSession } from "./react-meteor-data";
 
 export function useDateTimeFormat() {
   const locale = useSession("timeLocale") || "en";

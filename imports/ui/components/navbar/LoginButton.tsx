@@ -1,6 +1,6 @@
 import React from "react";
 import { Accounts } from "meteor/accounts-base";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 export function LoginButton() {

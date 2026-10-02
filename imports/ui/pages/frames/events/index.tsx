@@ -3,7 +3,7 @@ import { take } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import { Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";

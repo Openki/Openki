@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 import { LanguageEntity, Languages } from "/imports/api/languages/languages";
 

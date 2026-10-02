@@ -6,7 +6,7 @@ import { EventModel } from "/imports/api/events/events";
 import { Button, ButtonClose } from "/imports/ui/components/Buttons";
 import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
 import { FormControl } from "/imports/ui/components/form-control";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 export interface Props {
   event: EventModel;

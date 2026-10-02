@@ -9,7 +9,7 @@ import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { RegistrationParticipants } from "../display/registration.modern";
 import { Discussion } from "../../groups/discussion.modern";

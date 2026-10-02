@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";

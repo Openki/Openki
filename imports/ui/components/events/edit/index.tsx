@@ -14,7 +14,7 @@ import { useValidation } from "/imports/ui/hooks/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";

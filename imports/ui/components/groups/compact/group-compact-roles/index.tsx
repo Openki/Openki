@@ -4,8 +4,8 @@ import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 
 import { hasRole, hasRoleUser } from "/imports/api/groups/lib/hasRole";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useUserId } from "/imports/utils/react-meteor-data";
-import { useRegionRoles } from "../../../../hooks/useRegionRoles";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 import { isParticipant, isPredefined } from "/imports/api/groups/lib/isRole";
 import { predefinedRole } from "/imports/api/groups/lib/Role";

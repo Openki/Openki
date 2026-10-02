@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { chain } from "lodash-es";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { useFindFilter } from "/imports/api/events/publications";

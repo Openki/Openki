@@ -1,5 +1,5 @@
 import React from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { LanguagesRaw } from "/imports/api/languages/languages";

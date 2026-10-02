@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 import { FormCheck } from "/imports/ui/components/FormCheck";

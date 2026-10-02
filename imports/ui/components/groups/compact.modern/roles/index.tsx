@@ -6,7 +6,7 @@ import { useRegionRoles } from "../../../../hooks/useRegionRoles";
 
 import { Role } from "./role";
 import { hasRoleUser } from "/imports/api/groups/lib/hasRole";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { isParticipant, isPredefined, isTeam } from "/imports/api/groups/lib/isRole";

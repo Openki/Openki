@@ -4,7 +4,7 @@ import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { Regions } from "/imports/api/regions/regions";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
 import { cx } from "/imports/utils/cx";
