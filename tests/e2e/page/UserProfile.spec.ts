@@ -18,6 +18,14 @@ describe("userprofile page", () => {
 
     cy.getById("user-has-contributed-button").should("be.visible").click();
 
+    // Wait for the UI to re-render before continuing.
+    // The likely cause in this case is because the `UserprofilePage` receives the `user` as a prop
+    // but `iron:router` sometimes is not fast enough with updating the Page props
+    // when the userHasContributed state changes inside component.
+    //
+    // NOTE: Once we replace `iron:router`, we should try to remove this artificial delay.
+    cy.wait(4000);
+
     cy.getById("contribution").should("be.visible");
 
     cy.getById("user-has-contributed-button").should("be.visible").click();
