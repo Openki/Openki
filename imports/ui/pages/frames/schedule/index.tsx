@@ -2,7 +2,7 @@ import React from "react";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
-import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
+import { useParams, useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/groups/publications";

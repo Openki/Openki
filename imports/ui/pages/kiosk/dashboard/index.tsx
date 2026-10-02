@@ -6,7 +6,7 @@ import { useDetails } from "/imports/api/organizations/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Dashboard } from "/imports/ui/components/dashboard";

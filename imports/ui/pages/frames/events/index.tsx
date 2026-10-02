@@ -11,7 +11,7 @@ import { useFindFilter } from "/imports/api/events/publications";
 import { Filtering } from "/imports/utils/filtering";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import * as Predicates from "/imports/utils/predicates";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { Props as CalendarNavData, Day } from "/imports/ui/components/calendar-nav/day";

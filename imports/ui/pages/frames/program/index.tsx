@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import moment from "moment";
 
 import { Events, FindParams } from "/imports/api/events/events";

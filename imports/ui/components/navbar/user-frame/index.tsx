@@ -3,7 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 
 import "./styles.scss";
 import { Collapse } from "/imports/startup/client/bootstrap";

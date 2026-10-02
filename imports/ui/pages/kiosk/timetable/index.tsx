@@ -10,7 +10,7 @@ import { VenueModel } from "/imports/api/venues/venues";
 import { useEventListener } from "/imports/utils/useEventListener";
 import { textPlain } from "/imports/utils/html-tools";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";

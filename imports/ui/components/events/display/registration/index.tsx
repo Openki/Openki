@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as Alert from "/imports/api/alerts/alert";

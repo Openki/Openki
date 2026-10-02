@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { chain } from "lodash-es";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";

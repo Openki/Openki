@@ -4,7 +4,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
