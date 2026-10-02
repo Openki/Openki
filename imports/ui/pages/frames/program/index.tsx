@@ -8,7 +8,6 @@ import moment from "moment";
 
 import { Events, FindParams } from "/imports/api/events/events";
 
-import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
@@ -156,7 +155,7 @@ export function ProgramPage(props: Record<string, string>) {
                     }),
                     entity:
                       props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(filter.toParams()),
+                    query: new URLSearchParams(filter.toParams()).toString(),
                   };
                 }
                 let evening;
@@ -178,7 +177,7 @@ export function ProgramPage(props: Record<string, string>) {
                     }),
                     entity:
                       props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(filter.toParams()),
+                    query: new URLSearchParams(filter.toParams()).toString(),
                   };
                 }
 
