@@ -11,7 +11,7 @@
 - [ ] Follow the [Style Guide](https://gitlab.com/Openki/Openki/wikis/Naming%20and%20Syntax%20Convention).
 - [ ] Issue being solved is linked
 - [ ] A test that checks the issue is resolved (If you don't know how to do that, create the MR as WIP) [Check your wiki page about testing](https://gitlab.com/Openki/Openki/-/wikis/testing)
-- [ ] You have checked the result in diffrent browser (desktop and mobile)
+- [ ] You have tested your changes with different browsers (desktop and mobile)
 
 ## Review checklist
 
