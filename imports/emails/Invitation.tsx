@@ -4,6 +4,7 @@ import { TenantModel } from "/imports/api/tenants/tenants";
 import { UserModel } from "/imports/api/users/users";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { getFragmentsWithKeys } from "../ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   siteName: string;
@@ -64,7 +65,9 @@ export function Invitation({
         <td>
           <table className="footer">
             <tr>
-              <td>{t("email.base.unexpected", { REPORTEMAIL: reportEmail })}</td>
+              <td>
+                {getFragmentsWithKeys(t("email.base.unexpected", { REPORTEMAIL: reportEmail }))}
+              </td>
             </tr>
           </table>
         </td>

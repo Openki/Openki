@@ -4,6 +4,7 @@ import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   username: string;
@@ -33,10 +34,12 @@ export function EventCanceled({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
-            {t(
-              "notification.event.canceled.mail.intro",
-              "You have been registered for {EVENT}. Unfortunately the event just got cancelled.",
-              { EVENT: eventTitle },
+            {getFragmentsWithKeys(
+              t(
+                "notification.event.canceled.mail.intro",
+                "You have been registered for {EVENT}. Unfortunately the event just got cancelled.",
+                { EVENT: eventTitle },
+              ),
             )}
           </p>
           <p>
@@ -54,10 +57,12 @@ export function EventCanceled({
         </td>
       </tr>
       <Footer
-        receiveNote={t(
-          "notification.event.canceled.mail.notice",
-          "You receive this e-mail because you are involved in {EVENT}.",
-          { EVENT: eventTitle },
+        receiveNote={getFragmentsWithKeys(
+          t(
+            "notification.event.canceled.mail.notice",
+            "You receive this e-mail because you are involved in {EVENT}.",
+            { EVENT: eventTitle },
+          ),
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}
