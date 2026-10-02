@@ -7,7 +7,7 @@ import { LanguageEntity, Languages } from "/imports/api/languages/languages";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { MarkedName } from "/imports/utils/marked-name";
+import { MarkedName } from "/imports/ui/components/MarkedName";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { cx } from "/imports/utils/cx";
 
