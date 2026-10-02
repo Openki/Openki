@@ -18,7 +18,7 @@ export function Appearance() {
     routerAutoscroll.cancelNext();
 
     try {
-      const theme = event.currentTarget.value as any;
+      const theme = event.currentTarget.value;
       await usersMethods.updateTheme(theme);
       Theme.setTheme(theme);
       Alert.success(t("profile.updated", "Updated profile"));

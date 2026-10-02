@@ -176,19 +176,16 @@ export const updatePrivateMessages = ServerMethod(
   },
 );
 
-export const updateTheme = ServerMethod(
-  "user.updateTheme",
-  async (theme: "light" | "system" | "dark") => {
-    check(theme, StringEnum("light", "system", "dark"));
+export const updateTheme = ServerMethod("user.updateTheme", async (theme: string) => {
+  check(theme, StringEnum("light", "system", "dark"));
 
-    const userId = Meteor.userId();
-    if (!userId) {
-      throw new ValidationError([{ name: "theme", type: "plzLogin" }], "Not logged-in");
-    }
+  const userId = Meteor.userId();
+  if (!userId) {
+    throw new ValidationError([{ name: "theme", type: "plzLogin" }], "Not logged-in");
+  }
 
-    await Users.updateAsync(userId, { $set: { theme } });
-  },
-);
+  await Users.updateAsync(userId, { $set: { theme } });
+});
 
 /**
  * Update email

@@ -1,7 +1,7 @@
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 
-export function setTheme(theme: "light" | "system" | "dark" | undefined) {
+export function setTheme(theme: string | "light" | "system" | "dark" | undefined) {
   document.documentElement.classList.remove("theme-mode-dark");
   document.documentElement.classList.remove("theme-mode-system");
 
