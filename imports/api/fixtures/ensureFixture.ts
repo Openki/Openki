@@ -114,6 +114,7 @@ export const ensure = {
           // Hashing a password with bcrypt is expensive so we use the
           // computed hash.
           services: {
+            // @ts-expect-error Intentional override to avoid password reset for dev accounts.
             password: { bcrypt: "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq" },
           },
 
@@ -121,7 +122,7 @@ export const ensure = {
           lastLogin: new Date(time - age / 30),
 
           "emails.0.verified": verified,
-        } as any,
+        },
       },
     );
 
