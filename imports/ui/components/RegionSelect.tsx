@@ -28,9 +28,7 @@ export function RegionSelect({
       prepend="fa-solid fa-location-dot"
       placeholder={t("_selection.pleaseSelect")}
       options={
-        !isLoading()
-          ? Object.fromEntries(regions.map((region) => [region._id, region.name]))
-          : ({} as any)
+        !isLoading() ? Object.fromEntries(regions.map((region) => [region._id, region.name])) : {}
       }
       value={value || ""}
       onChange={onChange}
