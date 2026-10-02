@@ -1,4 +1,4 @@
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError, type ValidationErrorDetail } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Buttons";
@@ -45,7 +45,7 @@ export function EmailSection() {
       Alert.success(t("profile.updated", "Updated profile"));
     } catch (err) {
       if (ValidationError.is(err)) {
-        (err.details as any).forEach((fieldError: any) => {
+        (err.details as unknown as ValidationErrorDetail[]).forEach((fieldError) => {
           addError(fieldError.type);
         });
       }
