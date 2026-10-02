@@ -13,7 +13,7 @@ import { useAll as useRegions } from "/imports/api/regions/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 import { cx } from "/imports/utils/cx";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useValidation } from "/imports/ui/hooks/useValidation";

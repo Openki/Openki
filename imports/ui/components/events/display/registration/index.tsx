@@ -14,7 +14,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
 import { EventParticipants } from "/imports/ui/components/events/participants";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import "./styles.scss";
 

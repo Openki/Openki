@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
-import { useSessionEquals, useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useSessionEquals, useUser } from "./react-meteor-data";
 
-import { UserModel } from "/imports/api/users/users";
+import { UserModel } from "../../api/users/users";
 
 export function useAccountTasks() {
   const [actionActive, setActionActive] = useState(false);

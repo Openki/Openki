@@ -9,7 +9,7 @@ import { GroupCustomField } from "/imports/api/groups/groups";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 

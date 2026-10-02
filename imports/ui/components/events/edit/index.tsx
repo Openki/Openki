@@ -17,7 +17,7 @@ import { MeteorAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";

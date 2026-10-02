@@ -10,7 +10,7 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useValidation } from "/imports/ui/hooks/useValidation";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 import { useLocalStorage } from "/imports/ui/hooks/useLocalStorage";
 
 export interface Props {

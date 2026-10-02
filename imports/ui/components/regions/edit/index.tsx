@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import { RegionEntity } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";

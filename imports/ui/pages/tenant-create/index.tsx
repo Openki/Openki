@@ -4,7 +4,7 @@ import { omit } from "lodash-es";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useTranslation } from "react-i18next";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 import { useValidation } from "/imports/ui/hooks/useValidation";
 
 import * as Alert from "/imports/api/alerts/alert";
