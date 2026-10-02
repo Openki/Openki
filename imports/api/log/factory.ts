@@ -112,7 +112,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
    * @param rel related ID
    * @param body log body depending on track
    */
-  async record(track: string, rel: string[], body: Record<string, unknown>) {
+  async record(track: string, rel: string[], body: object) {
     check(track, String);
     check(rel, [String]);
     check(body, Object);
