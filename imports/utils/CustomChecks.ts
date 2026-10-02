@@ -107,6 +107,8 @@ export function Deprecated<T extends Match.Pattern>(pattern: T, text: string) {
     check(value, pattern);
 
     // Then always reject with a clear deprecation message
+    // The type for Match.Error is missing.
+    // eslint-disable-next-line
     throw new (Match as any).Error(`Deprecated: ${text}`);
   }) as Match.Matcher<Match.PatternMatch<T>>;
 }
