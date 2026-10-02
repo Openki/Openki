@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import * as GroupDiscussions from "/imports/api/group-discussions/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Post, type Props as PostProps } from "./post";

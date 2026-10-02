@@ -1,7 +1,7 @@
 import { extractRoles } from "../../utils/extractRoles";
-import { useDetails } from "/imports/api/regions/publications";
-import { RegionEntity } from "/imports/api/regions/regions";
-import { RoleEntity } from "/imports/utils/PublicSettings";
+import { useDetails } from "../../api/regions/publications";
+import { RegionEntity } from "../../api/regions/regions";
+import { RoleEntity } from "../../utils/PublicSettings";
 
 /** Load the region roles on the client side. */
 export function useRegionRoles(regionId: RegionEntity["_id"]) {

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Tooltip } from "/imports/startup/client/bootstrap";
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 
 /** A toggle tip that supports accessibility.
  *  *Hint: Do not use for information's that are necessary for a user to complete a task*

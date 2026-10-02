@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 

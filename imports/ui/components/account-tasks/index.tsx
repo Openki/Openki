@@ -2,13 +2,13 @@ import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Collapse, Modal } from "/imports/startup/client/bootstrap";
-import { useSession, useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSession, useSessionEquals, useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { ActionResult } from "/imports/ui/components/ActionResult";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../hooks/useViewportSize";
 import { isEmail } from "/imports/utils/email-tools";
 
 import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";

@@ -8,7 +8,7 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 import { isPredefined } from "/imports/api/groups/lib/isRole";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { GroupList } from "/imports/ui/components/groups/List";

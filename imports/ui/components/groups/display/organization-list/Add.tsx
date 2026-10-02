@@ -2,7 +2,7 @@ import React from "react";
 import { difference } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";

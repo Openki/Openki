@@ -5,7 +5,7 @@ import { Template } from "meteor/templating";
 
 import { useDetails } from "/imports/api/organizations/publications";
 
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import "./styles.scss";

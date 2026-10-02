@@ -5,10 +5,10 @@ import { DeleteConfirm } from "../../components/DeleteConfirm";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
 import { AccountsAsync } from "/imports/utils/promisify";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 import { FormControl } from "/imports/ui/components/form-control";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 
 function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
   return (

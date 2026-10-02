@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Filtering } from "/imports/utils/filtering";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { useFindFilter } from "/imports/api/events/publications";

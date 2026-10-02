@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../hooks/useViewportSize";
 
 export interface Props {
   organization?: string | undefined;

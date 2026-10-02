@@ -4,10 +4,10 @@ import { Router } from "meteor/iron:router";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { isParticipant } from "/imports/api/groups/lib/isRole";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { RoleIcon } from "/imports/ui/components/RoleIcon";

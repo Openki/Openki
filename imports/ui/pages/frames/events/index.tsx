@@ -3,7 +3,7 @@ import { take } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import { Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
@@ -11,7 +11,7 @@ import { useFindFilter } from "/imports/api/events/publications";
 import { Filtering } from "/imports/utils/filtering";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import * as Predicates from "/imports/utils/predicates";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { Props as CalendarNavData, Day } from "/imports/ui/components/calendar-nav/day";

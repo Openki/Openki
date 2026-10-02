@@ -2,7 +2,7 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
@@ -14,7 +14,7 @@ import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
 import { Sharing } from "../../../sharing";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";

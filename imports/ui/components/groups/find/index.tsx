@@ -11,7 +11,7 @@ import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { Filtering } from "/imports/utils/filtering";
 import { cx } from "/imports/utils/cx";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import * as Predicates from "/imports/utils/predicates";
 
 import { Filter, VisibleFilters, type Props as FilterProps } from "../filter";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -12,7 +12,7 @@ import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Add } from "./add";

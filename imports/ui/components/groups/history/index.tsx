@@ -7,10 +7,10 @@ import { GroupCustomRole, type GroupModel } from "/imports/api/groups/groups";
 import { type RegionEntity } from "/imports/api/regions/regions";
 import { type UserModel } from "/imports/api/users/users";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 

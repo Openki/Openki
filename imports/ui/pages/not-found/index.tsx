@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import { Report } from "/imports/ui/components/report";
 

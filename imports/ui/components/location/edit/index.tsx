@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 

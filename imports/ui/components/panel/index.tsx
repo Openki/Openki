@@ -2,8 +2,8 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
-import { useHash } from "/imports/utils/react-meteor-router";
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useHash } from "/imports/ui/hooks/react-meteor-router";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { cx } from "/imports/utils/cx";
 
 import { Draggable } from "../Draggable";

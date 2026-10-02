@@ -10,7 +10,7 @@ import { EventVenue, EventVenueRef } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import {
   AsyncTypeahead,

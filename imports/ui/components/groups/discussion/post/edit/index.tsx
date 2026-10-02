@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";

@@ -4,7 +4,7 @@ import { Router } from "meteor/iron:router";
 
 import type { DirectMessage } from "/imports/api/emails/publications";
 import { cx } from "/imports/utils/cx";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useDetails as useEventDetails } from "/imports/api/events/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 

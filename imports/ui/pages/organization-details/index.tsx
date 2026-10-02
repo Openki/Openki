@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
 import { useTranslation } from "react-i18next";
-import { useValidation } from "../../lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -12,7 +12,7 @@ import * as OrganizationsMethods from "/imports/api/organizations/methods";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { cx } from "/imports/utils/cx";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";

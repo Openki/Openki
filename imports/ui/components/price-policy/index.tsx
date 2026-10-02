@@ -4,7 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
+import { useSessionEquals, useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";

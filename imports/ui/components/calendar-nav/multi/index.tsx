@@ -1,15 +1,15 @@
 import $ from "jquery";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 
 import { Events } from "/imports/api/events/events";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 
 import { Direction, Unit } from "../Arrow";
 import { Control } from "./Control";

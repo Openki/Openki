@@ -2,7 +2,7 @@ import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import "./styles.scss";
 

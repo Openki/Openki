@@ -5,7 +5,7 @@ import { Modal } from "/imports/startup/client/bootstrap";
 import { EventModel, EventParticipant } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { Contribution } from "../../Contribution";

@@ -3,15 +3,15 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
-import { useValidation } from "/imports/ui/lib/useValidation";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { useLocalStorage } from "/imports/ui/lib/useLocalStorage";
+import { useValidation } from "/imports/ui/hooks/useValidation";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
+import { useLocalStorage } from "/imports/ui/hooks/useLocalStorage";
 
 export interface Props {
   autoFocus?: boolean | undefined;

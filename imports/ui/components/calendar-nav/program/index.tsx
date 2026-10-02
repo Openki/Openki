@@ -1,11 +1,11 @@
 import moment from "moment";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useViewportSize } from "../../../hooks/useViewportSize";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";

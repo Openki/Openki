@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 
 type Direction = "previous" | "next";
 

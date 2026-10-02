@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useUserId } from "/imports/utils/react-meteor-data";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import moment from "moment";
 
 import { Events, FindParams } from "/imports/api/events/events";
 
-import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -156,7 +155,7 @@ export function ProgramPage(props: Record<string, string>) {
                     }),
                     entity:
                       props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(filter.toParams()),
+                    query: new URLSearchParams(filter.toParams()).toString(),
                   };
                 }
                 let evening;
@@ -178,7 +177,7 @@ export function ProgramPage(props: Record<string, string>) {
                     }),
                     entity:
                       props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(filter.toParams()),
+                    query: new URLSearchParams(filter.toParams()).toString(),
                   };
                 }
 

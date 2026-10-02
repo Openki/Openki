@@ -3,7 +3,6 @@ import { Router } from "meteor/iron:router";
 
 import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
 
-// use _jQuery if available, otherwise support IE9+
 function getScrollTop() {
   // uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
   return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;

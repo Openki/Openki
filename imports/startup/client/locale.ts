@@ -10,7 +10,7 @@ import "bootstrap-datepicker";
 import * as UsersMethods from "/imports/api/users/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-import * as UrlTools from "/imports/utils/url-tools";
+import { getQueryParam } from "/imports/utils/url-tools";
 
 // Try to guess a sensible language
 Meteor.startup(() => {
@@ -42,7 +42,7 @@ Meteor.startup(() => {
   };
 
   // Check query parameter and cookies
-  if (setLocale(UrlTools.queryParam("lg"))) {
+  if (setLocale(getQueryParam("lg"))) {
     return;
   }
   if (setLocale(localStorage?.getItem("locale"))) {
