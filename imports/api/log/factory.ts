@@ -46,7 +46,7 @@ class ResultLogger {
     public log: LogCollection,
   ) {}
 
-  async success(message?: string) {
+  async success(message?: Parameters<typeof ResultLogger.prototype.record>[1]) {
     await this.record(true, message);
   }
 
