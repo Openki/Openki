@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";

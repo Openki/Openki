@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
