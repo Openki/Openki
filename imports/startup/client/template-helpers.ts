@@ -16,6 +16,7 @@ const helpers: Record<string, Function> = {
 Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name, helper));
 
 /** Utility to simplify the map of a Blaze component to a React component for backwards compatibility. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 Template.registerHelper("component", function (this: any, f: any) {
   const self = { ...this };
   self.component = f;
