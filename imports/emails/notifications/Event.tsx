@@ -4,6 +4,7 @@ import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   event: EventModel;
@@ -130,10 +131,12 @@ export function Event({
         </td>
       </tr>
       <Footer
-        receiveNote={t(
-          "notification.event.mail.notice",
-          "You receive this e-mail because you are involved in {GROUP}.",
-          { GROUP: group },
+        receiveNote={getFragmentsWithKeys(
+          t(
+            "notification.event.mail.notice",
+            "You receive this e-mail because you are involved in {GROUP}.",
+            { GROUP: group },
+          ),
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

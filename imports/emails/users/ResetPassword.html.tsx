@@ -3,6 +3,7 @@ import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { useTranslation } from "react-i18next";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export function ResetPassword({
   username,
@@ -53,9 +54,11 @@ export function ResetPassword({
           <table className="footer">
             <tr>
               <td>
-                {t("email.base.unexpected", {
-                  REPORTEMAIL: <a href={`mailto:${reportEmail}`}>{reportEmail}</a>,
-                })}{" "}
+                {getFragmentsWithKeys(
+                  t("email.base.unexpected", {
+                    REPORTEMAIL: <a href={`mailto:${reportEmail}`}>{reportEmail}</a>,
+                  }),
+                )}{" "}
                 <a href={Router.url("profile")}>{t("email.base.profileLink")}</a>
               </td>
             </tr>

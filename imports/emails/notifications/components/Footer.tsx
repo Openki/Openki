@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UnsubscribeLink, Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
-  receiveNote?: string | undefined;
+  receiveNote?: ReactNode | undefined;
   children?: ReactNode | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   spamPrevention?: boolean | undefined;
@@ -49,11 +50,15 @@ export function Footer({
           {!!spamPrevention && (
             <tr>
               <td style={{ paddingTop: "16px" }}>
-                {t("email.base.spamPrevention", {
-                  MAIL: Boolean(PrivateSettings.siteEmail) && (
-                    <a href={"mailto:" + PrivateSettings.siteEmail}>{PrivateSettings.siteEmail}</a>
-                  ),
-                })}
+                {getFragmentsWithKeys(
+                  t("email.base.spamPrevention", {
+                    MAIL: Boolean(PrivateSettings.siteEmail) && (
+                      <a href={"mailto:" + PrivateSettings.siteEmail}>
+                        {PrivateSettings.siteEmail}
+                      </a>
+                    ),
+                  }),
+                )}
               </td>
             </tr>
           )}
