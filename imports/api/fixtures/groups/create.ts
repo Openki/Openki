@@ -7,7 +7,7 @@ import { groups as groupsBase } from "./data";
 import { groups as groupsZuerichLernt } from "./zuerichlernt";
 import { Log } from "../../log/log";
 import { PRNG } from "seedrandom";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 async function mapSync<T, U>(
   array: T[],
@@ -69,7 +69,7 @@ async function createBase(prng: PRNG) {
       members: await Promise.all(
         template.members.map(async (member) => ({
           ...member,
-          roles: member.roles.map((role) => ({ id: role, type: "predefined" })),
+          roles: member.roles.map((role) => ({ id: role, type: RoleType.Predefined })),
           user: (await ensure.user(member.user, region))._id,
         })),
       ),
@@ -105,7 +105,7 @@ async function createZuerichLernt(prng: PRNG) {
       roles: template.roles.map((r) => predefinedRole(r)),
       members: await mapSync(template.members, async (member) => ({
         ...member,
-        roles: member.roles.map((r) => ({ id: r, type: "predefined" })),
+        roles: member.roles.map((r) => ({ id: r, type: RoleType.Predefined })),
         user: (await ensure.user(member.user, template.region))._id,
       })),
       internal: template.internal || false,
