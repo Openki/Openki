@@ -1,16 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
-import * as GroupDiscussions from "/imports/api/group-discussions/publications";
-
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useEventListener } from "/imports/ui/hooks/useEventListener";
-
-import { LoadingRow } from "/imports/ui/pages/loading";
-import { Post, type Props as PostProps } from "./post";
+import { GeneralGroupDiscussion } from "/imports/ui/components/groups/discussion/general-group-discussion";
 
 import "./styles.scss";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   select: string | undefined;
@@ -20,115 +14,66 @@ export interface Props {
 
 export function Discussion({ select, groupId, eventId }: Props) {
   const { t } = useTranslation();
-  const userId = useUserId();
-  // If we want to jump to a comment we don't fold the comments
-  const [limit, setLimit] = useState(select ? 0 : 3);
-  const [edit, setEdit] = useState(false);
-  const [notifyAll, setNotifyAll] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
 
-  const [isLoading, posts] = GroupDiscussions.useForGroup(groupId);
+  const tabs: { id: string; title: string; Content: React.FC }[] = [
+    {
+      id: "discussions",
+      title: "General",
+      Content: () => <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />,
+    },
+    {
+      id: "team",
+      title: "Team",
+      Content: () => <div>Team chat</div>,
+    },
+  ];
 
-  function allDiscussions() {
-    return posts
-      .filter((p) => !p.parentId)
-      .toSorted((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
-  }
-
-  function discussions() {
-    let filteredPosts = allDiscussions();
-
-    if (limit) {
-      filteredPosts = filteredPosts.slice(0, limit);
-    }
-
-    return filteredPosts;
-  }
-
-  function responses(discussionId: string) {
-    return posts
-      .filter((p) => p.parentId === discussionId)
-      .toSorted((a, b) => a.time_created.valueOf() - b.time_created.valueOf());
-  }
-  function newPostAttr() {
-    return {
-      post: {
-        new: true,
-        groupId,
-        eventId,
-        userId,
-        title: "",
-        text: "",
-        notifyAll,
-      } as PostProps["post"],
-      edit,
-      onCancel: () => {
-        setEdit(false);
-        setNotifyAll(false);
-      },
-    };
-  }
-  function limited() {
-    if (limit) {
-      return allDiscussions().length > limit;
-    }
-    return false;
-  }
-
-  useEventListener(elementRef, "notifyAll", () => {
-    setEdit(true);
-    setNotifyAll(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  });
-
-  useEventListener(elementRef, "writeComment", () => {
-    setEdit(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  });
-
-  useEffect(() => {
-    if (!select) {
-      return;
-    }
-    // Jump to the selected comment.
-    // This method should work for screenreaders too.
-    window.location.hash = `#comment${select}`;
-    routerAutoscroll.scheduleScroll();
-  });
-
-  // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div className="page-component discussion mt-4" id="discussion" ref={elementRef}>
+    <div className="page-component discussion mt-4">
       <div className="page-component-header">
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      {isLoading() ? (
-        <LoadingRow />
-      ) : (
-        <>
-          <Post {...newPostAttr()} />
-          {discussions().map((post) => (
-            <div key={post._id} className="discussion-conversation">
-              <Post post={post} responses={responses(post._id)} />
-            </div>
-          ))}
-          {limited() && (
-            <button
-              className="btn btn-add page-component-btn"
-              type="button"
-              onClick={() => setLimit(0)}
+      <nav>
+        <div className="nav nav-tabs" role="tablist">
+          {tabs.map(({ id, title }, i) => {
+            const tabId = `tab-${id}`;
+            const tabContentId = `tab-${id}-content`;
+            return (
+              <button
+                key={id}
+                className={cx("nav-link", i === 0 && "active")}
+                id={tabId}
+                data-bs-toggle="tab"
+                data-bs-target={`#${tabContentId}`}
+                type="button"
+                role="tab"
+                aria-controls={tabContentId}
+                aria-selected={i === 0}
+              >
+                {title}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+      <div className="tab-content">
+        {tabs.map(({ id, Content }, i) => {
+          const tabContentId = `tab-${id}-content`;
+          return (
+            <div
+              key={id}
+              className={cx("tab-pane", i === 0 && "show active")}
+              id={tabContentId}
+              role="tabpanel"
+              aria-labelledby={tabContentId}
+              tabIndex={0}
             >
-              <i className="fa-solid fa-chevron-down fa-fw" />
-              {t("group.discussions.showAllComment", "Show all {NUM} comments", {
-                NUM: allDiscussions().length,
-              })}
-            </button>
-          )}
-        </>
-      )}
+              <Content />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
