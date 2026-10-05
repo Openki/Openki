@@ -16,6 +16,9 @@ export function Discussion({ select, groupId, eventId }: Props) {
   const { t } = useTranslation();
 
   const tabs: { id: string; title: string; Content: React.FC }[] = [
+    // NOTE: To support direct links to the discussions section and to specific comments,
+    // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
+    // Otherwise the event listeners don't work as expected.
     {
       id: "discussions",
       title: "General",
@@ -34,7 +37,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      <nav>
+      <nav className="mt-2">
         <div className="nav nav-tabs" role="tablist">
           {tabs.map(({ id, title }, i) => {
             const tabId = `tab-${id}`;
@@ -59,6 +62,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
       </nav>
       <div className="tab-content">
         {tabs.map(({ id, Content }, i) => {
+          const tabId = `tab-${id}`;
           const tabContentId = `tab-${id}-content`;
           return (
             <div
@@ -66,7 +70,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
               className={cx("tab-pane", i === 0 && "show active")}
               id={tabContentId}
               role="tabpanel"
-              aria-labelledby={tabContentId}
+              aria-labelledby={tabId}
               tabIndex={0}
             >
               <Content />
