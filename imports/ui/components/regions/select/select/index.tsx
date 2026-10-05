@@ -143,10 +143,6 @@ export function Select(props: Props) {
   }
 
   useEffect(() => {
-    setShowAllRegions(search !== "");
-  }, [search]);
-
-  useEffect(() => {
     const element = dropdownToggleElementRef.current;
     if (!element) {
       return undefined;
@@ -185,6 +181,7 @@ export function Select(props: Props) {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
+      setShowAllRegions(search !== "");
     }
   }
 
