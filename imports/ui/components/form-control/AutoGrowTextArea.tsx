@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-export function AutoGrowTextArea(
+function LegacyAutoGrowTextArea(
   props: Omit<
     React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
     "style" | "onInput"
@@ -37,7 +37,31 @@ export function AutoGrowTextArea(
         element.setSelectionRange(-1, -1);
       }
     }, 0);
+    // We intentionally want to only run this effect on the initial render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <textarea ref={elementRef} {...props} style={{ overflowY: "hidden", resize: "none" }} />;
+}
+
+export function AutoGrowTextArea(
+  props: Omit<
+    React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
+    "style" | "onInput"
+  >,
+) {
+  // NOTE: Once `field-sizing: content` becomes Baseline Widely Available,
+  // then we should remove the `AutoGrowTextArea` component altogether - because all we need
+  // is just one line of CSS which can be added to any `<textarea>`
+  // Check browser support: https://caniuse.com/?search=field-sizing%3Acontent
+  if (CSS.supports("field-sizing", "content")) {
+    return (
+      <textarea
+        {...props}
+        style={{ overflowY: "hidden", resize: "none", fieldSizing: "content" }}
+      />
+    );
+  }
+
+  return <LegacyAutoGrowTextArea {...props} />;
 }
