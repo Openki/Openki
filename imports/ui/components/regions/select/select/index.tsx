@@ -26,11 +26,11 @@ export interface Props {
   onClose?: (() => void) | undefined;
 }
 
-export function Select(props: Props) {
+export function Select({ className, size, autoFocus, append, onClose, onSelect }: Props) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(props.autoFocus || false);
+  const [searchHasFocus, setSearchHasFocus] = useState(autoFocus || false);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -110,8 +110,8 @@ export function Select(props: Props) {
       }
     }
 
-    props.onSelect?.();
-    props.onClose?.();
+    onSelect?.();
+    onClose?.();
   }
 
   function allGroups() {
@@ -157,7 +157,7 @@ export function Select(props: Props) {
 
     function handleHide(event: Event) {
       if (!searchHasFocus) {
-        props.onClose?.();
+        onClose?.();
         return true;
       }
 
@@ -169,7 +169,7 @@ export function Select(props: Props) {
     return () => {
       element.removeEventListener("hide.bs.dropdown", handleHide);
     };
-  }, [searchHasFocus]);
+  }, [searchHasFocus, onClose]);
 
   function handleItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
@@ -215,12 +215,12 @@ export function Select(props: Props) {
   }
 
   return (
-    <li className={cx("region-select", props.className)}>
+    <li className={cx("region-select", className)}>
       <form className="d-flex region-search-form" onSubmit={handleSubmit}>
         <div
           className={cx(
             "input-group input-group-outline",
-            props.size === "small" && "input-group-sm p-2",
+            size === "small" && "input-group-sm p-2",
           )}
         >
           <span className="input-group-text">
@@ -359,7 +359,7 @@ export function Select(props: Props) {
               </>
             )}
           </ul>
-          {props.append}
+          {append}
         </div>
       </form>
     </li>
