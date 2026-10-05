@@ -79,15 +79,15 @@ export function Select(props: Props) {
     // filter active option
     if (typeof options.active === "boolean") {
       if (options.active === true) {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
+        regionsArray = regionsArray.filter((e) => e.futureEventCount > 0);
       } else {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount === 0)];
+        regionsArray = regionsArray.filter((e) => e.futureEventCount === 0);
       }
     }
 
     // filter limit option
     if (options.limit) {
-      regionsArray = [...regionsArray.slice(0, options.limit)];
+      regionsArray = regionsArray.slice(0, options.limit);
     }
 
     return regionsArray;
