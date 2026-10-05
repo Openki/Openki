@@ -1,10 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { useDetails } from "/imports/api/groups/publications";
+import { type GroupModel } from "/imports/api/groups/groups";
+import { type UserModel } from "/imports/api/users/users";
+
 import { GeneralGroupDiscussion } from "/imports/ui/components/groups/discussion/general-group-discussion";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
+
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
-import { cx } from "/imports/utils/cx";
 
 export interface Props {
   select: string | undefined;
@@ -13,7 +19,41 @@ export interface Props {
 }
 
 export function Discussion({ select, groupId, eventId }: Props) {
+  const [isLoading, group] = useDetails(groupId);
+  const user = useUser();
   const { t } = useTranslation();
+
+  if (isLoading() || !group) {
+    return null;
+  }
+
+  return (
+    <div className="page-component discussion mt-4">
+      <div className="page-component-header">
+        <h4>{t("group.title.Discussion", "Discussion")}</h4>
+      </div>
+
+      {group && group.editableBy(user) ? (
+        <DiscussionWithGroupChatTabs select={select} group={group} eventId={eventId} user={user} />
+      ) : (
+        <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />
+      )}
+    </div>
+  );
+}
+
+/**
+ * This component only exists so we only load data for the role chats for users with access.
+ */
+function DiscussionWithGroupChatTabs({
+  select,
+  group,
+  eventId,
+  user,
+}: Omit<Props, "groupId"> & { group: GroupModel; user: UserModel | null }) {
+  if (!group.editableBy(user)) {
+    throw new Error("This should only be accessible by group admins");
+  }
 
   const tabs: { id: string; title: string; Content: React.FC }[] = [
     // NOTE: To support direct links to the discussions section and to specific comments,
@@ -22,7 +62,9 @@ export function Discussion({ select, groupId, eventId }: Props) {
     {
       id: "discussions",
       title: "General",
-      Content: () => <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />,
+      Content: () => (
+        <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
+      ),
     },
     {
       id: "team",
@@ -32,11 +74,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
   ];
 
   return (
-    <div className="page-component discussion mt-4">
-      <div className="page-component-header">
-        <h4>{t("group.title.Discussion", "Discussion")}</h4>
-      </div>
-
+    <>
       <nav className="mt-2">
         <div className="nav nav-tabs" role="tablist">
           {tabs.map(({ id, title }, i) => {
@@ -78,6 +116,6 @@ export function Discussion({ select, groupId, eventId }: Props) {
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
