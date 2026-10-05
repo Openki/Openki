@@ -23,7 +23,7 @@ export interface GroupChatMessageEntity {
   roleId: string;
 
   createdAt: Date;
-  udpatedAt: Date;
+  updatedAt: Date;
 }
 
 export class GroupChatMessagesCollection extends Mongo.Collection<GroupChatMessageEntity> {
