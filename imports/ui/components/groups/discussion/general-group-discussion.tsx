@@ -98,13 +98,8 @@ export function GeneralGroupDiscussion({ select, groupId, eventId }: Props) {
     routerAutoscroll.scheduleScroll();
   });
 
-  // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div className="page-component discussion mt-4" id="discussion" ref={elementRef}>
-      <div className="page-component-header">
-        <h4>{t("group.title.Discussion", "Discussion")}</h4>
-      </div>
-
+    <div id="discussion" ref={elementRef}>
       {isLoading() ? (
         <LoadingRow />
       ) : (
