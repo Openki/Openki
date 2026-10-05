@@ -4,9 +4,10 @@ import { useMap } from "react-leaflet";
 
 import FullScreen from "leaflet.fullscreen";
 import "leaflet.fullscreen/dist/Control.FullScreen.css";
+import { type Map } from "leaflet";
 
 export function FullscreenControl() {
-  const map = useMap();
+  const map = useMap() as Map & { fullscreenControl: FullScreen & { link: HTMLDivElement } };
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -18,26 +19,26 @@ export function FullscreenControl() {
       content: '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;" />',
     });
 
-    const handleEnterFullscreen = function () {
-      (map as any).fullscreenControl.link.innerHTML =
+    function handleEnterFullscreen() {
+      map.fullscreenControl.link.innerHTML =
         '<i class="fa-solid fa-compress" style="font-size: 18px;vertical-align: middle;" />';
-    };
+    }
     map.on("enterFullscreen", handleEnterFullscreen);
 
-    const handleExitFullscreen = function () {
-      (map as any).fullscreenControl.link.innerHTML =
+    function handleExitFullscreen() {
+      map.fullscreenControl.link.innerHTML =
         '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;" />';
-    };
+    }
     map.on("exitFullscreen", handleExitFullscreen);
 
     fullscreenControl.addTo(map);
 
     return () => {
-      (map as any).fullscreenControl.link.remove();
+      map.fullscreenControl.link.remove();
       map.off("enterFullscreen", handleEnterFullscreen);
       map.off("exitFullscreen", handleExitFullscreen);
     };
-  }, [map]);
+  }, [map, t]);
 
   return null;
 }
