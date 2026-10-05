@@ -11,11 +11,28 @@ import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 export interface Props {
   select: string | undefined;
   groupId: string;
   eventId?: string | undefined;
+}
+
+function canUserAccessRoleChats({ group, user }: { group: GroupModel; user: UserModel | null }) {
+  // TODO: Remove before merge
+  if (user) {
+    const currentUserRoles = group.members.find((member) => member.user === user._id)?.roles;
+
+    console.dir({
+      group,
+      groupRoles: group.roles,
+      currentUserRoles,
+    });
+  }
+
+  // TODO: Extend with other group roles that have the role chat enabled
+  return group && group.userHasRole(user?._id, SystemRoles.Team);
 }
 
 export function Discussion({ select, groupId, eventId }: Props) {
@@ -27,14 +44,16 @@ export function Discussion({ select, groupId, eventId }: Props) {
     return null;
   }
 
+  const userCanAccessRoleChats = canUserAccessRoleChats({ group, user });
+
   return (
     <div className="page-component discussion mt-4">
       <div className="page-component-header">
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      {group && group.editableBy(user) ? (
-        <DiscussionWithGroupChatTabs select={select} group={group} eventId={eventId} user={user} />
+      {userCanAccessRoleChats ? (
+        <DiscussionWithGroupChatTabs select={select} group={group} eventId={eventId} />
       ) : (
         <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />
       )}
@@ -49,12 +68,7 @@ function DiscussionWithGroupChatTabs({
   select,
   group,
   eventId,
-  user,
-}: Omit<Props, "groupId"> & { group: GroupModel; user: UserModel | null }) {
-  if (!group.editableBy(user)) {
-    throw new Error("This should only be accessible by group admins");
-  }
-
+}: Omit<Props, "groupId"> & { group: GroupModel }) {
   const tabs: { id: string; title: string; Content: React.FC }[] = [
     // NOTE: To support direct links to the discussions section and to specific comments,
     // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
