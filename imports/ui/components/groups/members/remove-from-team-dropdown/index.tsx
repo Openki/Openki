@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { Tooltip } from "/imports/startup/client/bootstrap";
 
 import { GroupMember } from "/imports/api/groups/groups";
 
@@ -14,6 +15,7 @@ export interface Props {
 export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();
   const user = useUser();
+  const tooltipRef = useRef<HTMLElement | null>(null);
 
   function isNotPrivilegedSelf() {
     const notPrivilegedUser = !user?.hasPrivilege("admin");
@@ -21,7 +23,11 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   }
 
   return (
-    <span className="dropdown" data-bs-title={t("group.roles.removeTeam", "Remove from team")}>
+    <span
+      className="dropdown"
+      data-bs-title={t("group.roles.removeTeam", "Remove from team")}
+      ref={tooltipRef}
+    >
       <button
         type="button"
         className="btn btn-sm btn-close"
@@ -52,6 +58,14 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
             type="button"
             className="btn btn-danger"
             onClick={() => {
+              // Close any potentially open tooltip before letting React unmount this component.
+              // This prevents a crash and lets the event handler finish as expected.
+              // NOTE: When migrating away from Bootstrap, we should use a tooltip solution
+              // that aligns better with the React Virtual DOM and rendering.
+              if (tooltipRef.current) {
+                const tooltip = Tooltip.getOrCreateInstance(tooltipRef.current);
+                tooltip.dispose();
+              }
               onClick();
             }}
           >
