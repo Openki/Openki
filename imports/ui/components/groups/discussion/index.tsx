@@ -97,7 +97,7 @@ function DiscussionWithGroupChatTabs({
             return (
               <button
                 key={id}
-                className={cx("nav-link", i === 0 && "active")}
+                className={cx("nav-link border-bottom-0", i === 0 && "active")}
                 id={tabId}
                 data-bs-toggle="tab"
                 data-bs-target={`#${tabContentId}`}
@@ -112,7 +112,7 @@ function DiscussionWithGroupChatTabs({
           })}
         </div>
       </nav>
-      <div className="tab-content">
+      <div className="tab-content border-0">
         {tabs.map(({ id, Content }, i) => {
           const tabId = `tab-${id}`;
           const tabContentId = `tab-${id}-content`;
