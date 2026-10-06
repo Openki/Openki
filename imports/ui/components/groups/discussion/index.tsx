@@ -12,6 +12,7 @@ import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { GroupRoleChat } from "./group-role-chat";
 
 export interface Props {
   select: string | undefined;
@@ -21,15 +22,14 @@ export interface Props {
 
 function canUserAccessRoleChats({ group, user }: { group: GroupModel; user: UserModel | null }) {
   // TODO: Remove before merge
-  if (user) {
-    const currentUserRoles = group.members.find((member) => member.user === user._id)?.roles;
-
-    console.dir({
-      group,
-      groupRoles: group.roles,
-      currentUserRoles,
-    });
-  }
+  // if (user) {
+  //   const currentUserRoles = group.members.find((member) => member.user === user._id)?.roles;
+  //   console.dir({
+  //     group,
+  //     groupRoles: group.roles,
+  //     currentUserRoles,
+  //   });
+  // }
 
   // TODO: Extend with other group roles that have the role chat enabled
   return group && group.userHasRole(user?._id, SystemRoles.Team);
@@ -83,7 +83,7 @@ function DiscussionWithGroupChatTabs({
     {
       id: "team",
       title: "Team",
-      Content: () => <div>Team chat</div>,
+      Content: () => <GroupRoleChat group={group} roleId="team" />,
     },
   ];
 
