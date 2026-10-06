@@ -11,6 +11,10 @@ import { Button, ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
+function handleContactAllMembersClick() {
+  document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
+}
+
 export function Members({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -59,10 +63,6 @@ export function Members({ group }: { group: GroupModel }) {
     return (group?.members.length || 0) > membersDisplayLimit;
   }
 
-  function handleContactMembersClick() {
-    document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
-  }
-
   function handleShowMoreMembersClick() {
     setMembersDisplayLimit(membersDisplayLimit + increaseBy);
   }
@@ -80,7 +80,7 @@ export function Members({ group }: { group: GroupModel }) {
             <ButtonIcon
               id="group-members-notify-all"
               className="btn-lg btn-primary"
-              onClick={handleContactMembersClick}
+              onClick={handleContactAllMembersClick}
               label={t("group.details.members.contact-members", "Contact all members")}
               icon="fa-solid fa-paper-plane"
             />
