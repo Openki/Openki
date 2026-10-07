@@ -90,7 +90,7 @@ Accounts.emailTemplates.verifyEmail = {
     );
   },
   // We're intentionally extending the default verifyEmail templates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line no-explicit-any
 } as any;
 
 Accounts.urls.resetPassword = function (token) {
@@ -172,5 +172,5 @@ Accounts.emailTemplates.resetPassword = {
     );
   },
   // We're intentionally extending the default resetPassword templates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line no-explicit-any
 } as any;

@@ -47,7 +47,7 @@ function Registration({ event }: { event: EventModel }) {
     return event.maxParticipants - occupied;
   }
 
-  // eslint-disable-next-line react-hooks/purity
+  // oxlint-disable-next-line react-hooks/purity
   const isFuture = Date.now() < event.end.getTime();
 
   async function addParticipant(companions = 0) {
@@ -167,7 +167,7 @@ export function RegistrationParticipants({ event }: Props) {
     ids: event.allTeamOrganizations(),
   });
 
-  // eslint-disable-next-line react-hooks/purity
+  // oxlint-disable-next-line react-hooks/purity
   const isFuture = Date.now() < event.end.getTime();
 
   if (organizationsIsLoading()) {

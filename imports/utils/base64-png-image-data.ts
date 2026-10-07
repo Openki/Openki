@@ -1,7 +1,7 @@
 import { Base64 } from "meteor/base64";
 import { EJSON } from "meteor/ejson";
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
+// oxlint-disable-next-line no-namespace
 declare namespace Assets {
   function getBinaryAsync(assetPath: string): Promise<EJSON | undefined>;
 

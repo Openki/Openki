@@ -15,7 +15,7 @@ export class FilteringReadError extends Error {
  * A helper type to get the generic parameter.
  */
 type GetPredicateT1<C extends Predicate<any>> =
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line no-unused-vars
   C extends Predicate<infer T1, infer _T2> ? T1 : unknown;
 
 export class Filtering<T extends Record<string, Predicate<any>>> {
@@ -48,7 +48,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       this._predicates[name] = toSet as any;
 
       if (!this._predicates[name]) {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        // oxlint-disable-next-line no-dynamic-delete
         delete this._predicates[name];
       }
 
@@ -123,7 +123,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       }
 
       if (!this._predicates[name]) {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        // oxlint-disable-next-line no-dynamic-delete
         delete this._predicates[name];
       }
       this._dep.changed();
@@ -167,7 +167,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   }
 
   disable(name: keyof T) {
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+    // oxlint-disable-next-line no-dynamic-delete
     delete this._predicates[name];
     this._dep.changed();
     return this;

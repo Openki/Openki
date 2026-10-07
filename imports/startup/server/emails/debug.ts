@@ -24,7 +24,7 @@ if (Meteor.isDevelopment) {
     fs.writeFile(
       normalize(`${debugEmailDir}/${new Date().toISOString()} ${email.subject}.html`),
       emailContent,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      // oxlint-disable-next-line no-empty-function
       () => {},
     );
 

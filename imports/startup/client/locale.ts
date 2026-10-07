@@ -105,7 +105,7 @@ Meteor.startup(() => {
     // I do not understand why setting language: moment.locale() does not
     // work for the datepicker. But we want to use the momentjs settings
     // anyway, so we might as well clobber the 'en' locale.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line no-explicit-any
     const locale = moment().localeData() as any;
 
     const monthsShort = function () {
@@ -115,7 +115,7 @@ Meteor.startup(() => {
       return locale._monthsShort;
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line no-explicit-any
     ($.fn.datepicker as any).dates.en = assignIn({}, ($.fn.datepicker as any).dates.en, {
       days: locale._weekdays,
       daysShort: locale._weekdaysShort,

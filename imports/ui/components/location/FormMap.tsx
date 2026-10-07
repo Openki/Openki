@@ -67,7 +67,7 @@ export function FormMap({
         center={center}
         coordinates={
           // One of "center" or "coordinates" are set, so we can ignore the error from typescript
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // oxlint-disable-next-line no-explicit-any
           value as any
         }
         level={level}

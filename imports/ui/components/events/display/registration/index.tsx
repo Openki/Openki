@@ -72,7 +72,7 @@ export function EventRegistration({ event }: Props) {
     }
   }
 
-  // eslint-disable-next-line react-hooks/purity
+  // oxlint-disable-next-line react-hooks/purity
   const isFuture = Date.now() < event.end.getTime();
 
   useEffect(() => {

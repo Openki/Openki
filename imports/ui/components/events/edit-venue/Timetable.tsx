@@ -196,7 +196,7 @@ export function Timetable({
 
     const startPos = pos;
     const endPos = pos + hours.length;
-    // eslint-disable-next-line react-hooks/immutability
+    // oxlint-disable-next-line react-hooks/immutability
     pos = endPos;
 
     return {

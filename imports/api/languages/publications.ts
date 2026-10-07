@@ -56,7 +56,7 @@ async function loadWeblateStats() {
       ) {
         return cachedStats.response;
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // oxlint-disable-next-line no-unused-vars
     } catch (error: unknown) {
       // Unable to use the cached Weblate stats file, for whatever reason.
     }
@@ -130,7 +130,6 @@ export type FindFilter = Type<typeof FindFilterPattern>;
 // See: https://guide.meteor.com/data-loading.html#custom-publication
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Languages",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function (_filter: FindFilter) {
     Object.entries(languages).forEach(([code, value]) => {
       this.added("Languages", code, value);

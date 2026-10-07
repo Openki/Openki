@@ -158,9 +158,8 @@ Cypress.Commands.add("mount", (component: string, props: Record<string, any> = {
 // add types
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
+  // oxlint-disable-next-line no-namespace
   namespace Cypress {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject = any, T = any> {
       getById(
         selector: string,

@@ -15,7 +15,7 @@ import { Filtering } from "/imports/utils/filtering";
 import { StateWrapper, Predicate } from "/imports/utils/predicates";
 import { FieldSort } from "/imports/utils/sort-spec";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// oxlint-disable-next-line no-unused-vars
 type ExtractQuery<P> = P extends StateWrapper<infer _G, infer Q> ? Q : never;
 
 type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };

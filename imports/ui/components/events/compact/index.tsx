@@ -54,7 +54,7 @@ export function EventCompact({
       className={cx(
         "event-compact",
         withDate && "has-date",
-        // eslint-disable-next-line react-hooks/purity
+        // oxlint-disable-next-line react-hooks/purity
         (Date.now() > event.end.getTime() || event.isFullyBooked() || event.canceled) && "is-past",
       )}
     >

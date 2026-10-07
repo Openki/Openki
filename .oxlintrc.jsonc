@@ -195,9 +195,9 @@
         "prefer-spread": "error",
       },
     },
-    // Specific override for test files
+    // Specific overrides for test files
     {
-      "files": ["**/*.test.ts", "**/*.app-test.ts"],
+      "files": ["**/*.test.ts", "**/*.app-test.ts", "**/*.spec.ts"],
       "rules": {
         "no-unused-expressions": "off",
       },
