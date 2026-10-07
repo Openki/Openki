@@ -15,11 +15,8 @@
     // "allowUnusedLabels": false, // Do not report errors on unused labels. (Default: False)
     "noFallthroughCasesInSwitch": true, // Report errors for fall through cases in switch statement.
     "noImplicitReturns": true, // Report error when not all code paths in function return a value.
-    "noStrictGenericChecks": false, // Disable strict checking of generic signatures in function types.
     "noUnusedParameters": true, // Report errors on unused parameters.
     "noUnusedLocals": true, // Report errors on unused locals.
-    "suppressExcessPropertyErrors": false, // Suppress excess property checks for object literals.
-    "suppressImplicitAnyIndexErrors": false, // Suppress --noImplicitAny errors for indexing objects lacking index signatures.
     "noImplicitAny": true, // Raise error on expressions and declarations with an implied "any" type.
     "noImplicitThis": true, // Raise error on this expressions with an implied "any" type.
     "strictPropertyInitialization": true, // Ensure non-undefined class properties are initialized in the constructor.
