@@ -1,5 +1,4 @@
 cypress.config.ts
-eslint.config.mjs
 scripts/
 i18next-parser.config.js
 
@@ -11,6 +10,7 @@ Dockerfile
 .editorconfig
 justfile
 .oxfmtrc.jsonc
+.oxlintrc.jsonc
 
 LICENSE
 LICENSES/
