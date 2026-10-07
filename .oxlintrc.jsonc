@@ -8,6 +8,7 @@
   },
   "categories": {
     "correctness": "off",
+    "perf": "warn",
   },
   "env": {
     "builtin": true,
@@ -200,6 +201,15 @@
       "files": ["**/*.test.ts", "**/*.app-test.ts", "**/*.spec.ts"],
       "rules": {
         "no-unused-expressions": "off",
+      },
+    },
+    {
+      "files": [
+        // Allow await in loops in DB updates.
+        "./imports/startup/server/updates/*.ts",
+      ],
+      "rules": {
+        "no-await-in-loop": "off",
       },
     },
   ],
