@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { Accounts } from "meteor/accounts-base";
 import moment from "moment";
 import { VersionEntity } from "/imports/api/version/version";
+import { useReactiveNow } from "../utils/reactive-now";
 
 export function Alert({
   version,
@@ -11,6 +12,7 @@ export function Alert({
   children?: ReactNode | undefined;
 }) {
   const { siteName } = Accounts.emailTemplates;
+  const now = useReactiveNow()
 
   moment.locale("en");
   let versionElement;
@@ -45,7 +47,7 @@ export function Alert({
               <td>
                 {versionElement}
                 <br />
-                Now it&apos;s {new Date().toString()}.
+                Now it&apos;s {now.toString()}.
               </td>
             </tr>
           </table>

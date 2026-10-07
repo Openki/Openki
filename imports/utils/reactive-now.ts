@@ -21,7 +21,7 @@ export function useReactiveNow() {
   return useTracker(() => reactiveNow.get());
 }
 
-// Check for update all 5 seconds
+// Check for update every 5 seconds
 Meteor.setInterval(() => {
   const now = getNowWithoutSeconds();
   const old = reactiveNow.get();

@@ -44,6 +44,7 @@ import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
+import { useReactiveNow } from "/imports/utils/reactive-now";
 import { useFindParallelEvents } from "./useFindParallelEvents";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 
@@ -192,6 +193,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     _id: event._id,
     ...changes,
   });
+
+  const now = useReactiveNow()
 
   const allParallelEvents = [
     ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
@@ -559,7 +562,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               );
             }}
             /* Disabled for past */
-            disabled={!!event.start && event.start < new Date()}
+            disabled={!!event.start && event.start < now}
             errors={errors}
           />
         </div>

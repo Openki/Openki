@@ -4,6 +4,7 @@ import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { UserModel } from "/imports/api/users/users";
 import { VersionEntity } from "/imports/api/version/version";
+import { useReactiveNow } from "../utils/reactive-now";
 
 export function Report({
   user,
@@ -26,6 +27,8 @@ export function Report({
   if (user) {
     reporter = <a href={Router.url("userprofile", user)}>{user.getDisplayName()}</a>;
   }
+
+  const now = useReactiveNow()
 
   moment.locale("en");
   let versionElement;
@@ -71,7 +74,7 @@ export function Report({
               <td>
                 {versionElement}
                 <br />
-                Now it&apos;s {new Date().toString()}.<br />
+                Now it&apos;s {now.toString()}.<br />
                 User Agent: <code>{userAgent}</code>
               </td>
             </tr>

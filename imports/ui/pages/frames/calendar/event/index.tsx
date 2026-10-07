@@ -5,6 +5,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
 import { cx } from "/imports/utils/cx";
@@ -20,6 +21,8 @@ export function Event({ event, hideRsvp }: Props) {
   const { timeFormat, fromNow } = useDateTimeFormat();
   const allRegions = useSessionEquals("region", "all");
   const siteName = useSiteName();
+
+  const now = useReactiveNow();
 
   function regionName() {
     return Regions.findOne(event.region)?.name;
@@ -37,7 +40,7 @@ export function Event({ event, hideRsvp }: Props) {
   return (
     <div className={cx("frame-list-item-event", event.canceled && "frame-list-item-canceled")}>
       <div className="position-relative">
-        {new Date() > event.start && (
+        {now > event.start && (
           <div className="text-primary">
             <i className="fa-solid fa-circle-play fa-fw" />{" "}
             {t("frame.eventsList.started", "Started {FROMNOW}", { FROMNOW: fromNow(event.start) })}

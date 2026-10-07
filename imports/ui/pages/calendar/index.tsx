@@ -5,6 +5,7 @@ import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import { Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
@@ -21,8 +22,10 @@ export function CalendarPage(props: Record<string, string>) {
   const region = useCurrentRegion();
 
   const filter = Events.Filtering();
+  const now = useReactiveNow();
   // Read URL state
-  const date = region?.calendarStartDate || new Date();
+  // oxlint-disable-next-line react/purity TODO: Find a better solution for this
+  const date = region?.calendarStartDate || now;
   filter.set("start", moment(date).startOf("week")).read(props);
   // Show internal events only when a organization or venue is specified
   if (!props.organization && !props.venue && props.internal === undefined) {
