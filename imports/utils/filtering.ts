@@ -15,7 +15,6 @@ export class FilteringReadError extends Error {
  * A helper type to get the generic parameter.
  */
 type GetPredicateT1<C extends Predicate<any>> =
-  // oxlint-disable-next-line no-unused-vars
   C extends Predicate<infer T1, infer _T2> ? T1 : unknown;
 
 export class Filtering<T extends Record<string, Predicate<any>>> {

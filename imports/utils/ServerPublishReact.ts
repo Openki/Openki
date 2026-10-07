@@ -17,7 +17,6 @@ type DeepPartial<T> = T extends object
 /**
  * Subscribe to the record set.
  */
-// oxlint-disable-next-line no-unused-vars
 declare function publication<A extends any[], T>(...args: A): [isLoading: () => boolean, data: T];
 /**
  * Subsribe to the record set, when the condition is true.

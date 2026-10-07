@@ -24,7 +24,6 @@ export function CalendarPage(props: Record<string, string>) {
   const filter = Events.Filtering();
   const now = useReactiveNow();
   // Read URL state
-  // oxlint-disable-next-line react/purity TODO: Find a better solution for this
   const date = region?.calendarStartDate || now;
   filter.set("start", moment(date).startOf("week")).read(props);
   // Show internal events only when a organization or venue is specified
