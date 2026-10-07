@@ -70,7 +70,7 @@ export interface ApiEvent {
   }[];
 }
 
-async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
+function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
   formatter: (model: U) => Promise<R>,
   additionalFilters = {},
@@ -99,19 +99,19 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 }
 
 export const Api = {
-  organizations: await apiResponse(Organizations, async (originalOrganization) => {
+  organizations: apiResponse(Organizations, async (originalOrganization) => {
     const organization = { ...originalOrganization } as typeof originalOrganization & {
       link: string;
     };
     organization.link = Router.url("organizationDetails", organization);
     return organization;
   }),
-  venues: await apiResponse(Venues, async (originalVenue) => {
+  venues: apiResponse(Venues, async (originalVenue) => {
     const venue = { ...originalVenue } as typeof originalVenue & { link: string };
     venue.link = Router.url("venueDetails", venue);
     return venue;
   }),
-  events: await apiResponse(
+  events: apiResponse(
     Events,
     async (ev) => {
       const evr = {
@@ -200,7 +200,7 @@ export const Api = {
     },
     { tenants: await visibleTenantsAsync() },
   ),
-  groups: await apiResponse(
+  groups: apiResponse(
     Groups,
     async (originalGroup) => {
       const group = {
