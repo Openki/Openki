@@ -216,7 +216,7 @@ export function Edit({
 
   useEffect(() => {
     checkValidity("description");
-  }, [description]);
+  }, [description, checkValidity]);
 
   function showRegionSelection() {
     return (

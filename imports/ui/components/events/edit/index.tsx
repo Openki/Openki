@@ -7,7 +7,7 @@
 import { intersection, isEmpty } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/hooks/useValidation";
@@ -74,7 +74,7 @@ function EditGroupCustomFields({
       }
       onChange(group.customFields);
     }
-  }, [group]);
+  }, [group, onChange, groupId]);
 
   if (isLoadingGroup() || isLoadingOrganizations()) {
     return null;
@@ -196,7 +196,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const now = useReactiveNow()
 
-  const allParallelEvents = [
+  const allParallelEvents = useMemo(() => [
     ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
     ...externalParallelEvents.map((e) => ({
       _id: e.id,
@@ -206,7 +206,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       endLocal: e.end,
       url: e.url,
     })),
-  ];
+  ], [parallelEvents, externalParallelEvents]);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -330,13 +330,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     if (changes.descriptionNumberOfCharacters > 0) {
       checkValidity("description");
     }
-  }, [changes.description]);
+  }, [changes.description, checkValidity, changes]);
 
   useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     // only run when values that get checked are changed
-  }, [venue, allParallelEvents]);
+  }, [venue, allParallelEvents, checkValidity]);
 
   function showRegionSelection() {
     return (
