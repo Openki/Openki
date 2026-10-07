@@ -10,8 +10,7 @@ Dockerfile
 .codeclimate.yml
 .editorconfig
 justfile
-.prettierignore
-.prettierrc
+.oxfmtrc.jsonc
 
 LICENSE
 LICENSES/

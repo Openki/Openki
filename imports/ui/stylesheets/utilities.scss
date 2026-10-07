@@ -78,13 +78,14 @@ $utilities: map.merge(
     "z-index": (
       property: z-index,
       class: z,
-      values: map.merge(
+      values:
+        map.merge(
           // Extend with existing Bootstrap values
           map.get(map.get($utilities, "z-index"), "values"),
           (
             // Use a z-index that is higher than all values defined by
             // https://getbootstrap.com/docs/5.3/layout/z-index/
-            1200: 1200
+            1200: 1200,
           )
         ),
     ),

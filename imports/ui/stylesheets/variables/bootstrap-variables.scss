@@ -144,7 +144,8 @@ $theme-colors-border-subtle: map.merge(
 $utilities: map.merge(
   $utilities,
   (
-    "max-width": map.merge(
+    "max-width":
+      map.merge(
         map.get($utilities, "max-width"),
         (
           values: map.merge(map.get(map.get($utilities, "max-width"), "values"), $grid-breakpoints),

@@ -38,7 +38,7 @@ translations:
 
 # Run linting and type checking
 check:
-    meteor npm run type-check
+    meteor npm run lint && meteor npm run type-check
 
 # Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
