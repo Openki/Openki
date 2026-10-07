@@ -194,19 +194,22 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     ...changes,
   });
 
-  const now = useReactiveNow()
+  const now = useReactiveNow();
 
-  const allParallelEvents = useMemo(() => [
-    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
-    ...externalParallelEvents.map((e) => ({
-      _id: e.id,
-      title: e.summary,
-      room: e.location,
-      startLocal: e.start,
-      endLocal: e.end,
-      url: e.url,
-    })),
-  ], [parallelEvents, externalParallelEvents]);
+  const allParallelEvents = useMemo(
+    () => [
+      ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+      ...externalParallelEvents.map((e) => ({
+        _id: e.id,
+        title: e.summary,
+        room: e.location,
+        startLocal: e.start,
+        endLocal: e.end,
+        url: e.url,
+      })),
+    ],
+    [parallelEvents, externalParallelEvents],
+  );
 
   const [errors, checkValidity, addError] = useValidation(
     {

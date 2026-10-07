@@ -28,7 +28,7 @@ export function Report({
     reporter = <a href={Router.url("userprofile", user)}>{user.getDisplayName()}</a>;
   }
 
-  const now = useReactiveNow()
+  const now = useReactiveNow();
 
   moment.locale("en");
   let versionElement;

@@ -91,7 +91,11 @@ function CustomMenu({
             >
               <i className="fa-solid fa-house-user fa-fw" />{" "}
               {ReactJoin([
-                !!venue.name && <span className="fw-bold" key={venue.name}>{venue.name}</span>,
+                !!venue.name && (
+                  <span className="fw-bold" key={venue.name}>
+                    {venue.name}
+                  </span>
+                ),
                 venue.address,
               ])}
             </MenuItem>

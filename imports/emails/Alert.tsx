@@ -12,7 +12,7 @@ export function Alert({
   children?: ReactNode | undefined;
 }) {
   const { siteName } = Accounts.emailTemplates;
-  const now = useReactiveNow()
+  const now = useReactiveNow();
 
   moment.locale("en");
   let versionElement;

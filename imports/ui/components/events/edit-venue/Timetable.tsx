@@ -20,7 +20,7 @@ function ScrollIntoView({ children }: { children: React.ReactNode }) {
       behavior: "instant",
       container: "nearest",
     } as any);
-  }, [elementRef?.current]);
+  }, []);
 
   return <div ref={elementRef}>{children}</div>;
 }
