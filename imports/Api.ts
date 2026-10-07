@@ -81,12 +81,7 @@ function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
       .findFilter({ ...query, ...additionalFilters }, limit, skip, sort)
       .fetchAsync();
 
-    const formattedModels: R[] = [];
-    for (const model of models) {
-      const formattedModel = await formatter(model);
-      formattedModels.push(formattedModel);
-    }
-
+    const formattedModels = await Promise.all(models.map(formatter));
     return formattedModels;
   };
 }
