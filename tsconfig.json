@@ -3,7 +3,7 @@
     /* Basic Options */
     "target": "ES2020",
     "module": "ESNext",
-    "lib": ["esnext", "dom"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "incremental": true,
     "noEmit": true,
