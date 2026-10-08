@@ -34,7 +34,14 @@ docker-dev:
 
 # Fully rebuild the docker containers
 docker-dev-rebuild:
-    docker compose --verbose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps --build --no-cache --remove-orphans
+    docker compose \
+      --verbose -f docker-compose.dev.yml \
+      --env-file .env.dev up \
+      --force-recreate \
+      --always-recreate-deps \
+      --build \
+      --no-cache \
+      --remove-orphans
 
 # Fix linting and formatting errors and warn for serious problems.
 fix:
