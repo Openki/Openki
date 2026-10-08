@@ -64,7 +64,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.debian
+      dockerfile: Dockerfile.local
     restart: unless-stopped
     depends_on:
       - mongo
