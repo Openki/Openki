@@ -79,12 +79,15 @@ services:
       METEOR_VERSION: 3.5.2
       METEOR_NO_RELEASE_CHECK: true # This removes the need for sudo access when running meteor
       DO_NOT_TRACK: 1 # Disable Meteor telemetry
+    command: /start.local.sh
     volumes:
       - type: bind
         source: .
         target: /app
-      - app-node-modules:/app/node_modules:Z
-      - app-meteor:/app/.meteor:Z
+      # TODO: the `app-*` volumes should potentially be removed so we can install
+      # node_modules and run the meteor build fully inside of the container
+      # - app-node-modules:/app/node_modules:Z
+      # - app-meteor:/app/.meteor:Z
     networks:
       - app-network
 

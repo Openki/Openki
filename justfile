@@ -28,15 +28,22 @@ install *ARGS:
 dev:
     meteor npm run debug
 
+# Main docker compose wrapper with common config
+compose *ARGS:
+    docker compose -f docker-compose.dev.yml --env-file .env.dev {{ ARGS }}
+
 # Start the containerized local development environment
 docker-dev:
-    docker compose -f docker-compose.dev.yml --env-file .env.dev up --build
+    jsut compose up --build
+
+# Enter into the app container to run commands
+[no-exit-message]
+run-app:
+    just compose run app bash
 
 # Fully rebuild the docker containers
 docker-dev-rebuild:
-    docker compose \
-      --verbose -f docker-compose.dev.yml \
-      --env-file .env.dev up \
+    just compose \
       --force-recreate \
       --always-recreate-deps \
       --build \
