@@ -11,7 +11,7 @@ import { OrganizationEntity } from "/imports/api/organizations/organizations";
 import * as OrganizationsMethods from "/imports/api/organizations/methods";
 import * as Organizations from "/imports/api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
-import { type UserPrivilege, UserModel } from "/imports/api/users/users";
+import { UserModel } from "/imports/api/users/users";
 import * as Regions from "/imports/api/regions/publications";
 
 import { checkContribution } from "/imports/utils/checkContribution";
@@ -40,11 +40,10 @@ export function UserprofilePage({ user }: Props) {
   const [isLoading, groupsCreatedBy] = Groups.useFindFilter({ createdby: user?._id || "-1" });
   const [isLoadingRegions, regions] = Regions.useFindFilter();
 
-  // What privileges the user has
-  const privileges: Record<Extract<UserPrivilege, "admin">, boolean> = {
-    admin: user.hasPrivilege("admin"),
-  };
+  /** Privileges for the user with this profile */
+  const isProfileUserAdmin = user.hasPrivilege("admin");
 
+  /** Privileges for the current signed in user */
   const canModifyPrivileges = currentUser?.hasPrivilege("admin") || false;
   const showPrivileges = canModifyPrivileges || !!user.privileges?.length;
 
@@ -299,7 +298,7 @@ export function UserprofilePage({ user }: Props) {
                     {t("privileges.title", "Edit Privileges")}
                   </h3>
                   <div className="list-group">
-                    {privileges.admin ? (
+                    {isProfileUserAdmin ? (
                       <li className="list-group-item list-group-item-success">
                         {canModifyPrivileges && (
                           <button
