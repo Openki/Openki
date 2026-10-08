@@ -101,7 +101,7 @@
   "scripts": {
     "dev:startup": "npm run extract-translations && npm run type-check",
     "debug": "npm run dev:startup && npm run debug:dev",
-    "debug:dev": "meteor --inspect --settings settings/dev.json",
+    "debug:dev": "meteor --no-release-check --inspect --settings settings/dev.json",
     "debug:ssl": "npm run dev:startup && OPENKI_LOCALHOST_SSL=1 meteor --extra-packages storyteller:ssl --inspect --settings settings/dev.json",
     "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
