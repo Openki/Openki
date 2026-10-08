@@ -182,5 +182,6 @@ declare global {
   }
 }
 
-// handle as module
+// Mark this as an ES module
+// oxlint-disable-next-line unicorn/require-module-specifiers
 export {};

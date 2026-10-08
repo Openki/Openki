@@ -932,7 +932,7 @@ RouterAsync.route("timetable", {
     // Transform the "rows" objects to arrays and sort the room rows by
     // the room name, so "null" (meaning no room) comes first.
     const grouped = Object.values(perVenue).map((venueData) => {
-      const perRoom = Object.values(venueData.perRoom).sort();
+      const perRoom = Object.values(venueData.perRoom).toSorted();
       return {
         control,
         day,

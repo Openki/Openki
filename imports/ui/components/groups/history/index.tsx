@@ -454,7 +454,7 @@ const getGroupHistoryEntries = (group: GroupModel, user: UserModel | null) => {
 
   // Merge events and sort so recent events appear at the top of the history
   const sortedHistory = [...pastEvents, ...remainingHistoryEntries, groupCreated]
-    .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
+    .toSorted((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
     .slice(0, 200) // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
     // Map to the right renderer
     .map((entry) => ({

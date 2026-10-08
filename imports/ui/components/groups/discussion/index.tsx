@@ -32,7 +32,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
   function allDiscussions() {
     return posts
       .filter((p) => !p.parentId)
-      .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
+      .toSorted((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
   }
 
   function discussions() {
@@ -48,7 +48,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
   function responses(discussionId: string) {
     return posts
       .filter((p) => p.parentId === discussionId)
-      .sort((a, b) => a.time_created.valueOf() - b.time_created.valueOf());
+      .toSorted((a, b) => a.time_created.valueOf() - b.time_created.valueOf());
   }
   function newPostAttr() {
     return {

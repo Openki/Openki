@@ -204,7 +204,7 @@ export function Edit(props: Props) {
 
       Analytics.trackEvent(
         "Group creations",
-        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
+        `Group creations as ${changes.subs.length > 0 ? changes.subs.toSorted().join(" and ") : SystemRoles.Participant.id}`,
         Regions.findOne(changes.region)?.nameEn,
         totalFocusTime(),
       );

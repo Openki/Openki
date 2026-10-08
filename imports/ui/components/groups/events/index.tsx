@@ -52,19 +52,19 @@ export function Events({ group }: Props) {
   const [isLoading, events] = EventsPub.useForGroup(group._id);
 
   function hasEvents() {
-    return events.sort(compareByStartDate).some((e) => e.end >= now);
+    return events.toSorted(compareByStartDate).some((e) => e.end >= now);
   }
 
   function hasMoreEvents() {
-    return events.sort(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
+    return events.toSorted(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
   }
 
   function ongoingEvents() {
-    return events.sort(compareByStartDate).filter((e) => e.start <= now && e.end >= now);
+    return events.toSorted(compareByStartDate).filter((e) => e.start <= now && e.end >= now);
   }
 
   function futureEvents() {
-    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
+    const upcomingEvents = events.toSorted(compareByStartDate).filter((e) => e.start > now);
 
     if (showAllEvents) {
       return upcomingEvents;
@@ -93,7 +93,7 @@ export function Events({ group }: Props) {
     };
   }
   function deleteEventsModalArgs() {
-    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
+    const upcomingEvents = events.toSorted(compareByStartDate).filter((e) => e.start > now);
     return {
       upcomingEvents,
       onHideEventsDeleteModal() {

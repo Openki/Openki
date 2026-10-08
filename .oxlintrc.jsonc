@@ -1,15 +1,15 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "react"],
-  "jsPlugins": ["@e18e/eslint-plugin"],
+  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn"],
   "settings": {
     "react": {
       "version": "19.3.0",
     },
   },
   "categories": {
-    "correctness": "off",
-    "perf": "warn",
+    "correctness": "warn",
+    "suspicious": "warn",
+    // "perf": "warn",
   },
   "env": {
     "builtin": true,
@@ -205,12 +205,13 @@
       },
     },
     {
-      "files": [
-        // Allow await in loops in DB updates.
-        "./imports/startup/server/updates/*.ts",
-      ],
+      // Specific overrides for DB updates
+      "files": ["./imports/startup/server/updates/*.ts"],
       "rules": {
+        // DB updates need to be applied in a specific order, which sometimes means await in loops
         "no-await-in-loop": "off",
+        // Allow the legacy DB updates to be empty files
+        "unicorn/no-empty-file": "off",
       },
     },
   ],
