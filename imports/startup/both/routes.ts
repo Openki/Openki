@@ -783,7 +783,7 @@ RouterAsync.route("timetable", {
     Session.set("kioskFilter", filter.toParams());
 
     return {
-      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }, 200),
+      events: Events.findFilter.subscribe({ canceled: false, ...query }, 200),
     };
   },
   async data() {

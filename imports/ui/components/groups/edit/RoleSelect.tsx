@@ -101,22 +101,20 @@ export function RoleSelect({
       return [];
     }
 
-    return [
-      ...regionRoles
-        .filter((role) => {
-          // Skip non-editable roles
-          if (!role.editable) {
-            return false;
-          }
+    return regionRoles
+      .filter((role) => {
+        // Skip non-editable roles
+        if (!role.editable) {
+          return false;
+        }
 
-          if (isNewGroup && disabledCreateRoles.includes(role.id)) {
-            return false;
-          }
+        if (isNewGroup && disabledCreateRoles.includes(role.id)) {
+          return false;
+        }
 
-          return true;
-        })
-        .map((r) => predefinedRole(r.id)),
-    ];
+        return true;
+      })
+      .map((r) => predefinedRole(r.id));
   }
 
   function isRoleEnabled(roleId: string) {
