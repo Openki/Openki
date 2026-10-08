@@ -15,6 +15,8 @@
 
 set default-list
 
+export COMPOSE_FILE := 'docker-compose.dev.yml'
+
 # Combined installation of both npm and Meteor Atmosphere packages.
 # Optionally include `ARGS` to install specific npm package(s):
 # Example: `just install react react-dom`
@@ -30,20 +32,23 @@ dev:
 
 # Main docker compose wrapper with common config
 compose *ARGS:
-    docker compose -f docker-compose.dev.yml --env-file .env.dev {{ ARGS }}
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev {{ ARGS }}
 
 # Start the containerized local development environment
 docker-dev:
-    jsut compose up --build
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev up --build
 
 # Enter into the app container to run commands
 [no-exit-message]
 run-app:
-    just compose run app bash
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev run app bash
 
 # Fully rebuild the docker containers
 docker-dev-rebuild:
-    just compose \
+    docker compose \
+      -f {{ COMPOSE_FILE }} \
+      --env-file .env.dev \
+      up \
       --force-recreate \
       --always-recreate-deps \
       --build \
