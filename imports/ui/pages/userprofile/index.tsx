@@ -47,8 +47,8 @@ export function UserprofilePage({ user }: Props) {
     return ps;
   }, {});
 
-  const alterPrivileges = currentUser?.hasPrivilege("admin") || false;
-  const showPrivileges = alterPrivileges || !!user.privileges?.length;
+  const canModifyPrivileges = currentUser?.hasPrivilege("admin") || false;
+  const showPrivileges = canModifyPrivileges || !!user.privileges?.length;
 
   const isOwnProfile = user._id === currentUser?._id;
 
@@ -243,7 +243,7 @@ export function UserprofilePage({ user }: Props) {
               {isOwnProfile ? (
                 <span className="fst-italic">({t("profile.its_you", "It's you.")})</span>
               ) : (
-                alterPrivileges &&
+                canModifyPrivileges &&
                 PublicSettings.contribution &&
                 (!hasContributed() ? (
                   <button
@@ -303,7 +303,7 @@ export function UserprofilePage({ user }: Props) {
                   <div className="list-group">
                     {privileges.admin ? (
                       <li className="list-group-item list-group-item-success">
-                        {alterPrivileges && (
+                        {canModifyPrivileges && (
                           <button
                             type="button"
                             className="btn-close btn-close-black float-end"
@@ -314,7 +314,7 @@ export function UserprofilePage({ user }: Props) {
                         {t("privilege.has.admin", "Administrator privileges granted")}
                       </li>
                     ) : (
-                      alterPrivileges && (
+                      canModifyPrivileges && (
                         <button
                           type="button"
                           className="list-group-item-action list-group-item-secondary btn"
@@ -379,7 +379,7 @@ export function UserprofilePage({ user }: Props) {
           <GroupListSection key={region._id} regionId={region._id} user={user} ownProfile={false} />
         ))}
 
-        {alterPrivileges && (
+        {canModifyPrivileges && (
           <>
             <h3 className="text-danger mt-3">
               {t("profile.account.delete.header", "Is this a spammer?")}
