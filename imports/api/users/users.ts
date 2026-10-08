@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { assignIn } from "lodash-es";
 
-export type Role = "admin" | "visitor";
+export type UserPrivilege = "admin" | "visitor";
 
 export interface UserProfile {
   name: string;
@@ -81,7 +81,7 @@ export interface UserEntity extends Meteor.User {
    * See: https://docs.meteor.com/api/accounts#Meteor-user*/
   profile: UserProfile;
   /** [admin] */
-  privileges: Role[];
+  privileges: UserPrivilege[];
 
   /**
    * Has openki donated/supported. The Date is when an admin clicked the button in the user
@@ -157,7 +157,7 @@ export class User {
     return (emailRecord && emailRecord.verified && emailRecord.address) || undefined;
   }
 
-  hasPrivilege(this: UserModel, role: Role) {
+  hasPrivilege(this: UserModel, role: UserPrivilege) {
     return !!this.privileges?.includes(role);
   }
 
