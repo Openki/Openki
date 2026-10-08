@@ -288,7 +288,7 @@ export function Schedule() {
       <tbody>
         {displayIntervals().map((inverval) => (
           <tr key={inverval.intervalStart.valueOf()}>
-            <td className="schedule-time" scope="row">
+            <td className="schedule-time">
               <div className="schedule-time-interval">{inverval.intervalLabel}</div>
             </td>
             {inverval.slots.map((slot, index) => (
