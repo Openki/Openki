@@ -154,6 +154,7 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
         events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
       ),
       // calc stat for every organization
+      // oxlint-disable-next-line no-map-spread
       ...organizations.map((o) => ({
         ...o,
         ...calcStats(

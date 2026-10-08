@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { components, OptionProps } from "react-select";
 import { useTranslation } from "react-i18next";
 
@@ -50,17 +50,21 @@ export function FilterCategories({ categories, onChange }: Props) {
     return null;
   }
 
-  const options: CategoryOption[] = allCategories.flatMap((category) => [
-    {
-      value: category,
-      label: t(`category.${category}`),
-    },
-    ...Categories[category].map((subcategory) => ({
-      value: subcategory,
-      label: t(`category.${subcategory}`),
-      isSubcategory: true,
-    })),
-  ]);
+  const options: CategoryOption[] = useMemo(
+    () =>
+      allCategories.flatMap((category) => [
+        {
+          value: category,
+          label: t(`category.${category}`),
+        },
+        ...Categories[category].map((subcategory) => ({
+          value: subcategory,
+          label: t(`category.${subcategory}`),
+          isSubcategory: true,
+        })),
+      ]),
+    [allCategories, Categories, t],
+  );
 
   const value = options.filter((option) => categories?.includes(option.value));
 

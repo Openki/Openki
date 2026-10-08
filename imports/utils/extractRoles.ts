@@ -9,7 +9,7 @@ export function extractRoles(region: RegionModel) {
 
   if (!region.roles.some((r) => r.id === SystemRoles.Team.id)) {
     // NOTE: The system expects a `team` role to exist, so we always need to add it.
-    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.id === SystemRoles.Team.id);
+    const teamRole = PublicSettings.defaultRoles.find((r) => r.id === SystemRoles.Team.id);
 
     return [...region.roles, teamRole];
   }

@@ -931,6 +931,7 @@ RouterAsync.route("timetable", {
 
     // Transform the "rows" objects to arrays and sort the room rows by
     // the room name, so "null" (meaning no room) comes first.
+    // oxlint-disable-next-line no-map-spread
     const grouped = Object.values(perVenue).map((venueData) => {
       const perRoom = Object.values(venueData.perRoom).toSorted();
       return {

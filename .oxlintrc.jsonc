@@ -9,7 +9,7 @@
   "categories": {
     "correctness": "warn",
     "suspicious": "warn",
-    // "perf": "warn",
+    "perf": "warn",
   },
   "env": {
     "builtin": true,
@@ -212,6 +212,9 @@
         "no-await-in-loop": "off",
         // Allow the legacy DB updates to be empty files
         "unicorn/no-empty-file": "off",
+        // DB updates need to modify data in very precise ways, so spreading
+        // is worth the performance impact given that DB updates run only once.
+        "no-map-spread": "off",
       },
     },
   ],
