@@ -11,7 +11,7 @@ import { OrganizationEntity } from "/imports/api/organizations/organizations";
 import * as OrganizationsMethods from "/imports/api/organizations/methods";
 import * as Organizations from "/imports/api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
-import { UserModel } from "/imports/api/users/users";
+import { type Role, UserModel } from "/imports/api/users/users";
 import * as Regions from "/imports/api/regions/publications";
 
 import { checkContribution } from "/imports/utils/checkContribution";
@@ -41,11 +41,9 @@ export function UserprofilePage({ user }: Props) {
   const [isLoadingRegions, regions] = Regions.useFindFilter();
 
   // What privileges the user has
-  const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
-    const ps = { ...originalPs };
-    ps[p] = user.hasPrivilege(p);
-    return ps;
-  }, {});
+  const privileges: Record<Extract<Role, "admin">, boolean> = {
+    admin: user.hasPrivilege("admin"),
+  };
 
   const canModifyPrivileges = currentUser?.hasPrivilege("admin") || false;
   const showPrivileges = canModifyPrivileges || !!user.privileges?.length;
