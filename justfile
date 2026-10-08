@@ -16,6 +16,7 @@
 set default-list
 
 export COMPOSE_FILE := 'docker-compose.dev.yml'
+export METEOR_NO_RELEASE_CHECK := 'true'
 
 # Combined installation of both npm and Meteor Atmosphere packages.
 # Optionally include `ARGS` to install specific npm package(s):
