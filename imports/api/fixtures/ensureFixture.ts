@@ -1,5 +1,5 @@
 import { Accounts } from "meteor/accounts-base";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { Mongo } from "meteor/mongo";
 
 import { Prng } from "/imports/api/fixtures/Prng";
