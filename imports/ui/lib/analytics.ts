@@ -149,7 +149,7 @@ export function installRouterActions() {
             undefined,
             undefined,
             undefined,
-            new Date().getTime() - started.getTime() /** domCompletionTimeInMS */,
+            Date.now() - started.getTime() /** domCompletionTimeInMS */,
           );
           started = null;
         }

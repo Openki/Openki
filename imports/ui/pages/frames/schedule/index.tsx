@@ -30,7 +30,7 @@ function useOptions() {
   // Read query params
   const query = searchParams;
 
-  const repeatingOnly = Object.prototype.hasOwnProperty.call(query, "repeating");
+  const repeatingOnly = Object.hasOwn(query, "repeating");
 
   let scheduleStart: moment.Moment | undefined = undefined;
   if (query.start) {

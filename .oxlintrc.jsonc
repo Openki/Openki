@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["typescript", "react"],
+  "jsPlugins": ["@e18e/eslint-plugin"],
   "settings": {
     "react": {
       "version": "19.3.0",

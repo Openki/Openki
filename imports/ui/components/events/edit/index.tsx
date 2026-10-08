@@ -465,7 +465,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             `Event creations as ${role}`,
             regions.find((r) => r._id === group.region)?.nameEn,
             Math.round(
-              (new Date().getTime() - group.time_created.getTime()) /
+              (Date.now() - group.time_created.getTime()) /
                 1000 /
                 60 /
                 60 /

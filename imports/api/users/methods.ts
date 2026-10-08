@@ -106,7 +106,7 @@ export const updateUsername = ServerMethod(
       );
     }
 
-    if (NotAllowedCharacters.find((c) => username.includes(c))) {
+    if (NotAllowedCharacters.some((c) => username.includes(c))) {
       throw new ValidationError(
         [{ name: "username", type: "notAllowedCharacter" }],
         "Not allowed character",

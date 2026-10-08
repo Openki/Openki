@@ -280,6 +280,8 @@ export const FindParams = {
   canceled: Predicates.flag,
 };
 
+const searchTermDelimiter = /\s+/;
+
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
   constructor() {
     super("Events", {
@@ -374,7 +376,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     if (filter.venues) {
-      inVenues = inVenues.concat(filter.venues);
+      inVenues = [...inVenues, ...filter.venues];
     }
 
     if (inVenues.length > 0) {
@@ -407,7 +409,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     if (filter.organizations) {
-      inOrganizations = inOrganizations.concat(filter.organizations);
+      inOrganizations = [...inOrganizations, ...filter.organizations];
     }
 
     if (inOrganizations.length > 0) {
@@ -420,7 +422,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     if (filter.notOrganizations) {
-      notInOrganizations = notInOrganizations.concat(filter.notOrganizations);
+      notInOrganizations = [...notInOrganizations, ...filter.notOrganizations];
     }
 
     if (notInOrganizations.length > 0) {
@@ -448,7 +450,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     if (filter.search) {
-      const searchTerms = filter.search.split(/\s+/);
+      const searchTerms = filter.search.split(searchTermDelimiter);
       searchTerms.forEach((searchTerm) => {
         and.push({
           $or: [

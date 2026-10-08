@@ -30,7 +30,7 @@ export function publish<
 export function removeCallback<A extends any[]>(args: A) {
   const result = [...args];
   if (result.length) {
-    const lastParam = result[result.length - 1];
+    const lastParam = result.at(-1);
     if (
       lastParam &&
       (typeof lastParam === "function" ||

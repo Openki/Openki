@@ -102,7 +102,7 @@ export function CalendarNavProgram(props: Props) {
             days.map((d) => (
               <div key={d.toISOString()} className="col p-1">
                 <div className="d-grid h-100">
-                  {props.selectedDays.find((s) => s.isSame(d)) ? (
+                  {props.selectedDays.some((s) => s.isSame(d)) ? (
                     <button
                       type="button"
                       className={cx(

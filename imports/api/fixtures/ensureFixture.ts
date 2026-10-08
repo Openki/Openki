@@ -105,7 +105,7 @@ export const ensure = {
     } as any);
 
     const age = Math.floor(prng() * 100000000000);
-    const time = new Date().getTime();
+    const time = Date.now();
     await Users.updateAsync(
       { _id: id },
       {
@@ -206,8 +206,8 @@ export const ensure = {
     venueEntity._id = id || ensure.fixedId([venueEntity.name, venueEntity.region as string]);
 
     const age = Math.floor(prng() * 80000000000);
-    venueEntity.created = new Date(new Date().getTime() - age);
-    venueEntity.updated = new Date(new Date().getTime() - age * 0.25);
+    venueEntity.created = new Date(Date.now() - age);
+    venueEntity.updated = new Date(Date.now() - age * 0.25);
 
     await Venues.insertAsync(venueEntity);
 
