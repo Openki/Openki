@@ -108,12 +108,20 @@ export function Richtext({ className, text, placeholder, maxLength, onChange }: 
 
   return (
     <>
+      {/*
+        NOTE: Ideally we should require every usage of the Richtext component to specify
+        a more accurate aria-label depending on the context. E.g. "Edit comment".
+      */}
+      {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label */}
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
+        role="textbox"
         className={cx("richtext form-control", characterLimitReached() && "is-invalid", className)}
         ref={elementRef}
         onKeyUp={handleChange}
         onChange={handleChange}
         onInput={handleChange}
+        tabIndex={0}
       ></div>
       {characterLimitReached() && (
         <div className="invalid-feedback">

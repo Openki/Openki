@@ -113,6 +113,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                       type="button"
                       className="btn-close btn-close-black ms-2"
                       onClick={() => onChange(undefined)}
+                      aria-label={t("_button.clear", "Clear")}
                     ></button>
                   </div>
                 </>

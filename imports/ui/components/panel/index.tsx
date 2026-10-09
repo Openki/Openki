@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
@@ -57,6 +58,7 @@ export function Panel({
     | undefined
   >(undefined);
 
+  const { t } = useTranslation();
   const hash = (useHash() as string).slice(1);
   const hashParams = new URLSearchParams(hash);
   const isShowed = id === hashParams.get("show");
@@ -153,7 +155,11 @@ export function Panel({
               <div className="panel-full-body">
                 {full}
                 <div className="panel-minimize">
-                  <button className="btn-close btn-close-circle" onClick={handleClose}></button>
+                  <button
+                    className="btn-close btn-close-circle"
+                    onClick={handleClose}
+                    aria-label={t("_button.close", "Close")}
+                  ></button>
                 </div>
               </div>
             </div>

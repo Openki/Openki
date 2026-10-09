@@ -85,6 +85,7 @@ export function OrganizationList({ group }: Props) {
                   aria-expanded="false"
                   aria-haspopup="true"
                   data-bs-toggle="dropdown"
+                  aria-label={t("_button.open", "Open")}
                 ></button>
                 <ul className="dropdown-menu dialog-dropdown">
                   <li className="dropdown-header">
@@ -92,7 +93,11 @@ export function OrganizationList({ group }: Props) {
                       "group.organizationList.dropdownTitle.editOrganization",
                       "Edit organization",
                     )}
-                    <button type="button" className="btn-close"></button>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label={t("_button.close", "Close")}
+                    ></button>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />

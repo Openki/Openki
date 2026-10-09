@@ -25,7 +25,11 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
     <div className="featured-organization-body">
       {!!featuredOrganization.logoUrl && (
         <div className="featured-organization-body-logo">
-          <img className="featured-organization-logo" src={featuredOrganization.publicLogoUrl()} />
+          <img
+            className="featured-organization-logo"
+            src={featuredOrganization.publicLogoUrl()}
+            alt={`${featuredOrganization.name} logo`}
+          />
         </div>
       )}
 

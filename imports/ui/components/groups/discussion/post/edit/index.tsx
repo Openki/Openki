@@ -202,6 +202,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 )}`}
                 value={commentTitle}
                 onChange={(event) => setCommentTitle(event.currentTarget.value)}
+                // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
               />
             </div>

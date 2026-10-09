@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn"],
+  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y"],
   "settings": {
     "react": {
       "version": "19.3.0",

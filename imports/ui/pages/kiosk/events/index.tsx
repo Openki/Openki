@@ -41,7 +41,13 @@ function Organization({ organizationId }: { organizationId: string }) {
 
   return (
     <a href={Router.path("organizationDetails", organization)}>
-      {!!logo() && <img className="kiosk-logo kiosk-logo-organization" src={logo()} />}
+      {organization && !!logo() && (
+        <img
+          className="kiosk-logo kiosk-logo-organization"
+          src={logo()}
+          alt={`${organization.name} logo`}
+        />
+      )}
 
       {name()}
     </a>

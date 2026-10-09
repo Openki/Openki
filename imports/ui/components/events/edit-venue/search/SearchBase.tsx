@@ -74,6 +74,7 @@ function CustomMenu({
     <Menu {...menuProps} id="event-venue">
       {venues.length === 0 && (
         <>
+          {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
           <BaseMenuItem disabled role="option">
             {menuProps.emptyLabel}
           </BaseMenuItem>
@@ -255,6 +256,7 @@ export function SearchBase({
         const commonProps = { ...inputProps, id, isInvalid, isValid, size, className };
 
         // Add type="search" to have a clear button
+        // oxlint-disable-next-line jsx-a11y/no-autofocus
         return <TypeaheadInputSingle {...commonProps} type="search" autoFocus={autofocus} />;
       }}
       renderMenu={(results, menuProps, state) => (
