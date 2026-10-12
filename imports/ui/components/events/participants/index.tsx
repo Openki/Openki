@@ -136,6 +136,10 @@ export function EventParticipants({ event }: Props) {
     );
   }
 
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   return (
     <>
       <div data-test="events-participants" className="page-component-header">
@@ -177,7 +181,8 @@ export function EventParticipants({ event }: Props) {
             <i
               data-test="events-participants-notify-all"
               className="fa-solid fa-paper-plane cursor-pointer float-end"
-              onClick={() => setShowModal(!showModal)}
+              onClick={toggleModal}
+              onKeyDown={toggleModal}
             />
           )}
           <br />

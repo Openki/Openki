@@ -24,7 +24,7 @@ OAuth.registerService("c3", 2, null, async (query: any) => {
 
   const serviceData = {
     accessToken: OAuth.sealSecret(accessToken),
-    expiresAt: +new Date() + 1000 * response.expiresIn,
+    expiresAt: Date.now() + 1000 * response.expiresIn,
     refreshToken: undefined,
   };
 

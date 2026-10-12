@@ -155,17 +155,20 @@ export function Timetable({
     ...externalParallelEvents.map((e) => ({ room: e.location })),
   ];
 
-  const allEvents = [
-    ...events.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
-    ...externalEvents.map((e) => ({
-      _id: e.id,
-      title: e.summary,
-      room: e.location,
-      startLocal: e.start,
-      endLocal: e.end,
-      url: e.url,
-    })),
-  ];
+  const allEvents = useMemo(
+    () => [
+      ...events.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+      ...externalEvents.map((e) => ({
+        _id: e.id,
+        title: e.summary,
+        room: e.location,
+        startLocal: e.start,
+        endLocal: e.end,
+        url: e.url,
+      })),
+    ],
+    [events, externalEvents],
+  );
   const startLocal = chain(allEvents)
     .map((e) => e.startLocal)
     .min()

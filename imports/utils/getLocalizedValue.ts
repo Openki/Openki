@@ -1,6 +1,6 @@
 import { Match } from "meteor/check";
 import { useTranslation } from "react-i18next";
-import IntlMessageFormat, { PrimitiveType } from "intl-messageformat";
+import { IntlMessageFormat, PrimitiveType } from "intl-messageformat";
 import { i18n } from "i18next";
 import { $Dictionary } from "i18next/typescript/helpers";
 import { ReactElement } from "react";
@@ -24,8 +24,8 @@ export function getLocalizedValue(
   variables?: Record<string, PrimitiveType | ReactElement> | undefined,
 ): string | ReactElement | (string | ReactElement)[];
 /**
- * Returns a localized value based on the locale. It is also supported to give a 
- * key from the translation files. 
+ * Returns a localized value based on the locale. It is also supported to give a
+ * key from the translation files.
  * @example {
 			"en": "https://about.openki.net/en/ueber-uns/spenden/",
 			"de": "https://about.openki.net/ueber-uns/spenden/"

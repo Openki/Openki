@@ -3,6 +3,7 @@ import { observeSize } from "../../../lib/observeHeight";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { useTranslation } from "react-i18next";
 
 export function ScrollContainer({
   className,
@@ -15,6 +16,7 @@ export function ScrollContainer({
 
   const [scrollLeft, setScrollLeft] = useState(0);
   const [scrollLeftMax, setScrollLeftMax] = useState(0);
+  const { t } = useTranslation();
 
   function checkScroll() {
     const element = elementRef.current;
@@ -52,8 +54,9 @@ export function ScrollContainer({
     >
       {children}
       {scrollLeft > 0 && (
-        <a
+        <button
           className="btn-scroll btn-scroll-left text-primary"
+          aria-label={t("_button.previous", "Previous")}
           onClick={() => {
             const element = elementRef.current;
             if (element) {
@@ -62,12 +65,13 @@ export function ScrollContainer({
           }}
         >
           <i className="fa-solid fa-angle-left fa-fw" />
-        </a>
+        </button>
       )}
 
       {scrollLeft < scrollLeftMax && (
-        <a
+        <button
           className="btn-scroll btn-scroll-right text-primary"
+          aria-label={t("_button.next", "Next")}
           onClick={() => {
             const element = elementRef.current;
             if (element) {
@@ -76,7 +80,7 @@ export function ScrollContainer({
           }}
         >
           <i className="fa-solid fa-angle-right fa-fw" />
-        </a>
+        </button>
       )}
     </div>
   );

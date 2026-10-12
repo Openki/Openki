@@ -104,9 +104,9 @@ async function enrichLanguagesWithWeblateStats() {
   // enrich languages if we get back actual stats.
   if (stats) {
     Object.entries(languages).forEach(([code, value]) => {
-      const translatedPercent = stats.results.filter(
+      const translatedPercent = stats.results.find(
         (s) => (weblateMapping[s.code] || s.code) === code,
-      )[0]?.translated_percent;
+      )?.translated_percent;
 
       if (translatedPercent) {
         value.translatedPercent = Math.round(translatedPercent);

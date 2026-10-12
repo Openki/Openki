@@ -164,7 +164,7 @@ function DashboardComponent({
 
   const handler = mapping[settings.entity];
 
-  if (!currentUserId && settings.query && settings.query.indexOf("{currentUser}") !== -1) {
+  if (!currentUserId && settings.query && settings.query.includes("{currentUser}")) {
     // do not show components that need a logged in user.
     return null;
   }

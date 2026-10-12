@@ -82,7 +82,7 @@ Meteor.startup(async () => {
 });
 
 Accounts.validateNewUser((user) => {
-  if (NotAllowedCharacters.find((c) => user.username.includes(c))) {
+  if (NotAllowedCharacters.some((c) => user.username.includes(c))) {
     throw new Meteor.Error(403, "Not allowed character");
   }
 
@@ -116,7 +116,7 @@ Accounts.onCreateUser(
     // Collect info where a username could possibly be found
     let nameProviders = [user, user.profile];
     if (user.services) {
-      nameProviders = nameProviders.concat(toArray(proposedUser.services));
+      nameProviders = [...nameProviders, ...toArray(proposedUser.services)];
     }
 
     // Try to glean a username

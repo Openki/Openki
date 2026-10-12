@@ -104,7 +104,12 @@ export function Show({ post, onEdit }: Props) {
           </span>
           <span className="discussion-buttons">
             {canEdit() && (
-              <button type="button" className="discussion-edit-btn" onClick={onEdit}>
+              <button
+                type="button"
+                className="discussion-edit-btn"
+                onClick={onEdit}
+                aria-label={t("_button.edit", "Edit")}
+              >
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}

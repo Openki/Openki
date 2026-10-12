@@ -10,6 +10,7 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
     <div>
       <button
         className="btn btn-primary btn-sm bin-button-container rounded-circle"
+        aria-label={t("group.event.edit.deleteEvents", "Delete events")}
         data-bs-title={t("group.event.edit.deleteEvents", "Delete events")}
         onClick={() => {
           props.onShowEventsDeleteModal();

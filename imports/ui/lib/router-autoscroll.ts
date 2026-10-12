@@ -41,9 +41,9 @@ class RouterAutoscroll {
     const self = this;
 
     // TODO use history state so we don't litter
-    window.onpopstate = () => {
+    window.addEventListener("popstate", () => {
       this.backToPosition = this.scrollPositions.get(window.location.href);
-    };
+    });
 
     Router.onBeforeAction(async function (this: { next: () => void }) {
       if (!self._cancelNext) {

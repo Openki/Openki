@@ -73,6 +73,7 @@ export function ForgotPwdFrame(props: Props) {
             type="email"
             prepend="fa-solid fa-envelope"
             label={t("frame.login.email", "E-Mail")}
+            // oxlint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             value={email}
             onChange={(value) => setEmail(value)}

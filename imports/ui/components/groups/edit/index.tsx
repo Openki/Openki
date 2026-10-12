@@ -362,7 +362,7 @@ export function Edit({
       if (isNew) {
         Analytics.trackEvent(
           "Group creations",
-          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
+          `Group creations as ${changes.subs?.length ? changes.subs.toSorted().join(" and ") : SystemRoles.Participant.id}`,
           Regions.findOne(changes.region)?.nameEn,
           totalFocusTime(),
         );
@@ -434,11 +434,7 @@ export function Edit({
               <label className="form-label" id="learnOrTeachTitle">
                 {t("group.edit.learnOrTeach", "Learn or teach?")}
               </label>
-              <div
-                className="btn-group-toggle row"
-                role="group"
-                aria-labelledby="learnOrTeachTitle"
-              >
+              <fieldset className="btn-group-toggle row" aria-labelledby="learnOrTeachTitle">
                 <div className="col d-grid">
                   <label className={cx("btn btn-lg", simpleRoleActiveClass("participant"))}>
                     <input
@@ -467,7 +463,7 @@ export function Edit({
                     {t("group.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>
-              </div>
+              </fieldset>
             </div>
           )}
 

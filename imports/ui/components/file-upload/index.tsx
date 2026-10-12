@@ -117,7 +117,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
 
               const reader = new FileReader();
 
-              reader.onload = () => {
+              reader.addEventListener("load", () => {
                 const arrayBuffer = reader.result as ArrayBuffer;
                 const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 
@@ -129,7 +129,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
                 });
 
                 setProgress("done");
-              };
+              });
 
               reader.readAsArrayBuffer(droppedFile);
             }}

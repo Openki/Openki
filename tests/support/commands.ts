@@ -23,7 +23,7 @@ Cypress.Commands.add("getMeteor", () =>
 // Check if the meteor subscriptions are ready, should equal true.
 Cypress.Commands.add("allSubscriptionsReady", () => {
   cy.window({ log: false }).then((win) => {
-    new Cypress.Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       const poll = setInterval(() => {
         if (win.DDP?._allSubscriptionsReady()) {
           clearInterval(poll);
@@ -42,7 +42,7 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
       consoleProps: () => ({ name: method, params }),
     });
 
-    return new Cypress.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       Meteor.call(method, ...params, (err: unknown, result: unknown) => {
         if (err) {
           reject(err);
@@ -61,7 +61,7 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
       consoleProps: () => ({ name: method, params }),
     });
 
-    return new Cypress.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       Meteor.call(method, ...params, (err: unknown) => {
         console.log(`%c${method}`, "color: red; font-style: italic;", err);
         if (err) {
@@ -80,7 +80,7 @@ Cypress.Commands.add("logout", () => {
       name: "logout",
     });
 
-    return new Cypress.Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       Meteor.logout((err: unknown) => {
         if (err) {
           reject(err);
@@ -101,7 +101,7 @@ Cypress.Commands.add("login", (username: string, password = "greg") => {
           consoleProps: () => ({ username }),
         });
 
-        return new Cypress.Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
           Meteor.loginWithPassword(username, password, (err: unknown) => {
             if (err) {
               reject(err);
@@ -182,5 +182,6 @@ declare global {
   }
 }
 
-// handle as module
+// Mark this as an ES module
+// oxlint-disable-next-line unicorn/require-module-specifiers
 export {};

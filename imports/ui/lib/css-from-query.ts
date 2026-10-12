@@ -1,5 +1,6 @@
 export class CssFromQuery {
   public customizableProperties: { key: string; name: string; selector: string }[] = [];
+  #hexColorRegExp = /^[0-9A-F]+$/i;
 
   /**
    * @param properties the customizable properties to add
@@ -39,7 +40,7 @@ export class CssFromQuery {
       if (queryValue !== undefined) {
         // hexify color values
         if (property.name.includes("color")) {
-          if (queryValue.match(/^[0-9A-F]+$/i)) {
+          if (this.#hexColorRegExp.test(queryValue)) {
             cssValue = `#${queryValue.substring(0, 8)}`;
           }
         } else if (property.name.includes("font-weight")) {

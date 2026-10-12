@@ -89,6 +89,7 @@ export function EditStartEnd({
                   <button
                     type="button"
                     className="btn-icon"
+                    aria-label={t("group.event.edit.swich_duration", "Switch to duration")}
                     data-bs-title={t("group.event.edit.swich_duration", "Switch to duration")}
                     onClick={() => {
                       setDurationEdit(true);
@@ -130,6 +131,7 @@ export function EditStartEnd({
                   <button
                     type="button"
                     className="btn-icon"
+                    aria-label={t("group.event.edit.switch_time_end", "Switch to end time")}
                     data-bs-title={t("group.event.edit.switch_time_end", "Switch to end time")}
                     onClick={() => setDurationEdit(false)}
                   >

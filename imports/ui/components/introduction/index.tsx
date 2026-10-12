@@ -38,9 +38,9 @@ export function Introduction({ hasPricePolicy }: Props) {
   return (
     <div className={cx("container", isInCalendar() && "calendar-introduction")}>
       <div className="introduction">
-        <h3>
-          <a
-            href="#"
+        <h3 className="d-flex align-items-center justify-content-between">
+          <button
+            className="border-0 bg-transparent"
             onClick={() => {
               if (openedIntro) {
                 IntroductionUtil.closeIntro();
@@ -57,17 +57,15 @@ export function Introduction({ hasPricePolicy }: Props) {
             {t("introduction.Title", "What does {SITENAME} do for you?", {
               SITENAME: getSiteName(),
             })}
-          </a>
-          <a
-            className="introduction-close-btn"
-            href="#"
-            title={t("introduction.close.title", "Close introduction")}
-            onClick={() => {
-              IntroductionUtil.doneIntro();
-            }}
+          </button>
+          <button
+            className="introduction-close-btn btn btn-dark btn-sm"
+            aria-label={t("introduction.close.title", "Close introduction")}
+            data-bs-title={t("introduction.close.title", "Close introduction")}
+            onClick={IntroductionUtil.doneIntro}
           >
             <span className="remove-btn fa-solid fa-xmark" />
-          </a>
+          </button>
         </h3>
         {!!openedIntro && (
           <div className="introduction-content">

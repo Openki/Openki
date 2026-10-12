@@ -1,7 +1,7 @@
 import { WebApp } from "meteor/webapp";
 import { Router } from "meteor/iron:router";
 import { SitemapStream } from "sitemap";
-import { createGzip } from "zlib";
+import { createGzip } from "node:zlib";
 import type { ServerResponse } from "node:http";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";

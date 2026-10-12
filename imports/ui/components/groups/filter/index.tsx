@@ -115,9 +115,9 @@ export function Filter(props: Props) {
             {StateFilters.map((stateFilter) => (
               <div key={stateFilter.name} className="col filter-captions-column">
                 <div className="filter-caption-wrap">
-                  <div
+                  <button
                     className={cx("filter-caption", stateFilterClasses(stateFilter))}
-                    title={stateFilter.title}
+                    data-bs-title={stateFilter.title}
                     onClick={() => {
                       props.onStateClick(stateFilter);
                     }}
@@ -127,12 +127,18 @@ export function Filter(props: Props) {
                     onMouseOut={() => {
                       props.onStateMouseOut(stateFilter);
                     }}
+                    onFocus={() => {
+                      props.onStateMouseOver(stateFilter);
+                    }}
+                    onBlur={() => {
+                      props.onStateMouseOut(stateFilter);
+                    }}
                   >
                     <span className="filter-caption-text">
                       {stateFilter.label}
                       <i className="fa-solid fa-check fa-fw" />
                     </span>
-                  </div>
+                  </button>
                 </div>
               </div>
             ))}
@@ -141,9 +147,12 @@ export function Filter(props: Props) {
             <div className="mt-2 row gx-3">
               <div className="col-sm-4 offset-sm-8 filter-captions-column">
                 <div className="filter-caption-wrap">
-                  <div
+                  <button
                     className={cx("filter-caption is-archived", props.archived && "active")}
-                    title={t("filterCaptions.archived.title", "Show only groups that are archived")}
+                    data-bs-title={t(
+                      "filterCaptions.archived.title",
+                      "Show only groups that are archived",
+                    )}
                     onClick={() => {
                       props.onArchivedClick();
                     }}
@@ -153,12 +162,18 @@ export function Filter(props: Props) {
                     onMouseOut={() => {
                       props.onArchivedMouseOut();
                     }}
+                    onFocus={() => {
+                      props.onArchivedMouseOver();
+                    }}
+                    onBlur={() => {
+                      props.onArchivedMouseOut();
+                    }}
                   >
                     <span className="filter-caption-text">
                       {t("filterCaptions.archived.label", "Archived")}
                       <i className="fa-solid fa-check fa-fw" />
                     </span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

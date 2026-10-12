@@ -1,5 +1,4 @@
 import React, { FocusEventHandler } from "react";
-import { map } from "lodash-es";
 
 import { EventEntity, EventVenue } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
@@ -29,14 +28,31 @@ async function requestVenuesFromNominatim(
   }
   nominatimQuery.bounded = 1;
 
-  const request = fetch(
+  const response = await fetch(
     `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
   );
 
-  const response = await request;
-  const found = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed request to Nomatim", { cause: response });
+  }
 
-  return map(found, (foundLocation) => {
+  const foundLocations: {
+    name: string;
+    address: {
+      road: string;
+      house_number: string;
+      postcode: string;
+      municipality?: string;
+      city?: string;
+      town?: string;
+      village?: string;
+      state?: string;
+    };
+    lon: string;
+    lat: string;
+  }[] = await response.json();
+
+  return foundLocations.map((foundLocation) => {
     const address = foundLocation.address;
     return {
       loc: {

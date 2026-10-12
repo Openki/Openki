@@ -11,12 +11,14 @@ import { FormControl } from "/imports/ui/components/form-control";
 import { useValidation } from "/imports/ui/hooks/useValidation";
 
 function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
+  const { t } = useTranslation();
   return (
     <span className="input-group-text p-0">
       <button
         type="button"
         className="btn btn-outline-secondary text-dark rounded-0"
         onClick={onToggle}
+        aria-label={t("_button.toggleVisibility", "Toggle visibility")}
       >
         <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
       </button>

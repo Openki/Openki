@@ -22,8 +22,8 @@ import { LoadingPage } from "/imports/ui/pages/loading";
 
 import "./styles.scss";
 
-const hiddenFilters: (keyof typeof FindParams)[] = ["needsRole", "categories"];
-const filters = hiddenFilters.concat(["state"]);
+const hiddenFilters: (keyof typeof FindParams)[] = ["needsRole", "categories"] as const;
+const filters = [...hiddenFilters, "state"] as const;
 
 export interface Props {
   query: Record<string, string | undefined>;

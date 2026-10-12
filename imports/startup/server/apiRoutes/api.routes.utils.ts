@@ -14,7 +14,7 @@ export class NoActionError {
 }
 
 export const orderedResults = async (params: any, handler: HandlerType): Promise<ApiEvent[]> => {
-  if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
+  if (!Object.hasOwn(Api, handler)) {
     throw new NoActionError("Invalid action");
   }
 

@@ -1,13 +1,14 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "react"],
+  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y", "react"],
   "settings": {
     "react": {
       "version": "19.3.0",
     },
   },
   "categories": {
-    "correctness": "off",
+    "correctness": "warn",
+    "suspicious": "warn",
     "perf": "warn",
   },
   "env": {
@@ -28,6 +29,9 @@
     "postcss.config.js",
   ],
   "rules": {
+    "no-shadow": "warn",
+    "no-await-in-loop": "warn",
+    "no-underscore-dangle": "off",
     "constructor-super": "error",
     "for-direction": "error",
     "getter-return": "error",
@@ -169,6 +173,8 @@
     "typescript/no-inferrable-types": "error",
     "typescript/prefer-for-of": "error",
     "typescript/prefer-function-type": "error",
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/consistent-function-scoping": "warn",
   },
   "overrides": [
     {
@@ -204,12 +210,16 @@
       },
     },
     {
-      "files": [
-        // Allow await in loops in DB updates.
-        "./imports/startup/server/updates/*.ts",
-      ],
+      // Specific overrides for DB updates
+      "files": ["./imports/startup/server/updates/*.ts"],
       "rules": {
+        // DB updates need to be applied in a specific order, which sometimes means await in loops
         "no-await-in-loop": "off",
+        // Allow the legacy DB updates to be empty files
+        "unicorn/no-empty-file": "off",
+        // DB updates need to modify data in very precise ways, so spreading
+        // is worth the performance impact given that DB updates run only once.
+        "no-map-spread": "off",
       },
     },
   ],

@@ -51,7 +51,7 @@ export function AdminPanelPage() {
     <div className="row">
       {tasks.map((task) => (
         <div key={task.route} className="col-12 col-sm-6 col-md-4 mb-4">
-          <a href={Router.path(task.route)}>
+          <a href={Router.path(task.route)} aria-label={task.name}>
             <div className="admin-task">
               <i className={cx(task.icon, "fa-2x")} />
               <h3>{task.name}</h3>
