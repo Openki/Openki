@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMap } from "react-leaflet";
 
-import FullScreen from "leaflet.fullscreen";
+import { FullScreen } from "leaflet.fullscreen";
 import "leaflet.fullscreen/dist/Control.FullScreen.css";
 import { type Map } from "leaflet";
 

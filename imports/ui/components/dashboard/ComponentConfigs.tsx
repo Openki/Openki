@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import QRCode from "react-qr-code";
+import { QRCode } from "react-qr-code";
 
 import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
