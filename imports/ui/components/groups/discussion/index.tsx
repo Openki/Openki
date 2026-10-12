@@ -69,23 +69,13 @@ function DiscussionWithGroupChatTabs({
   group,
   eventId,
 }: Omit<Props, "groupId"> & { group: GroupModel }) {
-  const tabs: { id: string; title: string; Content: React.FC }[] = [
+  const tabs: { id: string; title: string }[] = [
     // NOTE: To support direct links to the discussions section and to specific comments,
     // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
     // Otherwise the event listeners don't work as expected.
-    {
-      id: "discussions",
-      title: "General",
-      Content: () => (
-        <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
-      ),
-    },
-    {
-      id: "team",
-      title: "Team",
-      Content: () => <GroupRoleChat group={group} roleId="team" />,
-    },
-  ];
+    { id: "discussions", title: "General" },
+    { id: "team", title: "Team" },
+  ] as const;
 
   return (
     <>
@@ -113,7 +103,7 @@ function DiscussionWithGroupChatTabs({
         </div>
       </nav>
       <div className="tab-content border-0">
-        {tabs.map(({ id, Content }, i) => {
+        {tabs.map(({ id }, i) => {
           const tabId = `tab-${id}`;
           const tabContentId = `tab-${id}-content`;
           return (
@@ -125,7 +115,11 @@ function DiscussionWithGroupChatTabs({
               aria-labelledby={tabId}
               tabIndex={0}
             >
-              <Content />
+              {id === "discussions" ? (
+                <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
+              ) : (
+                <GroupRoleChat roleId={id} group={group} />
+              )}
             </div>
           );
         })}
