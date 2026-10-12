@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y"],
+  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y", "react"],
   "settings": {
     "react": {
       "version": "19.3.0",
@@ -29,6 +29,9 @@
     "postcss.config.js",
   ],
   "rules": {
+    "no-shadow": "warn",
+    "no-await-in-loop": "warn",
+    "no-underscore-dangle": "off",
     "constructor-super": "error",
     "for-direction": "error",
     "getter-return": "error",
@@ -170,6 +173,8 @@
     "typescript/no-inferrable-types": "error",
     "typescript/prefer-for-of": "error",
     "typescript/prefer-function-type": "error",
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/consistent-function-scoping": "warn",
   },
   "overrides": [
     {
