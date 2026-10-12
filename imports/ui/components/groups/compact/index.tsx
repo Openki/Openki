@@ -41,7 +41,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   const elementRef = useRef<HTMLDivElement>(null);
   const user = useUser();
 
-  const [isRegionRolesLoading, regionRoles, region] = useRegionRoles(group?.region);
+  const [isRegionRolesLoading, regionRoles, region] = useRegionRoles(group.region);
 
   function groupCss() {
     if (!group.nextEvent) {
