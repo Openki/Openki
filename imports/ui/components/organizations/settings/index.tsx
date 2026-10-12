@@ -41,7 +41,8 @@ function RemoveMember({
     <div className="tag tag-btn organization-member-tag-btn-remove ">
       <button
         type="button"
-        title={t("organizations.settings.removeMember", "remove member")}
+        aria-label={t("organizations.settings.removeMember", "remove member")}
+        data-bs-title={t("organizations.settings.removeMember", "remove member")}
         onClick={() => {
           onRemove(user, userName);
         }}
@@ -93,7 +94,14 @@ function FoundUsers({
           <div className="tag tag-link organization-member-tag-profile addon">
             <a
               href={Router.path("userprofile", user)}
-              title={t("organizations.settings.member.profile")}
+              aria-label={t("organizations.settings.member.profile", "Visit profile for {USER}", {
+                USER: user.username,
+              })}
+              data-bs-title={t(
+                "organizations.settings.member.profile",
+                "Visit profile for {USER}",
+                { USER: user.username },
+              )}
             >
               <i className="fa-solid fa-user fa-fw" />
             </a>
@@ -276,49 +284,69 @@ export function OrganizationSettings({ organization }: Props) {
               {t("organizations.settings.title.Members", "Members")}
             </h3>
             <div className="tag-group multiline">
-              {organization.members.map((member) => (
-                <div key={member.user} className="tag-group-addon-unit">
-                  <RemoveMember {...member} onRemove={handleMemberRemove} />
+              {organization.members.map((member) => {
+                const userName = getUserName(member.user);
+                return (
+                  <div key={member.user} className="tag-group-addon-unit">
+                    <RemoveMember {...member} onRemove={handleMemberRemove} />
 
-                  {currentUser?._id === member.user &&
-                    (member.notify ? (
-                      <div className="tag tag-btn organization-member-tag-notify addon">
-                        <button
-                          type="button"
-                          title={t(
-                            "organizations.settings.member.turnNotifyOff",
-                            "Turn my notifications off",
-                          )}
-                          onClick={handleMemberToggleNotify}
-                        >
-                          <i className="fa-solid fa-bell fa-fw" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="tag tag-btn organization-member-tag-notify addon">
-                        <button
-                          type="button"
-                          title={t(
-                            "organization.settings.member.turnNotifyOn",
-                            "Turn my notifications on",
-                          )}
-                          onClick={handleMemberToggleNotify}
-                        >
-                          <i className="fa-solid fa-bell-slash fa-fw" />
-                        </button>
-                      </div>
-                    ))}
+                    {currentUser?._id === member.user &&
+                      (member.notify ? (
+                        <div className="tag tag-btn organization-member-tag-notify addon">
+                          <button
+                            type="button"
+                            aria-label={t(
+                              "organizations.settings.member.turnNotifyOff",
+                              "Turn my notifications off",
+                            )}
+                            data-bs-title={t(
+                              "organizations.settings.member.turnNotifyOff",
+                              "Turn my notifications off",
+                            )}
+                            onClick={handleMemberToggleNotify}
+                          >
+                            <i className="fa-solid fa-bell fa-fw" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="tag tag-btn organization-member-tag-notify addon">
+                          <button
+                            type="button"
+                            aria-label={t(
+                              "organization.settings.member.turnNotifyOn",
+                              "Turn my notifications on",
+                            )}
+                            data-bs-title={t(
+                              "organization.settings.member.turnNotifyOn",
+                              "Turn my notifications on",
+                            )}
+                            onClick={handleMemberToggleNotify}
+                          >
+                            <i className="fa-solid fa-bell-slash fa-fw" />
+                          </button>
+                        </div>
+                      ))}
 
-                  <div className="tag tag-link organization-member-tag-profile addon">
-                    <a
-                      href={Router.path("userprofile", { _id: member.user })}
-                      title={t("organizations.settings.member.profile", "Visit profile")}
-                    >
-                      <i className="fa-solid fa-user fa-fw" />
-                    </a>
+                    <div className="tag tag-link organization-member-tag-profile addon">
+                      <a
+                        href={Router.path("userprofile", { _id: member.user })}
+                        aria-label={t(
+                          "organizations.settings.member.profile",
+                          "Visit profile for {USER}",
+                          { USER: userName },
+                        )}
+                        data-bs-title={t(
+                          "organizations.settings.member.profile",
+                          "Visit profile for {USER}",
+                          { USER: userName },
+                        )}
+                      >
+                        <i className="fa-solid fa-user fa-fw" />
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="mb-3">
               <FormControl
@@ -365,7 +393,8 @@ export function OrganizationSettings({ organization }: Props) {
             type="button"
             className="btn btn-sm btn-outline-secondary organization-id-display__copy-btn"
             onClick={() => navigator.clipboard.writeText(organization._id)}
-            title={t("organization.settings.copyId", "Copy ID")}
+            aria-label={t("organization.settings.copyId", "Copy ID")}
+            data-bs-title={t("organization.settings.copyId", "Copy ID")}
           >
             <i className="fa-solid fa-copy fa-fw" />
           </button>
