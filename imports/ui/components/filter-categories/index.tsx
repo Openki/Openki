@@ -46,10 +46,6 @@ export function FilterCategories({ categories, onChange }: Props) {
 
   const allCategories = Object.keys(Categories);
 
-  if (!allCategories.length) {
-    return null;
-  }
-
   const options: CategoryOption[] = useMemo(
     () =>
       allCategories.flatMap((category) => [
@@ -63,8 +59,12 @@ export function FilterCategories({ categories, onChange }: Props) {
           isSubcategory: true,
         })),
       ]),
-    [allCategories, Categories, t],
+    [allCategories, t],
   );
+
+  if (!allCategories.length) {
+    return null;
+  }
 
   const value = options.filter((option) => categories?.includes(option.value));
 
