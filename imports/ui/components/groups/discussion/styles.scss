@@ -12,3 +12,7 @@
 .page-component-btn + .discussion-conversation {
   margin-top: $page-component-seperator-height;
 }
+
+.group-role-chat-tabs .nav-link:first-letter {
+  text-transform: uppercase;
+}

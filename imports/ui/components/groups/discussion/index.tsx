@@ -93,7 +93,7 @@ function DiscussionWithGroupChatTabs({
 
   return (
     <>
-      <nav className="mt-2">
+      <nav className="mt-2 group-role-chat-tabs">
         <div className="nav nav-tabs" role="tablist">
           {tabs.map(({ id, title }, i) => {
             const tabId = `tab-${id}`;
