@@ -78,8 +78,6 @@ function DiscussionWithGroupChatTabs({
     return null;
   }
 
-  // TODO: Use the correct labels based on defaultRoles, regionRoles and groupRoles
-
   const tabs: { id: string; title: string }[] = [
     // NOTE: To support direct links to the discussions section and to specific comments,
     // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.

@@ -7,6 +7,7 @@ if (Meteor.isDevelopment) {
    *
    * NOTE: Imported before other imports in order to run as quickly as possible.
    */
+  // oxlint-disable-next-line unicorn/consistent-function-scoping
   (function ensureForceReloadAfterHMR() {
     const key = "DEV_HAS_RENDERED_BEFORE";
 
