@@ -69,23 +69,23 @@ export function Members({ group }: { group: GroupModel }) {
 
   return (
     <>
-      <div className="page-component-header">
+      <div className="page-component-header d-flex align-items-center gap-4 justify-content-between">
         <h4>
           {t(
             "group.details.members.title",
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
             { NUM: howManyEnrolled() },
-          )}{" "}
-          {canNotifyAll() && (
-            <ButtonIcon
-              id="group-members-notify-all"
-              className="btn-lg btn-primary"
-              onClick={handleContactAllMembersClick}
-              label={t("group.details.members.contact-members", "Contact all members")}
-              icon="fa-solid fa-paper-plane"
-            />
           )}
         </h4>
+        {canNotifyAll() && (
+          <ButtonIcon
+            id="group-members-notify-all"
+            className="btn-lg btn-primary"
+            onClick={handleContactAllMembersClick}
+            label={t("group.details.members.contact-members", "Contact all members")}
+            icon="fa-solid fa-paper-plane"
+          />
+        )}
       </div>
       {!!group?.members && (
         <div className="group-members">

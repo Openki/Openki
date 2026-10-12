@@ -33,7 +33,7 @@ export function slug(text: string) {
  */
 export function sanitizeMultiline(
   text = "",
-  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody */,
 ) {
   // Remove all ASCII control chars except the line feed.
   /* oxlint-disable-next-line no-control-regex */
@@ -48,7 +48,7 @@ export function sanitizeMultiline(
  */
 export function sanitizeSingleline(
   text = "",
-  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody */,
 ) {
   const result = text.replace(/[\n\r]/g, "").replace(/\s+/g, " ");
   return sanitizeMultiline(result, maxLength);

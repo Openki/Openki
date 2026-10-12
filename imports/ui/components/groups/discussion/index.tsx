@@ -4,15 +4,17 @@ import { useTranslation } from "react-i18next";
 import { useDetails } from "/imports/api/groups/publications";
 import { type GroupModel } from "/imports/api/groups/groups";
 import { type UserModel } from "/imports/api/users/users";
+import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { GeneralGroupDiscussion } from "/imports/ui/components/groups/discussion/general-group-discussion";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { GroupRoleChat } from "./group-role-chat";
 
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
-import { SystemRoles } from "/imports/api/groups/lib/Role";
-import { GroupRoleChat } from "./group-role-chat";
 
 export interface Props {
   select: string | undefined;
@@ -44,15 +46,13 @@ export function Discussion({ select, groupId, eventId }: Props) {
     return null;
   }
 
-  const userCanAccessRoleChats = canUserAccessRoleChats({ group, user });
-
   return (
     <div className="page-component discussion mt-4">
       <div className="page-component-header">
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      {userCanAccessRoleChats ? (
+      {canUserAccessRoleChats({ group, user }) ? (
         <DiscussionWithGroupChatTabs select={select} group={group} eventId={eventId} />
       ) : (
         <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />
@@ -69,12 +69,26 @@ function DiscussionWithGroupChatTabs({
   group,
   eventId,
 }: Omit<Props, "groupId"> & { group: GroupModel }) {
+  const [isLoading, regionRoles] = useRegionRoles(group.region);
+  const { roleShort } = useRoleDisplay(regionRoles);
+
+  const teamRole = regionRoles.find((role) => role.id === SystemRoles.Team.id);
+
+  if (isLoading() || !teamRole) {
+    return null;
+  }
+
+  // TODO: Use the correct labels based on defaultRoles, regionRoles and groupRoles
+
   const tabs: { id: string; title: string }[] = [
     // NOTE: To support direct links to the discussions section and to specific comments,
     // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
     // Otherwise the event listeners don't work as expected.
     { id: "discussions", title: "General" },
-    { id: "team", title: "Team" },
+    {
+      id: SystemRoles.Team.id,
+      title: roleShort(predefinedRole(teamRole.id)),
+    },
   ] as const;
 
   return (
