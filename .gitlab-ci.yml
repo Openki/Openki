@@ -33,6 +33,7 @@ lint:
   tags:
     - gitlab-org
   script: ./ci/lint.sh
+  allow_failure: false
 
 # Cleanup generated/cached dependencies
 cleanup:
@@ -58,7 +59,6 @@ prepare_version:
     expire_in: 1 hour
   rules:
     - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 # Unit / E2E / integration tests
 test:
@@ -130,7 +130,6 @@ build_and_push_docker:
     - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
   rules:
     - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 # -------------------------------------------------------------------
 # Stage: Deploy
@@ -151,7 +150,6 @@ deploy_docker:
     IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 #Deploy branch dev
 deploy_dev:
@@ -163,7 +161,6 @@ deploy_dev:
     TARGET_HOST: dev
   rules:
     - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy staging branch
@@ -174,7 +171,6 @@ deploy_staging:
     TARGET_HOST: openki-staging
   rules:
     - if: $CI_COMMIT_BRANCH == "staging"
-      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy NLNet development branch
@@ -185,7 +181,6 @@ deploy_dev2:
     TARGET_HOST: dev2
   rules:
     - if: $CI_COMMIT_BRANCH == "nlnet-dev"
-      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy main branch to sandbox
@@ -196,5 +191,4 @@ deploy_sandbox:
     TARGET_HOST: sandbox
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-      when: always
   trigger: Openki/sysadmin/deploy-config
