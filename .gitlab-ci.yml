@@ -177,10 +177,10 @@ deploy_staging:
 deploy_dev2:
   stage: deploy
   variables:
-    SOURCE_BRANCH: nlnet-dev
+    SOURCE_BRANCH: dev
     TARGET_HOST: dev2
   rules:
-    - if: $CI_COMMIT_BRANCH == "nlnet-dev"
+    - if: $CI_COMMIT_BRANCH == "dev"
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy main branch to sandbox
