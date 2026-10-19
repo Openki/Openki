@@ -224,7 +224,7 @@ export const FindParams = {
 
 const searchTermDelimiter = /\s+/;
 
-export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
+class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
   constructor() {
     super("Groups", {
       transform(group) {

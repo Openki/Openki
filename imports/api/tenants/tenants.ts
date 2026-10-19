@@ -43,7 +43,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
+class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
   constructor() {
     super("Tenants", {
       transform(tenant) {

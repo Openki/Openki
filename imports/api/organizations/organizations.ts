@@ -152,10 +152,7 @@ export const FindParams = {
   ids: Predicates.ids,
 };
 
-export class OrganizationsCollection extends Mongo.Collection<
-  OrganizationEntity,
-  OrganizationModel
-> {
+class OrganizationsCollection extends Mongo.Collection<OrganizationEntity, OrganizationModel> {
   constructor() {
     super("Organizations", {
       transform(tenant) {

@@ -26,7 +26,7 @@ export interface GroupChatMessageEntity {
   updatedAt: Date;
 }
 
-export class GroupChatMessagesCollection extends Mongo.Collection<GroupChatMessageEntity> {
+class GroupChatMessagesCollection extends Mongo.Collection<GroupChatMessageEntity> {
   constructor() {
     super("GroupChatMessages");
 
@@ -35,4 +35,4 @@ export class GroupChatMessagesCollection extends Mongo.Collection<GroupChatMessa
     }
   }
 }
-export const GroupDiscussions = new GroupChatMessagesCollection();
+export const GroupChatMessages = new GroupChatMessagesCollection();

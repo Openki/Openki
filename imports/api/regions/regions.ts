@@ -149,7 +149,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
+class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
   constructor() {
     super("Regions", {
       transform(regionEntity) {

@@ -113,7 +113,7 @@ export const FindParams = { region: Predicates.id };
 
 const searchTermDelimiter = /\s+/;
 
-export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
+class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
   facilityOptions = [
     "projector",
     "screen",
