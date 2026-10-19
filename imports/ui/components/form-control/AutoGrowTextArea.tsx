@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Ref, useEffect, useRef } from "react";
 
 function LegacyAutoGrowTextArea(
   props: Omit<
@@ -48,7 +48,7 @@ export function AutoGrowTextArea(
   props: Omit<
     React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
     "style" | "onInput"
-  >,
+  > & { ref?: Ref<HTMLTextAreaElement> | undefined },
 ) {
   // NOTE: Once `field-sizing: content` becomes Baseline Widely Available,
   // then we should remove the `AutoGrowTextArea` component altogether - because all we need

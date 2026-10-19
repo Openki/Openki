@@ -89,6 +89,9 @@ function DiscussionWithGroupChatTabs({
     },
   ] as const;
 
+  // TODO: Temporary to simplify development
+  const TODO_activeIndex = 1;
+
   return (
     <>
       <nav className="mt-2 group-role-chat-tabs">
@@ -99,14 +102,14 @@ function DiscussionWithGroupChatTabs({
             return (
               <button
                 key={id}
-                className={cx("nav-link border-bottom-0", i === 0 && "active")}
+                className={cx("nav-link border-bottom-0", i === TODO_activeIndex && "active")}
                 id={tabId}
                 data-bs-toggle="tab"
                 data-bs-target={`#${tabContentId}`}
                 type="button"
                 role="tab"
                 aria-controls={tabContentId}
-                aria-selected={i === 0}
+                aria-selected={i === TODO_activeIndex}
               >
                 {title}
               </button>
@@ -121,7 +124,7 @@ function DiscussionWithGroupChatTabs({
           return (
             <div
               key={id}
-              className={cx("tab-pane", i === 0 && "show active")}
+              className={cx("tab-pane", i === TODO_activeIndex && "show active")}
               id={tabContentId}
               role="tabpanel"
               aria-labelledby={tabId}

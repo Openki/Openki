@@ -1,3 +1,6 @@
+import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
+
 import { GroupChatMessages } from "./group-chat-messages";
 import { Groups } from "/imports/api/groups/groups";
 import { Type } from "/imports/utils/CustomChecks";
@@ -21,7 +24,7 @@ export const SendGroupChatMessagePattern = {
 
 export type SendGroupChatMessage = Type<typeof SendGroupChatMessagePattern>;
 
-export const sendMessage = ServerMethod(
+export const sendGroupChatMessage = ServerMethod(
   "groupChatMessages.send",
   async function (rawMessage: SendGroupChatMessage) {
     check(rawMessage, SendGroupChatMessagePattern);
