@@ -17,7 +17,7 @@ import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-import { isSameRole } from "/imports/api/groups/lib/isRole";
+import { isSameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
 export const GroupPredefinedRolePattern = {
@@ -167,11 +167,19 @@ export class Group {
   }
 
   /**
-   * Get list of members with specified role
-   * @param role like 'team'
+   * Get list of members with a specific role.
    */
   membersWithRole(this: GroupModel, role: GroupRoleRef) {
     return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role)));
+  }
+
+  /**
+   * Get a list of members who can access a specific group role chat.
+   *
+   * This includes both users with the specific `role`, and users with the team role.
+   */
+  getGroupChatParticipants(this: GroupModel, role: GroupRoleRef): GroupMember[] {
+    return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role) || isTeam(r)));
   }
 
   userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {
