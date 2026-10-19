@@ -65,7 +65,13 @@ export function GroupRoleChat({ group, roleId }: Props) {
         </div>
       )}
 
-      <AutoGrowTextArea ref={messageInputRef} className="w-100" placeholder="Message" />
+      <AutoGrowTextArea
+        ref={messageInputRef}
+        className="w-100"
+        placeholder="Message"
+        // oxlint-disable jsx-a11y/no-autofocus
+        autoFocus={true}
+      />
 
       {/* TODO: Align the input to the bottom of the tab. Position absolute with scroll padding bottom on the message history */}
       <Button
