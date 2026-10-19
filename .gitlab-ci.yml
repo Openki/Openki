@@ -135,7 +135,9 @@ build_and_push_docker:
 deploy_dev:
   stage: deploy
   # Start immediately after lint testing
-  needs: [lint]
+  needs:
+    - build_and_push_docker
+    - lint
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
