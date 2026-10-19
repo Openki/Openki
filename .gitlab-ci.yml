@@ -134,22 +134,6 @@ build_and_push_docker:
 # -------------------------------------------------------------------
 # Stage: Deploy
 # -------------------------------------------------------------------
-# Deploy docker
-deploy_docker:
-  stage: deploy
-  needs:
-    - job: prepare_version
-      artifacts: true
-    - job: build_and_push_docker
-      artifacts: true
-  trigger:
-    project: Openki/sysadmin/deploy
-    branch: dev
-    strategy: depend
-  variables:
-    IMAGE_TAG: $IMAGE_TAG
-  rules:
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
 
 #Deploy branch dev
 deploy_dev:
