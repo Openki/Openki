@@ -8,6 +8,7 @@ import { useGroupChatMessages } from "/imports/api/group-chat-messages/publicati
 import { GroupChatMessageEntity } from "/imports/api/group-chat-messages/group-chat-messages";
 import { useTracker } from "meteor/react-meteor-data";
 import { getUserName } from "/imports/ui/lib/getUserName";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 
 interface Props {
   group: GroupModel;
@@ -40,6 +41,13 @@ export function GroupRoleChat({ group, roleId }: Props) {
         setIsSubmitting(false);
       });
   }
+
+  // Allow sending messages with a keyboard shortcut
+  useEventListener(document, "keydown", async (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+      await sendMessage();
+    }
+  });
 
   return (
     <>
