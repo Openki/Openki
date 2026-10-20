@@ -136,7 +136,18 @@ export function Panel({
       ref={thumbRef}
       style={{ opacity: expanded ? 0 : 1 }}
     >
-      <div className="panel-thumb-body" onClick={handleOpen}>
+      <div
+        className="panel-thumb-body"
+        role="button"
+        tabIndex={0}
+        onClick={handleOpen}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            handleOpen();
+          }
+        }}
+      >
         {thumb}
       </div>
     </div>
