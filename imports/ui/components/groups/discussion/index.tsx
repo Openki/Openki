@@ -124,7 +124,7 @@ function DiscussionWithGroupChatTabs({
           return (
             <div
               key={id}
-              className={cx("tab-pane", i === TODO_activeIndex && "show active")}
+              className={cx("tab-pane max-h-none", i === TODO_activeIndex && "show active")}
               id={tabContentId}
               role="tabpanel"
               aria-labelledby={tabId}

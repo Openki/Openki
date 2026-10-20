@@ -13,6 +13,8 @@ interface Props {
   roleId: GroupRole["id"];
 }
 
+const messageSequenceTimeLimit = 1000 * 60 * 30; // 30 min
+
 // TODO: Test with group: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
 export function GroupRoleChat({ group, roleId }: Props) {
   // TODO: Load translations for the group roles
@@ -57,15 +59,28 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
       {/* TODO: Make the chat scrollable */}
       {!isLoading() && (
-        <div>
-          {messages.map((message) => (
-            // TODO: Split messages into sequences, grouping messages by the same user together.
-            // If any message is more than 15 minutes later than the previous, or by another user, then split the sequence.
-            // TODO: Only show sender name for the first message in a sequence of messages by the same user
-            // TODO: Only show the timestamp for the last message in a sequence of messages by the same user.
-            // TODO: Add different spacing between each sequence of messages
-            <GroupChatMessage message={message} key={message._id} />
-          ))}
+        <div className="p-2">
+          {messages.map((message, i) => {
+            const previousMessage = messages.at(i - 1);
+            const nextMessage = messages.at(i + 1);
+            // A sequence of messages are sent by the same user, and within a short time.
+            const isFirstInSequence =
+              previousMessage?.userId !== message.userId ||
+              Math.abs(previousMessage.createdAt.getTime() - message.createdAt.getTime()) >
+                messageSequenceTimeLimit;
+            const isLastInSequence =
+              nextMessage?.userId !== message.userId ||
+              Math.abs(nextMessage.createdAt.getTime() - message.createdAt.getTime()) >
+                messageSequenceTimeLimit;
+            return (
+              <GroupChatMessage
+                message={message}
+                key={message._id}
+                isFirstInSequence={isFirstInSequence}
+                isLastInSequence={isLastInSequence}
+              />
+            );
+          })}
         </div>
       )}
 
