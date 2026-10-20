@@ -5,10 +5,8 @@ import { sendGroupChatMessage } from "/imports/api/group-chat-messages/methods";
 import { Button } from "../../Buttons";
 import { AutoGrowTextArea } from "../../form-control/AutoGrowTextArea";
 import { useGroupChatMessages } from "/imports/api/group-chat-messages/publications";
-import { GroupChatMessageEntity } from "/imports/api/group-chat-messages/group-chat-messages";
-import { useTracker } from "meteor/react-meteor-data";
-import { getUserName } from "/imports/ui/lib/getUserName";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
+import { GroupChatMessage } from "./group-chat-message";
 
 interface Props {
   group: GroupModel;
@@ -83,17 +81,5 @@ export function GroupRoleChat({ group, roleId }: Props) {
         Send message
       </Button>
     </>
-  );
-}
-
-interface GroupChatMessageProps {
-  message: GroupChatMessageEntity;
-}
-function GroupChatMessage({ message }: GroupChatMessageProps) {
-  const userName = useTracker(() => getUserName(message.userId));
-  return (
-    <div>
-      {userName}: {message.content}
-    </div>
   );
 }
