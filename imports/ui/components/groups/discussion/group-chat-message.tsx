@@ -32,7 +32,7 @@ export function GroupChatMessage({ message, isFirstInSequence, isLastInSequence 
       <section
         className={cx(
           "py-2 px-3 max-w-75 rounded-3",
-          wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
+          wasSentByCurrentUser ? "bg-primary-subtle" : "bg-white",
         )}
       >
         {!wasSentByCurrentUser && isFirstInSequence && (

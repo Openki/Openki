@@ -74,7 +74,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
   return (
     <div className="max-h-75vh">
       {hasOtherParticipants && (
-        <header className="small p-2 bg-secondary border-bottom border-secondary">
+        <header className="small p-2 border-bottom bg-success border-secondary">
           <details>
             <summary className="d-flex justify-content-between align-items-center">
               <span>Group chat with you and {chatParticipants.length - 1} others.</span>
