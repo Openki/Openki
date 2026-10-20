@@ -131,7 +131,11 @@ export function Panel({
   });
 
   const thumbElement = (
-    <div className={cx("panel-thumb", !draggable && className)} ref={thumbRef}>
+    <div
+      className={cx("panel-thumb", !draggable && className)}
+      ref={thumbRef}
+      style={{ opacity: expanded ? 0 : 1 }}
+    >
       <div className="panel-thumb-body" onClick={handleOpen}>
         {thumb}
       </div>
