@@ -31,6 +31,10 @@ export function GroupRoleChat({ group, roleId }: Props) {
   const chatParticipants = group.getGroupChatParticipants(role);
 
   async function sendMessage() {
+    // Don't allow sending messages if no other participants in the chat
+    if (!hasOtherParticipants) {
+      return;
+    }
     const element = messageInputRef.current;
     const content = element?.value;
 
@@ -50,6 +54,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
   }
 
   const [hasScrolled, setHasScrolled] = useState(false);
+  const hasOtherParticipants = chatParticipants.length >= 2;
 
   // Allow sending messages with a keyboard shortcut
   useEventListener(document, "keydown", async (event) => {
@@ -68,7 +73,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
   return (
     <div className="max-h-75vh">
-      {chatParticipants.length >= 2 && (
+      {hasOtherParticipants && (
         <header className="small p-2 bg-secondary border-bottom border-secondary">
           <details>
             <summary className="d-flex justify-content-between align-items-center">
@@ -141,12 +146,13 @@ export function GroupRoleChat({ group, roleId }: Props) {
           placeholder="Message"
           // oxlint-disable jsx-a11y/no-autofocus
           autoFocus={true}
+          disabled={!hasOtherParticipants}
         />
 
         <button
           className="btn btn-primary btn-sm justify-self-end align-self-end aspect-square rounded-circle"
           onClick={sendMessage}
-          disabled={isSubmitting}
+          disabled={!hasOtherParticipants || isSubmitting}
           id="send-group-chat-message"
           aria-label={"Send message"}
           data-bs-title={"Send message"}
