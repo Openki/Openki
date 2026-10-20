@@ -32,7 +32,7 @@ export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
       throw new Meteor.Error(403, `User can not access group chat for role ${roleId}`);
     }
 
-    return GroupChatMessages.find({ groupId, roleId });
+    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
   },
   (groupId: string, roleId: string) => {
     return GroupChatMessages.find({ groupId, roleId });
