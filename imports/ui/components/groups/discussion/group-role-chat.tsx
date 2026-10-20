@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 
 import { type GroupRole, type GroupModel } from "/imports/api/groups/groups";
 import { sendGroupChatMessage } from "/imports/api/group-chat-messages/methods";
-import { Button } from "../../Buttons";
 import { AutoGrowTextArea } from "../../form-control/AutoGrowTextArea";
 import { useGroupChatMessages } from "/imports/api/group-chat-messages/publications";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
@@ -89,23 +88,26 @@ export function GroupRoleChat({ group, roleId }: Props) {
       {/* IDEA: Show a button to scroll to the most recent message if the latest messages are not visible */}
 
       {/* TODO: Align the input to the bottom of the tab. Position absolute with scroll padding bottom on the message history */}
-      <AutoGrowTextArea
-        ref={messageInputRef}
-        className="w-100"
-        placeholder="Message"
-        // oxlint-disable jsx-a11y/no-autofocus
-        autoFocus={true}
-      />
+      <div className="d-flex gap-2 p-2">
+        <AutoGrowTextArea
+          ref={messageInputRef}
+          className="form-control flex-fill"
+          placeholder="Message"
+          // oxlint-disable jsx-a11y/no-autofocus
+          autoFocus={true}
+        />
 
-      {/* TODO: Make the send button an inline icon button with a label */}
-      <Button
-        className="btn-primary d-block"
-        onClick={sendMessage}
-        disabled={isSubmitting}
-        id="send-group-chat-message"
-      >
-        Send message
-      </Button>
+        <button
+          className="btn btn-primary btn-sm justify-self-end"
+          onClick={sendMessage}
+          disabled={isSubmitting}
+          id="send-group-chat-message"
+          aria-label={"Send message"}
+          data-bs-title={"Send message"}
+        >
+          <span className="fa-solid fa-paper-plane cursor-pointer fa-xl fa-fw"></span>
+        </button>
+      </div>
     </>
   );
 }
