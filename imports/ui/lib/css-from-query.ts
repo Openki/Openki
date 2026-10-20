@@ -12,7 +12,7 @@ export class CssFromQuery {
     // define a default set of customizable properties
     this.addCustomizableProperties([
       ["bgcolor", "background-color", "body"],
-      ["color", "color", "body, i"],
+      ["color", "color", "body"],
       ["fontsize", "font-size", "*"],
       ["fontweight", "font-weight", "p"],
     ]);
