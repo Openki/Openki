@@ -57,7 +57,7 @@ export function Hints({
         url: e.url,
       })),
     ],
-    [parallelEvents, externalParallelEvents, Router],
+    [parallelEvents, externalParallelEvents],
   );
 
   const inSameRoom = allParallelEvents.find(
