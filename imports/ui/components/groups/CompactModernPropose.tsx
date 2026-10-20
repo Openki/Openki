@@ -33,7 +33,10 @@ export function CompactPropose({ organization }: Props) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            Router.go("proposeGroup", undefined, {
+
+            // Reload the the window to help the kiosk extensions on the screen
+            // to detect change so it shows a back button
+            location.href = Router.url("proposeGroup", undefined, {
               query: organization ? { title, organization } : { title },
             });
           }}
