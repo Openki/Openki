@@ -40,8 +40,8 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
   const [isRegionLoading, region] = useRegionDetails(group.region);
   const visibleOrganizations = group.organizations?.filter(
     (organizationId) =>
+      // hide organization where are from the region set
       !(
-        // hide organization where are from the region set
         region?.defaultTeamOrganizations?.includes(organizationId) &&
         // when user is not member of the organization or a admin
         !user?.canPromoteWith(organizationId) &&
@@ -84,20 +84,17 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
           )}
 
           {group.editableBy(user) && (
-            <h4 className="card-title mt-3">
-              {t("groups.details.yourAreTeam", "You are part of the coordination-team")}{" "}
-              <a
-                className="btn btn-sm btn-secondary"
-                href={Router.path("showGroup", group, { query: { edit: "1" } })}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t("groups.details.editMode", "Edit mode", {
-                  SITENAME: siteName,
-                })}{" "}
-                <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
-              </a>
-            </h4>
+            <a
+              className="btn btn-sm btn-secondary"
+              href={Router.path("showGroup", group, { query: { edit: "1" } })}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("groups.details.editMode", "Edit mode", {
+                SITENAME: siteName,
+              })}{" "}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
+            </a>
           )}
 
           <hr className="hr-flush border-dark" />
