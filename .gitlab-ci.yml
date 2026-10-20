@@ -136,11 +136,14 @@ deploy_dev:
   stage: deploy
   # Start immediately after lint testing
   needs:
-    - build_and_push_docker
-    - lint
+    - job: lint
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
+    IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
   trigger: Openki/sysadmin/deploy-config
