@@ -57,22 +57,24 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
   return (
     <>
-      <header className="small p-2 bg-secondary">
-        <details>
-          <summary className="d-flex justify-content-between align-items-center">
-            <span>Group chat with you and {chatParticipants.length - 1} others.</span>
-            <span className="btn btn-sm btn-light">Show participants</span>
-          </summary>
+      {chatParticipants.length >= 2 && (
+        <header className="small p-2 bg-secondary">
+          <details>
+            <summary className="d-flex justify-content-between align-items-center">
+              <span>Group chat with you and {chatParticipants.length - 1} others.</span>
+              <span className="btn btn-sm btn-light">Show participants</span>
+            </summary>
 
-          <ul>
-            {chatParticipants.map((participant) => (
-              <li key={participant.user}>
-                <ProfileLink userId={participant.user} />
-              </li>
-            ))}
-          </ul>
-        </details>
-      </header>
+            <ul>
+              {chatParticipants.map((participant) => (
+                <li key={participant.user}>
+                  <ProfileLink userId={participant.user} />
+                </li>
+              ))}
+            </ul>
+          </details>
+        </header>
+      )}
 
       {/* TODO: Add a max height to the chat and make it scrollable */}
       {!isLoading() && (
