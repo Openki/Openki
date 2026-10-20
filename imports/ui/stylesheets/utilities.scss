@@ -92,6 +92,10 @@ $utilities: map.merge(
   )
 );
 
+.align-content-baseline {
+  align-content: baseline;
+}
+
 .line-clamp-2 {
   @include ellipsis-multiline(2);
 }

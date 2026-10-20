@@ -1,5 +1,5 @@
 .rummage {
-  max-block-size: 100vh;
+  min-block-size: 100vh;
   overflow-y: clip;
 
   &.animated .draggable {

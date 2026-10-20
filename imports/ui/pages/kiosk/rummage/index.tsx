@@ -91,7 +91,7 @@ export function KioskRummagePage() {
         <div className="row">
           <div
             className={cx(
-              "col-8 d-flex align-items-stretch flex-wrap gap-3 justify-content-center rummage position-relative py-3",
+              "col-8 d-flex align-content-baseline flex-wrap gap-3 justify-content-center rummage position-relative py-3",
               sorted && "sorted",
               animated && "animated",
             )}
