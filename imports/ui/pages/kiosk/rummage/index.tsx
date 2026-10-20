@@ -68,8 +68,9 @@ export function KioskRummagePage() {
   query = { ...query, region };
 
   const filter = new Filtering(FindParams).read(query);
+  const count = Number.parseInt(query.count || "", 10) || 100;
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
-  const [isLoading, groups] = useFindFilter(filter.toQuery(), undefined, undefined, sort.spec());
+  const [isLoading, groups] = useFindFilter(filter.toQuery(), count, undefined, sort.spec());
 
   if (isLoading()) {
     return <LoadingPage />;
