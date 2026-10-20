@@ -47,6 +47,10 @@ export function GroupRoleChat({ group, roleId }: Props) {
       .then(() => {
         // Clear input after successfully sending the message
         element.value = "";
+        // Show your new message
+        if (messagesContainerRef.current) {
+          messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
       })
       .finally(() => {
         setIsSubmitting(false);
