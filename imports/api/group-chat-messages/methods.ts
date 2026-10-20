@@ -40,6 +40,10 @@ export const sendGroupChatMessage = ServerMethod(
       throw new Meteor.Error(404, `Group with id "${message.groupId}" does not exist`);
     }
 
+    if (group.archived) {
+      throw new Meteor.Error(400, "Not allow to send messages in archived groups");
+    }
+
     const role = group.roles.find((groupRole) => groupRole.id === message.roleId);
     if (!role) {
       throw new Meteor.Error(400, `Role with id "${message.roleId}" does not exist`);

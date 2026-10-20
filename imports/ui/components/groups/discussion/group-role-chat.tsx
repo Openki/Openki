@@ -57,7 +57,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
         Group {group.name} role chat for {roleId}
       </h2>
 
-      {/* TODO: Make the chat scrollable */}
+      {/* TODO: Add a max height to the chat and make it scrollable */}
       {!isLoading() && (
         <div className="p-2">
           {messages.map((message, i) => {
