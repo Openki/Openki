@@ -9,9 +9,11 @@ import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 interface Props {
   message: GroupChatMessageEntity;
+  isFirstInSequence: boolean;
+  isLastInSequence: boolean;
 }
 
-export function GroupChatMessage({ message }: Props) {
+export function GroupChatMessage({ message, isFirstInSequence, isLastInSequence }: Props) {
   const senderUserName = useTracker(() => getUserName(message.userId));
   const currentUserId = Meteor.userId();
   const wasSentByCurrentUser = !!currentUserId && message.userId === currentUserId;
@@ -24,6 +26,7 @@ export function GroupChatMessage({ message }: Props) {
       className={cx(
         "d-flex flex-column gap-1",
         wasSentByCurrentUser ? "align-items-end" : "align-items-start",
+        isLastInSequence ? "mb-4" : "mb-1",
       )}
     >
       <section
@@ -32,22 +35,26 @@ export function GroupChatMessage({ message }: Props) {
           wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
         )}
       >
-        {!wasSentByCurrentUser && <span className="fw-bold mb-2">{senderUserName}</span>}
+        {!wasSentByCurrentUser && isFirstInSequence && (
+          <span className="fw-bold mb-2">{senderUserName}</span>
+        )}
         <div className="whitespace-pre-line text-dark">{message.content}</div>
 
-        <time
-          dateTime={message.createdAt.toISOString()}
-          className="small pt-2 fst-italic w-100 d-block text-end"
-        >
-          {message.createdAt.toLocaleString(locale, {
-            day: "numeric",
-            month: "long",
-            year: message.createdAt.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          })}
-        </time>
+        {isLastInSequence && (
+          <time
+            dateTime={message.createdAt.toISOString()}
+            className="small pt-2 fst-italic w-100 d-block text-end"
+          >
+            {message.createdAt.toLocaleString(locale, {
+              day: "numeric",
+              month: "long",
+              year: message.createdAt.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </time>
+        )}
       </section>
     </div>
   );
