@@ -82,10 +82,11 @@ function DiscussionWithGroupChatTabs({
     // NOTE: To support direct links to the discussions section and to specific comments,
     // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
     // Otherwise the event listeners don't work as expected.
-    { id: "discussions", title: "General" },
+    { id: "discussions", title: "Public" },
     {
       id: SystemRoles.Team.id,
-      title: roleShort(predefinedRole(teamRole.id)),
+      // TODO: Replace this with a formatted i18n string
+      title: `${roleShort(predefinedRole(teamRole.id))} chat`,
     },
   ] as const;
 
