@@ -6,6 +6,7 @@ import { AutoGrowTextArea } from "../../form-control/AutoGrowTextArea";
 import { useGroupChatMessages } from "/imports/api/group-chat-messages/publications";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { GroupChatMessage } from "./group-chat-message";
+import { ProfileLink } from "../../profile-link";
 
 interface Props {
   group: GroupModel;
@@ -22,6 +23,11 @@ export function GroupRoleChat({ group, roleId }: Props) {
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const role = group.roles.find((groupRole) => groupRole.id === roleId);
+  if (!role) {
+    throw new Error(`Expected role to exist in group: ${roleId}`);
+  }
+  const chatParticipants = group.getGroupChatParticipants(role);
 
   async function sendMessage() {
     const element = messageInputRef.current;
@@ -51,10 +57,22 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
   return (
     <>
-      {/* IDEA: Show some info about the group role chat to explain how it works, who can access it etc */}
-      <h2>
-        Group {group.name} role chat for {roleId}
-      </h2>
+      <header className="small p-2 bg-secondary">
+        <details>
+          <summary className="d-flex justify-content-between align-items-center">
+            <span>Group chat with you and {chatParticipants.length - 1} others.</span>
+            <span className="btn btn-sm btn-light">Show participants</span>
+          </summary>
+
+          <ul>
+            {chatParticipants.map((participant) => (
+              <li key={participant.user}>
+                <ProfileLink userId={participant.user} />
+              </li>
+            ))}
+          </ul>
+        </details>
+      </header>
 
       {/* TODO: Add a max height to the chat and make it scrollable */}
       {!isLoading() && (
