@@ -30,6 +30,8 @@ $utilities: map.merge(
       class: max-h,
       values: (
         none: none,
+        50vh: 50vh,
+        75vh: 75vh,
       ),
     ),
     "min-h": (
@@ -123,6 +125,10 @@ $utilities: map.merge(
 
 .aspect-square {
   aspect-ratio: 1 / 1;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 // Optional Bootstrap Utilities

@@ -15,9 +15,9 @@ interface Props {
 
 const messageSequenceTimeLimit = 1000 * 60 * 30; // 30 min
 
-// TODO: Test with group: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
+// TODO: Test with group with chat history: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
+// TODO: Test with group with no chat history: http://localhost:3000/group/c294d35055/deutschkurs
 export function GroupRoleChat({ group, roleId }: Props) {
-  // TODO: Load translations for the group roles
   // TODO: Add translation strings
 
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
@@ -56,16 +56,16 @@ export function GroupRoleChat({ group, roleId }: Props) {
   });
 
   return (
-    <>
+    <div className="max-h-75vh">
       {chatParticipants.length >= 2 && (
-        <header className="small p-2 bg-secondary">
+        <header className="small p-2 bg-secondary border-bottom border-secondary">
           <details>
             <summary className="d-flex justify-content-between align-items-center">
               <span>Group chat with you and {chatParticipants.length - 1} others.</span>
               <span className="btn btn-sm btn-light">Show participants</span>
             </summary>
 
-            <ul>
+            <ul className="m-0">
               {chatParticipants.map((participant) => (
                 <li key={participant.user}>
                   <ProfileLink userId={participant.user} />
@@ -78,7 +78,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
       {/* TODO: Add a max height to the chat and make it scrollable */}
       {!isLoading() && (
-        <div className="p-2">
+        <div className="p-2 max-h-50vh overflow-y-auto">
           {messages.map((message, i) => {
             const previousMessage = messages.at(i - 1);
             const nextMessage = messages.at(i + 1);
@@ -128,6 +128,6 @@ export function GroupRoleChat({ group, roleId }: Props) {
           <span className="fa-solid fa-paper-plane cursor-pointer fa-xl fa-fw"></span>
         </button>
       </div>
-    </>
+    </div>
   );
 }
