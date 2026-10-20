@@ -91,6 +91,14 @@ $utilities: map.merge(
           )
         ),
     ),
+    "overflow-anchor": (
+      property: overflow-anchor,
+      class: overflow-anchor,
+      values: (
+        none: none,
+        auto: auto,
+      ),
+    ),
   )
 );
 
