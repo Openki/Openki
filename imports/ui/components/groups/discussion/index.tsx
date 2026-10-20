@@ -47,7 +47,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
   }
 
   return (
-    <div className="page-component discussion mt-4">
+    <div className="page-component discussion mt-4 mb-5">
       <div className="page-component-header">
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>

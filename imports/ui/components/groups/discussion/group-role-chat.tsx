@@ -91,14 +91,14 @@ export function GroupRoleChat({ group, roleId }: Props) {
       <div className="d-flex gap-2 p-2">
         <AutoGrowTextArea
           ref={messageInputRef}
-          className="form-control flex-fill"
+          className="form-control flex-fill pt-2"
           placeholder="Message"
           // oxlint-disable jsx-a11y/no-autofocus
           autoFocus={true}
         />
 
         <button
-          className="btn btn-primary btn-sm justify-self-end"
+          className="btn btn-primary btn-sm justify-self-end align-self-end aspect-square rounded-circle"
           onClick={sendMessage}
           disabled={isSubmitting}
           id="send-group-chat-message"
