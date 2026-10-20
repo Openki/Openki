@@ -256,6 +256,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
             <button
               className="btn btn-link float-end ms-2"
               data-bs-title={t("organizationDetails.removeFilter", "See all groups")}
+              aria-label={t("organizationDetails.removeFilter", "See all groups")}
               onClick={() => {
                 Router.go("home"); // Got a better idea?
               }}
@@ -266,6 +267,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
               <button
                 className="btn btn-link float-end ms-2"
                 data-bs-title={t("organizations.settings.title")}
+                aria-label={t("organizations.settings.title")}
                 onClick={() => {
                   setEditingSettings(!editingSettings);
                 }}
