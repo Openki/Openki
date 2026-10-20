@@ -9,12 +9,17 @@ if (Meteor.isDevelopment) {
    */
   (function ensureForceReloadAfterHMR() {
     const key = "DEV_HAS_RENDERED_BEFORE";
+
+    const isPageReload =
+      (performance.getEntriesByType("navigation").at(0) as PerformanceNavigationTiming)?.type ===
+        "reload" || performance.navigation?.type === performance.navigation?.TYPE_RELOAD;
+
     if (
       sessionStorage.getItem(key) &&
       // Only trigger a forced reload when the user didn't explicitly reload the page
       // with F5 or the reload button.
       // This prevents double force-reloads and thus cuts reload time in half during development.
-      performance.navigation.type !== performance.navigation.TYPE_RELOAD
+      isPageReload
     ) {
       // Force-reload the page to make sure it's updated.
       // This avoids the infinite loading screen and removes the need for devs
