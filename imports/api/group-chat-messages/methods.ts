@@ -7,7 +7,6 @@ import { Type } from "/imports/utils/CustomChecks";
 import { sanitizeHtml } from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
-// TODO: Test with group: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
 function sanitizeMessage(rawMessage: { content: string; groupId: string; roleId: string }) {
   return {
     content: sanitizeHtml(rawMessage.content),

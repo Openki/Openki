@@ -13,6 +13,7 @@ interface Props {
   roleId: GroupRole["id"];
 }
 
+// TODO: Test with group: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
 export function GroupRoleChat({ group, roleId }: Props) {
   // TODO: Load translations for the group roles
   // TODO: Add translation strings
@@ -58,11 +59,21 @@ export function GroupRoleChat({ group, roleId }: Props) {
       {!isLoading() && (
         <div>
           {messages.map((message) => (
+            // TODO: Split messages into sequences, grouping messages by the same user together.
+            // If any message is more than 15 minutes later than the previous, or by another user, then split the sequence.
+            // TODO: Only show sender name for the first message in a sequence of messages by the same user
+            // TODO: Only show the timestamp for the last message in a sequence of messages by the same user.
+            // TODO: Add different spacing between each sequence of messages
             <GroupChatMessage message={message} key={message._id} />
           ))}
         </div>
       )}
 
+      {/* TODO: Scroll to bottom of the messages on initial render */}
+      {/* TODO: Virtualize the message list to only render the items currently in view */}
+      {/* IDEA: Show a button to scroll to the most recent message if the latest messages are not visible */}
+
+      {/* TODO: Align the input to the bottom of the tab. Position absolute with scroll padding bottom on the message history */}
       <AutoGrowTextArea
         ref={messageInputRef}
         className="w-100"
@@ -71,7 +82,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
         autoFocus={true}
       />
 
-      {/* TODO: Align the input to the bottom of the tab. Position absolute with scroll padding bottom on the message history */}
+      {/* TODO: Make the send button an inline icon button with a label */}
       <Button
         className="btn-primary d-block"
         onClick={sendMessage}
