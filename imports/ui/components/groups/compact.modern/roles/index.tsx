@@ -27,6 +27,10 @@ export function Roles({ group }: { group: GroupModel }) {
 
   const groupRolesWithoutParticipant = groupRoles.filter((role) => !isParticipant(role));
 
+  const userRoles = groupRolesWithoutParticipant.filter(
+    (role) => !hasRoleUser(group.members, role, user?._id),
+  );
+
   const userHasOtherRole = groupRolesWithoutParticipant.some((role) =>
     hasRoleUser(group.members, role, user?._id),
   );
@@ -47,18 +51,18 @@ export function Roles({ group }: { group: GroupModel }) {
           <Role key={role.id} group={group} role={role} />
         ))}
 
-      {hasParticipantRole && hasRoleUser(group.members, SystemRoles.Participant, user?._id) && (
-        <>
-          <h4 className="card-title mt-2">
-            {t("groups.details.roles.title", "Do you want to contribute?")}
-          </h4>
-          {groupRolesWithoutParticipant
-            .filter((role) => !hasRoleUser(group.members, role, user?._id))
-            .map((role) => (
+      {hasParticipantRole &&
+        hasRoleUser(group.members, SystemRoles.Participant, user?._id) &&
+        userRoles.length > 0 && (
+          <>
+            <h4 className="card-title mt-2">
+              {t("groups.details.roles.title", "Do you want to contribute?")}
+            </h4>
+            {userRoles.map((role) => (
               <Role key={role.id} group={group} role={role} />
             ))}
-        </>
-      )}
+          </>
+        )}
     </div>
   );
 }
