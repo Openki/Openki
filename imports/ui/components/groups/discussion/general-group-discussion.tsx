@@ -76,6 +76,11 @@ export function GeneralGroupDiscussion({ select, groupId, eventId }: Props) {
   }
 
   useEventListener(elementRef, "notifyAll", () => {
+    const tab = document.querySelector<HTMLElement>(".group-role-chat-tabs #tab-discussions");
+    if (!tab) {
+      throw new Error("Could not focus group discussions tab");
+    }
+    tab.click();
     setEdit(true);
     setNotifyAll(true);
     window.location.hash = "#discussion";
