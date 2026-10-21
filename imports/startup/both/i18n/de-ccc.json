@@ -546,7 +546,6 @@
   "groups.details.moreAboutThisGroup": "Mehr über diese Gruppe auf {SITENAME}",
   "groups.details.nextEvent": "Nächste Session",
   "groups.details.roles.title": "Möchtest du beitragen?",
-  "groups.details.yourAreTeam": "Du bist Teil des Koordinationsteams",
   "groups.organizationList.add.addOrganization": "Füge eine Organisation hinzu",
   "groups.organizationList.addText": "Mit Organisation verbinden",
   "groups.organizationList.organizationAdded.error": "Hinzufügen ist fehlgeschlagen",
