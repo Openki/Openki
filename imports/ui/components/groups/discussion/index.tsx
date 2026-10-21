@@ -3,15 +3,13 @@ import { useTranslation } from "react-i18next";
 
 import { useDetails } from "/imports/api/groups/publications";
 import { type GroupRole, type GroupModel } from "/imports/api/groups/groups";
-import { type UserModel } from "/imports/api/users/users";
-import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
 import { GeneralGroupDiscussion } from "/imports/ui/components/groups/discussion/general-group-discussion";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { GroupRoleChat } from "./group-role-chat";
-
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
@@ -22,29 +20,37 @@ export interface Props {
   eventId?: string | undefined;
 }
 
-// IDEA: This function could return the available role chats instead and then we could
-// use it to both determine if any chats can be accesed, and which ones specifically.
-function canUserAccessRoleChats({ group, user }: { group: GroupModel; user: UserModel | null }) {
-  if (!user) return false;
+function useAvailableRoleChats(group: GroupModel | undefined): GroupRole[] {
+  const user = useUser();
 
-  // NOTE: Here we could add the group.roles that should have a group chat enabled.
-  // For now, only the team role is enabled
-  const rolesWithChatEnabled: GroupRole[] = [];
-
-  return (
+  if (
+    !group ||
+    // Only available for signed in users
+    !user ||
     // NOTE: Only enabled during development for now until the feature is ready for production.
-    Meteor.isDevelopment &&
-    // Users with the team role can access all role chats even if they don't have that role
-    (group.userHasRole(user._id, SystemRoles.Team) ||
-      // Users with the specific role can access that chat.
-      rolesWithChatEnabled.some((role) => group.userHasRole(user._id, role)))
+    !Meteor.isDevelopment
+  ) {
+    return [];
+  }
+
+  const rolesWithChatEnabled: GroupRole[] = [SystemRoles.Team];
+
+  const availableRoleChats = group.roles.filter((groupRole) =>
+    rolesWithChatEnabled.some(
+      (role) =>
+        // The chat needs to be enabledfor the specific role
+        groupRole.id === role.id &&
+        // The user needs the specific role, unless they have the team role and should have access to all role chats.
+        (group.userHasRole(user._id, role) || group.userHasRole(user._id, SystemRoles.Team)),
+    ),
   );
+  return availableRoleChats;
 }
 
 export function Discussion({ select, groupId, eventId }: Props) {
   const [isLoading, group] = useDetails(groupId);
-  const user = useUser();
   const { t } = useTranslation();
+  const availableRoleChats = useAvailableRoleChats(group);
 
   if (isLoading() || !group) {
     return null;
@@ -56,8 +62,13 @@ export function Discussion({ select, groupId, eventId }: Props) {
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      {canUserAccessRoleChats({ group, user }) ? (
-        <DiscussionWithGroupChatTabs select={select} group={group} eventId={eventId} />
+      {availableRoleChats.length ? (
+        <DiscussionWithGroupChatTabs
+          select={select}
+          group={group}
+          eventId={eventId}
+          availableRoleChats={availableRoleChats}
+        />
       ) : (
         <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />
       )}
@@ -72,26 +83,24 @@ function DiscussionWithGroupChatTabs({
   select,
   group,
   eventId,
-}: Omit<Props, "groupId"> & { group: GroupModel }) {
+  availableRoleChats,
+}: Omit<Props, "groupId"> & { group: GroupModel; availableRoleChats: GroupRole[] }) {
   const [isLoading, regionRoles] = useRegionRoles(group.region);
   const { roleShort } = useRoleDisplay(regionRoles);
 
-  const teamRole = regionRoles.find((role) => role.id === SystemRoles.Team.id);
-
-  if (isLoading() || !teamRole) {
+  if (isLoading()) {
     return null;
   }
 
   const tabs: { id: string; title: string }[] = [
-    // NOTE: To support direct links to the discussions section and to specific comments,
-    // the GeneralGroupDiscussion section must right now be the first tab so it renders by default.
-    // Otherwise the event listeners don't work as expected.
+    // The general group discussions
     { id: "discussions", title: "Public" },
-    {
-      id: SystemRoles.Team.id,
+    // Role chat tabs
+    ...availableRoleChats.map((role) => ({
+      id: role.id,
       // TODO: Replace this with a formatted i18n string
-      title: `${roleShort(predefinedRole(teamRole.id))} chat`,
-    },
+      title: `${roleShort(role)} chat`,
+    })),
   ] as const;
 
   // TODO: Temporary to simplify development
@@ -111,7 +120,6 @@ function DiscussionWithGroupChatTabs({
                 id={tabId}
                 data-bs-toggle="tab"
                 data-bs-target={`#${tabContentId}`}
-                type="button"
                 role="tab"
                 aria-controls={tabContentId}
                 aria-selected={i === TODO_activeIndex}
