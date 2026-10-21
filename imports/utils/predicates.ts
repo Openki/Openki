@@ -1,7 +1,8 @@
 import moment from "moment";
-import { union, difference, intersection, uniq } from "lodash-es";
+import { union, difference } from "lodash-es";
 
 import { FilteringReadError } from "./filtering";
+import { getUniqueValues } from "./getUniqueValues";
 
 export interface StateWrapper<State = unknown, Query = State> {
   merge(other: StateWrapper<State, Query>): StateWrapper<State, Query>;
@@ -64,7 +65,7 @@ export const ids: Predicate<string[]> = function (paramOrState) {
     return undefined;
   }
 
-  state = uniq(state);
+  state = getUniqueValues(state);
 
   return {
     merge(other) {
@@ -85,7 +86,8 @@ export const ids: Predicate<string[]> = function (paramOrState) {
     equals(other) {
       const otherIds = other.get();
       return (
-        state.length === otherIds.length && intersection(state, otherIds).length === state.length
+        state.length === otherIds.length &&
+        new Set(state).intersection(new Set(otherIds)).size === state.length
       );
     },
   };
@@ -266,7 +268,7 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
       return undefined;
     }
 
-    state = uniq(state);
+    state = getUniqueValues(state);
 
     state = state.map((v) => {
       const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
@@ -297,7 +299,7 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
         const otherStates = other.get();
         return (
           state.length === otherStates.length &&
-          intersection(state, otherStates).length === state.length
+          new Set(state).intersection(new Set(otherStates)).size === state.length
         );
       },
     };
