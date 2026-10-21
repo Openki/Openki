@@ -35,14 +35,12 @@ export function Panel({
   thumb,
   full,
   draggable,
-  onChange,
 }: {
   id: string;
   className?: string;
   thumb: ReactNode;
   full: ReactNode;
   draggable?: boolean | undefined;
-  onChange: (view: "thumb" | "full") => void;
 }) {
   const thumbRef = useRef<HTMLDivElement>(null);
   const fullRef = useRef<HTMLDivElement>(null);
@@ -96,7 +94,6 @@ export function Panel({
   }
 
   useEffect(() => {
-    onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
       if (thumbRef.current) {
         scroll(thumbRef.current, "smooth");
@@ -131,13 +128,9 @@ export function Panel({
   });
 
   const thumbElement = (
-    <div
-      className={cx("panel-thumb", !draggable && className)}
-      ref={thumbRef}
-      style={{ opacity: expanded ? 0 : 1 }}
-    >
+    <div className={cx("panel-thumb h-100", !draggable && className)} ref={thumbRef}>
       <div
-        className="panel-thumb-body"
+        className="panel-thumb-body h-100"
         role="button"
         tabIndex={0}
         onClick={handleOpen}
@@ -155,7 +148,11 @@ export function Panel({
 
   return (
     <div className={cx("panel", inIframe && "panel-iframe")}>
-      {draggable ? <Draggable className={className}>{thumbElement}</Draggable> : thumbElement}
+      {draggable ? (
+        <Draggable className={cx(className, expanded && "opacity-0")}>{thumbElement}</Draggable>
+      ) : (
+        thumbElement
+      )}
       {expanded && (
         <div
           ref={fullRef}
@@ -167,15 +164,13 @@ export function Panel({
         >
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
             <div className="panel-full" onClick={(e) => e.stopPropagation()} style={rect}>
-              <div className="panel-full-body">
-                {full}
-                <div className="panel-minimize">
-                  <button
-                    className="btn-close btn-close-circle"
-                    onClick={handleClose}
-                    aria-label={t("_button.close", "Close")}
-                  ></button>
-                </div>
+              {full}
+              <div className="panel-minimize">
+                <button
+                  className="btn-close btn-close-circle"
+                  onClick={handleClose}
+                  aria-label={t("_button.close")}
+                />
               </div>
             </div>
           </div>

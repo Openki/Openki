@@ -29,7 +29,8 @@ $transition-duration: 0.35s;
 .panel-full {
   position: absolute;
   transition: all $transition-duration;
-  will-change: left, top, right, bottom;
+  will-change: left, top, width, height, overflow;
+  overflow: hidden;
 }
 
 .panel-animation .panel-full {
@@ -37,7 +38,8 @@ $transition-duration: 0.35s;
   right: 4% !important;
   width: 92% !important;
   padding-bottom: 10px !important;
-  height: auto !important;
+  height: calc(100vh - 20px) !important;
+  overflow: initial !important;
 
   // If the panel is opened in an iframe, we don't want to set the top position
   // to 10px, because it will be cut off by the iframe. Instead, we use the position

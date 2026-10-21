@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { Collapse } from "/imports/startup/client/bootstrap";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -18,24 +17,11 @@ import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 import { OrganizationName } from "/imports/ui/components/OrganizationName";
 import { Roles } from "./roles";
 
-export function Full({ group, animation }: { group: GroupModel; animation: "show" | "hide" }) {
+export function Full({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const { dateFormat, timeFormat } = useDateTimeFormat();
   const siteName = useSiteName();
   const user = useUser();
-  const collapseElementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (collapseElementRef.current) {
-        if (animation === "show") {
-          Collapse.getOrCreateInstance(collapseElementRef.current).show();
-        } else {
-          Collapse.getOrCreateInstance(collapseElementRef.current).hide();
-        }
-      }
-    }, 1);
-  }, [animation]);
 
   const [isRegionLoading, region] = useRegionDetails(group.region);
   const visibleOrganizations = group.organizations?.filter(
@@ -74,91 +60,84 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
         <div className="panel-hide-line-1">
           <i className="fs-4 fa-solid fa-arrow-right-long" />
         </div>
-        <div className="collapse" ref={collapseElementRef}>
-          <p
-            className="card-text"
-            dangerouslySetInnerHTML={{ __html: group.description || "" }}
-          ></p>
-          {!!group._id && (
-            <CustomFieldDisplay groupId={group._id} customClassName="card-text mb-1" />
-          )}
 
-          {group.editableBy(user) && (
-            <a
-              className="btn btn-sm btn-secondary"
-              href={Router.path("showGroup", group, { query: { edit: "1" } })}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t("groups.details.editMode", "Edit mode", {
-                SITENAME: siteName,
-              })}{" "}
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
-            </a>
-          )}
+        <p className="card-text" dangerouslySetInnerHTML={{ __html: group.description || "" }}></p>
+        {!!group._id && <CustomFieldDisplay groupId={group._id} customClassName="card-text mb-1" />}
 
-          <hr className="hr-flush border-dark" />
+        {group.editableBy(user) && (
+          <a
+            className="btn btn-sm btn-secondary"
+            href={Router.path("showGroup", group, { query: { edit: "1" } })}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t("groups.details.editMode", "Edit mode", {
+              SITENAME: siteName,
+            })}{" "}
+            <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
+          </a>
+        )}
 
-          <div className="mw-sm">
-            <Roles group={group} />
-          </div>
+        <hr className="hr-flush border-dark" />
 
-          <hr className="hr-flush border-dark" />
-
-          {group.nextEvent && (
-            <>
-              <h4 className="card-title">{t("groups.details.nextEvent", "Next event")}</h4>
-              <div className="card d-inline-flex border-2">
-                <div className="card-body bg-event">
-                  <i className="fa-regular fa-fw fa-calendar" />{" "}
-                  {dateFormat(group.nextEvent.startLocal)} ·{" "}
-                  {timeFormat(group.nextEvent.startLocal)}
-                  <br />
-                  {!!locationPreview && (
-                    <>
-                      <i className="fa-solid fa-fw fa-location-dot" />
-                      {locationPreview}
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-
-          {!isRegionLoading() && !!organizedByOrganizations?.length && (
-            <p className="card-text">
-              <strong>{t("groups.details.organizedBy", "Organized by:")}</strong>{" "}
-              {ReactJoin(
-                organizedByOrganizations.map((organization) => (
-                  <OrganizationName key={organization} id={organization} />
-                )),
-              )}
-            </p>
-          )}
-
-          {group.members.some((m) => m.user === user?._id) && (
-            <>
-              <hr className="hr-flush border-dark" />
-              <Discussion groupId={group._id} />
-            </>
-          )}
-
-          <hr className="hr-flush border-dark" />
-
-          <p className="card-text text-center mb-0">
-            <a
-              className="btn btn-secondary"
-              href={Router.path("showGroup", group)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t("groups.details.moreAboutThisGroup", "More about this group on {SITENAME}", {
-                SITENAME: siteName,
-              })}{" "}
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
-            </a>
-          </p>
+        <div className="mw-sm">
+          <Roles group={group} />
         </div>
+
+        <hr className="hr-flush border-dark" />
+
+        {group.nextEvent && (
+          <>
+            <h4 className="card-title">{t("groups.details.nextEvent", "Next event")}</h4>
+            <div className="card d-inline-flex border-2">
+              <div className="card-body bg-event">
+                <i className="fa-regular fa-fw fa-calendar" />{" "}
+                {dateFormat(group.nextEvent.startLocal)} · {timeFormat(group.nextEvent.startLocal)}
+                <br />
+                {!!locationPreview && (
+                  <>
+                    <i className="fa-solid fa-fw fa-location-dot" />
+                    {locationPreview}
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
+        {!isRegionLoading() && !!organizedByOrganizations?.length && (
+          <p className="card-text">
+            <strong>{t("groups.details.organizedBy", "Organized by:")}</strong>{" "}
+            {ReactJoin(
+              organizedByOrganizations.map((organization) => (
+                <OrganizationName key={organization} id={organization} />
+              )),
+            )}
+          </p>
+        )}
+
+        {group.members.some((m) => m.user === user?._id) && (
+          <>
+            <hr className="hr-flush border-dark" />
+            <Discussion groupId={group._id} />
+          </>
+        )}
+
+        <hr className="hr-flush border-dark" />
+
+        <p className="card-text text-center mb-0">
+          <a
+            className="btn btn-secondary"
+            href={Router.path("showGroup", group)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t("groups.details.moreAboutThisGroup", "More about this group on {SITENAME}", {
+              SITENAME: siteName,
+            })}{" "}
+            <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
+          </a>
+        </p>
       </div>
     </div>
   );

@@ -16,8 +16,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
-import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
-import { Draggable } from "/imports/ui/components/Draggable";
+import { CompactPropose } from "/imports/ui/components/groups/compact.modern.propose";
 import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
@@ -97,9 +96,7 @@ export function KioskRummagePage() {
               animated && "animated",
             )}
           >
-            <Draggable className="rounded-2">
-              <CompactPropose organization={filter.get("organization")} />
-            </Draggable>
+            <CompactPropose organization={filter.get("organization")} draggable />
             {groups.map((group) => (
               <GroupCompact key={group._id} group={group} draggable />
             ))}

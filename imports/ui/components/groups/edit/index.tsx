@@ -396,7 +396,7 @@ export function Edit({
     }
   }
 
-  if (organizationsIsLoading() || regionsIsLoading() ) {
+  if (organizationsIsLoading() || regionsIsLoading()) {
     return null;
   }
 
