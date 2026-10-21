@@ -1,12 +1,12 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { useMeteorStatus } from "/imports/ui/hooks/react-meteor-data";
@@ -23,8 +23,6 @@ import { LoginButton } from "./LoginButton";
 
 import "./styles.scss";
 
-let hasIncomingHMRUpdate = false;
-
 export function Navbar() {
   const { t } = useTranslation();
   const status = useMeteorStatus();
@@ -38,20 +36,6 @@ export function Navbar() {
   const isMobileScreen = viewport.width <= ScssVars.gridFloatBreakpoint;
 
   const [navbarIsCollapsed, setNavbarIsCollapsed] = useState(true);
-
-  useEffect(() => {
-    if (Meteor.isDevelopment) {
-      /**
-       * HACK: The HMR is broken since we use a combination of iron:router, Blaze and React for rendering.
-       * This can be removed once we replace `iron:router`, blaze and switch to the Rspack Meteor build.
-       */
-      if (status === "waiting") {
-        hasIncomingHMRUpdate = true;
-      } else if (status === "connected" && hasIncomingHMRUpdate) {
-        window.location.reload();
-      }
-    }
-  }, [status]);
 
   function headerLogo() {
     let logoSrc: string;
