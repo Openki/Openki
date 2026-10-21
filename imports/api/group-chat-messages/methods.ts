@@ -49,15 +49,6 @@ export const sendGroupChatMessage = ServerMethod(
       throw new Meteor.Error(400, `Role with id "${message.roleId}" does not exist`);
     }
 
-    // TODO: Only include each group member once
-    // TODO: Verify this works as expected by running it in dev
-    // const groupRoleChatParticipants = [
-    //   // Group members with the specific role
-    //   ...group.membersWithRole(role),
-    //   // The team role can participate in all group role chats.
-    //   ...group.membersWithRole(SystemRoles.Team),
-    // ];
-
     const groupRoleChatParticipants = group.getGroupChatParticipants(role);
 
     // Only allow sending messages when there are at least two participants.
@@ -80,7 +71,5 @@ export const sendGroupChatMessage = ServerMethod(
       createdAt: now,
       updatedAt: now,
     });
-
-    // TODO: send email notifications
   },
 );

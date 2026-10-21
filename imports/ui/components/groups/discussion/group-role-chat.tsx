@@ -140,9 +140,6 @@ export function GroupRoleChat({ group, roleId }: Props) {
         </div>
       )}
 
-      {/* TODO: Virtualize the message list to only render the items currently in view */}
-      {/* IDEA: Show a button to scroll to the most recent message if the latest messages are not visible */}
-
       <div className="d-flex gap-2 p-2">
         <AutoGrowTextArea
           ref={messageInputRef}

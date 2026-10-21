@@ -187,8 +187,8 @@ export class Group {
    * Get a list of members who can access the group chat for a specific `role`.
    *
    * Participants include:
-   * 1) all group members with the specific `role`
-   * 2) group members with the team role, since they should be able to read and write in all chats.
+   * 1) All group members with the specific `role`
+   * 2) Group members with the team role, since they should be able to read and write in all chats.
    */
   getGroupChatParticipants(this: GroupModel, role: GroupRoleRef): GroupMember[] {
     return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role) || isTeam(r)));

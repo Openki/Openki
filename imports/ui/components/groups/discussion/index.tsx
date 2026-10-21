@@ -98,7 +98,7 @@ function DiscussionWithGroupChatTabs({
     // Role chat tabs
     ...availableRoleChats.map((role) => ({
       id: role.id,
-      // TODO: Replace this with a formatted i18n string
+      // TODO: Replace this with a formatted i18n string: `{ROLE} chat`, generic for all roles.
       title: `${roleShort(role)} chat`,
     })),
   ] as const;

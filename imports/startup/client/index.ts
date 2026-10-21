@@ -15,7 +15,6 @@ if (Meteor.isDevelopment) {
   Tracker.autorun(() => {
     const { status } = Meteor.status();
 
-    console.log(status, globalThis.hasIncomingHMRUpdate);
     if (status === "waiting") {
       // Common case: The dev server is restarting because of an HMR update
       globalThis.hasIncomingHMRUpdate = true;
