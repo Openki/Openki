@@ -84,7 +84,7 @@ export function Submenu({ group }: { group: GroupModel }) {
         <div
           className={cx(
             "tab-pane active",
-            !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+            descriptionTruncated ? "overflow-hidden" : "max-h-none overflow-visible",
           )}
           id="description"
           role="tabpanel"
@@ -95,7 +95,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <div
               className={cx(
                 "group-description",
-                !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+                descriptionTruncated ? "overflow-hidden" : "max-h-none overflow-visible",
               )}
               ref={elementRef}
             >
