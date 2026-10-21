@@ -66,8 +66,9 @@ function canShare(group: GroupModel) {
 
 function groupStateClasses(group: GroupModel) {
   const classes = [];
+  const groupState = group.getState();
 
-  switch (group.hasState()) {
+  switch (groupState) {
     case "proposal":
       classes.push("is-proposal");
       break;
@@ -78,7 +79,7 @@ function groupStateClasses(group: GroupModel) {
       classes.push("has-past-events");
       break;
     default:
-      throw new Error(`Unexpected value for group state: ${group.hasState()}`);
+      throw new Error(`Unexpected value for group state: ${groupState}`);
   }
 
   if (group?.archived) {

@@ -132,6 +132,12 @@ export interface GroupEntity {
 
 export type GroupModel = Group & GroupEntity;
 
+const groupStates = {
+  upcomingEvent: "upcomingEvent",
+  resting: "resting",
+  proposal: "proposal",
+} as const;
+
 export class Group {
   members: GroupEntity["members"] = [];
 
@@ -143,7 +149,7 @@ export class Group {
 
   lastEvent: GroupLastEventRef | null = null;
 
-  hasState(this: GroupModel) {
+  getState(this: GroupModel): keyof typeof groupStates {
     if (this.nextEvent) {
       return "upcomingEvent";
     } else if (this.lastEvent) {
@@ -151,6 +157,10 @@ export class Group {
     } else {
       return "proposal";
     }
+  }
+
+  hasState(this: GroupModel, state: keyof typeof groupStates) {
+    return this.getState() === state;
   }
 
   /**
