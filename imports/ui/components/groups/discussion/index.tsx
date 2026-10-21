@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useDetails } from "/imports/api/groups/publications";
-import { type GroupModel } from "/imports/api/groups/groups";
+import { type GroupRole, type GroupModel } from "/imports/api/groups/groups";
 import { type UserModel } from "/imports/api/users/users";
 import { predefinedRole, SystemRoles } from "/imports/api/groups/lib/Role";
 
@@ -22,19 +22,21 @@ export interface Props {
   eventId?: string | undefined;
 }
 
+// IDEA: This function could return the available role chats instead and then we could
+// use it to both determine if any chats can be accesed, and which ones specifically.
 function canUserAccessRoleChats({ group, user }: { group: GroupModel; user: UserModel | null }) {
-  // TODO: Remove before merge
-  // if (user) {
-  //   const currentUserRoles = group.members.find((member) => member.user === user._id)?.roles;
-  //   console.dir({
-  //     group,
-  //     groupRoles: group.roles,
-  //     currentUserRoles,
-  //   });
-  // }
+  if (!user) return false;
 
-  // TODO: Extend with other group roles that have the role chat enabled
-  return group && group.userHasRole(user?._id, SystemRoles.Team);
+  // NOTE: Here we could add the group.roles that should have a group chat enabled.
+  // For now, only the team role is enabled
+  const rolesWithChatEnabled: GroupRole[] = [];
+
+  return (
+    // Users with the team role can access all role chats even if they don't have that role
+    group.userHasRole(user._id, SystemRoles.Team) ||
+    // Users with the specific role can access that chat.
+    rolesWithChatEnabled.some((role) => group.userHasRole(user._id, role))
+  );
 }
 
 export function Discussion({ select, groupId, eventId }: Props) {
