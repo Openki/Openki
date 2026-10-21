@@ -54,28 +54,28 @@ export function Navbar() {
   }, [status]);
 
   function headerLogo() {
-    let headerLogo;
+    let logoSrc: string;
 
     if (currentRegion?.custom?.headerLogo?.src) {
       // the region has a custom logo
-      headerLogo = currentRegion.custom.headerLogo.src;
+      logoSrc = currentRegion.custom.headerLogo.src;
     } else {
       // general logo
-      headerLogo = PublicSettings.headerLogo.src;
+      logoSrc = PublicSettings.headerLogo.src;
     }
 
-    if (headerLogo.startsWith("data:image/")) {
+    if (logoSrc.startsWith("data:image/")) {
       // base64 image
-      return headerLogo;
+      return logoSrc;
     }
 
-    if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+    if (logoSrc.startsWith(PublicSettings.s3.publicUrlBase)) {
       // in our s3 file storage
-      return headerLogo;
+      return logoSrc;
     }
 
     // in the openki repository folder "public/logo/"
-    return `/logo/${headerLogo}`;
+    return `/logo/${logoSrc}`;
   }
   function headerAlt() {
     return (
