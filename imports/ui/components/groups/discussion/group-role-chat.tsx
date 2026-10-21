@@ -81,6 +81,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
         <header className="small p-2 border-bottom bg-success border-secondary">
           <details>
             <summary className="d-flex justify-content-between align-items-center">
+              {/* TODO: Use the plural rules to adapt he count based on the locale. */}
               <span>Group chat with you and {chatParticipants.length - 1} others.</span>
               <span className="btn btn-sm btn-light">Show participants</span>
             </summary>

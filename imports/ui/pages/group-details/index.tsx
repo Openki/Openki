@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { intersection } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
@@ -103,6 +102,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
   }
 
   async function handleDelete() {
+    if (!user) return;
     setIsBusy(true);
 
     try {
@@ -115,7 +115,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       );
 
       let role;
-      if (intersection(user?.badges || [], group.editors).length > 0) {
+      if (group.editableBy(user)) {
         role = "team";
       } else if (user?.hasPrivilege("admin")) {
         role = "admin";

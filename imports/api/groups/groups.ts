@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { intersection, assignIn, escapeRegExp } from "lodash-es";
+import { assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -172,7 +172,7 @@ export class Group {
     }
     return (
       user.hasPrivilege("admin") /* Admins can edit all groups */ ||
-      intersection(user.badges, this.editors).length > 0
+      user.badges.some((organizationIdOrUserId) => this.editors.includes(organizationIdOrUserId))
     );
   }
 
