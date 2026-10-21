@@ -37,50 +37,34 @@ export function Navbar() {
 
   const [navbarIsCollapsed, setNavbarIsCollapsed] = useState(true);
 
-  function headerLogo() {
-    let logoSrc: string;
+  function getHeaderLogo() {
+    // Use the region's custom logo if available. Otherwise use the general logo for the Openki instance.
+    const logoSrc = currentRegion?.custom?.headerLogo?.src || PublicSettings.headerLogo.src;
 
-    if (currentRegion?.custom?.headerLogo?.src) {
-      // the region has a custom logo
-      logoSrc = currentRegion.custom.headerLogo.src;
-    } else {
-      // general logo
-      logoSrc = PublicSettings.headerLogo.src;
-    }
-
-    if (logoSrc.startsWith("data:image/")) {
-      // base64 image
+    if (
+      // 1) Base64 image
+      logoSrc.startsWith("data:image/") ||
+      // 2) Image from our S3 storage
+      logoSrc.startsWith(PublicSettings.s3.publicUrlBase)
+    ) {
       return logoSrc;
     }
 
-    if (logoSrc.startsWith(PublicSettings.s3.publicUrlBase)) {
-      // in our s3 file storage
-      return logoSrc;
-    }
-
-    // in the openki repository folder "public/logo/"
+    // Fallback: Image from the Openki repository and the "public/logo/" directory
     return `/logo/${logoSrc}`;
   }
-  function headerAlt() {
-    return (
-      getLocalizedValue(currentRegion?.custom?.headerLogo?.alt) ||
-      getLocalizedValue(PublicSettings.headerLogo.alt)
-    );
-  }
-  function siteStage() {
-    if (currentRegion?.custom?.siteStage) {
-      return currentRegion.custom.siteStage;
-    }
+  const headerAlt =
+    getLocalizedValue(currentRegion?.custom?.headerLogo?.alt) ||
+    getLocalizedValue(PublicSettings.headerLogo.alt);
 
-    return PublicSettings.siteStage;
-  }
-  function links() {
-    return PublicSettings.nav.customEntries.map((entry) => ({
-      link: entry.link,
-      icon: entry.icon,
-      text: getLocalizedValue(entry.key || entry.text, { SITENAME: siteName }),
-    }));
-  }
+  const siteStage = currentRegion?.custom?.siteStage || PublicSettings.siteStage;
+
+  const links = PublicSettings.nav.customEntries.map((entry) => ({
+    link: entry.link,
+    icon: entry.icon,
+    text: getLocalizedValue(entry.key || entry.text, { SITENAME: siteName }),
+  }));
+
   function currentRouteIs(...routeNames: string[]) {
     return routeNames.includes(currentRouteName);
   }
@@ -127,7 +111,7 @@ export function Navbar() {
             }}
           >
             {status === "connected" ? (
-              <img src={headerLogo()} alt={headerAlt()} />
+              <img src={getHeaderLogo()} alt={headerAlt} />
             ) : status === "connecting" ? (
               <>
                 <span
@@ -148,7 +132,7 @@ export function Navbar() {
             )}
 
             <span className="site-name text-white">{siteName}</span>
-            <span className="site-stage">{siteStage()}</span>
+            <span className="site-stage">{siteStage}</span>
           </a>
           <button
             data-test="navbar-toggler"
@@ -212,7 +196,7 @@ export function Navbar() {
                   </a>
                 </li>
               )}
-              {links().map((link) => (
+              {links.map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
                   <a href={link.link} className="nav-link text-white" onClick={close}>
                     <i className={cx(link.icon, "fa-fw")} /> {link.text}
