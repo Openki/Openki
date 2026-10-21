@@ -170,9 +170,24 @@ export class Group {
     if (!user) {
       return false;
     }
-    return (
-      user.hasPrivilege("admin") /* Admins can edit all groups */ ||
-      user.badges.some((organizationIdOrUserId) => this.editors.includes(organizationIdOrUserId))
+
+    // Admins can edit all groups
+    return user.hasPrivilege("admin") || this.hasTeamMember(user);
+  }
+
+  /**
+   * Check if a given user is either part of:
+   * 1) The coordination-team for the group.
+   * 2) Any teamOrganizations for the group.
+   *
+   * What makes this method unique is that it also checks teamOrganizations.
+   */
+  hasTeamMember(this: GroupModel, user: UserModel | null | undefined) {
+    if (!user) {
+      return false;
+    }
+    return user.badges.some((organizationIdOrUserId) =>
+      this.editors.includes(organizationIdOrUserId),
     );
   }
 

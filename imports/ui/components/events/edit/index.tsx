@@ -458,7 +458,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             throw new Error("Unexpected undefined: group");
           }
           let role;
-          if (intersection(potentialUser.badges, group.editors).length > 0) {
+          if (group.hasTeamMember(potentialUser)) {
             role = "team";
           } else if (potentialUser.hasPrivilege("admin")) {
             role = "admin";

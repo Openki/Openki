@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
-import { intersection, assignIn, escapeRegExp } from "lodash-es";
+import { assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";
@@ -146,10 +146,24 @@ export class OEvent {
     if (!user) {
       return false;
     }
-    if (user.hasPrivilege("admin")) {
-      return true;
+    // Admins can edit all events
+    return user.hasPrivilege("admin") || this.hasTeamMember(user);
+  }
+
+  /**
+   * Check if a given user is either part of:
+   * 1) The coordination-team for the group.
+   * 2) Any teamOrganizations for the group.
+   *
+   * What makes this method unique is that it also checks teamOrganizations.
+   */
+  hasTeamMember(this: EventModel, user: UserModel | null | undefined) {
+    if (!user) {
+      return false;
     }
-    return intersection(user.badges, this.editors).length > 0;
+    return user.badges.some((organizationIdOrUserId) =>
+      this.editors.includes(organizationIdOrUserId),
+    );
   }
 
   sameTime(

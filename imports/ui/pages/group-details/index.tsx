@@ -115,7 +115,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       );
 
       let role;
-      if (group.editableBy(user)) {
+      if (group.hasTeamMember(user)) {
         role = "team";
       } else if (user?.hasPrivilege("admin")) {
         role = "admin";
