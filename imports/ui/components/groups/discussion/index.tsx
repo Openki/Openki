@@ -32,10 +32,12 @@ function canUserAccessRoleChats({ group, user }: { group: GroupModel; user: User
   const rolesWithChatEnabled: GroupRole[] = [];
 
   return (
+    // NOTE: Only enabled during development for now until the feature is ready for production.
+    Meteor.isDevelopment &&
     // Users with the team role can access all role chats even if they don't have that role
-    group.userHasRole(user._id, SystemRoles.Team) ||
-    // Users with the specific role can access that chat.
-    rolesWithChatEnabled.some((role) => group.userHasRole(user._id, role))
+    (group.userHasRole(user._id, SystemRoles.Team) ||
+      // Users with the specific role can access that chat.
+      rolesWithChatEnabled.some((role) => group.userHasRole(user._id, role)))
   );
 }
 
