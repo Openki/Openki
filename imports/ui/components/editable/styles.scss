@@ -49,6 +49,11 @@
   position: relative;
   display: flex;
   align-items: baseline;
+
+  &.editable-wrap-multiline {
+    display: block;
+    padding: 4px;
+  }
 }
 
 .editable {
