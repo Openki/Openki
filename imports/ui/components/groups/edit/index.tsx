@@ -42,13 +42,14 @@ import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 import "./styles.scss";
 
 export type Props = {
-  isFrame?: boolean;
-  organization?: string;
-  hideRoleSelection?: boolean;
-  hidePricePolicy?: boolean;
-  creatorsRoles?: string[];
-  hideCategories?: boolean;
-  groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
+  isFrame?: boolean | undefined;
+  organization?: string | undefined;
+  hideRoleSelection?: boolean | undefined;
+  hidePricePolicy?: boolean | undefined;
+  creatorsRoles?: string[] | undefined;
+  hideCategories?: boolean | undefined;
+  groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]> | undefined;
+  showCancelButton?: boolean | undefined;
 } & Partial<GroupModel>;
 
 export function Edit({
@@ -59,6 +60,7 @@ export function Edit({
   creatorsRoles,
   hideCategories,
   groupsQuery,
+  showCancelButton,
   ...group
 }: Props) {
   const isNew = !group._id;
@@ -394,14 +396,6 @@ export function Edit({
     }
   }
 
-  function handleCancel() {
-    if (group._id) {
-      Router.go("showGroup", group);
-    } else {
-      Router.go("home");
-    }
-  }
-
   if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
   }
@@ -607,8 +601,14 @@ export function Edit({
             >
               {t("group.publish", "Publish")}
             </Button>
-            {!isFrame && (
-              <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
+            {!!showCancelButton && (
+              <ButtonCancel
+                id="groups-edit-cancel"
+                onClick={() => {
+                  history.back();
+                }}
+                disabled={isBusy}
+              />
             )}
           </div>
         </div>

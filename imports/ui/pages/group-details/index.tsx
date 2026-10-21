@@ -244,7 +244,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
               )}
 
               {edit ? (
-                <Edit {...group} />
+                <Edit {...group} showCancelButton/>
               ) : (
                 <>
                   <div className={cx("group-details", groupStateClasses(group))}>
