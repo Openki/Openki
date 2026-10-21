@@ -1,13 +1,13 @@
 .rummage {
-  min-block-size: 100vh;
-  overflow-y: clip;
+  max-height: 100vh;
+  overflow-y: visible;
 
   &.animated .draggable {
     transition: all 0.5s !important;
   }
 
   &.sorted {
-    max-block-size: auto;
+    max-height: none;
     overflow-y: auto;
   }
 

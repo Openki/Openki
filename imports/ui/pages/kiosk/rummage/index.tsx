@@ -88,7 +88,7 @@ export function KioskRummagePage() {
         <AccountTasks />
       </div>
       <div className="container-fluid">
-        <div className="row">
+        <div className="row overflow-hidden">
           <div
             className={cx(
               "col-8 d-flex align-content-baseline flex-wrap gap-3 justify-content-center rummage position-relative py-3",
