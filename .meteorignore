@@ -3,7 +3,6 @@ scripts/
 i18next-parser.config.js
 
 .dockerignore
-docker-compose.yml
 Dockerfile
 
 .codeclimate.yml
