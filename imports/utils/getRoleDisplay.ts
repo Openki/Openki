@@ -161,6 +161,12 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   };
 }
 
+/**
+ * Get i18n formatting helpers for roles.
+ *
+ * @param roles The roles to format. Pass an empty array if you only need to format `GroupCustomRole`s,
+ * since custom group roles include their own labels.
+ */
 export function useRoleDisplay(roles: RoleEntity[]) {
   const { i18n } = useTranslation();
 
