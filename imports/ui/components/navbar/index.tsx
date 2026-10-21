@@ -77,6 +77,12 @@ export function Navbar() {
     }
   }
 
+  useEventListener(document.documentElement, "keydown", (event) => {
+    if (event.key === "Escape") {
+      close();
+    }
+  });
+
   useEventListener(collapseRef, "show.bs.collapse", () => {
     setNavbarIsCollapsed(false);
   });
