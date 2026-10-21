@@ -9,7 +9,7 @@ import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
-import * as GroupsMethods from "/imports/api/groups/methods";
+import { removeGroup, archiveGroup, unarchiveGroup } from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { hasRole } from "/imports/api/groups/lib/hasRole";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
@@ -106,7 +106,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     setIsBusy(true);
 
     try {
-      await GroupsMethods.remove(group._id);
+      await removeGroup(group._id);
 
       Alert.success(
         t("groupDetailsPage.message.groupHasBeenDeleted", "{GROUP} was deleted.", {
@@ -143,7 +143,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
   async function handleArchive() {
     setIsBusy(true);
     try {
-      await GroupsMethods.archive(group._id);
+      await archiveGroup(group._id);
       setExpanded(false);
 
       Alert.success(
@@ -164,7 +164,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
   async function handleUnarchive() {
     setIsBusy(true);
     try {
-      await GroupsMethods.unarchive(group._id);
+      await unarchiveGroup(group._id);
 
       Alert.success(
         t("groupDetailsPage.message.groupHasBeenUnarchived", "{GROUP} has been unarchived.", {
