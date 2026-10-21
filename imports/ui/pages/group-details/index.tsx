@@ -64,6 +64,30 @@ function canShare(group: GroupModel) {
   return false;
 }
 
+function groupStateClasses(group: GroupModel) {
+  const classes = [];
+
+  switch (group.hasState()) {
+    case "proposal":
+      classes.push("is-proposal");
+      break;
+    case "upcomingEvent":
+      classes.push("has-upcoming-events");
+      break;
+    case "resting":
+      classes.push("has-past-events");
+      break;
+    default:
+      throw new Error(`Unexpected value for group state: ${group.hasState()}`);
+  }
+
+  if (group?.archived) {
+    classes.push("is-archived");
+  }
+
+  return classes.join(" ");
+}
+
 export function GroupDetailsPage({ edit, group, select }: Props) {
   const { t } = useTranslation();
   const user = useUser();
@@ -73,29 +97,6 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 
   const [expanded, setExpanded] = useState(false);
 
-  function groupStateClasses(group: GroupModel) {
-    const classes = [];
-
-    switch (group.hasState()) {
-      case "proposal":
-        classes.push("is-proposal");
-        break;
-      case "upcomingEvent":
-        classes.push("has-upcoming-events");
-        break;
-      case "resting":
-        classes.push("has-past-events");
-        break;
-      default:
-        throw new Error(`Unexpected value for group state: ${group.hasState()}`);
-    }
-
-    if (group?.archived) {
-      classes.push("is-archived");
-    }
-
-    return classes.join(" ");
-  }
   function mobileViewport() {
     return viewport.width <= ScssVars.screenMD;
   }
