@@ -597,9 +597,9 @@ export function Edit({
               id="groups-edit-save"
               className="btn-save"
               isBusy={isBusy}
-              busyText={t("group.publishing", "Publishing…")}
+              busyText={isNew ? t("group.publishing", "Publishing…") : t("_button.saving")}
             >
-              {t("group.publish", "Publish")}
+              {isNew ? t("group.publish", "Publish") : t("_button.save")}
             </Button>
             {!!showCancelButton && (
               <ButtonCancel
