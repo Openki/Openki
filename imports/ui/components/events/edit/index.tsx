@@ -211,6 +211,20 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     [parallelEvents, externalParallelEvents],
   );
 
+  const ParallelEventsWarning = useMemo(
+    () => () => (
+      <>
+        {t(
+          "event.edit.venue.parallelEvents.disallowed",
+          "Parallel events in this venue are not allowed.",
+        )}{" "}
+        <OtherEventsMessage events={allParallelEvents} />{" "}
+        {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
+      </>
+    ),
+    [allParallelEvents, t],
+  );
+
   const [errors, checkValidity, addError] = useValidation(
     {
       noTitle: {
@@ -281,16 +295,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         field: "startEndVenue",
         isValid: () =>
           venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
-        text: () => (
-          <>
-            {t(
-              "event.edit.venue.parallelEvents.disallowed",
-              "Parallel events in this venue are not allowed.",
-            )}{" "}
-            <OtherEventsMessage events={allParallelEvents} />{" "}
-            {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
-          </>
-        ),
+        text: ParallelEventsWarning,
       },
       noVenue: {
         field: "venue",
@@ -426,8 +431,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     setIsBusy(true);
     try {
-      const user = await promptToLogin();
-      if (!user) {
+      const potentialUser = await promptToLogin();
+      if (!potentialUser) {
         return;
       }
 
@@ -453,9 +458,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             throw new Error("Unexpected undefined: group");
           }
           let role;
-          if (intersection(user.badges, group.editors).length > 0) {
+          if (intersection(potentialUser.badges, group.editors).length > 0) {
             role = "team";
-          } else if (user.hasPrivilege("admin")) {
+          } else if (potentialUser.hasPrivilege("admin")) {
             role = "admin";
           } else {
             role = "unknown";
@@ -547,7 +552,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("group.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
-              onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
+              onChange={(value) => setChanges((current) => ({ ...current, title: value }))}
               onBlur={() => checkValidity("title")}
               error={errors.title}
             />
@@ -555,7 +560,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <EditStartEnd
             {...changes}
             onChange={(newValue) => {
-              setChanges((changes) => ({ ...changes, ...newValue }));
+              setChanges((current) => ({ ...current, ...newValue }));
               setStartDayChanged(!moment.utc(newValue.startLocal).isSame(event.startLocal, "day"));
               setTimeChanged(
                 !(
@@ -582,8 +587,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               )}
               value={changes.description}
               onChange={(newValue, numberOfCharacters) =>
-                setChanges((changes) => ({
-                  ...changes,
+                setChanges((current) => ({
+                  ...current,
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
                 }))
@@ -618,7 +623,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     label={t("group.event.edit.room", "Room")}
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
-                    onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
+                    onChange={(value) => setChanges((current) => ({ ...current, room: value }))}
                   />
                 </div>
               )}
@@ -661,7 +666,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   placeholder={t("group.event.edit.unlimitedParticipants", "Unlimited seats")}
                   value={changes.maxParticipants}
                   onChange={(value) =>
-                    setChanges((changes) => ({ ...changes, maxParticipants: value }))
+                    setChanges((current) => ({ ...current, maxParticipants: value }))
                   }
                 />
               )}
@@ -678,7 +683,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 "Show it only on organization and venue pages",
               )}
               checked={changes.internal}
-              onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
+              onChange={(checked) => setChanges((current) => ({ ...current, internal: checked }))}
             />
           </div>
 
@@ -718,7 +723,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 )}
                 checked={changes.sendReminder}
                 onChange={(checked) =>
-                  setChanges((changes) => ({ ...changes, sendReminder: checked }))
+                  setChanges((current) => ({ ...current, sendReminder: checked }))
                 }
               />
             </div>
