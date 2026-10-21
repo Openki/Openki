@@ -111,15 +111,14 @@ export function Submenu({ group }: { group: GroupModel }) {
             {descriptionTruncated && <div className="group-description-fade-bottom" />}
           </div>
           {descriptionTruncated && (
-            <div
-              role="button"
-              className="link-primary text-center"
+            <button
+              className="link-primary text-center mx-auto d-block bg-transparent border-none"
               onClick={() => {
                 setDescriptionTruncated(false);
               }}
             >
               — {t("groupDetails.showMore", "show more")} —
-            </div>
+            </button>
           )}
         </div>
         <div
