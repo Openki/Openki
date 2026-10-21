@@ -173,7 +173,7 @@ export function Navbar() {
                       "nav-link text-white",
                       currentRouteIs("search", "showGroup") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Groups", "Find")}
                     <div className="nav-marker-caret"></div>
@@ -188,7 +188,7 @@ export function Navbar() {
                       "nav-link text-white",
                       currentRouteIs("proposeGroup", "createEvent") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}
                     <div className="nav-marker-caret"></div>
@@ -203,7 +203,7 @@ export function Navbar() {
                       "nav-link calendar-link text-white",
                       currentRouteIs("calendar") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-regular fa-calendar-days fa-fw" />{" "}
                     {t("menue.Calendar", "Calendar")}
@@ -214,7 +214,7 @@ export function Navbar() {
               )}
               {links().map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
-                  <a href={link.link} className="nav-link text-white" onClick={() => close()}>
+                  <a href={link.link} className="nav-link text-white" onClick={close}>
                     <i className={cx(link.icon, "fa-fw")} /> {link.text}
                   </a>
                 </li>
@@ -225,14 +225,9 @@ export function Navbar() {
                 className="nav-item text-center col col-lg-auto"
                 autoFocus
                 size="small"
-                onSelect={() => close()}
+                onSelect={close}
               />
-              <LanguageSelection
-                inNavbar
-                onSelect={() => {
-                  close();
-                }}
-              />
+              <LanguageSelection inNavbar onSelect={close} />
             </ul>
             <ul className="navbar-nav text-center">
               <li className="dropdown login-link">
@@ -247,7 +242,7 @@ export function Navbar() {
       </nav>
       <div
         className={cx("navbar-custom-modal", navbarIsCollapsed && "d-none")}
-        onClick={() => close()}
+        onClick={close}
       ></div>
     </>
   );
