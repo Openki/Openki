@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
@@ -129,9 +129,7 @@ export function Submenu({ group }: { group: GroupModel }) {
           aria-labelledby="history-tab"
           tabIndex={0}
         >
-          <StrictMode>
-            <History group={group} />
-          </StrictMode>
+          <History group={group} />
         </div>
         {group.editableBy(user) && (
           <div

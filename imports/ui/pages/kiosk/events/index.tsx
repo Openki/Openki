@@ -23,51 +23,30 @@ import "./styles.scss";
 function Organization({ organizationId }: { organizationId: string }) {
   const [isLoading, organization] = useOrganizationDetails(organizationId);
 
-  function logo() {
-    if (organization) {
-      return organization.publicLogoUrl();
-    }
-    return "";
-  }
-  function name() {
-    if (organization) {
-      return organization.name;
-    }
-    return "";
-  }
+  const logo = organization?.publicLogoUrl() || "";
+  const name = organization?.name || "";
+
   if (isLoading()) {
     return null;
   }
 
   return (
     <a href={Router.path("organizationDetails", organization)}>
-      {organization && !!logo() && (
-        <img
-          className="kiosk-logo kiosk-logo-organization"
-          src={logo()}
-          alt={`${organization.name} logo`}
-        />
-      )}
+      {logo && <img className="kiosk-logo kiosk-logo-organization" src={logo} alt="" />}
 
-      {name()}
+      {name}
     </a>
   );
 }
 
 function Venue({ venueId }: { venueId: string }) {
   const [isLoading, venue] = useVenueDetails(venueId);
-  function venueName() {
-    if (venue) {
-      return venue.name;
-    }
-    return "";
-  }
 
   if (isLoading()) {
     return null;
   }
 
-  return <a href={Router.path("venueDetails", venue)}>{venueName()}</a>;
+  return <a href={Router.path("venueDetails", venue)}>{venue?.name || ""}</a>;
 }
 
 export function KioskEventsPage({

@@ -28,7 +28,7 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
           <img
             className="featured-organization-logo"
             src={featuredOrganization.publicLogoUrl()}
-            alt={`${featuredOrganization.name} logo`}
+            alt=""
           />
         </div>
       )}

@@ -65,7 +65,6 @@ export const FieldOrdering = function (sortSpec: { spec: () => FieldSort[] }) {
         },
         equal,
       );
-  const copy = <T>(list: T[]) => list.slice();
 
   return {
     /**
@@ -76,6 +75,6 @@ export const FieldOrdering = function (sortSpec: { spec: () => FieldSort[] }) {
      */
     ordering,
     /** @returns a new list with the items sorted according to spec */
-    sorted: <T>(list: Record<string, T>[]) => copy(list).toSorted(ordering()),
+    sorted: <T>(list: Record<string, T>[]) => list.toSorted(ordering()),
   };
 };

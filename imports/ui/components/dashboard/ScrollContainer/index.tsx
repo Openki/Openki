@@ -1,9 +1,10 @@
 import React, { useRef, useState, useLayoutEffect, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+
 import { observeSize } from "../../../lib/observeHeight";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
-import { useTranslation } from "react-i18next";
 
 export function ScrollContainer({
   className,

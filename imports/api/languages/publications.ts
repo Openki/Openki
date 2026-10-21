@@ -57,7 +57,7 @@ async function loadWeblateStats() {
         return cachedStats.response;
       }
       // oxlint-disable-next-line no-unused-vars
-    } catch (error: unknown) {
+    } catch {
       // Unable to use the cached Weblate stats file, for whatever reason.
     }
   }
@@ -73,7 +73,7 @@ async function loadWeblateStats() {
       // During development, we often get rate-limited due to too frequent requests.
       // Related issue: https://gitlab.com/Openki/Openki/-/work_items/2465
       console.error("Failed to fetch Weblate stats:", await response.text());
-      return null;
+      return undefined;
     }
 
     const stats: WeblateStatsResponse = await response.json();
@@ -91,7 +91,7 @@ async function loadWeblateStats() {
     console.info(`Failed to fetch Weblate stats: ${serializeError(error)}`);
   }
 
-  return null;
+  return undefined;
 }
 
 /**
