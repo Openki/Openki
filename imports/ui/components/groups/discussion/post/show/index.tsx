@@ -108,7 +108,7 @@ export function Show({ post, onEdit }: Props) {
                 type="button"
                 className="discussion-edit-btn"
                 onClick={onEdit}
-                aria-label={t("_button.edit", "Edit")}
+                aria-label={t("_button.edit")}
               >
                 <i className="fa-solid fa-pen-to-square" />
               </button>

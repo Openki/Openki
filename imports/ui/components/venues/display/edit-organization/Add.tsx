@@ -101,11 +101,7 @@ export function Add({ venue }: Props) {
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <div className="dropdown-header">
           {t("venues.editOrganization.add.header", "Choose organization")}
-          <button
-            type="button"
-            className="btn-close"
-            aria-label={t("_button.close", "Close")}
-          ></button>
+          <button type="button" className="btn-close" aria-label={t("_button.close")}></button>
         </div>
         <div className="p-2">
           {t(

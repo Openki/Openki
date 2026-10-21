@@ -359,7 +359,8 @@ export function Editable({
           <button
             onClick={handleEdit}
             className="btn btn-sm editable-icon-container"
-            data-bs-title={t("_button.edit", "Edit")}
+            data-bs-title={t("_button.edit")}
+            aria-label={t("_button.edit")}
           >
             <i className="fa-solid fa-pencil editable-icon" />
           </button>
