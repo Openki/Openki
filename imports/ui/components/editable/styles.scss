@@ -127,10 +127,9 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .editable-wrap-multiline .editable-icon-container {
-  @include td-pos(right, -14px);
-
+  @include td-pos(right, 0);
   position: absolute;
-  top: -12px;
+  top: 0;
 }
 
 .editable:focus + .editable-icon,
