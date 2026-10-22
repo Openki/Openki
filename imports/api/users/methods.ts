@@ -296,9 +296,7 @@ export const adminRemove = ServerMethod(
       await editorsDenormalizer.updateEditors(group._id);
     }
 
-    const user = (await Users.findOneAsync(userId)) as any;
-
-    delete user.services;
+    const user = await Users.findOneAsync(userId, { projection: { services: 0 } });
 
     await Users.removeAsync({ _id: userId });
 
