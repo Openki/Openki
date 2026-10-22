@@ -22,7 +22,7 @@ import { serverError } from "/imports/api/log/methods";
 
 /**
  * Record the result of a notification delivery attempt
- * @param note notification log-entry
+ * @param notification notification log-entry
  * @param unsubToken token that can be used to unsubscribe from further notices
  * @param sent whether the notification was sent
  * @param recipient recipient user ID
@@ -30,7 +30,7 @@ import { serverError } from "/imports/api/log/methods";
  * @param reason why this log entry was recorded
  */
 export async function record(
-  note: { _id: string },
+  notification: { _id: string },
   unsubToken: string | null,
   sent: boolean,
   recipient: string,
@@ -49,7 +49,7 @@ export async function record(
     unsubToken,
   };
 
-  const rel = [note._id, recipient];
+  const rel = [notification._id, recipient];
   if (unsubToken) {
     rel.push(unsubToken);
   }
