@@ -30,11 +30,11 @@ dev:
 
 # Fix linting and formatting errors and warn for serious problems
 fix:
-    meteor npm run lint:fix
+    meteor npm run lint:fix || just oxlint-errors
 
 # Only run the regular linting
 lint:
-    meteor npm run lint
+    meteor npm run lint || just oxlint-errors
 
 # Only print the oxlint errors so they are easier to find and fix.
 oxlint-errors:
