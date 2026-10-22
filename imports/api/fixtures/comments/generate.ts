@@ -1,13 +1,13 @@
 import { Mongo } from "meteor/mongo";
 import { sampleSize } from "lodash-es";
-import { PRNG } from "seedrandom";
+import { type PRNG } from "seedrandom";
 
 import { Groups } from "../../groups/groups";
 import { GroupDiscussionEntity, GroupDiscussions } from "../../group-discussions/group-discussions";
 import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
 
-import * as HtmlTools from "/imports/utils/html-tools";
+import { sanitizeHtml } from "/imports/utils/html-tools";
 import { Log } from "../../log/log";
 
 /**
@@ -21,7 +21,7 @@ function sometimesAfter(prng: PRNG, date: Date) {
   // Seconds between then and now
   const spread = new Date(Math.abs(Date.now() - date.getTime())).getTime();
 
-  // Quadratic dropoff: Place new date closer to the original date statistically
+  // Quadratic drop off: Place new date closer to the original date statistically
   const placement = prng();
   const squaredPlacement = placement * placement;
 
@@ -44,7 +44,7 @@ export async function generate() {
       const comment = {} as Mongo.OptionalId<GroupDiscussionEntity>;
       comment.groupId = group._id;
       comment.title = sampleSize(words, 1 + Math.floor(prng() * 3)).join(" ");
-      comment.text = HtmlTools.sanitizeHtml(
+      comment.text = sanitizeHtml(
         sampleSize(words, 5).join(" ") + sampleSize(words, Math.floor(prng() * 30)).join(" "),
       );
 
