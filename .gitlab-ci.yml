@@ -27,7 +27,7 @@ variables:
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
   DEV_BRANCH: "dev"
-  OPENKI_CI_IMAGE_TAG: "$CI_REGISTRY/openki-ci:latest"
+  OPENKI_CI_IMAGE_TAG: registry.gitlab.com/openki/openki/openki-ci:latest
 
 # -------------------------------------------------------------------
 # Stage: prepare-ci-container
