@@ -35,9 +35,10 @@ variables:
 # -------------------------------------------------------------------
 rebuild-ci-container:
   stage: prepare-ci-container
-  rules:
-    - changes:
-        - ci/Dockerfile.ci
+  # Temporarily allow this stage to run for every commit until it works as expected.
+  # rules:
+  #   - changes:
+  #       - ci/Dockerfile.ci
   image: docker:29.7.2-cli
   services:
     - docker:29.7.2-dind
