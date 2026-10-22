@@ -102,18 +102,6 @@ export function ProgramPage(props: Record<string, string>) {
     };
   }
 
-  function days() {
-    const days = [];
-    let current = moment(start);
-    while (current.isBefore(end)) {
-      const next = moment(current).add(1, "day");
-
-      days.push(current);
-      current = next;
-    }
-    return days;
-  }
-
   const routeName = useCurrentRouteName();
 
   function update() {
@@ -133,7 +121,7 @@ export function ProgramPage(props: Record<string, string>) {
       <div className="py-4">
         <Dashboard
           list={
-            days()
+            getDays(start, end)
               .filter((day) => selectedDays.find((s) => s.isSame(day)))
               .flatMap((day) => {
                 const afternoonEventsFilter = Events.Filtering().read(props);
