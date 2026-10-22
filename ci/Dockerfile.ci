@@ -6,6 +6,7 @@ ARG BUILD_DATE
 LABEL build_version="TestingDocker version:- 0.3 Build-date:- ${BUILD_DATE}"
 LABEL maintainer="1u"
 
+# The Meteor version should match what we use in the rest of the project.
 ENV METEOR_VERSION=3.5.3
 ENV TITLE=TestingDocker
 ENV DISPLAY=':99.0'
