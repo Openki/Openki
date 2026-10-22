@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { Coordinates, Edit } from "/imports/ui/components/location/edit";
 import { useTranslation } from "react-i18next";
-import { cx } from "/imports/utils/cx";
 
 export function FormMap({
   id,
