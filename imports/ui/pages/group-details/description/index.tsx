@@ -5,7 +5,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as GroupsMethods from "/imports/api/groups/methods";
+import { saveGroup } from "/imports/api/groups/methods";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
@@ -28,7 +28,7 @@ export function Description({
     maxlength: PublicSettings.groupDescriptionMax,
     store: {
       onSave: async (newDescription) => {
-        await GroupsMethods.save(group._id, { description: newDescription });
+        await saveGroup(group._id, { description: newDescription });
       },
       onSuccess: () => {
         Alert.success(

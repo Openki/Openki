@@ -6,7 +6,7 @@ import { uniq, union } from "lodash-es";
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, FindParams } from "/imports/api/groups/groups";
 import { isPrivate } from "/imports/api/groups/lib/isPrivate";
-import * as GroupsMethods from "/imports/api/groups/methods";
+import { saveGroup, type SaveFields } from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
@@ -315,7 +315,7 @@ export function Edit({
       return;
     }
 
-    const changes: GroupsMethods.SaveFields = {
+    const changes: SaveFields = {
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
       internal,
@@ -361,7 +361,7 @@ export function Edit({
         return;
       }
 
-      const groupId = await GroupsMethods.save(group._id || "", changes);
+      const groupId = await saveGroup(group._id || "", changes);
 
       if (isNew) {
         Analytics.trackEvent(
