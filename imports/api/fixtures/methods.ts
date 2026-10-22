@@ -15,7 +15,7 @@ import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
 import { create as organizationsDataCreate } from "./organizations/create";
 import { create as venuesDataCreate } from "./venues/create";
-import { generate as commentsDataGenerate } from "./comments/generate";
+import { generate as groupDiscussionsDataGenerate } from "./group-discussions/generate";
 import { create as regionsDataCreate } from "./regions/create";
 import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
@@ -97,7 +97,7 @@ export const create = ServerMethod(
       }
 
       if ((await GroupDiscussions.countDocuments()) === 0) {
-        await commentsDataGenerate();
+        await groupDiscussionsDataGenerate();
         shouldUpdateDBCache = true;
       }
 
