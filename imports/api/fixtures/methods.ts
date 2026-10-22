@@ -23,7 +23,7 @@ import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
 import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
 
-export const clean = ServerMethod(
+export const cleanFixtures = ServerMethod(
   "fixtures.clean",
   async () => {
     if (!PrivateSettings.testdata) {
@@ -50,7 +50,7 @@ export const clean = ServerMethod(
   { simulation: false },
 );
 
-export const create = ServerMethod(
+export const createFixtures = ServerMethod(
   "fixtures.create",
   async () => {
     if (!PrivateSettings.testdata) {
