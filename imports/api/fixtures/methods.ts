@@ -1,4 +1,3 @@
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Groups } from "../groups/groups";
@@ -9,6 +8,7 @@ import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
 import { GroupDiscussions } from "../group-discussions/group-discussions";
+import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 
 import { create as groupsDataCreate } from "./groups/create";
 import { create as eventsDataCreate } from "./events/create";
@@ -22,16 +22,18 @@ import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
 import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export const cleanFixtures = ServerMethod(
   "fixtures.clean",
   async () => {
-    if (!PrivateSettings.testdata) {
+    if (!PublicSettings.testdata) {
       return;
     }
     try {
       await Promise.all([
         GroupDiscussions.removeAsync({}),
+        GroupChatMessages.removeAsync({}),
         Events.removeAsync({}),
         Groups.removeAsync({}),
         Venues.removeAsync({}),
@@ -53,7 +55,7 @@ export const cleanFixtures = ServerMethod(
 export const createFixtures = ServerMethod(
   "fixtures.create",
   async () => {
-    if (!PrivateSettings.testdata) {
+    if (!PublicSettings.testdata) {
       return;
     }
 

@@ -125,6 +125,12 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   testWarning: Boolean,
 
   /**
+   * Generates test data. Not needed for the production environment.
+   * @default false
+   */
+  testdata: Boolean,
+
+  /**
    * The logo in the top left corner. Can be a logo from the `/public/logo/*` folder,
    * from our s3 file storage (must start with the "publicUrlBase" setting) or
    * a base64 encoded string.
@@ -556,6 +562,7 @@ const defaults = {
   siteName: "Hmmm",
   siteStage: "",
   testWarning: false,
+  testdata: false,
   headerLogo: { src: "", alt: "" },
   headerLogoKiosk: { src: "", alt: "" },
   avatarLogo: { src: "", alt: "" },

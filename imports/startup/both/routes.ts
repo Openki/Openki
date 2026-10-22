@@ -1026,13 +1026,15 @@ RouterAsync.route("tenants", {
   },
 });
 
-RouterAsync.route("testdata", {
-  path: "admin/testdata",
-  template: "adminTestdataPage",
-  async onRun() {
-    await import("/imports/ui/pages/admin/testdata");
-  },
-});
+if (PublicSettings.testdata) {
+  RouterAsync.route("testdata", {
+    path: "admin/testdata",
+    template: "adminTestdataPage",
+    async onRun() {
+      await import("/imports/ui/pages/admin/testdata");
+    },
+  });
+}
 
 RouterAsync.route("regionCreate", {
   path: "region/create",

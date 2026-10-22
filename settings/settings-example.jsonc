@@ -21,8 +21,9 @@
   "prng": "",
 
   /*
-   * Generates test data, is not needed for the production environment.
+   * Generates test data. Not needed for the production environment.
    * Default: false
+   * Deprecated: use "public.testdata" field instead (October 2026)
    */
   "testdata": true,
 
@@ -41,6 +42,11 @@
      * Default: false
      */
     "testWarning": true,
+    /*
+     * Generates test data. Not needed for the production environment.
+     * Default: false
+     */
+    "testdata": true,
 
     /*
      * The logo in the top left corner. Can be a logo from the `/public/logo/*` folder,
