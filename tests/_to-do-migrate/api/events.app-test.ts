@@ -153,7 +153,7 @@ if (Meteor.isClient) {
         );
       });
 
-      it("should allow a logged in user to see events from his tenant", async function () {
+      it("should allow a logged in user to see events from their tenant", async function () {
         this.timeout(6000);
 
         const eventsAsGast = Events.findFilter().fetch();

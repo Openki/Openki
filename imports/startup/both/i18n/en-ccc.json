@@ -806,7 +806,7 @@
   "privilege.removed": "Removed privilege",
   "privilege.removed.error": "Unable to remove privilege",
   "privileges.title": "Edit Privileges",
-  "profile.account.delete.confirm.button": "Delete user and all his traces",
+  "profile.account.delete.confirm.button": "Delete user and all their traces",
   "profile.account.delete.confirm.button.busy": "Deleting profile…",
   "profile.account.delete.header": "Is this a spammer?",
   "profile.account.deleted": "The account has been deleted",

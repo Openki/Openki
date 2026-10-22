@@ -417,7 +417,7 @@ export function UserprofilePage({ user }: Props) {
                     onClick={() => handleConfirmDeleteUser()}
                     busyText={t("profile.account.delete.confirm.button.busy", "Deleting profile…")}
                   >
-                    {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
+                    {t("profile.account.delete.confirm.button", "Delete user and all their traces")}
                   </Button>{" "}
                   <ButtonCancel
                     id="userprofile-confirm-delete-user-cancel"
