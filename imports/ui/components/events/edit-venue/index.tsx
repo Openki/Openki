@@ -1,6 +1,5 @@
 import React, { FocusEventHandler, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "lodash-es";
 
 import { EventEntity } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
@@ -64,7 +63,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
 
   return (
     <fieldset id="edit-venue">
-      {!value || isEmpty(value) ? (
+      {!value || Object.entries(value).length === 0 ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
             {t("group.event.edit.location", "Venue")}

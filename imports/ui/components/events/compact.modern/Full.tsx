@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
-import { isEmpty, omitBy, isNil } from "lodash-es";
+import { omitBy, isNil } from "lodash-es";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -133,7 +133,7 @@ export function Full({
 
         <hr className="hr-flush border-dark" />
 
-        {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
+        {!!event.venue && Object.entries(omitBy(event.venue, isNil)).length && (
           <>
             <h4 className="card-title">{t("event.details.location", "Location")}</h4>
             <p id="place" className="card-text">

@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import { isEmpty, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 import { i18n } from "/imports/startup/both/i18next";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
 
@@ -26,7 +26,7 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
         ? dbevent.title
         : i18n("ical.event.canceled", "Canceled: {EVENT}", { EVENT: dbevent.title }),
       location:
-        dbevent.venue && !isEmpty(dbevent.venue)
+        dbevent.venue && Object.entries(dbevent.venue).length
           ? omitBy(
               {
                 title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
