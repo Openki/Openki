@@ -36,6 +36,10 @@ fix:
 lint:
     meteor npm run lint
 
+# Only print the oxlint errors so they are easier to find and fix.
+oxlint-errors:
+    meteor npx oxlint --quiet
+
 # Extract translations into i18n files
 translations:
     meteor npm run extract-translations
