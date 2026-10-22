@@ -71,6 +71,7 @@ export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
               <textarea
                 className="form-control"
                 id="reportMessage"
+                // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 rows={5}
                 placeholder={t("report.placeholder", "My hovercraft is full of eels.")}

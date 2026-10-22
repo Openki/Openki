@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import QRCode from "react-qr-code";
+import { QRCode } from "react-qr-code";
 
 import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
@@ -21,7 +21,7 @@ import { EventCompact as EventCompactModern } from "../events/compact.modern";
 import { GroupCompact as GroupCompactModern } from "../groups/compact.modern";
 import { EventsMap } from "../events/map";
 import { CompactPropose } from "../groups/CompactPropose";
-import { CompactPropose as CompactModernPropose } from "../groups/CompactModernPropose";
+import { CompactPropose as CompactModernPropose } from "../groups/compact.modern.propose";
 import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
 
 /* This file contains the entities that an admin can use to configure a dashboard. Look at the mapping at the end of the file. */

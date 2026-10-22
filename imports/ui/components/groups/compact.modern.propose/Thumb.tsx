@@ -1,31 +1,18 @@
-import { Router } from "meteor/iron:router";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
+import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
 
-export interface Props {
-  organization?: string | undefined;
-  organizationTagEvents?:
-    | ((organizationId: string) => {
-        onMouseOver: () => Promise<void>;
-        onMouseOut: () => Promise<void>;
-        onClick: () => Promise<void>;
-      })
-    | undefined;
-}
-
-export function CompactPropose({ organization }: Props) {
+export function Thumb() {
   const { t } = useTranslation();
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenSM;
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [title, setTitle] = useState("");
-
   return (
     <div
-      className="card border-2 border-dashed"
+      className="card border-2 border-dashed h-100"
       ref={elementRef}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
@@ -33,9 +20,9 @@ export function CompactPropose({ organization }: Props) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            Router.go("proposeGroup", undefined, {
-              query: organization ? { title, organization } : { title },
-            });
+
+            location.hash = `show=propose`;
+            new ScrollBarHelper().hide();
           }}
         >
           <label className="px-2 lead">
@@ -49,9 +36,6 @@ export function CompactPropose({ organization }: Props) {
               type="text"
               className="form-control"
               placeholder={t("group.compact.propose.titlePlaceholder", "My proposal")}
-              onChange={(event) => {
-                setTitle(event.currentTarget.value);
-              }}
             />
             <button className="btn btn-success" type="submit">
               {t("group.compact.propose.button", "Go!")}

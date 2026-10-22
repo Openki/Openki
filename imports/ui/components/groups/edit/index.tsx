@@ -13,12 +13,12 @@ import { useAll as useRegions } from "/imports/api/regions/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 import { cx } from "/imports/utils/cx";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useValidation } from "/imports/ui/lib/useValidation";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useValidation } from "/imports/ui/hooks/useValidation";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
+import { useMeasureTime } from "/imports/ui/hooks/useMeasureTime";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { isMentor } from "/imports/api/groups/lib/isRole";
@@ -42,13 +42,14 @@ import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 import "./styles.scss";
 
 export type Props = {
-  isFrame?: boolean;
-  organization?: string;
-  hideRoleSelection?: boolean;
-  hidePricePolicy?: boolean;
-  creatorsRoles?: string[];
-  hideCategories?: boolean;
-  groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
+  isFrame?: boolean | undefined;
+  organization?: string | undefined;
+  hideRoleSelection?: boolean | undefined;
+  hidePricePolicy?: boolean | undefined;
+  creatorsRoles?: string[] | undefined;
+  hideCategories?: boolean | undefined;
+  groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]> | undefined;
+  showCancelButton?: boolean | undefined;
 } & Partial<GroupModel>;
 
 export function Edit({
@@ -59,6 +60,7 @@ export function Edit({
   creatorsRoles,
   hideCategories,
   groupsQuery,
+  showCancelButton,
   ...group
 }: Props) {
   const isNew = !group._id;
@@ -216,7 +218,7 @@ export function Edit({
 
   useEffect(() => {
     checkValidity("description");
-  }, [description]);
+  }, [description, checkValidity]);
 
   function showRegionSelection() {
     return (
@@ -362,7 +364,7 @@ export function Edit({
       if (isNew) {
         Analytics.trackEvent(
           "Group creations",
-          `Group creations as ${changes.subs?.length ? changes.subs.sort().join(" and ") : SystemRoles.Participant.id}`,
+          `Group creations as ${changes.subs?.length ? changes.subs.toSorted().join(" and ") : SystemRoles.Participant.id}`,
           Regions.findOne(changes.region)?.nameEn,
           totalFocusTime(),
         );
@@ -394,15 +396,7 @@ export function Edit({
     }
   }
 
-  function handleCancel() {
-    if (group._id) {
-      Router.go("showGroup", group);
-    } else {
-      Router.go("home");
-    }
-  }
-
-  if (regionsIsLoading() || organizationsIsLoading()) {
+  if (organizationsIsLoading() || regionsIsLoading()) {
     return null;
   }
 
@@ -434,11 +428,7 @@ export function Edit({
               <label className="form-label" id="learnOrTeachTitle">
                 {t("group.edit.learnOrTeach", "Learn or teach?")}
               </label>
-              <div
-                className="btn-group-toggle row"
-                role="group"
-                aria-labelledby="learnOrTeachTitle"
-              >
+              <fieldset className="btn-group-toggle row" aria-labelledby="learnOrTeachTitle">
                 <div className="col d-grid">
                   <label className={cx("btn btn-lg", simpleRoleActiveClass("participant"))}>
                     <input
@@ -467,7 +457,7 @@ export function Edit({
                     {t("group.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>
-              </div>
+              </fieldset>
             </div>
           )}
 
@@ -607,12 +597,18 @@ export function Edit({
               id="groups-edit-save"
               className="btn-save"
               isBusy={isBusy}
-              busyText={t("group.publishing", "Publishing…")}
+              busyText={isNew ? t("group.publishing", "Publishing…") : t("_button.saving")}
             >
-              {t("group.publish", "Publish")}
+              {isNew ? t("group.publish", "Publish") : t("_button.save")}
             </Button>
-            {!isFrame && (
-              <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
+            {!!showCancelButton && (
+              <ButtonCancel
+                id="groups-edit-cancel"
+                onClick={() => {
+                  history.back();
+                }}
+                disabled={isBusy}
+              />
             )}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { Accounts } from "meteor/accounts-base";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { Mongo } from "meteor/mongo";
 
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -105,7 +105,7 @@ export const ensure = {
     } as any);
 
     const age = Math.floor(prng() * 100000000000);
-    const time = new Date().getTime();
+    const time = Date.now();
     await Users.updateAsync(
       { _id: id },
       {
@@ -114,6 +114,7 @@ export const ensure = {
           // Hashing a password with bcrypt is expensive so we use the
           // computed hash.
           services: {
+            // @ts-expect-error Intentional override to avoid password reset for dev accounts.
             password: { bcrypt: "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq" },
           },
 
@@ -121,7 +122,7 @@ export const ensure = {
           lastLogin: new Date(time - age / 30),
 
           "emails.0.verified": verified,
-        } as any,
+        },
       },
     );
 
@@ -205,8 +206,8 @@ export const ensure = {
     venueEntity._id = id || ensure.fixedId([venueEntity.name, venueEntity.region as string]);
 
     const age = Math.floor(prng() * 80000000000);
-    venueEntity.created = new Date(new Date().getTime() - age);
-    venueEntity.updated = new Date(new Date().getTime() - age * 0.25);
+    venueEntity.created = new Date(Date.now() - age);
+    venueEntity.updated = new Date(Date.now() - age * 0.25);
 
     await Venues.insertAsync(venueEntity);
 

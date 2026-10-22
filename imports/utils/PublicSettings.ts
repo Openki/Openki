@@ -643,6 +643,7 @@ publicSettings.feature.socialMediaButtons =
   Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
 
 publicSettings.defaultRoles =
+  // oxlint-disable-next-line no-map-spread
   Meteor.settings.public.defaultRoles.map((role: RoleEntity) => ({
     // set default value for undefined props
     ...RoleEntityDefault,

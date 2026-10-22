@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-error";
 import MediumEditor from "medium-editor";
 
-import { Mapping, useValidation } from "../../lib/useValidation";
-import { useSession, useSessionEquals } from "../../../utils/react-meteor-data";
+import { Mapping, useValidation } from "/imports/ui/hooks/useValidation";
+import { useSession, useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { Store } from "../../lib/editable";
 import { cx } from "/imports/utils/cx";
 
@@ -359,7 +359,8 @@ export function Editable({
           <button
             onClick={handleEdit}
             className="btn btn-sm editable-icon-container"
-            data-bs-title={t("_button.edit", "Edit")}
+            data-bs-title={t("_button.edit")}
+            aria-label={t("_button.edit")}
           >
             <i className="fa-solid fa-pencil editable-icon" />
           </button>

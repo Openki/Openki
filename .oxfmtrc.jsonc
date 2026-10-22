@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/oxfmt/configuration_schema.json",
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    // Ignore artifacts
+    ".meteor/",
+    "node_modules/",
+    "packages/",
+
+    // Preserve formatting of Blaze templates for readability
+    // NOTE: These ignore rules can be removed after migrating away from Blaze and `iron:router`.
+    "*.html",
+    "imports/startup/client/translations.html",
+  ],
+}

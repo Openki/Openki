@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Find } from "../../components/groups/find";

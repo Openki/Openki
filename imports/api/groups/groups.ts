@@ -222,6 +222,8 @@ export const FindParams = {
   userInvolved: Predicates.string,
 };
 
+const searchTermDelimiter = /\s+/;
+
 export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
   constructor() {
     super("Groups", {
@@ -351,7 +353,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     }
 
     if (filter.search) {
-      const searchTerms = filter.search.split(/\s+/);
+      const searchTerms = filter.search.split(searchTermDelimiter);
       const searchQueries = searchTerms.map((searchTerm) => ({
         $or: [
           { name: { $regex: escapeRegExp(searchTerm), $options: "i" } },

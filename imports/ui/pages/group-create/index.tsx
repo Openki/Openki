@@ -13,7 +13,7 @@ export function GroupProposePage(props: Props) {
       <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <div className="container mw-md">
-        <Edit {...props} />
+        <Edit {...props} showCancelButton />
       </div>
     </>
   );

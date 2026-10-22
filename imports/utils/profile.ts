@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+/* oxlint-disable no-namespace */
 
 import { Match, check } from "meteor/check";
 

@@ -29,7 +29,7 @@ export function waitForSubscriptions(): Promise<void> {
  */
 export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
   return new Promise((resolve, reject) => {
-    const start = new Date().getTime();
+    const start = Date.now();
     let interval: false | NodeJS.Timer = false;
 
     const clearWatchers = () => {
@@ -46,7 +46,7 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
         return true;
       } catch (e) {
         if (e instanceof AssertionError) {
-          if (new Date().getTime() - start < timeout) {
+          if (Date.now() - start < timeout) {
             return false;
           }
         }
@@ -87,7 +87,7 @@ export async function expectHtmlButton(selector: string, message?: string) {
 
 export async function expectText(selector: string, text: string, message?: string) {
   return await waitFor(() => {
-    const elements = Array.from(document.querySelectorAll(selector)).filter((element) =>
+    const elements = [...document.querySelectorAll(selector)].filter((element) =>
       element.textContent?.includes(text),
     );
     expect(elements.length).to.be.equal(1, message);

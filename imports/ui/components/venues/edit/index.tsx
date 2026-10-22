@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
@@ -18,8 +18,8 @@ import { AdditionalInfo, type Props as AdditionalInfoData } from "./additional-i
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Props {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { EventModel } from "/imports/api/events/events";
 
@@ -14,22 +14,11 @@ export interface Props {
 }
 
 export function EventCompact({ event, hideCategories }: Props) {
-  const [view, setView] = useState("");
-
   return (
     <Panel
       id={event._id}
-      onChange={(view) => {
-        setView(view);
-      }}
       thumb={<Thumb event={event} />}
-      full={
-        <Full
-          event={event}
-          animation={view === "full" ? "show" : "hide"}
-          hideCategories={hideCategories}
-        />
-      }
+      full={<Full event={event} hideCategories={hideCategories} />}
     />
   );
 }

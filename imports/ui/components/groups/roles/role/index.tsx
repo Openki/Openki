@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
@@ -37,7 +37,7 @@ export function Role({ group, role }: Props) {
   }
 
   return (
-    <>
+    <Fragment key={`group:${group._id}:${role.id}`}>
       {searchParams.action === "unsubscribe" &&
         searchParams.role === role.id &&
         searchParams.type === role.type && (
@@ -78,6 +78,6 @@ export function Role({ group, role }: Props) {
           onToggle={handleFirstStepsToggle}
         />
       )}
-    </>
+    </Fragment>
   );
 }

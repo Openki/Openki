@@ -1,7 +1,7 @@
 import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useUserId } from "./react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { isObject } from "lodash-es";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
@@ -17,7 +17,6 @@ type DeepPartial<T> = T extends object
 /**
  * Subscribe to the record set.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare function publication<A extends any[], T>(...args: A): [isLoading: () => boolean, data: T];
 /**
  * Subsribe to the record set, when the condition is true.

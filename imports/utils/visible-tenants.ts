@@ -13,7 +13,7 @@ export async function visibleTenantsAsync() {
     usersTenants = [];
   }
 
-  return usersTenants.concat(PublicSettings.publicTenants).filter((t) => t);
+  return [...usersTenants, ...PublicSettings.publicTenants].filter((t) => t);
 }
 
 export function visibleTenants() {
@@ -28,5 +28,5 @@ export function visibleTenants() {
     usersTenants = [];
   }
 
-  return usersTenants.concat(PublicSettings.publicTenants).filter((t) => t);
+  return [...usersTenants, ...PublicSettings.publicTenants].filter((t) => t);
 }

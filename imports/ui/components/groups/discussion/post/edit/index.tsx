@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
@@ -202,6 +202,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 )}`}
                 value={commentTitle}
                 onChange={(event) => setCommentTitle(event.currentTarget.value)}
+                // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
               />
             </div>

@@ -61,6 +61,7 @@ export function SearchField({ search, variant = "success", onChange, onGo }: Pro
           value={value}
           placeholder={t("find.search_placeholder", "Everything")}
           onChange={handleChange}
+          // oxlint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
         />
         <button type="submit" className={`btn btn-${variant}`}>

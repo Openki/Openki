@@ -1,5 +1,5 @@
 import { PublicSettings } from "./PublicSettings";
-import { useCurrentRegion } from "./useCurrentRegion";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { RegionModel } from "/imports/api/regions/regions";
 
 export function getSiteName(region?: RegionModel): string {

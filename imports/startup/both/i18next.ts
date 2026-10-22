@@ -12,9 +12,9 @@ import { initReactI18next } from "react-i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-// eslint-disable-next-line no-constant-condition
+// oxlint-disable-next-line no-constant-condition
 if (false) {
-  // whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
+  // Allowlist: This is needed for meteor's dynamic-import module, to allow dynamic loading of modules
   // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
   import("/imports/startup/both/i18n/en.json");
   import("/imports/startup/both/i18n/roles/en.json");

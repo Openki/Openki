@@ -10,7 +10,7 @@ import * as Users from "/imports/api/users/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { Button } from "../../components/Buttons";
 

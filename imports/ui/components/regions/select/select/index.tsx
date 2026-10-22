@@ -5,8 +5,8 @@ import { Mongo } from "meteor/mongo";
 
 import { RegionEntity, RegionModel, Regions } from "/imports/api/regions/regions";
 
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
+import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import * as RegionSelectionUtils from "/imports/utils/region-selection";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
@@ -26,11 +26,11 @@ export interface Props {
   onClose?: (() => void) | undefined;
 }
 
-export function Select(props: Props) {
+export function Select({ className, size, autoFocus, append, onClose, onSelect }: Props) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(props.autoFocus || false);
+  const [searchHasFocus, setSearchHasFocus] = useState(autoFocus || false);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -79,15 +79,15 @@ export function Select(props: Props) {
     // filter active option
     if (typeof options.active === "boolean") {
       if (options.active === true) {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
+        regionsArray = regionsArray.filter((e) => e.futureEventCount > 0);
       } else {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount === 0)];
+        regionsArray = regionsArray.filter((e) => e.futureEventCount === 0);
       }
     }
 
     // filter limit option
     if (options.limit) {
-      regionsArray = [...regionsArray.slice(0, options.limit)];
+      regionsArray = regionsArray.slice(0, options.limit);
     }
 
     return regionsArray;
@@ -110,8 +110,8 @@ export function Select(props: Props) {
       }
     }
 
-    props.onSelect?.();
-    props.onClose?.();
+    onSelect?.();
+    onClose?.();
   }
 
   function allGroups() {
@@ -143,10 +143,6 @@ export function Select(props: Props) {
   }
 
   useEffect(() => {
-    setShowAllRegions(search !== "");
-  }, [search]);
-
-  useEffect(() => {
     const element = dropdownToggleElementRef.current;
     if (!element) {
       return undefined;
@@ -161,7 +157,7 @@ export function Select(props: Props) {
 
     function handleHide(event: Event) {
       if (!searchHasFocus) {
-        props.onClose?.();
+        onClose?.();
         return true;
       }
 
@@ -173,7 +169,7 @@ export function Select(props: Props) {
     return () => {
       element.removeEventListener("hide.bs.dropdown", handleHide);
     };
-  }, [searchHasFocus]);
+  }, [searchHasFocus, onClose]);
 
   function handleItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
@@ -185,6 +181,7 @@ export function Select(props: Props) {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
+      setShowAllRegions(search !== "");
     }
   }
 
@@ -218,12 +215,12 @@ export function Select(props: Props) {
   }
 
   return (
-    <li className={cx("region-select", props.className)}>
+    <li className={cx("region-select", className)}>
       <form className="d-flex region-search-form" onSubmit={handleSubmit}>
         <div
           className={cx(
             "input-group input-group-outline",
-            props.size === "small" && "input-group-sm p-2",
+            size === "small" && "input-group-sm p-2",
           )}
         >
           <span className="input-group-text">
@@ -362,7 +359,7 @@ export function Select(props: Props) {
               </>
             )}
           </ul>
-          {props.append}
+          {append}
         </div>
       </form>
     </li>

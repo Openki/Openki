@@ -36,7 +36,6 @@ function createElements<K extends string>(props: Props<K>) {
   return Object.entries(options).map((e) => {
     const [optionValue, optionLabel] = e as [K, ReactNode];
     const commonProps = {
-      key: optionValue,
       id: id + optionValue,
       label: optionLabel,
       disabled,
@@ -46,8 +45,9 @@ function createElements<K extends string>(props: Props<K>) {
       case "box":
         return (
           <FormCheck
-            type={type}
+            key={optionValue}
             {...commonProps}
+            type={type}
             checked={value.includes(optionValue)}
             onChange={(checked) => {
               if (checked) {
@@ -62,8 +62,9 @@ function createElements<K extends string>(props: Props<K>) {
       case "radio":
         return (
           <FormCheck
-            type="radio"
+            key={optionValue}
             {...commonProps}
+            type="radio"
             name={id}
             checked={optionValue === value}
             onChange={(checked) => {

@@ -5,6 +5,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { EventEntity, EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { EventsMap } from "/imports/ui/components/events/map";
 
@@ -18,7 +19,7 @@ export interface Props {
 export function EventsMapPage(props: Props) {
   const { t } = useTranslation();
   const [isLoading, region] = useDetails(props.region || "-1");
-  const now = new Date();
+  const now = useReactiveNow();
 
   if (isLoading()) {
     return null;

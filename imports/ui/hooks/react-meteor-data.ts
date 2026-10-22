@@ -16,7 +16,7 @@ export function useSession(key: string) {
   return useTracker(() => Session.get(key));
 }
 
-export function useSessionEquals(key: string, value: any) {
+export function useSessionEquals<T>(key: string, value: T) {
   return useTracker(() => Session.equals(key, value));
 }
 

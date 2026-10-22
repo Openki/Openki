@@ -93,7 +93,7 @@ export function EditableImage(props: Props) {
 
     {
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.addEventListener("load", () => {
         let name = file.name;
         // handle if resizing changed file type
         const fileExtension = extension(resizedFile.type);
@@ -111,15 +111,15 @@ export function EditableImage(props: Props) {
 
         setCopyRights(false);
         setProgress("ready");
-      };
+      });
       reader.readAsDataURL(resizedFile);
     }
 
     {
       const reader = new FileReader();
-      reader.onload = function () {
+      reader.addEventListener("load", () => {
         setPreview(reader.result as string);
-      };
+      });
       reader.readAsDataURL(resizedFile);
     }
   }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import * as StatsMethods from "/imports/api/stats/methods";
 import { Stat, Stats } from "/imports/api/stats/stats";
 
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useSession, useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { useAll, useDetails } from "/imports/api/regions/publications";
 

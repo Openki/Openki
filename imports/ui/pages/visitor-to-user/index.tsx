@@ -11,7 +11,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
 import { useAccount } from "/imports/api/users/publications";
 
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 
 import { TokenExpired } from "../../components/TokenExpired";
 

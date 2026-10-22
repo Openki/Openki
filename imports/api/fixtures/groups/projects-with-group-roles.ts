@@ -1,4 +1,3 @@
-/* eslint max-len: 0 */
 /* these groups are used for creating test data with group-specific roles */
 
 export const groups: {

@@ -11,7 +11,7 @@ import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { Filtering } from "/imports/utils/filtering";
 import { cx } from "/imports/utils/cx";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import * as Predicates from "/imports/utils/predicates";
 
 import { Filter, VisibleFilters, type Props as FilterProps } from "../filter";
@@ -22,8 +22,8 @@ import { LoadingPage } from "/imports/ui/pages/loading";
 
 import "./styles.scss";
 
-const hiddenFilters: (keyof typeof FindParams)[] = ["needsRole", "categories"];
-const filters = hiddenFilters.concat(["state"]);
+const hiddenFilters: (keyof typeof FindParams)[] = ["needsRole", "categories"] as const;
+const filters = [...hiddenFilters, "state"] as const;
 
 export interface Props {
   query: Record<string, string | undefined>;

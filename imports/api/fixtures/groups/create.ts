@@ -63,8 +63,8 @@ async function createBase(prng: PRNG) {
       region,
       customFields: [],
       createdby: (await ensure.user(template.createdby, region))._id,
-      time_created: new Date(new Date().getTime() - age),
-      time_lastedit: new Date(new Date().getTime() - age * 0.25),
+      time_created: new Date(Date.now() - age),
+      time_lastedit: new Date(Date.now() - age * 0.25),
       roles: template.roles.map((role) => predefinedRole(role)),
       members: await Promise.all(
         template.members.map(async (member) => ({
@@ -100,8 +100,8 @@ async function createZuerichLernt(prng: PRNG) {
       region: template.region,
       customFields: template.customFields,
       createdby: (await ensure.user(template.createdby, template.region))._id,
-      time_created: new Date(new Date().getTime() - age),
-      time_lastedit: new Date(new Date().getTime() - age * 0.25),
+      time_created: new Date(Date.now() - age),
+      time_lastedit: new Date(Date.now() - age * 0.25),
       roles: template.roles.map((r) => predefinedRole(r)),
       members: await mapSync(template.members, async (member) => ({
         ...member,

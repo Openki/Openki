@@ -1,5 +1,5 @@
 import React from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";

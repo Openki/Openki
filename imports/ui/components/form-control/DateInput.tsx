@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { FocusEventHandler, useEffect, useRef } from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 export function DateInput(props: {

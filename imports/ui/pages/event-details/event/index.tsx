@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
-import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
+import { useParams, useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/groups/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { cx } from "/imports/utils/cx";
 
 import { EventGroupHeader } from "../../../components/events/display/group-header";

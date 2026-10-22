@@ -8,12 +8,12 @@ export function TestWarningTicker() {
     <>
       {/* @ts-expect-error react do not known marquee */}
       <marquee
-        // eslint-disable-next-line react/no-unknown-property
+        // oxlint-disable-next-line react/no-unknown-property
         bgcolor="#000"
         direction="left"
-        // eslint-disable-next-line react/no-unknown-property
+        // oxlint-disable-next-line react/no-unknown-property
         scrollamount="5"
-        // eslint-disable-next-line react/no-unknown-property
+        // oxlint-disable-next-line react/no-unknown-property
         scrolldelay="1"
         style={{ color: "white", position: "absolute", top: "50px" }}
       >

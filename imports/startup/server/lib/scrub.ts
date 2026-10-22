@@ -38,7 +38,7 @@ export class ScrubRule {
         const count = await log.removeAsync(select);
 
         // Record completion of scrubbing
-        await pending.success({ count } as any);
+        await pending.success({ count });
       } catch (err) {
         await pending.error(err);
       }
@@ -69,7 +69,7 @@ export class ScrubRule {
           { multi: true },
         );
         // Record completion of scrubbing
-        await pending.success({ count } as any);
+        await pending.success({ count });
       } catch (err) {
         await pending.error(err);
       }

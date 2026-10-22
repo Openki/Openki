@@ -1,5 +1,3 @@
-/* eslint max-len: 0 */
-
 export const groups: {
   name: string;
   categories?: string[];

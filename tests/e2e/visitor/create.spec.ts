@@ -9,7 +9,7 @@ describe("Visitor", () => {
     cy.visitOpenki("/event/eb386e8309/Schweissen", { region: "" });
     // Wait for the full page to render before continuing.
     // NOTE: Once we replace `iron:router`, we should try to remove this artificial delay.
-    cy.wait(500);
+    cy.wait(4000);
 
     cy.get("#register-panel-reserve").click();
     cy.get("#events-display-registration").click();

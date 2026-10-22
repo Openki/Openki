@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -9,7 +9,7 @@ import { RoleType } from "/imports/api/groups/lib/Role";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { cx } from "/imports/utils/cx";
@@ -89,9 +89,9 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
   }
 
   const name = `group-${group._id}-role-enrolled-${role.id}-${role.type}-content`;
-  const firstSteps = roleGroupFirstSteps(role, { GUIDE: <Guide /> });
+  const firstSteps = roleGroupFirstSteps(role, { GUIDE: <Guide key={role.id} /> });
   return (
-    <>
+    <Fragment key={`group:${group._id}:${role.id}`}>
       <button
         className={cx(
           "btn btn-user page-component-btn d-flex flex-row align-items-center gap-1",
@@ -153,6 +153,6 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 }

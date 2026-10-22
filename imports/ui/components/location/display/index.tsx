@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
 import { DivIcon } from "leaflet";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 import "leaflet/dist/leaflet.css";
 import { RegionMapContainer } from "./RegionMapContainer";

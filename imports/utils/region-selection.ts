@@ -7,7 +7,7 @@ import * as usersMethods from "/imports/api/users/methods";
 import { RegionModel } from "/imports/api/regions/regions";
 
 import * as UserLocation from "/imports/utils/user-location";
-import * as UrlTools from "/imports/utils/url-tools";
+import { getQueryParam } from "/imports/utils/url-tools";
 
 /**
  * List of routes that show different results when the region changes.
@@ -62,7 +62,7 @@ export async function subscribe() {
   const findFilter = Regions.findFilter.subscribe(async () => {
     const selectors = [
       Session.get("region"),
-      UrlTools.queryParam("region"),
+      getQueryParam("region"),
       localStorage?.getItem("region"),
     ].filter(Boolean) as string[];
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
 import { useDetails } from "/imports/api/regions/publications";

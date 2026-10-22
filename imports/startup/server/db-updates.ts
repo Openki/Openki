@@ -4,80 +4,7 @@
 
 import { Mongo } from "meteor/mongo";
 
-import { update as update20201216MergeUserLocale } from "./updates/2020.12.16 mergeUserLocale";
-import { update as update20210106EnsureVenueSlugField } from "./updates/2021.01.06 ensureVenueSlugField";
-import { update as update20210112EnsureCourseInterestedField } from "./updates/2021.01.12 ensureCourseInterestedField";
-import { update as update20210128PrivateMessagesForAll } from "./updates/2021.01.28 privateMessagesForAll";
-import { update as update20210211AvatarColor } from "./updates/2021.02.11 avatarColor";
-import { update as update20210218UserDescription } from "./updates/2021.02.18 userDescription";
-import { update as update20210329EnrichTenant } from "./updates/2021.03.29 enrichTenant";
-import { update as update20210309HistorySubscribeUnsubscribe } from "./updates/2021.03.09 historySubscribeUnsubscribe";
-import { update as update20210421EnsureCourseArchivedField } from "./updates/2021.04.21 ensureCourseArchivedField";
-import { update as update20210513ensureTenantAdminsField } from "./updates/2021.05.13 ensureTenantAdminsField";
-import { update as update20220621EnrichEventCourseImage } from "./updates/2022.06.21 enrichEventCourseImage";
-import { update as update20230506extendEventParticipants } from "./updates/2023.05.06 extendEventParticipants";
-import { update as update20230802ensureEventSendReminderField } from "./updates/2023.08.02 ensureEventSendReminderField";
-import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorGroupMembers";
-import { update as update20241014enrichCourseCompactImage } from "./updates/2024.10.14 enrichCourseCompactImage";
-import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
-import { update as update20250723extendEventParticipants } from "./updates/2025.07.23 extendEventParticipants";
-import { update as update20251018ensureVenueAllowParallelEvents } from "./updates/2025.10.18 ensureVenueAllowParallelEventsField";
-import { update as update20260319renameGroupToOrganizationDbCollection } from "./updates/2026.03.19 renameGroupToOrganizationDbCollection";
-import { update as update20260311renameGroupToOrganization } from "./updates/2026.03.11 renameGroupToOrganization";
-import { update as update20260313renameGroupToOrganization2 } from "./updates/2026.03.13 renameGroupToOrganization2";
-import { update as update20260313renameGroupToOrganization3 } from "./updates/2026.03.13 renameGroupToOrganization3";
-import { update as update20260320moveAllS3FilesFromGroupsToOrganizations } from "./updates/2026.03.20 moveAllS3FilesFromGroupsToOrganizations";
-import { update as update20260408moveAllS3FilesFromCoursesToGroups } from "./updates/2026.04.08 moveAllS3FilesFromCoursesToGroups";
-import { update as update20260408renameCourseToGroupDbCollection } from "./updates/2026.04.08 renameCourseToGroupDbCollection";
-import { update as update20260408renameCourseToGroupInEventsAndDiscussions } from "./updates/2026.04.08 renameCourseToGroupInEventsAndDiscussions";
-import { update as update20260408renameCourseToGroupInDashboardSettings } from "./updates/2026.04.08 renameCourseToGroupInDashboardSettings";
-import { update as update20260408renameCourseToGroupInRegionAndOrganization } from "./updates/2026.04.08 renameCourseToGroupInRegionAndOrganization";
-import { update as update20260604renameGroupToOrganizationInEvents } from "./updates/2026.06.04 renameGroupToOrganizationInEvents";
-import { update as update20260709cleanupLogData } from "./updates/2026.07.09 cleanupLogData";
-import { update as update20260906refactorGroupRoles } from "./updates/2026.09.06 refactorGroupRoles";
-import { update as update20260929refactorRegionRoles } from "./updates/2026.09.29 refactorRegionRoles";
-
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-
-const UpdatesAvailable: Record<string, () => Promise<number>> = {
-  "2020.12.16 mergeUserLocale": update20201216MergeUserLocale,
-  "2021.01.06 ensureVenueSlugField": update20210106EnsureVenueSlugField,
-  "2021.01.12 ensureCourseInterestedField": update20210112EnsureCourseInterestedField,
-  "2021.01.28 privateMessagesForAll": update20210128PrivateMessagesForAll,
-  "2021.02.11 avatarColor": update20210211AvatarColor,
-  "2021.02.18 userDescription": update20210218UserDescription,
-  "2021.03.29 enrichTenant": update20210329EnrichTenant,
-  "2021.03.09 historySubscribeUnsubscribe": update20210309HistorySubscribeUnsubscribe,
-  "2021.04.21 ensureCourseArchivedField": update20210421EnsureCourseArchivedField,
-  "2021.05.13 ensureTenantAdminsField": update20210513ensureTenantAdminsField,
-  "2022.06.21 enrichEventCourseImage": update20220621EnrichEventCourseImage,
-  "2023.05.06 extendEventParticipants": update20230506extendEventParticipants,
-  "2023.08.02 ensureEventSendReminderField": update20230802ensureEventSendReminderField,
-  "2024.02.24 refactorGroupMembers": update20240224refactorGroupMembers,
-  "2024.10.14 enrichCourseCompactImage": update20241014enrichCourseCompactImage,
-  "2025.04.07 enrichUserVenues": update20250407enrichUserVenues,
-  "2025.07.23 extendEventParticipants": update20250723extendEventParticipants,
-  "2025.10.18 ensureVenueAllowParallelEventsField": update20251018ensureVenueAllowParallelEvents,
-  "2026.03.19 renameGroupToOrganizationDbCollection":
-    update20260319renameGroupToOrganizationDbCollection,
-  "2026.04.08 renameCourseToGroupDbCollection": update20260408renameCourseToGroupDbCollection,
-  "2026.03.11 renameGroupToOrganization": update20260311renameGroupToOrganization,
-  "2026.03.13 renameGroupToOrganization2": update20260313renameGroupToOrganization2,
-  "2026.03.13 renameGroupToOrganization3": update20260313renameGroupToOrganization3,
-  "2026.03.20 moveAllS3FilesFromGroupsToOrganizations":
-    update20260320moveAllS3FilesFromGroupsToOrganizations,
-  "2026.04.08 moveAllS3FilesFromCoursesToGroups": update20260408moveAllS3FilesFromCoursesToGroups,
-  "2026.04.08 renameCourseToGroupInRegionAndOrganization":
-    update20260408renameCourseToGroupInRegionAndOrganization,
-  "2026.04.08 renameCourseToGroupInEventsAndDiscussions":
-    update20260408renameCourseToGroupInEventsAndDiscussions,
-  "2026.04.08 renameCourseToGroupInDashboardSettings":
-    update20260408renameCourseToGroupInDashboardSettings,
-  "2026.06.04 renameGroupToOrganizationInEvents": update20260604renameGroupToOrganizationInEvents,
-  "2026.07.09 cleanupLogData": update20260709cleanupLogData,
-  "2026.09.06 refactorGroupRoles": update20260906refactorGroupRoles,
-  "2026.09.29 refactorRegionRoles": update20260929refactorRegionRoles,
-};
 
 interface UpdatesAppliedEntity {
   name: string;
@@ -86,13 +13,87 @@ interface UpdatesAppliedEntity {
   applied?: Date;
 }
 
-const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>("UpdatesApplied");
+if (runBackgroundTasks) {
+  /**
+   * These DB updates should be applied.
+   *
+   * To add a new migration, add a new entry here where the
+   * `key` is the filename without the `.ts` extension,
+   * and the `value` is a function to dynamically import the update script.
+   *
+   * NOTE: Never rename DB updates (or their filenames) once they have been added here,
+   * because the names are stored in the DB to track which migrations have been applied.
+   *
+   * There are also some legacy update scripts in the `updates/` directory, but they are ignored.
+   */
+  const UpdatesAvailable: Record<string, () => Promise<{ update: () => Promise<number> }>> = {
+    "2020.12.16 mergeUserLocale": () => import("./updates/2020.12.16 mergeUserLocale"),
+    "2021.01.06 ensureVenueSlugField": () => import("./updates/2021.01.06 ensureVenueSlugField"),
+    "2021.01.12 ensureCourseInterestedField": () =>
+      import("./updates/2021.01.12 ensureCourseInterestedField"),
+    "2021.01.28 privateMessagesForAll": () => import("./updates/2021.01.28 privateMessagesForAll"),
+    "2021.02.11 avatarColor": () => import("./updates/2021.02.11 avatarColor"),
+    "2021.02.18 userDescription": () => import("./updates/2021.02.18 userDescription"),
+    "2021.03.29 enrichTenant": () => import("./updates/2021.03.29 enrichTenant"),
+    "2021.03.09 historySubscribeUnsubscribe": () =>
+      import("./updates/2021.03.09 historySubscribeUnsubscribe"),
+    "2021.04.21 ensureCourseArchivedField": () =>
+      import("./updates/2021.04.21 ensureCourseArchivedField"),
+    "2021.05.13 ensureTenantAdminsField": () =>
+      import("./updates/2021.05.13 ensureTenantAdminsField"),
+    "2022.06.21 enrichEventCourseImage": () =>
+      import("./updates/2022.06.21 enrichEventCourseImage"),
+    "2023.05.06 extendEventParticipants": () =>
+      import("./updates/2023.05.06 extendEventParticipants"),
+    "2023.08.02 ensureEventSendReminderField": () =>
+      import("./updates/2023.08.02 ensureEventSendReminderField"),
+    "2024.02.24 refactorGroupMembers": () => import("./updates/2024.02.24 refactorGroupMembers"),
+    "2024.10.14 enrichCourseCompactImage": () =>
+      import("./updates/2024.10.14 enrichCourseCompactImage"),
+    "2025.04.07 enrichUserVenues": () => import("./updates/2025.04.07 enrichUserVenues"),
+    "2025.07.23 extendEventParticipants": () =>
+      import("./updates/2025.07.23 extendEventParticipants"),
+    "2025.10.18 ensureVenueAllowParallelEventsField": () =>
+      import("./updates/2025.10.18 ensureVenueAllowParallelEventsField"),
+    "2026.03.19 renameGroupToOrganizationDbCollection": () =>
+      import("./updates/2026.03.19 renameGroupToOrganizationDbCollection"),
+    "2026.04.08 renameCourseToGroupDbCollection": () =>
+      import("./updates/2026.04.08 renameCourseToGroupDbCollection"),
+    "2026.03.11 renameGroupToOrganization": () =>
+      import("./updates/2026.03.11 renameGroupToOrganization"),
+    "2026.03.13 renameGroupToOrganization2": () =>
+      import("./updates/2026.03.13 renameGroupToOrganization2"),
+    "2026.03.13 renameGroupToOrganization3": () =>
+      import("./updates/2026.03.13 renameGroupToOrganization3"),
+    "2026.03.20 moveAllS3FilesFromGroupsToOrganizations": () =>
+      import("./updates/2026.03.20 moveAllS3FilesFromGroupsToOrganizations"),
+    "2026.04.08 moveAllS3FilesFromCoursesToGroups": () =>
+      import("./updates/2026.04.08 moveAllS3FilesFromCoursesToGroups"),
+    "2026.04.08 renameCourseToGroupInRegionAndOrganization": () =>
+      import("./updates/2026.04.08 renameCourseToGroupInRegionAndOrganization"),
+    "2026.04.08 renameCourseToGroupInEventsAndDiscussions": () =>
+      import("./updates/2026.04.08 renameCourseToGroupInEventsAndDiscussions"),
+    "2026.04.08 renameCourseToGroupInDashboardSettings": () =>
+      import("./updates/2026.04.08 renameCourseToGroupInDashboardSettings"),
+    "2026.06.04 renameGroupToOrganizationInEvents": () =>
+      import("./updates/2026.06.04 renameGroupToOrganizationInEvents"),
+    "2026.07.09 cleanupLogData": () => import("./updates/2026.07.09 cleanupLogData"),
+    "2026.09.06 refactorGroupRoles": () => import("./updates/2026.09.06 refactorGroupRoles"),
+    "2026.09.29 refactorRegionRoles": () => import("./updates/2026.09.29 refactorRegionRoles"),
+  };
 
-if (runBackgroundTasks)
-  Meteor.startup(async () => {
+  const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>("UpdatesApplied");
+
+  async function applyUpdates() {
+    /**
+     * If the DB is new like for a fresh DEV, CI or production DB,
+     * we should not apply any DB updates since the DB already uses the latest schema.
+     */
     const skipInitial = (await UpdatesApplied.countDocuments()) === 0;
 
-    for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
+    // DB updates should run in sequence so we can abort as soon as something fails.
+    // oxlint-disable no-await-in-loop
+    for (const [name, loadModule] of Object.entries(UpdatesAvailable)) {
       if ((await UpdatesApplied.countDocuments({ name })) === 0) {
         const entry: UpdatesAppliedEntity = {
           name,
@@ -105,7 +106,13 @@ if (runBackgroundTasks)
         } else {
           console.log(`Applying update ${name}`);
 
-          entry.affected = await updateAvailable();
+          // Only load the update scripts into memory to run them.
+          // This reduces memory usage when the server starts,
+          // and improves startup performance both during dev and production
+          // because Node.js needs to parse and execute fewer modules.
+          const { update } = await loadModule();
+
+          entry.affected = await update();
           entry.applied = new Date();
 
           console.log(`${name}: ${entry.affected} affected documents`);
@@ -114,4 +121,9 @@ if (runBackgroundTasks)
         await UpdatesApplied.insertAsync(entry);
       }
     }
+  }
+
+  Meteor.startup(async () => {
+    await applyUpdates();
   });
+}

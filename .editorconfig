@@ -1,5 +1,5 @@
 # EditorConfig is awesome: https://EditorConfig.org
-# Some options are also used by prettier.io: https://prettier.io/docs/configuration#editorconfig
+# Some options are also used by oxfmt: https://oxc.rs/docs/guide/usage/formatter/config.html#editorconfig
 
 # top-most EditorConfig file
 root = true

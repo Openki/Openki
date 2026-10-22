@@ -111,6 +111,8 @@ export type FindFilter = Type<typeof FindFilterPattern>;
 
 export const FindParams = { region: Predicates.id };
 
+const searchTermDelimiter = /\s+/;
+
 export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
   facilityOptions = [
     "projector",
@@ -177,7 +179,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     }
 
     if (filter.search) {
-      const searchTerms = filter.search.split(/\s+/);
+      const searchTerms = filter.search.split(searchTermDelimiter);
       find.$and = searchTerms.map((searchTerm) => ({
         name: { $regex: escapeRegExp(searchTerm), $options: "i" },
       }));

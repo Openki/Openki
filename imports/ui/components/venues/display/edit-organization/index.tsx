@@ -1,5 +1,5 @@
 import React from "react";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { VenueModel } from "/imports/api/venues/venues";
 

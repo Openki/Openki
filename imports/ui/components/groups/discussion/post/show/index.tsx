@@ -7,12 +7,12 @@ import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods
 import * as Alert from "/imports/api/alerts/alert";
 
 import * as GroupDiscussionUtils from "/imports/utils/group-discussion-utils";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { RemoveDropdown } from "./remove-dropdown";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { isNewPost, type NewPost } from "../../../discussion.modern/new-post";
@@ -104,7 +104,12 @@ export function Show({ post, onEdit }: Props) {
           </span>
           <span className="discussion-buttons">
             {canEdit() && (
-              <button type="button" className="discussion-edit-btn" onClick={onEdit}>
+              <button
+                type="button"
+                className="discussion-edit-btn"
+                onClick={onEdit}
+                aria-label={t("_button.edit")}
+              >
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}

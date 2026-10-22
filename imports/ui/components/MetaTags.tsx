@@ -15,6 +15,8 @@ function getSiteDefaultImage() {
   return Meteor.absoluteUrl(`logo/${ogLogo}`);
 }
 
+const separatorRegExp = /(,|;|:|-)? +/;
+
 export function MetaTags({
   title,
   description = "",
@@ -25,7 +27,7 @@ export function MetaTags({
   image?: string | undefined;
 }) {
   // try splitting inside words to a good length for search services
-  description = truncate(textPlain(description || ""), { length: 160, separator: /(,|;|:|-)? +/ });
+  description = truncate(textPlain(description || ""), { length: 160, separator: separatorRegExp });
 
   return (
     <>

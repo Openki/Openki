@@ -70,7 +70,7 @@ export class Zone {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
+// oxlint-disable-next-line no-namespace
 export namespace LocalTime {
   export const DateFormat = "YYYY-MM-DD";
   export const TimeFormat = "HH:mm";

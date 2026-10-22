@@ -4,6 +4,7 @@ import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   companions: number;
@@ -37,10 +38,12 @@ export function EventReminder({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
-            {t(
-              "notification.event.reminder.mail.intro",
-              'We like to remind you that you are registered for "{EVENTTITLE}". We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } {EVENTDATE}.',
-              { EVENTTITLE: eventTitle, EVENTDATE: eventCalendar, COMPANIONS: companions },
+            {getFragmentsWithKeys(
+              t(
+                "notification.event.reminder.mail.intro",
+                'We like to remind you that you are registered for "{EVENTTITLE}". We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } {EVENTDATE}.',
+                { EVENTTITLE: eventTitle, EVENTDATE: eventCalendar, COMPANIONS: companions },
+              ),
             )}
           </p>
           <p className="gap-md text-center">
@@ -58,10 +61,12 @@ export function EventReminder({
         </td>
       </tr>
       <Footer
-        receiveNote={t(
-          "notification.event.reminder.mail.notice",
-          "You receive this e-mail because you are involved in {EVENTTITLE}.",
-          { EVENTTITLE: eventTitle },
+        receiveNote={getFragmentsWithKeys(
+          t(
+            "notification.event.reminder.mail.notice",
+            "You receive this e-mail because you are involved in {EVENTTITLE}.",
+            { EVENTTITLE: eventTitle },
+          ),
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

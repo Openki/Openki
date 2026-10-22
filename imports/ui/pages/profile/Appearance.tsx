@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import * as Theme from "/imports/utils/theme";
 
 export function Appearance() {
@@ -18,7 +18,7 @@ export function Appearance() {
     routerAutoscroll.cancelNext();
 
     try {
-      const theme = event.currentTarget.value as any;
+      const theme = event.currentTarget.value;
       await usersMethods.updateTheme(theme);
       Theme.setTheme(theme);
       Alert.success(t("profile.updated", "Updated profile"));

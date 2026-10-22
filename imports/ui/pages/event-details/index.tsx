@@ -3,7 +3,7 @@ import { Session } from "meteor/session";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";

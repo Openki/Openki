@@ -3,7 +3,7 @@ import React from "react";
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 import { cx } from "/imports/utils/cx";

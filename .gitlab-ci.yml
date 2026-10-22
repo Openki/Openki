@@ -2,8 +2,9 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-    - if: $CI_COMMIT_BRANCH
+    # Only run CI pipelines for specific branches and open merge requests.
+    # This prevents duplicate CI pipelines for source branches in merge requests.
+    - if: $CI_COMMIT_BRANCH =~ /^(dev|staging|main)$/ || $CI_MERGE_REQUEST_ID
 
 stages:
   - lint
@@ -24,7 +25,7 @@ variables:
   GIT_DEPTH: "0" # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
-  TARGET_BRANCH: "dev"
+  DEV_BRANCH: "dev"
 
 # Static analysis / formatting checks
 lint:
@@ -32,6 +33,7 @@ lint:
   tags:
     - gitlab-org
   script: ./ci/lint.sh
+  allow_failure: false
 
 # Cleanup generated/cached dependencies
 cleanup:
@@ -55,9 +57,6 @@ prepare_version:
     paths:
       - server/version.js
     expire_in: 1 hour
-  rules:
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 # Unit / E2E / integration tests
 test:
@@ -90,15 +89,15 @@ code_quality:
       when: never
 
     # Run only for merge requests targeting the "dev" branch
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $TARGET_BRANCH
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $DEV_BRANCH
       when: always
 
 # Semgrep SAST configuration
 # - Additional SAST settings: https://gitlab.com/Openki/Openki/-/security/configuration/sast
 semgrep-sast:
   rules:
-    # Run security scanning only on the "server-config-21-docker-simple-setup" branch
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
+    # Run security scanning only on the "dev" branch
+    - if: "$CI_COMMIT_BRANCH == $DEV_BRANCH"
       when: always
 
 # Global SAST settings
@@ -121,79 +120,72 @@ build_and_push_docker:
   needs:
     - job: prepare_version
       artifacts: true # Pulls in server/version.js + IMAGE_TAG
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "main"'
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - echo "Building image with tag $IMAGE_TAG"
     - docker build -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" .
     - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
-  rules:
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 # -------------------------------------------------------------------
 # Stage: Deploy
 # -------------------------------------------------------------------
-# Deploy docker
-deploy_docker:
-  stage: deploy
-  needs:
-    - job: prepare_version
-      artifacts: true
-    - job: build_and_push_docker
-      artifacts: true
-  trigger:
-    project: Openki/sysadmin/deploy
-    branch: dev
-    strategy: depend
-  variables:
-    IMAGE_TAG: $IMAGE_TAG
-  rules:
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
 
 #Deploy branch dev
 deploy_dev:
   stage: deploy
   # Start immediately after lint testing
-  needs: [lint]
+  needs:
+    - job: lint
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
+    IMAGE_TAG: $IMAGE_TAG
   rules:
-    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
-      when: always
+    - if: $CI_COMMIT_BRANCH == "dev"
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy staging branch
 deploy_staging:
   stage: deploy
+  needs:
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: staging
     TARGET_HOST: openki-staging
+    IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: $CI_COMMIT_BRANCH == "staging"
-      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy NLNet development branch
 deploy_dev2:
   stage: deploy
   variables:
-    SOURCE_BRANCH: nlnet-dev
+    SOURCE_BRANCH: dev
     TARGET_HOST: dev2
   rules:
-    - if: $CI_COMMIT_BRANCH == "nlnet-dev"
-      when: always
+    - if: $CI_COMMIT_BRANCH == "dev"
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy main branch to sandbox
 deploy_sandbox:
   stage: deploy
+  needs:
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: main
     TARGET_HOST: sandbox
+    IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-      when: always
   trigger: Openki/sysadmin/deploy-config

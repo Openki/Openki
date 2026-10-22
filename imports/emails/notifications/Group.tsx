@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   group: JSX.Element;
@@ -36,20 +37,24 @@ export function Group({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p className="pre">
-            {t(
-              "notification.group.mail.intro",
-              'Congratulations, you successfully created "{GROUP}" on `{SITENAME}`.',
-              { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+            {getFragmentsWithKeys(
+              t(
+                "notification.group.mail.intro",
+                'Congratulations, you successfully created "{GROUP}" on `{SITENAME}`.',
+                { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+              ),
             )}
           </p>
 
           {!!groupDescription && (
             <>
               <p>
-                {t(
-                  "notification.group.mail.description",
-                  "Here is a copy of the description you entered:",
-                  { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+                {getFragmentsWithKeys(
+                  t(
+                    "notification.group.mail.description",
+                    "Here is a copy of the description you entered:",
+                    { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+                  ),
                 )}
               </p>
               <table className="comment-box">

@@ -1,6 +1,6 @@
 import React, { SubmitEvent, ReactNode, useLayoutEffect, useState } from "react";
 
-import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
+import { useSessionEquals, useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { Content } from "/imports/ui/components/Buttons";
 
 export function Button({

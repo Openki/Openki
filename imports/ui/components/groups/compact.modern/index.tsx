@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
@@ -12,15 +12,12 @@ export interface Props {
 }
 
 export function GroupCompact({ group, draggable }: Props) {
-  const [view, setView] = useState("");
-
   return (
     <Panel
       id={group._id}
       className="rounded-2"
-      onChange={(view) => setView(view)}
       thumb={<Thumb group={group} />}
-      full={<Full group={group} animation={view === "full" ? "show" : "hide"} />}
+      full={<Full group={group} />}
       draggable={draggable}
     />
   );

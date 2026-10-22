@@ -28,7 +28,7 @@ async function getBrowserInfo(
     const rawVersion = await x(binaryPath, ["--version"], { throwOnError: true });
 
     return browserParser(rawVersion.stdout.trim(), binaryPath);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
   } catch (error) {
     // Ignore errors since the browser most likely doesn't exist.
     // NOTE: Uncomment the following line if you want to add or debug a local browser:

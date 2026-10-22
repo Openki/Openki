@@ -2,6 +2,7 @@ import React, { JSX, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   group: JSX.Element;
@@ -63,7 +64,7 @@ export function Join({
         </td>
       </tr>
       <Footer
-        receiveNote={t("email.base.receiveNote.groupTeam", { GROUP: group })}
+        receiveNote={getFragmentsWithKeys(t("email.base.receiveNote.groupTeam", { GROUP: group }))}
         unsubscribe={unsubscribe}
         spamPrevention
         campaign={campaign}

@@ -7,7 +7,7 @@ import { useFindFilter } from "/imports/api/invitations/publications";
 import * as InvitationsMethods from "/imports/api/invitations/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { FormCheck } from "/imports/ui/components/FormCheck";

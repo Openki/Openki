@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
@@ -101,7 +101,7 @@ export function Add({ venue }: Props) {
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <div className="dropdown-header">
           {t("venues.editOrganization.add.header", "Choose organization")}
-          <button type="button" className="btn-close"></button>
+          <button type="button" className="btn-close" aria-label={t("_button.close")}></button>
         </div>
         <div className="p-2">
           {t(
