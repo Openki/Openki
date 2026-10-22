@@ -5,8 +5,8 @@ import { PublicSettings, PublicSettingsPattern } from "../../utils/PublicSetting
 
 export const checkSettings = ServerMethod(
   "checkSettings",
-  () => {
-    const errors: unknown[] = [];
+  (): (Error | { errorType: "Match.Error"; message: string; path: string })[] => {
+    const errors = [];
     try {
       // Check that everything is set as expected in the settings.
       check(PrivateSettings, PrivateSettingsPattern, { throwAllErrors: true });
@@ -27,7 +27,7 @@ export const checkSettings = ServerMethod(
         errors.push(e);
       }
     }
-    // to comment out a setting we use "_commented" at the end of the name, so we can filter out this errors
+    // To comment out a setting we use "_commented" at the end of the name, so we can skip errors for these keys
     return errors.filter((e) => e instanceof Error && !e.message.includes("_commented"));
   },
   { simulation: false },

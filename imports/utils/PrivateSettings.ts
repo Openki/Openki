@@ -24,7 +24,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
    * @default false
    * @deprecated use `public.testdata` instead (October 2026)
    */
-  testdata: Match.Maybe(Deprecated(Boolean, "This option has moved to `PublicSettings.testdata`")),
+  testdata: Match.Maybe(Deprecated(Boolean, "use `public.testdata` instead (October 2026)")),
 
   /**
    * Sender e-mail address in mails
