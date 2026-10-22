@@ -12,6 +12,8 @@
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import "{}/node_modules/bootstrap/scss/functions"; // Required
 
+$enable-negative-margins: true;
+
 // Default variable overrides
 $secondary: #f0f0f0;
 

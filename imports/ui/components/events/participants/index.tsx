@@ -13,6 +13,7 @@ import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { RemoveDropdown } from "./remove-dropdown";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
+import { ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -178,11 +179,12 @@ export function EventParticipants({ event }: Props) {
             { NUM: event.numberOfParticipants() },
           )}
           {canNotifyAll() && (
-            <i
-              data-test="events-participants-notify-all"
-              className="fa-solid fa-paper-plane cursor-pointer float-end"
+            <ButtonIcon
+              id="events-participants-notify-all"
+              className="btn-lg btn-primary"
               onClick={toggleModal}
-              onKeyDown={toggleModal}
+              title={t("event.details.participants.contact-all", "Contact all participants")}
+              icon="fa-solid fa-paper-plane"
             />
           )}
           <br />

@@ -229,6 +229,7 @@
   "event.details.message.eventHasBeenUncanceled.error": "Uncancelling went wrong",
   "event.details.noRsvp": "Registration not required.",
   "event.details.organizedBy": "Organized by:",
+  "event.details.participants.contact-all": "Contact all participants",
   "event.details.participants.free.places": "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
   "event.details.participants.title": "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
   "event.details.register-register": "Register",

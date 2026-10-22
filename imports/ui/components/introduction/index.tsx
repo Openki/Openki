@@ -40,7 +40,7 @@ export function Introduction({ hasPricePolicy }: Props) {
       <div className="introduction">
         <h3 className="d-flex align-items-center justify-content-between">
           <button
-            className="border-0 bg-transparent"
+            className="border-0 bg-transparent text-primary ms-n2"
             onClick={() => {
               if (openedIntro) {
                 IntroductionUtil.closeIntro();
@@ -59,7 +59,7 @@ export function Introduction({ hasPricePolicy }: Props) {
             })}
           </button>
           <button
-            className="introduction-close-btn btn btn-dark btn-sm"
+            className="btn btn-sm fs-5 mt-n1 me-n2"
             aria-label={t("introduction.close.title", "Close introduction")}
             data-bs-title={t("introduction.close.title", "Close introduction")}
             onClick={IntroductionUtil.doneIntro}
