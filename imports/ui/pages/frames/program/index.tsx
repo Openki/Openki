@@ -136,50 +136,45 @@ export function ProgramPage(props: Record<string, string>) {
             days()
               .filter((day) => selectedDays.find((s) => s.isSame(day)))
               .flatMap((day) => {
-                let afternoon;
-                {
-                  const filter = Events.Filtering().read(props);
+                const afternoonEventsFilter = Events.Filtering().read(props);
 
-                  filter.set("after", day);
-                  filter.set("end", moment(day).add(17.75, "hour"));
+                afternoonEventsFilter.set("after", day);
+                afternoonEventsFilter.set("end", moment(day).add(17.75, "hour"));
 
-                  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-                  if (userId && isAttendeeFilterOn) {
-                    filter.set("participant", userId);
-                  }
-                  afternoon = {
-                    title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
-                      DAYOFWEEK: isMobileScreen
-                        ? dayOfWeekAndMonthShort(day)
-                        : dayOfWeekAndMonthLong(day),
-                    }),
-                    entity:
-                      props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: new URLSearchParams(filter.toParams()).toString(),
-                  };
+                // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+                if (userId && isAttendeeFilterOn) {
+                  afternoonEventsFilter.set("participant", userId);
                 }
-                let evening;
-                {
-                  const filter = Events.Filtering().read(props);
+                const afternoon = {
+                  title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
+                    DAYOFWEEK: isMobileScreen
+                      ? dayOfWeekAndMonthShort(day)
+                      : dayOfWeekAndMonthLong(day),
+                  }),
+                  entity:
+                    props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
+                  query: new URLSearchParams(afternoonEventsFilter.toParams()).toString(),
+                };
 
-                  filter.set("after", moment(day).add(17.75, "hour"));
-                  filter.set("end", moment(day).add(1, "day"));
+                const eveningEventsFilter = Events.Filtering().read(props);
 
-                  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-                  if (userId && isAttendeeFilterOn) {
-                    filter.set("participant", userId);
-                  }
-                  evening = {
-                    title: t("program.evening", "{DAYOFWEEK}, evening", {
-                      DAYOFWEEK: isMobileScreen
-                        ? dayOfWeekAndMonthShort(day)
-                        : dayOfWeekAndMonthLong(day),
-                    }),
-                    entity:
-                      props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: new URLSearchParams(filter.toParams()).toString(),
-                  };
+                eveningEventsFilter.set("after", moment(day).add(17.75, "hour"));
+                eveningEventsFilter.set("end", moment(day).add(1, "day"));
+
+                // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+                if (userId && isAttendeeFilterOn) {
+                  eveningEventsFilter.set("participant", userId);
                 }
+                const evening = {
+                  title: t("program.evening", "{DAYOFWEEK}, evening", {
+                    DAYOFWEEK: isMobileScreen
+                      ? dayOfWeekAndMonthShort(day)
+                      : dayOfWeekAndMonthLong(day),
+                  }),
+                  entity:
+                    props.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
+                  query: new URLSearchParams(eveningEventsFilter.toParams()).toString(),
+                };
 
                 return [afternoon, evening];
               }) as ComponentSettings[]
