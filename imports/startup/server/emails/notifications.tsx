@@ -6,7 +6,6 @@ import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Model, Notification } from "/imports/startup/both/emails/notification";
-import { fromPairs } from "lodash-es";
 import { serializeError } from "serialize-error";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -67,7 +66,7 @@ async function send(
   },
 ) {
   // Find out for which recipients sending has already been attempted.
-  const concluded = fromPairs(
+  const concluded = Object.fromEntries(
     await Log.find({
       tr: "Notification.SendResult",
       ts: { $gte: entry.ts },

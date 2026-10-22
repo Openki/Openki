@@ -7,7 +7,7 @@ import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { chain, sortBy, fromPairs } from "lodash-es";
+import { chain, sortBy } from "lodash-es";
 
 import { useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -203,7 +203,9 @@ export function Schedule() {
 
   // Build list of most used titles (first few chars)
   const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
-  const kindRank = fromPairs(mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]));
+  const kindRank = Object.fromEntries(
+    mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
+  );
   const kindMap = function (title: string) {
     const kindId = title.substring(0, 5);
     if (kindRank[kindId]) {
