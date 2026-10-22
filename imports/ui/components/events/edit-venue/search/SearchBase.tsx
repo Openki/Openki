@@ -2,7 +2,8 @@ import React, { FocusEventHandler, useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { differenceBy, isUndefined, omitBy, uniqBy } from "lodash-es";
+import { differenceBy, uniqBy } from "lodash-es";
+import { omitBy } from "/imports/utils/omitBy";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
@@ -37,7 +38,7 @@ function toEventVenue(venue: VenueEntity | EventVenueRef) {
       editor: venue.editor,
       restrictedUse: venue.restrictedUse,
     },
-    isUndefined,
+    (value: unknown) => value === undefined,
   ) as EventVenueRef;
 }
 

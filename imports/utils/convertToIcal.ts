@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import { omitBy } from "lodash-es";
+import { omitBy } from "/imports/utils/omitBy";
 import { i18n } from "/imports/startup/both/i18next";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
 
