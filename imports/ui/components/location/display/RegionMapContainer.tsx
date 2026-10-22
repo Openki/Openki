@@ -22,14 +22,12 @@ export function RegionMapContainer({
   level,
   onLevelChange,
   children,
-  className = "",
 }: {
   region: string;
   ref?: React.Ref<Map> | undefined;
   level?: number | undefined;
   onLevelChange?: (newValue: number) => void;
   children: ReactNode;
-  className?: string;
 } & (
   | {
       center: LatLngExpression;
@@ -51,13 +49,7 @@ export function RegionMapContainer({
 
   if (!region?.map) {
     return (
-      <MapContainer
-        ref={ref}
-        className={className}
-        bounds={bounds as LatLngBoundsExpression}
-        center={center}
-        zoom={zoom}
-      >
+      <MapContainer ref={ref} bounds={bounds as LatLngBoundsExpression} center={center} zoom={zoom}>
         {TileLayers[locale] || TileLayers.default}
         {children}
       </MapContainer>
@@ -68,7 +60,6 @@ export function RegionMapContainer({
   return (
     <MapContainer
       ref={ref}
-      className={className}
       bounds={bounds as LatLngBoundsExpression}
       center={center}
       zoom={zoom}
