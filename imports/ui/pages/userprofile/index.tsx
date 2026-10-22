@@ -392,9 +392,9 @@ export function UserprofilePage({ user }: Props) {
                     'Remove the user profile "{NAME}" permanently? {GROUPS, number} Groups created by this user (with {INTERESTED, number} members and {EVENTS, number} upcoming events) will also be removed.',
                     {
                       NAME: user.getDisplayName(),
-                      GROUPS: numberOfGroupsAffectedByDelete,
-                      INTERESTED: numberOfInterestedAffectedByDelete,
-                      EVENTS: numberOfFutureEventsAffectedByDelete,
+                      GROUPS: numberOfGroupsAffectedByDelete(),
+                      INTERESTED: numberOfInterestedAffectedByDelete(),
+                      EVENTS: numberOfFutureEventsAffectedByDelete(),
                     },
                   )}
                 </p>
