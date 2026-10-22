@@ -801,14 +801,14 @@ RouterAsync.route("timetable", {
     const events = await (await this.subscriptions?.()?.events())?.fetchAsync();
 
     // collect time when first event starts and last event ends
-    events.forEach((event: EventModel) => {
+    for (const event of events) {
       if (!start || event.start < start) {
         start = event.start;
       }
       if (!end || end < event.end) {
         end = event.end;
       }
-    });
+    }
 
     if (!start || !end) {
       return {
@@ -877,7 +877,7 @@ RouterAsync.route("timetable", {
         >;
       }
     > = {};
-    const useVenue = function (venue: any, room: any) {
+    const getRoomRowsForVenue = function (venue: any, room: any) {
       const id = venue._id || `#${venue.name}`;
       if (!perVenue[id]) {
         perVenue[id] = {
@@ -900,7 +900,7 @@ RouterAsync.route("timetable", {
       return perVenue[id].perRoom[room].rows;
     };
 
-    events.forEach((originalEvent: EventModel) => {
+    for (const originalEvent of events) {
       const event = originalEvent as EventModel & RelStartEnd;
       event.relStart = (originalEvent.start.getTime() - timestampStart) / span;
       event.relEnd = (timestampEnd - originalEvent.end.getTime()) / span;
@@ -908,26 +908,28 @@ RouterAsync.route("timetable", {
       let placed = false;
 
       const room = event.room || null;
-      const roomRows = useVenue(event.venue, room) as unknown as (EventModel & RelStartEnd)[][];
-      roomRows.forEach((roomRow) => {
+      const roomRows = getRoomRowsForVenue(event.venue, room) as unknown as (EventModel &
+        RelStartEnd)[][];
+      for (const roomRow of roomRows) {
         if (placed) {
           return;
         }
-        let last: any;
-        roomRow.forEach((placedEvent: any) => {
-          if (!last || placedEvent.end > last) {
+        const [first, ...remainingEvents] = roomRow;
+        let last = first.end;
+        for (const placedEvent of remainingEvents) {
+          if (placedEvent.end > last) {
             last = placedEvent.end;
           }
-        });
+        }
         if (last <= event.start) {
           roomRow.push(event);
           placed = true;
         }
-      });
-      if (!placed) {
-        roomRows.push([event]);
+        if (!placed) {
+          roomRows.push([event]);
+        }
       }
-    });
+    }
 
     // Transform the "rows" objects to arrays and sort the room rows by
     // the room name, so "null" (meaning no room) comes first.
