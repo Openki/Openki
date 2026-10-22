@@ -120,6 +120,8 @@ build_and_push_docker:
   needs:
     - job: prepare_version
       artifacts: true # Pulls in server/version.js + IMAGE_TAG
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "main"'
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
