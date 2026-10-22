@@ -30,6 +30,10 @@ export interface Props {
   user: UserModel;
 }
 
+function organizationMember(organization: OrganizationEntity, user: UserModel) {
+  return !!(user && organization?.members?.some((m) => m.user === user._id));
+}
+
 export function UserprofilePage({ user }: Props) {
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
@@ -54,9 +58,6 @@ export function UserprofilePage({ user }: Props) {
   }
   function allowPrivateMessages() {
     return user.allowPrivateMessages || Boolean(currentUser?.hasPrivilege("admin"));
-  }
-  function organizationMember(organization: OrganizationEntity, user: UserModel) {
-    return !!(user && organization?.members?.some((m) => m.user === user._id));
   }
   function showInviteOrganizations() {
     if (user._id === currentUser?._id) {
