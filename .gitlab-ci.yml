@@ -45,7 +45,7 @@ rebuild-ci-container:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - echo "Building CI container..."
-    - docker build --tag $OPENKI_CI_IMAGE_TAG ci/Dockerfile.ci .
+    - docker build --tag $OPENKI_CI_IMAGE_TAG -f ci/Dockerfile.ci .
     - docker push $OPENKI_CI_IMAGE_TAG
   allow_failure: false
 
