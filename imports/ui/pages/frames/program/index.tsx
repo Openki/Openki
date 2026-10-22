@@ -79,10 +79,10 @@ export function ProgramPage(props: Record<string, string>) {
       days: getDays(start, end),
       selectedDays,
       onAddDay: (day) => {
-        setSelectedDays((selectedDays) => [...selectedDays, day].toSorted());
+        setSelectedDays((current) => [...current, day].toSorted());
       },
       onRemoveDay: (day) => {
-        setSelectedDays((selectedDays) => selectedDays.filter((d) => !d.isSame(day)));
+        setSelectedDays((current) => current.filter((d) => !d.isSame(day)));
       },
       availableOrganizations: filter.get("filterOrganizations") ?? [],
       selectedOrganizations: filter.get("organizations") ?? [],
