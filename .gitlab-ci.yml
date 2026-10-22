@@ -153,9 +153,14 @@ deploy_dev:
 # Deploy staging branch
 deploy_staging:
   stage: deploy
+  needs:
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: staging
     TARGET_HOST: openki-staging
+    IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: $CI_COMMIT_BRANCH == "staging"
   trigger: Openki/sysadmin/deploy-config
@@ -173,9 +178,14 @@ deploy_dev2:
 # Deploy main branch to sandbox
 deploy_sandbox:
   stage: deploy
+  needs:
+    - job: prepare_version
+      artifacts: true
+    - job: build_and_push_docker
   variables:
     SOURCE_BRANCH: main
     TARGET_HOST: sandbox
+    IMAGE_TAG: $IMAGE_TAG
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
   trigger: Openki/sysadmin/deploy-config
