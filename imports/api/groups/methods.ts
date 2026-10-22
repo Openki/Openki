@@ -161,7 +161,8 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
               case RoleType.Custom:
                 // add a id to custom roles
-                return { ...role, id: Random.id() };
+                role.id = Random.id();
+                return role;
 
               default:
                 throw new Error("Unexpected value for role.type");
@@ -252,7 +253,10 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
               case RoleType.Custom:
                 // add an id to new custom roles
-                return !role.id ? { ...role, id: Random.id() } : role;
+                if (!role.id) {
+                  role.id = Random.id();
+                }
+                return role;
 
               default:
                 throw new Error("Unexpected value for role.type");

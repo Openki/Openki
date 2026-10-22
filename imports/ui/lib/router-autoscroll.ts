@@ -3,7 +3,6 @@ import { Router } from "meteor/iron:router";
 
 import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
 
-// use _jQuery if available, otherwise support IE9+
 function getScrollTop() {
   // uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
   return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
@@ -38,13 +37,13 @@ class RouterAutoscroll {
   public marginTop = 0;
 
   constructor() {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // oxlint-disable-next-line no-this-alias
     const self = this;
 
     // TODO use history state so we don't litter
-    window.onpopstate = () => {
+    window.addEventListener("popstate", () => {
       this.backToPosition = this.scrollPositions.get(window.location.href);
-    };
+    });
 
     Router.onBeforeAction(async function (this: { next: () => void }) {
       if (!self._cancelNext) {

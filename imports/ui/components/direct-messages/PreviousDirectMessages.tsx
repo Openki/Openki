@@ -4,9 +4,10 @@ import { Router } from "meteor/iron:router";
 
 import type { DirectMessage } from "/imports/api/emails/publications";
 import { cx } from "/imports/utils/cx";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useDetails as useEventDetails } from "/imports/api/events/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 
 const defaultVisibleMessages = 2;
 
@@ -24,7 +25,7 @@ export function PreviousDirectMessages({
   const { t } = useTranslation();
 
   const currentUserId = Meteor.userId();
-  const currentYear = new Date().getFullYear();
+  const now = useReactiveNow();
   const locale = useSession("locale");
 
   return (
@@ -65,7 +66,7 @@ export function PreviousDirectMessages({
                     {ts.toLocaleString(locale, {
                       day: "numeric",
                       month: "long",
-                      year: ts.getFullYear() !== currentYear ? "numeric" : undefined,
+                      year: ts.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: false,

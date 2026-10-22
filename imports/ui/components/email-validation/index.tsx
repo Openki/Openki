@@ -2,7 +2,7 @@ import moment from "moment";
 import { Template } from "meteor/templating";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
+import { useSessionEquals, useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";

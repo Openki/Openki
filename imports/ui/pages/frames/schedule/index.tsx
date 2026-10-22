@@ -1,12 +1,12 @@
 import React from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { chain, sortBy, fromPairs } from "lodash-es";
 
 import { useFindFilter } from "/imports/api/events/publications";
@@ -30,7 +30,7 @@ function useOptions() {
   // Read query params
   const query = searchParams;
 
-  const repeatingOnly = Object.prototype.hasOwnProperty.call(query, "repeating");
+  const repeatingOnly = Object.hasOwn(query, "repeating");
 
   let scheduleStart: moment.Moment | undefined = undefined;
   if (query.start) {
@@ -140,7 +140,7 @@ export function Schedule() {
   // Because we need to find the closest separator later on we use reverse which is easier to search.
   // List of intervals where events or separators are placed
   const intervalsDic = separators
-    .reverse()
+    .toReversed()
     .reduce((rIntervals: Record<number, number>, separator) => {
       rIntervals[separator] = separator;
       return rIntervals;
@@ -198,8 +198,8 @@ export function Schedule() {
   const numCmp = function (a: number, b: number) {
     return a - b;
   };
-  const days = Object.values(daysDic).sort(numCmp);
-  const intervals = Object.values(intervalsDic).sort(numCmp);
+  const days = Object.values(daysDic).toSorted(numCmp);
+  const intervals = Object.values(intervalsDic).toSorted(numCmp);
 
   // Build list of most used titles (first few chars)
   const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
@@ -288,7 +288,7 @@ export function Schedule() {
       <tbody>
         {displayIntervals().map((inverval) => (
           <tr key={inverval.intervalStart.valueOf()}>
-            <td className="schedule-time" scope="row">
+            <td className="schedule-time">
               <div className="schedule-time-interval">{inverval.intervalLabel}</div>
             </td>
             {inverval.slots.map((slot, index) => (

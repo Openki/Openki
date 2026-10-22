@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDetails } from "/imports/api/groups/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 export function CustomFieldDisplay({

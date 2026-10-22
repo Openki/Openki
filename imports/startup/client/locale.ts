@@ -10,7 +10,7 @@ import "bootstrap-datepicker";
 import * as UsersMethods from "/imports/api/users/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-import * as UrlTools from "/imports/utils/url-tools";
+import { getQueryParam } from "/imports/utils/url-tools";
 
 // Try to guess a sensible language
 Meteor.startup(() => {
@@ -42,7 +42,7 @@ Meteor.startup(() => {
   };
 
   // Check query parameter and cookies
-  if (setLocale(UrlTools.queryParam("lg"))) {
+  if (setLocale(getQueryParam("lg"))) {
     return;
   }
   if (setLocale(localStorage?.getItem("locale"))) {
@@ -105,6 +105,7 @@ Meteor.startup(() => {
     // I do not understand why setting language: moment.locale() does not
     // work for the datepicker. But we want to use the momentjs settings
     // anyway, so we might as well clobber the 'en' locale.
+    // oxlint-disable-next-line no-explicit-any
     const locale = moment().localeData() as any;
 
     const monthsShort = function () {
@@ -114,6 +115,7 @@ Meteor.startup(() => {
       return locale._monthsShort;
     };
 
+    // oxlint-disable-next-line no-explicit-any
     ($.fn.datepicker as any).dates.en = assignIn({}, ($.fn.datepicker as any).dates.en, {
       days: locale._weekdays,
       daysShort: locale._weekdaysShort,

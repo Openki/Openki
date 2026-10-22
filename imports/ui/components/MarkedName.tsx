@@ -16,9 +16,9 @@ export function MarkedName({ search, name }: Props) {
     const parts = name.split(term);
     return (
       <>
-        {parts.map((p, i) => (
+        {parts.map((part, i) => (
           <React.Fragment key={i}>
-            {p}
+            {part}
             {i + 1 < parts.length && <span className="fw-bold">{term}</span>}
           </React.Fragment>
         ))}

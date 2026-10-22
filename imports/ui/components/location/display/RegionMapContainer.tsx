@@ -1,13 +1,13 @@
-import { LatLngBoundsExpression, LatLngExpression, CRS } from "leaflet";
+import { type LatLngBoundsExpression, type LatLngExpression, CRS, type Map } from "leaflet";
 import React, { ReactNode } from "react";
 import { MapContainer, LayersControl, TileLayer, useMapEvent } from "react-leaflet";
 import { TileLayers } from "../../TileLayer";
 import { useDetails } from "/imports/api/regions/publications";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
 function LayerEventListener({ onChange }: { onChange: (newValue: string) => void }) {
-  useMapEvent("baselayerchange", (e) => {
-    onChange((e as any).name);
+  useMapEvent("baselayerchange", (event) => {
+    onChange(event.name);
   });
 
   return null; // hidden Element
@@ -24,7 +24,7 @@ export function RegionMapContainer({
   children,
 }: {
   region: string;
-  ref?: any | undefined;
+  ref?: React.Ref<Map> | undefined;
   level?: number | undefined;
   onLevelChange?: (newValue: number) => void;
   children: ReactNode;
@@ -49,7 +49,7 @@ export function RegionMapContainer({
 
   if (!region?.map) {
     return (
-      <MapContainer ref={ref} bounds={bounds as any} center={center as any} zoom={zoom as any}>
+      <MapContainer ref={ref} bounds={bounds as LatLngBoundsExpression} center={center} zoom={zoom}>
         {TileLayers[locale] || TileLayers.default}
         {children}
       </MapContainer>
@@ -60,11 +60,11 @@ export function RegionMapContainer({
   return (
     <MapContainer
       ref={ref}
-      bounds={bounds as any}
-      center={center as any}
-      zoom={zoom as any}
-      maxZoom={map.maxZoom as any}
-      crs={region.map.crs === "Simple" ? CRS.Simple : (undefined as any)}
+      bounds={bounds as LatLngBoundsExpression}
+      center={center}
+      zoom={zoom}
+      maxZoom={map.maxZoom}
+      crs={region.map.crs === "Simple" ? CRS.Simple : undefined}
     >
       <LayersControl position="topright" collapsed={false} hideSingleBase>
         {region.map.layers.map((l) => (

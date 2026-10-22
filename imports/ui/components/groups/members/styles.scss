@@ -3,11 +3,3 @@
 .group-members {
   margin-top: $page-component-seperator-height;
 }
-
-.contact-members {
-  @include td-float(right);
-
-  &:hover {
-    cursor: pointer;
-  }
-}

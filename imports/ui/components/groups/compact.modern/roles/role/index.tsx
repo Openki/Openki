@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useUser } from "/imports/utils/react-meteor-data";
+import React, { Fragment, useState } from "react";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 
@@ -29,7 +29,7 @@ export function Role({ group, role }: Props) {
   }
 
   return (
-    <>
+    <Fragment key={`group:${group._id}:${role.id}`}>
       {!subscribed ? (
         <Enrolling group={group} role={role} afterSubscribe={handleAfterSubscribe} />
       ) : (
@@ -40,6 +40,6 @@ export function Role({ group, role }: Props) {
           onToggle={handleFirstStepsToggle}
         />
       )}
-    </>
+    </Fragment>
   );
 }

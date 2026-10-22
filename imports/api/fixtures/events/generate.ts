@@ -118,7 +118,7 @@ export async function generate() {
 
       const spread = 1000 * 60 * 60 * 24 * 365 * 1.24; // 1.2 years in ms
       const timeOffset = Math.floor(relativeDate * spread);
-      const date = new Date(new Date().getTime() + timeOffset);
+      const date = new Date(Date.now() + timeOffset);
       const hour = date.getHours();
 
       // Events outside daylight 8-21 should be unlikely
@@ -144,8 +144,8 @@ export async function generate() {
       const randomMember = members[Math.floor(Math.random() * members.length)];
       event.createdBy = (await ensure.user(randomMember?.user || "Serverscript", event.region))._id;
       const age = Math.floor(prng() * 10000000000);
-      event.time_created = new Date(new Date().getTime() - age);
-      event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
+      event.time_created = new Date(Date.now() - age);
+      event.time_lastedit = new Date(Date.now() - age * 0.25);
       await Events.insertAsync(event);
     }
 

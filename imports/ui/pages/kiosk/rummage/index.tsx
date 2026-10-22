@@ -5,8 +5,8 @@ import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
 import { useDetails } from "/imports/api/organizations/publications";
 
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { Filtering } from "/imports/utils/filtering";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
@@ -16,8 +16,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
-import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
-import { Draggable } from "/imports/ui/components/Draggable";
+import { CompactPropose } from "/imports/ui/components/groups/compact.modern.propose";
 import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
@@ -68,8 +67,9 @@ export function KioskRummagePage() {
   query = { ...query, region };
 
   const filter = new Filtering(FindParams).read(query);
+  const count = Number.parseInt(query.count || "", 10) || 100;
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
-  const [isLoading, groups] = useFindFilter(filter.toQuery(), undefined, undefined, sort.spec());
+  const [isLoading, groups] = useFindFilter(filter.toQuery(), count, undefined, sort.spec());
 
   if (isLoading()) {
     return <LoadingPage />;
@@ -88,17 +88,15 @@ export function KioskRummagePage() {
         <AccountTasks />
       </div>
       <div className="container-fluid">
-        <div className="row">
+        <div className="row overflow-hidden">
           <div
             className={cx(
-              "col-8 d-flex align-items-stretch flex-wrap gap-3 justify-content-center rummage position-relative py-3",
+              "col-8 d-flex align-content-baseline flex-wrap gap-3 justify-content-center rummage position-relative py-3",
               sorted && "sorted",
               animated && "animated",
             )}
           >
-            <Draggable className="rounded-2">
-              <CompactPropose organization={filter.get("organization")} />
-            </Draggable>
+            <CompactPropose organization={filter.get("organization")} draggable />
             {groups.map((group) => (
               <GroupCompact key={group._id} group={group} draggable />
             ))}

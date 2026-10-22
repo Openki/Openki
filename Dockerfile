@@ -21,7 +21,7 @@ RUN meteor build --directory /build --server-only --allow-superuser
 # Stage 2 – Runtime
 # Lean Node image that just runs the bundle.
 # ─────────────────────────────────────────────
-FROM node:22-slim AS runtime
+FROM node:24-slim AS runtime
 
 # Required by Meteor bundles
 ENV PORT=3000 \

@@ -76,7 +76,7 @@ describe("API", () => {
         .should(assertGoodHeaders)
         .its("body.data")
         .then((data) => {
-          const titles = data.map((e: any) => e.title).reverse();
+          const titles = data.map((e: any) => e.title).toReversed();
           titles.forEach(assertAscendingString("", "descending ordering of titles was requested"));
         });
     });

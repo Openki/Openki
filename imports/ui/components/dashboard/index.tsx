@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { take } from "lodash-es";
 
 import { SortSpec } from "/imports/utils/sort-spec";
@@ -164,7 +164,7 @@ function DashboardComponent({
 
   const handler = mapping[settings.entity];
 
-  if (!currentUserId && settings.query && settings.query.indexOf("{currentUser}") !== -1) {
+  if (!currentUserId && settings.query && settings.query.includes("{currentUser}")) {
     // do not show components that need a logged in user.
     return null;
   }

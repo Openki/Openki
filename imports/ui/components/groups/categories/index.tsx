@@ -35,7 +35,9 @@ function CategoryLabelLinked({
           CATEGORY: t(`category.${category}`),
         })}
         onMouseOver={onMouseOver}
+        onFocus={onMouseOver}
         onMouseOut={onMouseOut}
+        onBlur={onMouseOut}
         onClick={(e) => {
           if (onClick) {
             e.preventDefault();

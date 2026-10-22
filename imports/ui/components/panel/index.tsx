@@ -1,9 +1,10 @@
+import { useTranslation } from "react-i18next";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
-import { useHash } from "/imports/utils/react-meteor-router";
-import { useEventListener } from "/imports/utils/useEventListener";
+import { useHash } from "/imports/ui/hooks/react-meteor-router";
+import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { cx } from "/imports/utils/cx";
 
 import { Draggable } from "../Draggable";
@@ -34,14 +35,12 @@ export function Panel({
   thumb,
   full,
   draggable,
-  onChange,
 }: {
   id: string;
   className?: string;
   thumb: ReactNode;
   full: ReactNode;
   draggable?: boolean | undefined;
-  onChange: (view: "thumb" | "full") => void;
 }) {
   const thumbRef = useRef<HTMLDivElement>(null);
   const fullRef = useRef<HTMLDivElement>(null);
@@ -57,6 +56,7 @@ export function Panel({
     | undefined
   >(undefined);
 
+  const { t } = useTranslation();
   const hash = (useHash() as string).slice(1);
   const hashParams = new URLSearchParams(hash);
   const isShowed = id === hashParams.get("show");
@@ -94,7 +94,6 @@ export function Panel({
   }
 
   useEffect(() => {
-    onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
       if (thumbRef.current) {
         scroll(thumbRef.current, "smooth");
@@ -129,8 +128,19 @@ export function Panel({
   });
 
   const thumbElement = (
-    <div className={cx("panel-thumb", !draggable && className)} ref={thumbRef}>
-      <div className="panel-thumb-body" onClick={handleOpen}>
+    <div className={cx("panel-thumb h-100", !draggable && className)} ref={thumbRef}>
+      <div
+        className="panel-thumb-body h-100"
+        role="button"
+        tabIndex={0}
+        onClick={handleOpen}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            handleOpen();
+          }
+        }}
+      >
         {thumb}
       </div>
     </div>
@@ -138,7 +148,11 @@ export function Panel({
 
   return (
     <div className={cx("panel", inIframe && "panel-iframe")}>
-      {draggable ? <Draggable className={className}>{thumbElement}</Draggable> : thumbElement}
+      {draggable ? (
+        <Draggable className={cx(className, expanded && "opacity-0")}>{thumbElement}</Draggable>
+      ) : (
+        thumbElement
+      )}
       {expanded && (
         <div
           ref={fullRef}
@@ -150,11 +164,13 @@ export function Panel({
         >
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
             <div className="panel-full" onClick={(e) => e.stopPropagation()} style={rect}>
-              <div className="panel-full-body">
-                {full}
-                <div className="panel-minimize">
-                  <button className="btn-close btn-close-circle" onClick={handleClose}></button>
-                </div>
+              {full}
+              <div className="panel-minimize">
+                <button
+                  className="btn-close btn-close-circle"
+                  onClick={handleClose}
+                  aria-label={t("_button.close")}
+                />
               </div>
             </div>
           </div>

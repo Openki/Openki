@@ -1,4 +1,3 @@
-import { clone } from "lodash-es";
 import { Log } from "../../log/log";
 import { RegionEntity, Regions } from "../../regions/regions";
 import { ensure } from "../ensureFixture";
@@ -21,7 +20,7 @@ export async function create() {
       defaultTeamOrganizations: template.defaultTeamOrganizations,
     } as unknown as RegionEntity;
     if (template.loc) {
-      const coordinates = clone(template.loc).reverse() as [long: number, lat: number]; // GeoJSON takes latitude first
+      const coordinates = template.loc.toReversed() as [long: number, lat: number]; // GeoJSON takes latitude first
       region.loc = { type: "Point", coordinates };
     }
     if (template.calendarStartDate) {

@@ -36,7 +36,7 @@ export function sanitizeMultiline(
   maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
 ) {
   // Remove all ASCII control chars except the line feed.
-  /* eslint-disable-next-line no-control-regex */
+  /* oxlint-disable-next-line no-control-regex */
   const re = /[\0-\x09\x0B-\x1F\x7F]/g;
 
   return text.replace(re, "").substring(0, maxLength).trim();

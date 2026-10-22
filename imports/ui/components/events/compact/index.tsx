@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 
 import { EventModel } from "/imports/api/events/events";
 
-import { useUserId } from "/imports/utils/react-meteor-data";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
@@ -54,7 +54,7 @@ export function EventCompact({
       className={cx(
         "event-compact",
         withDate && "has-date",
-        // eslint-disable-next-line react-hooks/purity
+        // oxlint-disable-next-line react-hooks/purity
         (Date.now() > event.end.getTime() || event.isFullyBooked() || event.canceled) && "is-past",
       )}
     >

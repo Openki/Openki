@@ -1,14 +1,14 @@
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError, type ValidationErrorDetail } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Buttons";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
-import { useValidation } from "../../lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { FormControl } from "/imports/ui/components/form-control";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
@@ -45,7 +45,7 @@ export function EmailSection() {
       Alert.success(t("profile.updated", "Updated profile"));
     } catch (err) {
       if (ValidationError.is(err)) {
-        (err.details as any).forEach((fieldError: any) => {
+        (err.details as unknown as ValidationErrorDetail[]).forEach((fieldError) => {
           addError(fieldError.type);
         });
       }

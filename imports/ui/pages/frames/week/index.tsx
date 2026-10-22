@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { chain } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import moment from "moment";
 

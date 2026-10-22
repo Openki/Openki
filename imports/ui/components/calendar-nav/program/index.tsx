@@ -1,11 +1,11 @@
 import moment from "moment";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useViewportSize } from "../../../hooks/useViewportSize";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
@@ -34,7 +34,7 @@ export interface Props {
 }
 
 export function CalendarNavProgram(props: Props) {
-  const { hideSwitches, days, availableOrganizations: availableOrganizations } = props;
+  const { hideSwitches, days, availableOrganizations } = props;
   const currentUser = useUser();
   const { t } = useTranslation();
   const { dayOfWeekShort, dayOfWeekLong } = useDateTimeFormat();
@@ -102,7 +102,7 @@ export function CalendarNavProgram(props: Props) {
             days.map((d) => (
               <div key={d.toISOString()} className="col p-1">
                 <div className="d-grid h-100">
-                  {props.selectedDays.find((s) => s.isSame(d)) ? (
+                  {props.selectedDays.some((s) => s.isSame(d)) ? (
                     <button
                       type="button"
                       className={cx(

@@ -1,7 +1,7 @@
 import { uniq } from "lodash-es";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 

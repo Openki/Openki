@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { textPlain } from "/imports/utils/html-tools";
 
 import { EventModel } from "/imports/api/events/events";

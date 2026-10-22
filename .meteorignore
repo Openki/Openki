@@ -1,17 +1,15 @@
 cypress.config.ts
-eslint.config.mjs
 scripts/
 i18next-parser.config.js
 
 .dockerignore
-docker-compose.yml
 Dockerfile
 
 .codeclimate.yml
 .editorconfig
 justfile
-.prettierignore
-.prettierrc
+.oxfmtrc.jsonc
+.oxlintrc.jsonc
 
 LICENSE
 LICENSES/

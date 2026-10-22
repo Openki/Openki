@@ -783,7 +783,7 @@ RouterAsync.route("timetable", {
     Session.set("kioskFilter", filter.toParams());
 
     return {
-      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }, 200),
+      events: Events.findFilter.subscribe({ canceled: false, ...query }, 200),
     };
   },
   async data() {
@@ -931,8 +931,9 @@ RouterAsync.route("timetable", {
 
     // Transform the "rows" objects to arrays and sort the room rows by
     // the room name, so "null" (meaning no room) comes first.
+    // oxlint-disable-next-line no-map-spread
     const grouped = Object.values(perVenue).map((venueData) => {
-      const perRoom = Object.values(venueData.perRoom).sort();
+      const perRoom = Object.values(venueData.perRoom).toSorted();
       return {
         control,
         day,

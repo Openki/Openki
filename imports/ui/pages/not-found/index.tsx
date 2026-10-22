@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
 import { Report } from "/imports/ui/components/report";
 
@@ -48,10 +48,10 @@ export function NotFound() {
         )}
       </div>
       <div className="page-component page-component-seperated">
-        <ul className="list-inline fs-5">
+        <ul className="list-inline">
           <li className="list-inline-item">
-            <a
-              href="#"
+            <button
+              className="btn btn-link fs-5"
               onClick={() => {
                 window.history.back();
               }}
@@ -59,10 +59,10 @@ export function NotFound() {
               <BackArrow />
               &nbsp;
               {t("notFound.goBack", "Go back")}
-            </a>
+            </button>
           </li>
           <li className="list-inline-item">
-            <a href={Router.path("home")}>
+            <a href={Router.path("home")} className="btn btn-link fs-5">
               <i className="fa-solid fa-house fa-fw" />
               &nbsp;
               {t("notFound.visitStartPage", "Go to the start page")}

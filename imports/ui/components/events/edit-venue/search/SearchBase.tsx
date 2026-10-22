@@ -10,7 +10,7 @@ import { EventVenue, EventVenueRef } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import {
   AsyncTypeahead,
@@ -74,6 +74,7 @@ function CustomMenu({
     <Menu {...menuProps} id="event-venue">
       {venues.length === 0 && (
         <>
+          {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
           <BaseMenuItem disabled role="option">
             {menuProps.emptyLabel}
           </BaseMenuItem>
@@ -91,7 +92,11 @@ function CustomMenu({
             >
               <i className="fa-solid fa-house-user fa-fw" />{" "}
               {ReactJoin([
-                !!venue.name && <span className="fw-bold">{venue.name}</span>,
+                !!venue.name && (
+                  <span className="fw-bold" key={venue.name}>
+                    {venue.name}
+                  </span>
+                ),
                 venue.address,
               ])}
             </MenuItem>
@@ -251,6 +256,7 @@ export function SearchBase({
         const commonProps = { ...inputProps, id, isInvalid, isValid, size, className };
 
         // Add type="search" to have a clear button
+        // oxlint-disable-next-line jsx-a11y/no-autofocus
         return <TypeaheadInputSingle {...commonProps} type="search" autoFocus={autofocus} />;
       }}
       renderMenu={(results, menuProps, state) => (

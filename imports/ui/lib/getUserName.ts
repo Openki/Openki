@@ -20,7 +20,7 @@ Users.find({}, { projection: { _id: 1, username: 1, contribution: 1 } }).observe
     cache[user._id] = assignIn(new User(), user || { username: "?!" });
     if (pending[user._id]) {
       pending[user._id].changed();
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      // oxlint-disable-next-line no-dynamic-delete
       delete pending[user._id];
     }
   },

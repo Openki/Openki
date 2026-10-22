@@ -1,8 +1,15 @@
+# v0.13.2 2026-10-22
+
+## Fixes
+
+- **Improved rummage page for touchscreen usability** — Added spacing to prevent the on-screen keyboard from overlapping content on touchscreens and fixed layout issues caused by long lists of cards.
+- **Improved accessibility and keyboard navigation** — Improved keyboard usability across panels, buttons, scroll controls, and organization settings, including fixes for missing accessible labels and keyboard event handlers.
+
 # v0.13.1 - 2026-10-01
 
 ## Fixes
 
-- **Rummage view layout improvement** — Limit the size of logo in rummage kiosk view
+- **Rummage view layout improvement** — Limit the size of logo in rummage kiosk view.
 - **Updated translations** — Added some German translations.
 
 # v0.13.0 - 2026-10-01

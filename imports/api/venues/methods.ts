@@ -101,8 +101,7 @@ export const save = ServerMethod(
       set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
     }
     if (changes.facilities !== undefined) {
-      set.facilities = changes.facilities.reduce((originalFs: Record<string, boolean>, f) => {
-        const fs = { ...originalFs };
+      set.facilities = changes.facilities.reduce((fs: Record<string, boolean>, f) => {
         if (Venues.facilityOptions.includes(f)) {
           fs[f] = true;
         }

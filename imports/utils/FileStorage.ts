@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import { Mongo } from "meteor/mongo";

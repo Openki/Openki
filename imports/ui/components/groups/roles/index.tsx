@@ -4,8 +4,8 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { isTeamRoleVisible } from "/imports/api/groups/lib/teamPermissions";
 import { isPredefined, isTeam } from "/imports/api/groups/lib/isRole";
 
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { Role } from "./role";
 

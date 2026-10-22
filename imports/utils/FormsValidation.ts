@@ -1,9 +1,9 @@
 export function create(target: ParentNode = document) {
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = target.querySelectorAll("form.needs-validation") as NodeListOf<HTMLFormElement>;
+  const forms = target.querySelectorAll<HTMLFormElement>("form.needs-validation");
 
   // Loop over them and prevent submission
-  Array.from(forms).forEach((form) => {
+  for (const form of forms) {
     form.addEventListener(
       "submit",
       (event) => {
@@ -16,7 +16,7 @@ export function create(target: ParentNode = document) {
       },
       false,
     );
-  });
+  }
 }
 
 export function enable() {

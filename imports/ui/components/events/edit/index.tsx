@@ -7,17 +7,17 @@
 import { intersection, isEmpty } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { useValidation } from "/imports/ui/lib/useValidation";
+import { useValidation } from "/imports/ui/hooks/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
+import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
+import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -44,6 +44,7 @@ import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
+import { useReactiveNow } from "/imports/utils/reactive-now";
 import { useFindParallelEvents } from "./useFindParallelEvents";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 
@@ -73,7 +74,7 @@ function EditGroupCustomFields({
       }
       onChange(group.customFields);
     }
-  }, [group]);
+  }, [group, onChange, groupId]);
 
   if (isLoadingGroup() || isLoadingOrganizations()) {
     return null;
@@ -193,17 +194,36 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     ...changes,
   });
 
-  const allParallelEvents = [
-    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
-    ...externalParallelEvents.map((e) => ({
-      _id: e.id,
-      title: e.summary,
-      room: e.location,
-      startLocal: e.start,
-      endLocal: e.end,
-      url: e.url,
-    })),
-  ];
+  const now = useReactiveNow();
+
+  const allParallelEvents = useMemo(
+    () => [
+      ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+      ...externalParallelEvents.map((e) => ({
+        _id: e.id,
+        title: e.summary,
+        room: e.location,
+        startLocal: e.start,
+        endLocal: e.end,
+        url: e.url,
+      })),
+    ],
+    [parallelEvents, externalParallelEvents],
+  );
+
+  const ParallelEventsWarning = useMemo(
+    () => () => (
+      <>
+        {t(
+          "event.edit.venue.parallelEvents.disallowed",
+          "Parallel events in this venue are not allowed.",
+        )}{" "}
+        <OtherEventsMessage events={allParallelEvents} />{" "}
+        {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
+      </>
+    ),
+    [allParallelEvents, t],
+  );
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -275,16 +295,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         field: "startEndVenue",
         isValid: () =>
           venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
-        text: () => (
-          <>
-            {t(
-              "event.edit.venue.parallelEvents.disallowed",
-              "Parallel events in this venue are not allowed.",
-            )}{" "}
-            <OtherEventsMessage events={allParallelEvents} />{" "}
-            {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
-          </>
-        ),
+        text: ParallelEventsWarning,
       },
       noVenue: {
         field: "venue",
@@ -327,13 +338,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     if (changes.descriptionNumberOfCharacters > 0) {
       checkValidity("description");
     }
-  }, [changes.description]);
+  }, [changes.description, checkValidity, changes]);
 
   useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     // only run when values that get checked are changed
-  }, [venue, allParallelEvents]);
+  }, [venue, allParallelEvents, checkValidity]);
 
   function showRegionSelection() {
     return (
@@ -420,8 +431,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     setIsBusy(true);
     try {
-      const user = await promptToLogin();
-      if (!user) {
+      const potentialUser = await promptToLogin();
+      if (!potentialUser) {
         return;
       }
 
@@ -447,9 +458,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             throw new Error("Unexpected undefined: group");
           }
           let role;
-          if (intersection(user.badges, group.editors).length > 0) {
+          if (intersection(potentialUser.badges, group.editors).length > 0) {
             role = "team";
-          } else if (user.hasPrivilege("admin")) {
+          } else if (potentialUser.hasPrivilege("admin")) {
             role = "admin";
           } else {
             role = "unknown";
@@ -459,7 +470,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             `Event creations as ${role}`,
             regions.find((r) => r._id === group.region)?.nameEn,
             Math.round(
-              (new Date().getTime() - group.time_created.getTime()) /
+              (Date.now() - group.time_created.getTime()) /
                 1000 /
                 60 /
                 60 /
@@ -541,7 +552,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("group.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
-              onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
+              onChange={(value) => setChanges((current) => ({ ...current, title: value }))}
               onBlur={() => checkValidity("title")}
               error={errors.title}
             />
@@ -549,7 +560,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <EditStartEnd
             {...changes}
             onChange={(newValue) => {
-              setChanges((changes) => ({ ...changes, ...newValue }));
+              setChanges((current) => ({ ...current, ...newValue }));
               setStartDayChanged(!moment.utc(newValue.startLocal).isSame(event.startLocal, "day"));
               setTimeChanged(
                 !(
@@ -559,7 +570,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               );
             }}
             /* Disabled for past */
-            disabled={!!event.start && event.start < new Date()}
+            disabled={!!event.start && event.start < now}
             errors={errors}
           />
         </div>
@@ -576,8 +587,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               )}
               value={changes.description}
               onChange={(newValue, numberOfCharacters) =>
-                setChanges((changes) => ({
-                  ...changes,
+                setChanges((current) => ({
+                  ...current,
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
                 }))
@@ -612,7 +623,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     label={t("group.event.edit.room", "Room")}
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
-                    onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
+                    onChange={(value) => setChanges((current) => ({ ...current, room: value }))}
                   />
                 </div>
               )}
@@ -655,7 +666,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   placeholder={t("group.event.edit.unlimitedParticipants", "Unlimited seats")}
                   value={changes.maxParticipants}
                   onChange={(value) =>
-                    setChanges((changes) => ({ ...changes, maxParticipants: value }))
+                    setChanges((current) => ({ ...current, maxParticipants: value }))
                   }
                 />
               )}
@@ -672,7 +683,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 "Show it only on organization and venue pages",
               )}
               checked={changes.internal}
-              onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
+              onChange={(checked) => setChanges((current) => ({ ...current, internal: checked }))}
             />
           </div>
 
@@ -712,7 +723,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 )}
                 checked={changes.sendReminder}
                 onChange={(checked) =>
-                  setChanges((changes) => ({ ...changes, sendReminder: checked }))
+                  setChanges((current) => ({ ...current, sendReminder: checked }))
                 }
               />
             </div>

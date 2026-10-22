@@ -1,7 +1,9 @@
 import React from "react";
-import { Accounts } from "meteor/accounts-base";
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { useTranslation } from "react-i18next";
+import { Accounts } from "meteor/accounts-base";
+
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export function CreateAccount({
   username,
@@ -60,9 +62,11 @@ export function CreateAccount({
           <table className="footer">
             <tr>
               <td>
-                {t("email.base.unexpected", {
-                  REPORTEMAIL: <a href={`mailto:${reportEmail}`}>{reportEmail}</a>,
-                })}{" "}
+                {getFragmentsWithKeys(
+                  t("email.base.unexpected", {
+                    REPORTEMAIL: <a href={`mailto:${reportEmail}`}>{reportEmail}</a>,
+                  }),
+                )}{" "}
               </td>
             </tr>
           </table>

@@ -11,7 +11,7 @@ import {
 import { getSiteName } from "/imports/utils/getSiteName";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
@@ -38,9 +38,9 @@ export function Introduction({ hasPricePolicy }: Props) {
   return (
     <div className={cx("container", isInCalendar() && "calendar-introduction")}>
       <div className="introduction">
-        <h3>
-          <a
-            href="#"
+        <h3 className="d-flex align-items-center justify-content-between">
+          <button
+            className="border-0 bg-transparent text-primary ms-n2"
             onClick={() => {
               if (openedIntro) {
                 IntroductionUtil.closeIntro();
@@ -57,17 +57,15 @@ export function Introduction({ hasPricePolicy }: Props) {
             {t("introduction.Title", "What does {SITENAME} do for you?", {
               SITENAME: getSiteName(),
             })}
-          </a>
-          <a
-            className="introduction-close-btn"
-            href="#"
-            title={t("introduction.close.title", "Close introduction")}
-            onClick={() => {
-              IntroductionUtil.doneIntro();
-            }}
+          </button>
+          <button
+            className="btn btn-sm fs-5 mt-n1 me-n2"
+            aria-label={t("introduction.close.title", "Close introduction")}
+            data-bs-title={t("introduction.close.title", "Close introduction")}
+            onClick={IntroductionUtil.doneIntro}
           >
             <span className="remove-btn fa-solid fa-xmark" />
-          </a>
+          </button>
         </h3>
         {!!openedIntro && (
           <div className="introduction-content">

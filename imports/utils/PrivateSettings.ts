@@ -158,7 +158,7 @@ if (Meteor.isServer) {
   };
 
   // none deep merge
-  privateSettings = { ...defaults, ...Meteor.settings, ...{ public: undefined } };
+  privateSettings = { ...defaults, ...Meteor.settings, public: undefined };
 }
 
 /**

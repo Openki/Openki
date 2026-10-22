@@ -89,6 +89,8 @@ Accounts.emailTemplates.verifyEmail = {
       </Root>,
     );
   },
+  // We're intentionally extending the default verifyEmail templates
+  // oxlint-disable-next-line no-explicit-any
 } as any;
 
 Accounts.urls.resetPassword = function (token) {
@@ -169,4 +171,6 @@ Accounts.emailTemplates.resetPassword = {
       </Root>,
     );
   },
+  // We're intentionally extending the default resetPassword templates
+  // oxlint-disable-next-line no-explicit-any
 } as any;

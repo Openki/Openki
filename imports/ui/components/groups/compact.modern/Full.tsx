@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { Collapse } from "/imports/startup/client/bootstrap";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -7,9 +6,9 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { useSiteName } from "/imports/utils/getSiteName";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
 import { Discussion } from "../../groups/discussion.modern";
@@ -18,30 +17,17 @@ import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 import { OrganizationName } from "/imports/ui/components/OrganizationName";
 import { Roles } from "./roles";
 
-export function Full({ group, animation }: { group: GroupModel; animation: "show" | "hide" }) {
+export function Full({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const { dateFormat, timeFormat } = useDateTimeFormat();
   const siteName = useSiteName();
   const user = useUser();
-  const collapseElementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (collapseElementRef.current) {
-        if (animation === "show") {
-          Collapse.getOrCreateInstance(collapseElementRef.current).show();
-        } else {
-          Collapse.getOrCreateInstance(collapseElementRef.current).hide();
-        }
-      }
-    }, 1);
-  }, [animation]);
 
   const [isRegionLoading, region] = useRegionDetails(group.region);
   const visibleOrganizations = group.organizations?.filter(
     (organizationId) =>
+      // hide organization where are from the region set
       !(
-        // hide organization where are from the region set
         region?.defaultTeamOrganizations?.includes(organizationId) &&
         // when user is not member of the organization or a admin
         !user?.canPromoteWith(organizationId) &&
@@ -56,25 +42,30 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
   const locationPreview = group.nextEvent?.venue?.name || group.nextEvent?.venue?.address;
 
   return (
-    <div className="card">
-      {group?.publicUrlForDetailsImage() ? (
+    // add some padding to prevent overlapping screen keyboard on the our touch screens
+    <div style={{ paddingBottom: "360px" }}>
+      <div className="card">
+        {group?.publicUrlForDetailsImage() ? (
+          <div
+            className="position-relative card-header bg-img-cover border-bottom"
+            style={{
+              backgroundImage: `url('${group.publicUrlForDetailsImage()}'), url('${group.publicUrlForCompactImage()}')`,
+            }}
+          />
+        ) : (
+          <ImagePlaceholder seed={group._id} regionId={group.region} />
+        )}
         <div
-          className="position-relative card-header bg-img-cover border-bottom"
-          style={{
-            backgroundImage: `url('${group.publicUrlForDetailsImage()}'), url('${group.publicUrlForCompactImage()}')`,
-          }}
-        />
-      ) : (
-        <ImagePlaceholder seed={group._id} regionId={group.region} />
-      )}
-      <div
-        className={cx("card-body animated-bg", group.hasState() === "upcomingEvent" && "bg-group")}
-      >
-        <h3 className="card-title min-h-[2lh] fw-bold">{group.name}</h3>
-        <div className="panel-hide-line-1">
-          <i className="fs-4 fa-solid fa-arrow-right-long" />
-        </div>
-        <div className="collapse" ref={collapseElementRef}>
+          className={cx(
+            "card-body animated-bg",
+            group.hasState() === "upcomingEvent" && "bg-group",
+          )}
+        >
+          <h3 className="card-title min-h-[2lh] fw-bold">{group.name}</h3>
+          <div className="panel-hide-line-1">
+            <i className="fs-4 fa-solid fa-arrow-right-long" />
+          </div>
+
           <p
             className="card-text"
             dangerouslySetInnerHTML={{ __html: group.description || "" }}
@@ -84,20 +75,17 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
           )}
 
           {group.editableBy(user) && (
-            <h4 className="card-title mt-3">
-              {t("groups.details.yourAreTeam", "You are part of the coordination-team")}{" "}
-              <a
-                className="btn btn-sm btn-secondary"
-                href={Router.path("showGroup", group, { query: { edit: "1" } })}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t("groups.details.editMode", "Edit mode", {
-                  SITENAME: siteName,
-                })}{" "}
-                <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
-              </a>
-            </h4>
+            <a
+              className="btn btn-sm btn-secondary"
+              href={Router.path("showGroup", group, { query: { edit: "1" } })}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("groups.details.editMode", "Edit mode", {
+                SITENAME: siteName,
+              })}{" "}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
+            </a>
           )}
 
           <hr className="hr-flush border-dark" />

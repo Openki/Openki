@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { numberOf } from "/imports/api/events/lib/numberOf";
 
 import { GroupModel } from "/imports/api/groups/groups";

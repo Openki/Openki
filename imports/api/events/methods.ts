@@ -354,7 +354,10 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.createdBy = user._id;
       editFields.teamOrganizations = [];
-      let enrichedEvent = await groupImageDenormalizer.beforeInsert(editFields as any);
+      let enrichedEvent = await groupImageDenormalizer.beforeInsert(
+        // Since we're creating a new event, we should have the expected data here.
+        editFields as Omit<EventEntity, "_id">,
+      );
       if (enrichedEvent.groupId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { geoLocationLink } from "/imports/utils/geoLocationLink";
 import { format } from "/imports/utils/location-format";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as VenuesMethods from "/imports/api/venues/methods";

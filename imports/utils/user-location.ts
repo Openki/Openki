@@ -6,6 +6,9 @@ import { Regions } from "/imports/api/regions/regions";
  */
 export async function getLocation(): Promise<Geodata> {
   const response = await fetch("https://ipinfo.io/geo");
+  if (!response.ok) {
+    throw new Error("Failed to fetch IP location", { cause: response });
+  }
   const location = await response.json();
 
   if (!location.region) {

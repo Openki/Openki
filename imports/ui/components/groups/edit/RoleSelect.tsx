@@ -9,7 +9,7 @@ import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 import { isCustom, isSameRole } from "/imports/api/groups/lib/isRole";
 import { uniqGroupRole } from "/imports/api/groups/lib/uniqGroupRole";
 
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRegionRoles } from "../../../hooks/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { slug } from "/imports/utils/string-tools";
 
@@ -101,22 +101,20 @@ export function RoleSelect({
       return [];
     }
 
-    return [
-      ...regionRoles
-        .filter((role) => {
-          // Skip non-editable roles
-          if (!role.editable) {
-            return false;
-          }
+    return regionRoles
+      .filter((role) => {
+        // Skip non-editable roles
+        if (!role.editable) {
+          return false;
+        }
 
-          if (isNewGroup && disabledCreateRoles.includes(role.id)) {
-            return false;
-          }
+        if (isNewGroup && disabledCreateRoles.includes(role.id)) {
+          return false;
+        }
 
-          return true;
-        })
-        .map((r) => predefinedRole(r.id)),
-    ];
+        return true;
+      })
+      .map((r) => predefinedRole(r.id));
   }
 
   function isRoleEnabled(roleId: string) {

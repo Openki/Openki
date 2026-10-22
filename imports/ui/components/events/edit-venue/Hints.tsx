@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { EventVenueRef } from "/imports/api/events/events";
@@ -45,17 +45,20 @@ export function Hints({
   const parallelEvents = useFindParallelEvents(regionId, eventVenue._id, event);
   const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue._id, event);
 
-  const allParallelEvents = [
-    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
-    ...externalParallelEvents.map((e) => ({
-      _id: e.id,
-      title: e.summary,
-      room: e.location,
-      startLocal: e.start,
-      endLocal: e.end,
-      url: e.url,
-    })),
-  ];
+  const allParallelEvents = useMemo(
+    () => [
+      ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+      ...externalParallelEvents.map((e) => ({
+        _id: e.id,
+        title: e.summary,
+        room: e.location,
+        startLocal: e.start,
+        endLocal: e.end,
+        url: e.url,
+      })),
+    ],
+    [parallelEvents, externalParallelEvents],
+  );
 
   const inSameRoom = allParallelEvents.find(
     (e) => e.room && event.room && e.room.toUpperCase() === event.room.toUpperCase(),

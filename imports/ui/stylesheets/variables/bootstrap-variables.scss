@@ -12,6 +12,8 @@
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import "{}/node_modules/bootstrap/scss/functions"; // Required
 
+$enable-negative-margins: true;
+
 // Default variable overrides
 $secondary: #f0f0f0;
 
@@ -144,7 +146,8 @@ $theme-colors-border-subtle: map.merge(
 $utilities: map.merge(
   $utilities,
   (
-    "max-width": map.merge(
+    "max-width":
+      map.merge(
         map.get($utilities, "max-width"),
         (
           values: map.merge(map.get(map.get($utilities, "max-width"), "values"), $grid-breakpoints),

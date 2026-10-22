@@ -154,6 +154,7 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
         events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
       ),
       // calc stat for every organization
+      // oxlint-disable-next-line no-map-spread
       ...organizations.map((o) => ({
         ...o,
         ...calcStats(
@@ -168,9 +169,9 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
       //        then by number of active users in groups
       //        then by number of events
       //        then by number of groups
-      .sort((a, b) => b.groups.total + b.groups.archived - (a.groups.total + a.groups.archived))
-      .sort((a, b) => b.events.total - a.events.total)
-      .sort((a, b) => b.groups.users - a.groups.users)
-      .sort((a, b) => b.events.users - a.events.users),
+      .toSorted((a, b) => b.groups.total + b.groups.archived - (a.groups.total + a.groups.archived))
+      .toSorted((a, b) => b.events.total - a.events.total)
+      .toSorted((a, b) => b.groups.users - a.groups.users)
+      .toSorted((a, b) => b.events.users - a.events.users),
   };
 }

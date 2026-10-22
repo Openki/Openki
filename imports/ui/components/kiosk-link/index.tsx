@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import React from "react";
 import { Template } from "meteor/templating";
 
-import * as UrlTools from "/imports/utils/url-tools";
-
 import "./styles.scss";
 
 function buildBackLink() {
@@ -16,7 +14,7 @@ function buildBackLink() {
   }
 
   delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-  const queryString = UrlTools.paramsToQueryString(filterParams);
+  const queryString = new URLSearchParams(filterParams).toString();
 
   const options: { query?: string } = {};
   if (queryString.length) {

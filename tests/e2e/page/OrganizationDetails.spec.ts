@@ -31,7 +31,7 @@ describe("Organization edit", () => {
       cy.get('#maincontent label[for="group-edit-internal"]').click();
       cy.get("#group-edit-internal").check();
       cy.get("#group-edit-role-select").type("host{enter}");
-      cy.get(".introduction a:first-of-type").click();
+      cy.get(".introduction button:first-of-type").click();
       cy.get("#groups-edit-add-categories").click();
       cy.get("#groups-select-categories-misc").check();
       cy.get("#groups-select-subcategories-♥undefined♥").check();

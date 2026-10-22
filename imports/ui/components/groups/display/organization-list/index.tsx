@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -85,6 +85,7 @@ export function OrganizationList({ group }: Props) {
                   aria-expanded="false"
                   aria-haspopup="true"
                   data-bs-toggle="dropdown"
+                  aria-label={t("_button.open")}
                 ></button>
                 <ul className="dropdown-menu dialog-dropdown">
                   <li className="dropdown-header">
@@ -92,7 +93,11 @@ export function OrganizationList({ group }: Props) {
                       "group.organizationList.dropdownTitle.editOrganization",
                       "Edit organization",
                     )}
-                    <button type="button" className="btn-close"></button>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label={t("_button.close")}
+                    ></button>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />

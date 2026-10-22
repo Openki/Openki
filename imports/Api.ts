@@ -15,7 +15,6 @@ import { Filtering } from "/imports/utils/filtering";
 import { StateWrapper, Predicate } from "/imports/utils/predicates";
 import { FieldSort } from "/imports/utils/sort-spec";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ExtractQuery<P> = P extends StateWrapper<infer _G, infer Q> ? Q : never;
 
 type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
@@ -71,7 +70,7 @@ export interface ApiEvent {
   }[];
 }
 
-async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
+function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
   formatter: (model: U) => Promise<R>,
   additionalFilters = {},
@@ -82,12 +81,7 @@ async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
       .findFilter({ ...query, ...additionalFilters }, limit, skip, sort)
       .fetchAsync();
 
-    const formattedModels: R[] = [];
-    for (const model of models) {
-      const formattedModel = await formatter(model);
-      formattedModels.push(formattedModel);
-    }
-
+    const formattedModels = await Promise.all(models.map(formatter));
     return formattedModels;
   };
 }
@@ -100,19 +94,19 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 }
 
 export const Api = {
-  organizations: await apiResponse(Organizations, async (originalOrganization) => {
+  organizations: apiResponse(Organizations, async (originalOrganization) => {
     const organization = { ...originalOrganization } as typeof originalOrganization & {
       link: string;
     };
     organization.link = Router.url("organizationDetails", organization);
     return organization;
   }),
-  venues: await apiResponse(Venues, async (originalVenue) => {
+  venues: apiResponse(Venues, async (originalVenue) => {
     const venue = { ...originalVenue } as typeof originalVenue & { link: string };
     venue.link = Router.url("venueDetails", venue);
     return venue;
   }),
-  events: await apiResponse(
+  events: apiResponse(
     Events,
     async (ev) => {
       const evr = {
@@ -201,7 +195,7 @@ export const Api = {
     },
     { tenants: await visibleTenantsAsync() },
   ),
-  groups: await apiResponse(
+  groups: apiResponse(
     Groups,
     async (originalGroup) => {
       const group = {

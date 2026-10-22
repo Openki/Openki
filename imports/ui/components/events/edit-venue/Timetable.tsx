@@ -6,9 +6,9 @@ import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useLocalTimeZone } from "/imports/utils/local-time";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
-import { useData } from "../../../lib/useData";
+import { useData } from "/imports/ui/hooks/useData";
 
 function ScrollIntoView({ children }: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -20,7 +20,7 @@ function ScrollIntoView({ children }: { children: React.ReactNode }) {
       behavior: "instant",
       container: "nearest",
     } as any);
-  }, [elementRef?.current]);
+  }, []);
 
   return <div ref={elementRef}>{children}</div>;
 }
@@ -82,14 +82,18 @@ export function useFindNearExternalEvents(
   params.append("start", start.subtract(18, "hours").toISOString());
   params.append("end", end.add(18, "hours").toISOString());
 
-  return (useData(`/api/venue/${venueId}/external-bookings?${params}`)?.data || []) as {
-    id: string;
-    summary: string;
-    location: string;
-    start: string;
-    end: string;
-    url: string;
-  }[];
+  return (
+    useData<{
+      data: {
+        id: string;
+        summary: string;
+        location: string;
+        start: string;
+        end: string;
+        url: string;
+      }[];
+    }>(`/api/venue/${venueId}/external-bookings?${params}`)?.data || []
+  );
 }
 
 function getDaysBetween(startDate: moment.MomentInput, endDate: moment.MomentInput) {
@@ -151,17 +155,20 @@ export function Timetable({
     ...externalParallelEvents.map((e) => ({ room: e.location })),
   ];
 
-  const allEvents = [
-    ...events.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
-    ...externalEvents.map((e) => ({
-      _id: e.id,
-      title: e.summary,
-      room: e.location,
-      startLocal: e.start,
-      endLocal: e.end,
-      url: e.url,
-    })),
-  ];
+  const allEvents = useMemo(
+    () => [
+      ...events.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+      ...externalEvents.map((e) => ({
+        _id: e.id,
+        title: e.summary,
+        room: e.location,
+        startLocal: e.start,
+        endLocal: e.end,
+        url: e.url,
+      })),
+    ],
+    [events, externalEvents],
+  );
   const startLocal = chain(allEvents)
     .map((e) => e.startLocal)
     .min()
@@ -192,7 +199,7 @@ export function Timetable({
 
     const startPos = pos;
     const endPos = pos + hours.length;
-    // eslint-disable-next-line react-hooks/immutability
+    // oxlint-disable-next-line react-hooks/immutability
     pos = endPos;
 
     return {

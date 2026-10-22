@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -12,7 +12,7 @@ import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Add } from "./add";
@@ -52,19 +52,19 @@ export function Events({ group }: Props) {
   const [isLoading, events] = EventsPub.useForGroup(group._id);
 
   function hasEvents() {
-    return events.sort(compareByStartDate).some((e) => e.end >= now);
+    return events.toSorted(compareByStartDate).some((e) => e.end >= now);
   }
 
   function hasMoreEvents() {
-    return events.sort(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
+    return events.toSorted(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
   }
 
   function ongoingEvents() {
-    return events.sort(compareByStartDate).filter((e) => e.start <= now && e.end >= now);
+    return events.toSorted(compareByStartDate).filter((e) => e.start <= now && e.end >= now);
   }
 
   function futureEvents() {
-    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
+    const upcomingEvents = events.toSorted(compareByStartDate).filter((e) => e.start > now);
 
     if (showAllEvents) {
       return upcomingEvents;
@@ -93,7 +93,7 @@ export function Events({ group }: Props) {
     };
   }
   function deleteEventsModalArgs() {
-    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
+    const upcomingEvents = events.toSorted(compareByStartDate).filter((e) => e.start > now);
     return {
       upcomingEvents,
       onHideEventsDeleteModal() {

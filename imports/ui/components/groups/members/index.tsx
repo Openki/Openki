@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { SystemRoles } from "/imports/api/groups/lib/Role";
 import { GroupModel } from "/imports/api/groups/groups";
 import { isParticipant } from "/imports/api/groups/lib/isRole";
 
 import { Member } from "./member";
+import { Button, ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -76,10 +77,12 @@ export function Members({ group }: { group: GroupModel }) {
             { NUM: howManyEnrolled() },
           )}{" "}
           {canNotifyAll() && (
-            <i
-              className="fa-solid fa-paper-plane contact-members"
-              data-bs-title={t("group.details.members.contact-members", "Contact all members")}
+            <ButtonIcon
+              id="group-members-notify-all"
+              className="btn-lg btn-primary"
               onClick={handleContactMembersClick}
+              title={t("group.details.members.contact-members", "Contact all members")}
+              icon="fa-solid fa-paper-plane"
             />
           )}
         </h4>
@@ -90,13 +93,13 @@ export function Members({ group }: { group: GroupModel }) {
             <Member key={member.user} member={member} group={group} />
           ))}
           {limited() && (
-            <button
+            <Button
+              id="group-members-show-more"
               className="btn btn-add page-component-btn"
-              type="button"
               onClick={handleShowMoreMembersClick}
             >
               {t("_button.more")}
-            </button>
+            </Button>
           )}
         </div>
       )}

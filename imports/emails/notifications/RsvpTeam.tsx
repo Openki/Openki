@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getFragmentsWithKeys } from "/imports/ui/lib/getFragmentsWithKeys";
 
 export interface Props {
   group: string;
@@ -33,10 +34,12 @@ export function RsvpTeam({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
-            {t(
-              "notification.rsvp.team.mail.intro",
-              '{COMPANIONS, plural, =0{{USER} } other{{USER} and companion } }just reserved a seat for event "{EVENT}".',
-              { USER: newParticipant, COMPANIONS: companionsOfNewParticipant, EVENT: event },
+            {getFragmentsWithKeys(
+              t(
+                "notification.rsvp.team.mail.intro",
+                '{COMPANIONS, plural, =0{{USER} } other{{USER} and companion } }just reserved a seat for event "{EVENT}".',
+                { USER: newParticipant, COMPANIONS: companionsOfNewParticipant, EVENT: event },
+              ),
             )}
           </p>
           <p className="fw-bold">

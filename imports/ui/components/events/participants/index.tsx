@@ -5,7 +5,7 @@ import { Modal } from "/imports/startup/client/bootstrap";
 import { EventModel, EventParticipant } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
 import { Contribution } from "../../Contribution";
@@ -13,6 +13,7 @@ import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { RemoveDropdown } from "./remove-dropdown";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
+import { ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -136,6 +137,10 @@ export function EventParticipants({ event }: Props) {
     );
   }
 
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   return (
     <>
       <div data-test="events-participants" className="page-component-header">
@@ -174,10 +179,12 @@ export function EventParticipants({ event }: Props) {
             { NUM: event.numberOfParticipants() },
           )}
           {canNotifyAll() && (
-            <i
-              data-test="events-participants-notify-all"
-              className="fa-solid fa-paper-plane cursor-pointer float-end"
-              onClick={() => setShowModal(!showModal)}
+            <ButtonIcon
+              id="events-participants-notify-all"
+              className="btn-lg btn-primary"
+              onClick={toggleModal}
+              title={t("event.details.participants.contact-all", "Contact all participants")}
+              icon="fa-solid fa-paper-plane"
             />
           )}
           <br />
