@@ -218,6 +218,8 @@ export function Edit({
 
   useEffect(() => {
     checkValidity("description");
+    // In this case, we want to re-run the validation when the description changes.
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
   }, [description, checkValidity]);
 
   function showRegionSelection() {
@@ -478,9 +480,9 @@ export function Edit({
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
-              onChange={(newValue, numberOfCharacters) => {
+              onChange={(newValue, numberOfVissibleCharacters) => {
                 setDescription(newValue);
-                setNumberOfCharacters(numberOfCharacters);
+                setNumberOfCharacters(numberOfVissibleCharacters);
               }}
               onFocus={() => startMeasureFocusTime()}
               onBlur={() => {

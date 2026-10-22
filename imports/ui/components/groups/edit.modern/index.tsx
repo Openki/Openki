@@ -251,9 +251,9 @@ export function Edit(props: Props) {
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
-              onChange={(newValue, numberOfCharacters) => {
+              onChange={(newValue, numberOfVisibleCharacters) => {
                 setDescription(newValue);
-                setNumberOfCharacters(numberOfCharacters);
+                setNumberOfCharacters(numberOfVisibleCharacters);
               }}
               onFocus={() => startMeasureFocusTime()}
               onBlur={() => {
