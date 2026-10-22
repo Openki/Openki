@@ -1,0 +1,28 @@
+# Use the same Node.js major version our Meteor version
+FROM node:24-trixie-slim
+
+# Set version label
+ARG BUILD_DATE
+LABEL build_version="TestingDocker version:- 0.3 Build-date:- ${BUILD_DATE}"
+LABEL maintainer="1u"
+
+ENV METEOR_VERSION=3.5.3
+ENV TITLE=TestingDocker
+ENV DISPLAY=':99.0'
+ENV DEBIAN_FRONTEND=noninteractive
+ENV METEOR_ALLOW_SUPERUSER=true
+ENV TZ="Europe/Zurich"
+
+RUN apt-get update -qq \
+  && apt-get install -qq --no-install-recommends build-essential python3 git curl ca-certificates chromium chromium-l10n xvfb \
+  # Clean up tmp data
+  && apt-get autoclean \
+  && rm -rf \
+  /config/.cache \
+  /var/lib/apt/lists/* \
+  /var/tmp/* \
+  /tmp/*
+
+RUN curl -fsSL https://install.meteor.com/?release=$METEOR_VERSION | sh \
+  # Reduce container size
+  && rm -rf /tmp/* /var/cache/*
