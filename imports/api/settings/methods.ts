@@ -1,7 +1,7 @@
 import { check } from "meteor/check";
-import { ServerMethod } from "/imports/utils/ServerMethod";
-import { PrivateSettings, PrivateSettingsPattern } from "/imports/utils/PrivateSettings";
-import { PublicSettings, PublicSettingsPattern } from "/imports/utils/PublicSettings";
+import { ServerMethod } from "../../utils/ServerMethod";
+import { PrivateSettings, PrivateSettingsPattern } from "../../utils/PrivateSettings";
+import { PublicSettings, PublicSettingsPattern } from "../../utils/PublicSettings";
 
 export const checkSettings = ServerMethod(
   "checkSettings",
