@@ -356,8 +356,6 @@ export const save = ServerMethod(
       editFields.teamOrganizations = [];
       let enrichedEvent = await groupImageDenormalizer.beforeInsert(
         // Since we're creating a new event, we should have the expected data here.
-        // NOTE: Instead of validating input data with matchers, a more robust approach would be
-        // to parse input data against schemas, from where we can infer accurate and trusted types.
         editFields as Omit<EventEntity, "_id">,
       );
       if (enrichedEvent.groupId) {

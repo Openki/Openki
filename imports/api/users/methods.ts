@@ -176,6 +176,9 @@ export const updatePrivateMessages = ServerMethod(
   },
 );
 
+/**
+ * @param theme "light" | "system" | "dark"
+ */
 export const updateTheme = ServerMethod("user.updateTheme", async (theme: string) => {
   check(theme, StringEnum("light", "system", "dark"));
 
