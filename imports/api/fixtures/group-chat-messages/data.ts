@@ -4,8 +4,6 @@ import { type groups } from "../groups/data";
 export interface FixtureGroupWithChatMessages {
   /** Used to find the right group */
   groupName: (typeof groups)[number]["name"];
-  /** Used to find the right group, to guarantee we find the right group if there have been name changes */
-  groupCreatedBy: (typeof groups)[number]["createdby"];
   /**
    * These members need to be in the group and have the specific roles.
    *
@@ -32,7 +30,6 @@ export interface FixtureGroupWithChatMessages {
 export const fixtureGroupChatMessages = [
   {
     groupName: "Elektronik",
-    groupCreatedBy: "greg",
     requiredMembers: [
       { user: "greg", roles: ["host", "team"] },
       { user: "LeOnI", roles: ["participant", "team"] },

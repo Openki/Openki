@@ -73,10 +73,7 @@ async function getUserId(username: string) {
 export async function create() {
   await Promise.all(
     fixtureGroupChatMessages.map(async (fixture) => {
-      const group = await Groups.findOneAsync({
-        name: fixture.groupName,
-        // createdby: fixture.groupCreatedBy,
-      });
+      const group = await Groups.findOneAsync({ name: fixture.groupName });
       if (!group) {
         throw new Error(
           `Expected group with name "${fixture.groupName}" to exist. It may have been renamed or deleted.
