@@ -118,8 +118,7 @@ export function RoleSelect({
   }
 
   function isRoleEnabled(roleId: string) {
-    const regionRole = regionRoles.find((regionRole) => regionRole.id === roleId);
-    return regionRole?.preset ?? false;
+    return regionRoles.find((regionRole) => regionRole.id === roleId)?.preset || false;
   }
 
   useEffect(() => {
