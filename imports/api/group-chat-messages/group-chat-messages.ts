@@ -11,16 +11,16 @@ export interface GroupChatMessageEntity {
    * Message content. Initially plain text.
    */
   content: string;
-  /**
-   * The account who sent the message.
-   */
-  userId: string;
   groupId: string;
   /**
    * The group role that should have access to this chat.
    * Users with the coordination `team` role can access all chats so they can coordinate with all roles.
    */
   roleId: string;
+  /**
+   * The user who sent the message.
+   */
+  userId: string;
 
   createdAt: Date;
   updatedAt: Date;
