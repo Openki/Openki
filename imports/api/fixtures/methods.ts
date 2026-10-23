@@ -23,6 +23,7 @@ import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
 import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { create as groupChatMessagesDataCreate } from "/imports/api/fixtures/group-chat-messages/create";
 
 export const cleanFixtures = ServerMethod(
   "fixtures.clean",
@@ -100,6 +101,11 @@ export const createFixtures = ServerMethod(
 
       if ((await GroupDiscussions.countDocuments()) === 0) {
         await groupDiscussionsDataGenerate();
+        shouldUpdateDBCache = true;
+      }
+
+      if ((await GroupChatMessages.countDocuments()) === 0) {
+        await groupChatMessagesDataCreate();
         shouldUpdateDBCache = true;
       }
 
