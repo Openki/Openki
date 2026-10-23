@@ -15,8 +15,13 @@ function getMessagesWithUpdatedDates({
   offsetDays: number;
 }) {
   const sorted = messages
-    // Revive timestamps into dates
-    .map((m) => ({ ...m, createdAt: new Date(m.createdAt), updatedAt: new Date(m.updatedAt) }))
+    // Revive timestamps into dates.
+    .map((m) => ({
+      ...m,
+      createdAt: new Date(m.createdAt),
+      // Assume message was unchanged unless an explicit updatedAt was provided.
+      updatedAt: new Date(m.updatedAt ?? m.createdAt),
+    }))
     // Ensure messages are sorted by creation time
     .toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 

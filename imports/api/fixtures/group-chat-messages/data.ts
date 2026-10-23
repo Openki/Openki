@@ -25,8 +25,7 @@ export interface FixtureGroupWithChatMessages {
     user: string;
     roleId: GroupRole["id"];
     createdAt: string;
-    // TODO: Make updatedAt optional, since it by default will be the same timestamp.
-    updatedAt: string;
+    updatedAt?: string;
   }[];
 }
 
@@ -45,35 +44,30 @@ export const fixtureGroupChatMessages = [
         user: "greg",
         roleId: "team",
         createdAt: "2026-10-19T15:49:09.770Z",
-        updatedAt: "2026-10-19T15:49:09.770Z",
       },
       {
         content: "We should start planning.",
         user: "greg",
         roleId: "team",
         createdAt: "2026-10-19T15:51:42.090Z",
-        updatedAt: "2026-10-19T15:51:42.090Z",
       },
       {
         content: "Nice chat you got here! 🌚",
         user: "Barbie92",
         roleId: "team",
         createdAt: "2026-10-19T16:20:42.090Z",
-        updatedAt: "2026-10-19T16:20:42.090Z",
       },
       {
         content: "Wait what how did you get in here? Removing unauthorized users...",
         user: "greg",
         roleId: "team",
         createdAt: "2026-10-19T16:21:00.000Z",
-        updatedAt: "2026-10-19T16:21:00.000Z",
       },
       {
         content: "Lol. Let's start planning - I have some ideas.",
         user: "LeOnI",
         roleId: "team",
         createdAt: "2026-10-19T16:25:44.870Z",
-        updatedAt: "2026-10-19T16:25:44.870Z",
       },
       {
         content:
@@ -81,7 +75,6 @@ export const fixtureGroupChatMessages = [
         user: "LeOnI",
         roleId: "team",
         createdAt: "2026-10-19T16:38:11.070Z",
-        updatedAt: "2026-10-19T16:38:11.070Z",
       },
       {
         content:
@@ -89,21 +82,18 @@ export const fixtureGroupChatMessages = [
         user: "IvanZ",
         roleId: "team",
         createdAt: "2026-10-20T11:53:05.420Z",
-        updatedAt: "2026-10-20T11:53:05.420Z",
       },
       {
         content: "Please anyone?",
         user: "IvanZ",
         roleId: "team",
         createdAt: "2026-10-20T11:53:05.420Z",
-        updatedAt: "2026-10-20T11:53:05.420Z",
       },
       {
         content: "Next to the station would work well. Though only space for 20 people.",
         user: "greg",
         roleId: "team",
         createdAt: "2026-10-20T11:54:59.955Z",
-        updatedAt: "2026-10-20T11:54:59.955Z",
       },
       {
         content:
@@ -111,14 +101,12 @@ export const fixtureGroupChatMessages = [
         user: "IvanZ",
         roleId: "team",
         createdAt: "2026-10-20T12:49:42.194Z",
-        updatedAt: "2026-10-20T12:49:42.194Z",
       },
       {
         content: "Can someone bring a powerbank?",
         user: "IvanZ",
         roleId: "team",
         createdAt: "2026-10-20T16:53:51.347Z",
-        updatedAt: "2026-10-20T16:53:51.347Z",
       },
     ],
   },
