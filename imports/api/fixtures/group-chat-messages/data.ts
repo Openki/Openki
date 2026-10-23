@@ -1,18 +1,15 @@
 import { type GroupRole } from "../../groups/groups";
 import { groups } from "../groups/data";
 
-export const groupChatMessages: {
-  groupName: (typeof groups)[number]["name"];
-  messages: {
-    content: string;
-    user: string;
-    roleId: GroupRole["id"];
-    createdAt: string;
-    updatedAt: string;
-  }[];
-}[] = [
+export const fixtureGroupChatMessages = [
   {
     groupName: "Elektronik",
+    groupCreatedBy: "greg",
+    requiredMembers: [
+      { user: "greg", roles: ["host", "team"] },
+      { user: "LeOnI", roles: ["participant", "team"] },
+      { user: "IvanZ", roles: ["participant", "team"] },
+    ],
     messages: [
       {
         content: "Hello team! Looking forward to get to know you.",
@@ -82,4 +79,19 @@ export const groupChatMessages: {
       },
     ],
   },
-];
+] as const satisfies {
+  /** Used to find the right group */
+  groupName: (typeof groups)[number]["name"];
+  /** Used to find the right group, as fallback if the name has changed */
+  groupCreatedBy: (typeof groups)[number]["createdby"];
+  /** These members need to be in the group and have the specific roles */
+  requiredMembers: { user: string; roles: GroupRole["id"][] }[];
+  /** The chat messages to add to the group */
+  messages: {
+    content: string;
+    user: string;
+    roleId: GroupRole["id"];
+    createdAt: string;
+    updatedAt: string;
+  }[];
+}[];
