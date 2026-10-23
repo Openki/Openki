@@ -25,6 +25,7 @@ export interface FixtureGroupWithChatMessages {
     user: string;
     roleId: GroupRole["id"];
     createdAt: string;
+    // TODO: Make updatedAt optional, since it by default will be the same timestamp.
     updatedAt: string;
   }[];
 }
@@ -54,7 +55,21 @@ export const fixtureGroupChatMessages = [
         updatedAt: "2026-10-19T15:51:42.090Z",
       },
       {
-        content: "Indeed, I have some ideas.",
+        content: "Nice chat you got here! 🌚",
+        user: "Barbie92",
+        roleId: "team",
+        createdAt: "2026-10-19T16:20:42.090Z",
+        updatedAt: "2026-10-19T16:20:42.090Z",
+      },
+      {
+        content: "Wait what how did you get in here? Removing unauthorized users...",
+        user: "greg",
+        roleId: "team",
+        createdAt: "2026-10-19T16:21:00.000Z",
+        updatedAt: "2026-10-19T16:21:00.000Z",
+      },
+      {
+        content: "Lol. Let's start planning - I have some ideas.",
         user: "LeOnI",
         roleId: "team",
         createdAt: "2026-10-19T16:25:44.870Z",
