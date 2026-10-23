@@ -127,13 +127,7 @@ export function Button(props: Props & { children: ReactNode }) {
     "onClick" in props ? (
       <ControlledButton {...additionalProps} {...props} className={fullClassName} />
     ) : (
-      <button
-        {...additionalProps}
-        id={id}
-        type="submit"
-        className={fullClassName}
-        disabled={props.isBusy || disabled}
-      >
+      <button id={id} type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
         <Content isBusy={props.isBusy} busyText={busyText}>
           {children}
         </Content>
