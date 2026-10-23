@@ -1,12 +1,12 @@
 import { GroupEntity, Groups } from "../../groups/groups";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
-import * as StringTools from "/imports/utils/string-tools";
+import { slug } from "/imports/utils/string-tools";
 
-import { groups as groupsBase } from "./data";
+import { type FixtureGroup, groups as groupsBase } from "./data";
 import { groups as groupsZuerichLernt } from "./zuerichlernt";
 import { Log } from "../../log/log";
-import { PRNG } from "seedrandom";
+import { type PRNG } from "seedrandom";
 import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 async function mapSync<T, U>(
@@ -34,7 +34,7 @@ export async function create() {
 }
 
 async function createBase(prng: PRNG) {
-  for (const template of groupsBase) {
+  for (const template of groupsBase as FixtureGroup[]) {
     let region: string;
     if (template.region) {
       region = await ensure.region(template.region);
@@ -59,7 +59,7 @@ async function createBase(prng: PRNG) {
       description: template.description,
       compactImage: "",
       image: "",
-      slug: StringTools.slug(template.name),
+      slug: slug(template.name),
       region,
       customFields: [],
       createdby: (await ensure.user(template.createdby, region))._id,
@@ -96,7 +96,7 @@ async function createZuerichLernt(prng: PRNG) {
       description: template.description,
       compactImage: template.image,
       image: template.image,
-      slug: StringTools.slug(template.name),
+      slug: slug(template.name),
       region: template.region,
       customFields: template.customFields,
       createdby: (await ensure.user(template.createdby, template.region))._id,

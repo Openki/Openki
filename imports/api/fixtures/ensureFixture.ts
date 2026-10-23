@@ -8,9 +8,9 @@ import { Tenants } from "/imports/api/tenants/tenants";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import { UserEntity, Users } from "/imports/api/users/users";
-import { GroupEntity, GroupRole, type GroupModel } from "../groups/groups";
+import { GroupEntity, GroupRole, Groups, type GroupModel } from "../groups/groups";
 
-import * as StringTools from "/imports/utils/string-tools";
+import { slug } from "/imports/utils/string-tools";
 
 export const ensure = {
   fixedId(strings: string[]) {
@@ -194,7 +194,7 @@ export const ensure = {
       region: regionId,
     } as VenueEntity;
 
-    venueEntity.slug = StringTools.slug(venueEntity.name);
+    venueEntity.slug = slug(venueEntity.name);
 
     const region = await Regions.findOneAsync(regionId);
     if (!region || !region.loc) {

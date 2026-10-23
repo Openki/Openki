@@ -1,3 +1,24 @@
+export interface FixtureGroup {
+  name: string;
+  categories?: string[];
+  tags: string[];
+  organizations?: string[];
+  teamOrganizations?: string[];
+  createdby: string;
+  description: string;
+  roles: string[];
+  members: {
+    user: string;
+    roles: string[];
+    comment?: string;
+  }[];
+  region?: string;
+  singleEvent?: boolean;
+  archived?: boolean;
+  comment?: string;
+  internal?: boolean;
+}
+
 export const groups = [
   {
     name: "Meditation & Yoga/Qi-Gong",
@@ -1595,23 +1616,4 @@ export const groups = [
     ],
     region: "Projectistan",
   },
-] as const satisfies {
-  name: string;
-  categories?: string[];
-  tags: string[];
-  organizations?: string[];
-  teamOrganizations?: string[];
-  createdby: string;
-  description: string;
-  roles: string[];
-  members: {
-    user: string;
-    roles: string[];
-    comment?: string;
-  }[];
-  region?: string;
-  singleEvent?: boolean;
-  archived?: boolean;
-  comment?: string;
-  internal?: boolean;
-}[];
+] as const satisfies FixtureGroup[];
