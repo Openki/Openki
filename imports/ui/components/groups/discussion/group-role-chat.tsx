@@ -78,15 +78,15 @@ export function GroupRoleChat({ group, roleId }: Props) {
   return (
     <div className="max-h-75vh">
       {hasOtherParticipants && (
-        <header className="small p-2 border-bottom bg-success border-secondary">
+        <header className="small border-bottom border-secondary">
           <details>
-            <summary className="d-flex justify-content-between align-items-center">
+            <summary className="d-flex justify-content-between align-items-center p-2">
               {/* TODO: Use the plural rules to adapt he count based on the locale. */}
               <span>Group chat with you and {chatParticipants.length - 1} others.</span>
               <span className="btn btn-sm btn-light">Show participants</span>
             </summary>
 
-            <ul className="m-0">
+            <ul className="m-0 pe-2 pb-2">
               {chatParticipants.map((participant) => (
                 <li key={participant.user}>
                   <ProfileLink userId={participant.user} />
