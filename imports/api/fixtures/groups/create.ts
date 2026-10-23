@@ -1,6 +1,6 @@
 import { GroupEntity, Groups } from "../../groups/groups";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
-import { Prng } from "/imports/api/fixtures/Prng";
+import { createSeededRNG } from "../createSeededRNG";
 import { slug } from "/imports/utils/string-tools";
 
 import { type FixtureGroup, groups as groupsBase } from "./data";
@@ -24,7 +24,7 @@ async function mapSync<T, U>(
 }
 
 export async function create() {
-  const prng = Prng("createCourses");
+  const prng = createSeededRNG("createCourses");
 
   await Promise.all([createBase(prng), createZuerichLernt(prng)]);
 

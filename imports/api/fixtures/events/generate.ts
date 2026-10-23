@@ -4,7 +4,7 @@ import { shuffle, sample } from "lodash-es";
 import { Groups } from "../../groups/groups";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
-import { Prng } from "/imports/api/fixtures/Prng";
+import { createSeededRNG } from "../createSeededRNG";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -29,7 +29,7 @@ function humandistrib(prng: () => number): number {
  * the past, some in the future.
  */
 export async function generate() {
-  const prng = Prng("eventsGenerate");
+  const prng = createSeededRNG("eventsGenerate");
   let count = 0;
 
   const testVenues = [

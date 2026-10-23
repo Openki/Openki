@@ -4,7 +4,7 @@ import { type PRNG } from "seedrandom";
 
 import { Groups } from "../../groups/groups";
 import { GroupDiscussionEntity, GroupDiscussions } from "../../group-discussions/group-discussions";
-import { Prng } from "/imports/api/fixtures/Prng";
+import { createSeededRNG } from "../createSeededRNG";
 import { Users } from "/imports/api/users/users";
 
 import { sanitizeHtml } from "/imports/utils/html-tools";
@@ -29,7 +29,7 @@ function sometimesAfter(prng: PRNG, date: Date) {
 }
 
 export async function generate() {
-  const prng = Prng("createComments");
+  const prng = createSeededRNG("createComments");
   let count = 0;
 
   const userCount = await Users.countDocuments();

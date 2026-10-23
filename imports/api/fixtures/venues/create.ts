@@ -1,7 +1,7 @@
 import { assignIn } from "lodash-es";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
-import { Prng } from "/imports/api/fixtures/Prng";
+import { createSeededRNG } from "../createSeededRNG";
 import { Regions } from "/imports/api/regions/regions";
 import { FacilityOption, Venues } from "/imports/api/venues/venues";
 
@@ -33,7 +33,7 @@ export interface VenueTemplate {
 }
 
 export async function create() {
-  const prng = Prng("loadLocations");
+  const prng = createSeededRNG("loadLocations");
 
   const venues = [...venuesBase, ...zuerichlerntVenues];
   const testRegions = (
