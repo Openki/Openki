@@ -16,3 +16,13 @@ export const SystemRoles = {
   Participant: predefinedRole("participant"),
   Mentor: predefinedRole("mentor"),
 } as const;
+
+const systemRoleIds = new Set<string>(Object.values(SystemRoles).map((role) => role.id));
+
+export function getRoleType(id: string) {
+  if (systemRoleIds.has(id)) {
+    return RoleType.Predefined;
+  }
+
+  return RoleType.Custom;
+}
