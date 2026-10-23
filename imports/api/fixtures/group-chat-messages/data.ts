@@ -4,11 +4,22 @@ import { type groups } from "../groups/data";
 export interface FixtureGroupWithChatMessages {
   /** Used to find the right group */
   groupName: (typeof groups)[number]["name"];
-  /** Used to find the right group, as fallback if the name has changed */
+  /** Used to find the right group, to guarantee we find the right group if there have been name changes */
   groupCreatedBy: (typeof groups)[number]["createdby"];
-  /** These members need to be in the group and have the specific roles */
+  /**
+   * These members need to be in the group and have the specific roles.
+   *
+   * The actual messages may be sent by other users who are no longer in the group,
+   * or have different roles than at the time when the messages were sent.
+   * That's why we need to define the currently required group members explicitly here.
+   */
   requiredMembers: { user: string; roles: GroupRole["id"][] }[];
-  /** The chat messages to add to the group */
+  /**
+   * The chat messages to add to the group.
+   *
+   * This may include older messages by users who are no longer part of the group
+   * and/or no longer have the roles required to access their messages.
+   */
   messages: {
     content: string;
     user: string;
