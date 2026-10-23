@@ -85,6 +85,10 @@ Please re-create the testdata for groups or reset the DB.`,
         );
       }
 
+      // NOTE: Here, we might want to ensure the group has all roles defined in `fixture.requiredMembers[number].roles[number]`.
+      // Check if they are system roles and add them like that in that case. Otherwise add them as custom roles to the group.
+      // This will become relevant when we add chats for custom roles and not just the `team`.
+
       await Promise.all(
         fixture.requiredMembers.map(async ({ user: username, roles }) => {
           // First make sure the user with a specific username exists
@@ -118,45 +122,9 @@ Please re-create the testdata for groups or reset the DB.`,
                 },
               );
             }
-
-            // Add the missing roles
-            // await Promise.all(
-            //   // TODO: get all missing roles and add them all at once
-            //   roles.map(async (roleId) => {
-            //     if (!member.roles.some(({ id }) => id === roleId)) {
-            //       // Now that we're sure she's listed, add the role too
-            //       await Groups.updateAsync(
-            //         { _id: group._id, "members.user": user._id },
-            //         // IDEA: Can we add multiple items at the same time with $addToSet?
-            //         {
-            //           $addToSet: { "members.$.roles": [{ id: roleId, type: getRoleType(roleId) }] },
-            //         },
-            //       );
-            //     }
-            //   }),
-            // );
           }
         }),
       );
-
-      // TODO: Maybe not worth it, because we will likely want to support having messages sent by users who are no longer part of a group chat.
-      // for (const message of fixture.messages) {
-      //   if (!usernameToUserIds.get(message.user)) {
-      //     throw new Error(
-      //       `GroupChatMessages fixtures has a message which includes user ${message.user}, but they are not part of the group's requiredMembers`,
-      //       { cause: { message, requiredMembers: fixture.requiredMembers } },
-      //     );
-      //   }
-      // }
-
-      // IDEA: Pass in requiredMembers not from the fixture, but based on the actual messages instead
-      // This would be more robust and reduce duplication in the fixture data.
-      // determine required roles by first determining which members are participating
-      // TODO: This won't work if someone should have access to a custom role chat while themselves being part of the team.
-      // Because writing in the `customRoleId` chat doesn't mean you have that role, you could also be in the `team`.
-      // Thus we need the requiredRoles to be explicitly defined.
-      // However, we could compare against actual usage and throw an error if the fixtures are invalid.
-      // const { group, groupMembers } = await ensure.groupExistsAndHasMembersWithRoles(fixture);
 
       await Promise.all(
         getMessagesWithUpdatedDates({ messages: fixture.messages, offsetDays: 5 }).map(
