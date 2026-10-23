@@ -134,19 +134,24 @@ function DiscussionWithGroupChatTabs({
         {tabs.map(({ id }, i) => {
           const tabId = `tab-${id}`;
           const tabContentId = `tab-${id}-content`;
+          const isChatTab = id !== "discussions";
           return (
             <div
               key={id}
-              className={cx("tab-pane max-h-none", i === TODO_activeIndex && "show active")}
+              className={cx(
+                "tab-pane max-h-none",
+                i === TODO_activeIndex && "show active",
+                isChatTab && "group-chat-tab",
+              )}
               id={tabContentId}
               role="tabpanel"
               aria-labelledby={tabId}
               tabIndex={0}
             >
-              {id === "discussions" ? (
-                <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
-              ) : (
+              {isChatTab ? (
                 <GroupRoleChat roleId={id} group={group} />
+              ) : (
+                <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
               )}
             </div>
           );
