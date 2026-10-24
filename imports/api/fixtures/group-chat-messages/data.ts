@@ -48,14 +48,22 @@ export const fixtureGroupChatMessages = [
         roleId: "team",
         createdAt: "2026-10-19T15:51:42.090Z",
       },
+      // This user is a group member, but no longer part of the team.
       {
         content: "Nice chat you got here! 🌚",
         user: "Barbie92",
         roleId: "team",
         createdAt: "2026-10-19T16:20:42.090Z",
       },
+      // This user is no longer part of the group, and thus not part of the team.
       {
-        content: "Wait what how did you get in here? Removing unauthorized users...",
+        content: "I have to agree with Barbie!",
+        user: "August",
+        roleId: "team",
+        createdAt: "2026-10-20T16:53:51.347Z",
+      },
+      {
+        content: "Wait what how did you two get in here? Removing unauthorized users...",
         user: "greg",
         roleId: "team",
         createdAt: "2026-10-19T16:21:00.000Z",
