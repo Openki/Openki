@@ -8,7 +8,6 @@ import { Tenants } from "/imports/api/tenants/tenants";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import { UserEntity, Users } from "/imports/api/users/users";
-import { GroupEntity, GroupRole, Groups, type GroupModel } from "../groups/groups";
 
 import { slug } from "/imports/utils/string-tools";
 
@@ -217,24 +216,5 @@ export const ensure = {
       throw new Error("Unexpected undefined");
     }
     return venue;
-  },
-
-  async groupExistsAndHasMembersWithRoles({
-    groupName,
-    groupCreatedBy,
-    requiredMembers,
-  }: {
-    groupName: GroupEntity["name"];
-    groupCreatedBy: UserEntity["username"];
-    requiredMembers: { user: UserEntity["username"]; roles: GroupRole["id"][] }[];
-  }): Promise<{
-    group: GroupModel;
-    groupMembers: { _id: string; username: UserEntity["username"] }[];
-  }> {
-    // Ensure all groups exist, otherwise re-create the specific group from fixture data.
-    // Ensure all group members exist as users in the system.
-    // Ensure all group members exist and have the expected roles, otherwise add them to the group with the specific roles.
-    // Ensure the group roles exist. Check if they are system roles and add them like that in that case. Otherwise add them as custom roles.
-    // return { group, groupMembers }
   },
 };
