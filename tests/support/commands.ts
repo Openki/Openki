@@ -74,6 +74,46 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
   });
 });
 
+interface MeteorPublications {
+  // We might be able to import the types for publications to make them easier to test.
+  server: { publish_handlers: Record<string, (...args: unknown[]) => unknown> };
+}
+
+function callMeteorPublication({
+  Meteor,
+  publication,
+  args,
+}: {
+  Meteor: typeof import("meteor/meteor") & MeteorPublications;
+  publication: string;
+  args: unknown[];
+}) {
+  return Meteor.server.publish_handlers[publication].apply(...args);
+}
+
+Cypress.Commands.add("callPublication", (publication: string, ...args: unknown[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "callPublication",
+      consoleProps: () => ({ name: publication, args }),
+    });
+
+    return new Promise((resolve, reject) => {
+      try {
+        const result = callMeteorPublication({ Meteor, publication, args });
+        resolve(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error(error);
+        }
+        reject(error);
+      }
+    });
+  });
+});
+
 Cypress.Commands.add("logout", () => {
   cy.getMeteor().then((Meteor) => {
     Cypress.log({
@@ -169,6 +209,7 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callPublication<T = any>(publication: string, ...args: unknown[]): Chainable<T>;
       logout(): Chainable<void>;
       login(username: string, password?: string): Chainable<void>;
       visitOpenki(
