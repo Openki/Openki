@@ -16,6 +16,11 @@ interface CommonProps {
   busyText?: string | undefined;
 }
 
+interface AdditionalProps {
+  "aria-label"?: string | undefined;
+  "data-bs-title"?: string | undefined;
+}
+
 type LoginProps = {
   onClick: () => Promise<void> | void;
 } & (
@@ -73,15 +78,25 @@ export function Content({
   );
 }
 
-function ControlledButton(props: CommonProps & LoginProps & { children: ReactNode }) {
-  const { id, className, disabled, needsLogin, onClick, children, busyText, ...additionalProps } =
-    props;
+function ControlledButton(
+  props: CommonProps & LoginProps & AdditionalProps & { children: ReactNode },
+) {
+  const {
+    id,
+    className,
+    disabled,
+    needsLogin,
+    onClick,
+    children,
+    busyText,
+    "aria-label": ariaLabel,
+    "data-bs-title": dataBsTitle,
+  } = props;
   const [isBusy, setIsBusy] = useState(false);
 
   if (needsLogin) {
     return (
       <NeedsLoginButton
-        {...additionalProps}
         id={id}
         type="button"
         className={className}
@@ -89,6 +104,8 @@ function ControlledButton(props: CommonProps & LoginProps & { children: ReactNod
         visitorUserAllowed={props.visitorUserAllowed}
         onClick={onClick}
         busyText={busyText}
+        aria-label={ariaLabel}
+        data-bs-title={dataBsTitle}
       >
         {children}
       </NeedsLoginButton>
@@ -97,7 +114,6 @@ function ControlledButton(props: CommonProps & LoginProps & { children: ReactNod
 
   return (
     <button
-      {...additionalProps}
       id={id}
       type="button"
       className={className}
@@ -110,6 +126,8 @@ function ControlledButton(props: CommonProps & LoginProps & { children: ReactNod
           setIsBusy(false);
         }
       }}
+      aria-label={ariaLabel}
+      data-bs-title={dataBsTitle}
     >
       <Content isBusy={isBusy} busyText={busyText}>
         {children}
@@ -118,16 +136,38 @@ function ControlledButton(props: CommonProps & LoginProps & { children: ReactNod
   );
 }
 
-export function Button(props: Props & { children: ReactNode }) {
-  const { id, className, size, block, disabled, children, busyText, ...additionalProps } = props;
+export function Button(props: Props & AdditionalProps & { children: ReactNode }) {
+  const {
+    id,
+    className,
+    size,
+    block,
+    disabled,
+    children,
+    busyText,
+    "aria-label": ariaLabel,
+    "data-bs-title": dataBsTitle,
+  } = props;
 
   const fullClassName = cx("btn", buildSizeClass("btn", size), !block && "text-nowrap", className);
 
   const button =
     "onClick" in props ? (
-      <ControlledButton {...additionalProps} {...props} className={fullClassName} />
+      <ControlledButton
+        {...props}
+        className={fullClassName}
+        aria-label={ariaLabel}
+        data-bs-title={dataBsTitle}
+      />
     ) : (
-      <button id={id} type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
+      <button
+        id={id}
+        type="submit"
+        className={fullClassName}
+        disabled={props.isBusy || disabled}
+        aria-label={ariaLabel}
+        data-bs-title={dataBsTitle}
+      >
         <Content isBusy={props.isBusy} busyText={busyText}>
           {children}
         </Content>
@@ -264,14 +304,14 @@ export function ButtonDelete({
   );
 }
 
-export function ButtonIcon(props: { icon: string; title: string } & Props) {
-  const { icon, title, className, ...buttonProps } = props;
+export function ButtonIcon(props: { icon: string; label: string } & Props) {
+  const { icon, label, className, ...buttonProps } = props;
   return (
     <Button
       {...buttonProps}
       className={cx(className, "d-inline-flex rounded-circle p-2 m-n2 float-end")}
-      aria-label={title}
-      data-bs-title={title}
+      aria-label={label}
+      data-bs-title={label}
     >
       <i className={icon} />
     </Button>
