@@ -1,4 +1,5 @@
 import { SystemRoles } from "../../imports/api/groups/lib/Role";
+import { getMeteorCollection } from "../support/getMeteorCollection";
 import { type GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 
 describe("group-chat-messages - publications", () => {
@@ -7,100 +8,75 @@ describe("group-chat-messages - publications", () => {
     const roleId = SystemRoles.Team.id;
 
     it("should only allow access for authenticated users", () => {
-      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
-        cy.allSubscriptionsReady();
+      cy.testSubscription("groupChatMessages", groupId, roleId).then(({ subscription, Meteor }) => {
+        const collection = getMeteorCollection<typeof GroupChatMessages>(
+          "GroupChatMessages",
+          Meteor,
+        );
 
-        cy.getMeteor().then((Meteor) => {
-          const store = Meteor.connection._stores[
-            "GroupChatMessages"
-          ]._getCollection() as typeof GroupChatMessages;
+        expect(collection.find().fetch()).length(0);
 
-          expect(store.find().fetch()).length(0);
-
-          // Cleanup
-          subscription.stop();
-          cy.allSubscriptionsReady();
-        });
+        subscription.stop();
       });
     });
 
     it("should not allow access for authenticated users who are not members of the group", () => {
       cy.login("Bob");
 
-      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
-        cy.allSubscriptionsReady();
+      cy.testSubscription("groupChatMessages", groupId, roleId).then(({ subscription, Meteor }) => {
+        const collection = getMeteorCollection<typeof GroupChatMessages>(
+          "GroupChatMessages",
+          Meteor,
+        );
 
-        cy.getMeteor().then((Meteor) => {
-          const store = Meteor.connection._stores[
-            "GroupChatMessages"
-          ]._getCollection() as typeof GroupChatMessages;
+        expect(collection.find().fetch()).length(0);
 
-          expect(store.find().fetch()).length(0);
-
-          // Cleanup
-          subscription.stop();
-          cy.allSubscriptionsReady();
-        });
+        subscription.stop();
       });
     });
 
     it("should not allow access for instance admins who are not members of the group", () => {
       cy.login("FeeLing");
 
-      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
-        cy.allSubscriptionsReady();
+      cy.testSubscription("groupChatMessages", groupId, roleId).then(({ subscription, Meteor }) => {
+        const collection = getMeteorCollection<typeof GroupChatMessages>(
+          "GroupChatMessages",
+          Meteor,
+        );
 
-        cy.getMeteor().then((Meteor) => {
-          const store = Meteor.connection._stores[
-            "GroupChatMessages"
-          ]._getCollection() as typeof GroupChatMessages;
+        expect(collection.find().fetch()).length(0);
 
-          expect(store.find().fetch()).length(0);
-
-          // Cleanup
-          subscription.stop();
-          cy.allSubscriptionsReady();
-        });
+        subscription.stop();
       });
     });
 
     it("should allow access for users who are part of the group coordination-team", () => {
       cy.login("IvanZ");
 
-      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
-        cy.allSubscriptionsReady();
+      cy.testSubscription("groupChatMessages", groupId, roleId).then(({ subscription, Meteor }) => {
+        const collection = getMeteorCollection<typeof GroupChatMessages>(
+          "GroupChatMessages",
+          Meteor,
+        );
 
-        cy.getMeteor().then((Meteor) => {
-          const store = Meteor.connection._stores[
-            "GroupChatMessages"
-          ]._getCollection() as typeof GroupChatMessages;
+        expect(collection.find().fetch().length).to.be.above(0);
 
-          expect(store.find().fetch().length).to.be.above(0);
-
-          // Cleanup
-          subscription.stop();
-          cy.allSubscriptionsReady();
-        });
+        subscription.stop();
       });
     });
 
     it("should allow access for instance admins who are also part of the group coordination-team", () => {
       cy.login("greg");
 
-      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
-        cy.allSubscriptionsReady();
+      cy.testSubscription("groupChatMessages", groupId, roleId).then(({ subscription, Meteor }) => {
+        const collection = getMeteorCollection<typeof GroupChatMessages>(
+          "GroupChatMessages",
+          Meteor,
+        );
 
-        cy.getMeteor().then((Meteor) => {
-          const store = Meteor.connection._stores[
-            "GroupChatMessages"
-          ]._getCollection() as typeof GroupChatMessages;
+        expect(collection.find().fetch().length).to.be.above(0);
 
-          expect(store.find().fetch().length).to.be.above(0);
-
-          // Cleanup
-          subscription.stop();
-          cy.allSubscriptionsReady();
-        });
+        subscription.stop();
       });
     });
   });

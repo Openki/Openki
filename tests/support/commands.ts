@@ -13,10 +13,10 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
-      startSubscription(
+      testSubscription(
         publication: string,
         ...args: unknown[]
-      ): Chainable<Meteor.SubscriptionHandle>;
+      ): Chainable<{ subscription: Meteor.SubscriptionHandle; Meteor: any }>;
       logout(): Chainable<void>;
       login(username: string, password?: string): Chainable<void>;
       visitOpenki(
@@ -104,14 +104,18 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
   });
 });
 
-Cypress.Commands.add("startSubscription", (publication: string, ...args: unknown[]) => {
+Cypress.Commands.add("testSubscription", (publication: string, ...args: unknown[]) => {
   return cy.getMeteor().then((Meteor) => {
     Cypress.log({
-      name: "startSubscription",
+      name: "testSubscription",
       consoleProps: () => ({ name: publication, args }),
     });
 
-    return Meteor.subscribe(publication, ...args);
+    const subscription = Meteor.subscribe(publication, ...args) as Meteor.SubscriptionHandle;
+
+    return cy.allSubscriptionsReady().then(() => {
+      return { subscription, Meteor };
+    });
   });
 });
 
