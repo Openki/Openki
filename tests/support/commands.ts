@@ -1,4 +1,34 @@
-// Custom Cypress Commands für Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
+// Custom Cypress Commands for Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
+
+// Add types for our custom Cypress commands
+declare global {
+  // oxlint-disable-next-line no-namespace
+  namespace Cypress {
+    interface Chainable<Subject = any, T = any> {
+      getById(
+        selector: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
+      ): Chainable<JQuery<HTMLElement>>;
+      getMeteor(): Chainable<any>;
+      allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
+      callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
+      expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callPublication(
+        publication: string,
+        ...args: unknown[]
+      ): Chainable<Meteor.SubscriptionHandle>;
+      logout(): Chainable<void>;
+      login(username: string, password?: string): Chainable<void>;
+      visitOpenki(
+        url?: string,
+        state?:
+          | { locale?: string | undefined; region?: string | undefined }
+          | { username: string; password?: string | undefined },
+      ): Chainable<void>;
+      mount(component: string, props?: Record<string, any>): Chainable<void>;
+    }
+  }
+}
 
 // Get DOM elements by id. this command adds the prefix "data-test".
 Cypress.Commands.add("getById", (selector, ...args) => {
@@ -74,23 +104,6 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
   });
 });
 
-interface MeteorPublications {
-  // We might be able to import the types for publications to make them easier to test.
-  server: { publish_handlers: Record<string, (...args: unknown[]) => unknown> };
-}
-
-function callMeteorPublication({
-  Meteor,
-  publication,
-  args,
-}: {
-  Meteor: typeof import("meteor/meteor") & MeteorPublications;
-  publication: string;
-  args: unknown[];
-}) {
-  return Meteor.server.publish_handlers[publication].apply(...args);
-}
-
 Cypress.Commands.add("callPublication", (publication: string, ...args: unknown[]) => {
   return cy.getMeteor().then((Meteor) => {
     Cypress.log({
@@ -98,19 +111,7 @@ Cypress.Commands.add("callPublication", (publication: string, ...args: unknown[]
       consoleProps: () => ({ name: publication, args }),
     });
 
-    return new Promise((resolve, reject) => {
-      try {
-        const result = callMeteorPublication({ Meteor, publication, args });
-        resolve(result);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        } else {
-          console.error(error);
-        }
-        reject(error);
-      }
-    });
+    return Meteor.subscribe(publication, ...args);
   });
 });
 
@@ -194,34 +195,6 @@ Cypress.Commands.add("mount", (component: string, props: Record<string, any> = {
   cy.visit("/component/" + component, { qs: { args: JSON.stringify(props) } });
   cy.allSubscriptionsReady();
 });
-
-// add types
-
-declare global {
-  // oxlint-disable-next-line no-namespace
-  namespace Cypress {
-    interface Chainable<Subject = any, T = any> {
-      getById(
-        selector: string,
-        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
-      ): Chainable<JQuery<HTMLElement>>;
-      getMeteor(): Chainable<any>;
-      allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
-      callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
-      expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
-      callPublication<T = any>(publication: string, ...args: unknown[]): Chainable<T>;
-      logout(): Chainable<void>;
-      login(username: string, password?: string): Chainable<void>;
-      visitOpenki(
-        url?: string,
-        state?:
-          | { locale?: string | undefined; region?: string | undefined }
-          | { username: string; password?: string | undefined },
-      ): Chainable<void>;
-      mount(component: string, props?: Record<string, any>): Chainable<void>;
-    }
-  }
-}
 
 // Mark this as an ES module
 // oxlint-disable-next-line unicorn/require-module-specifiers
