@@ -313,7 +313,8 @@ export function ButtonIcon(props: { icon: string; label: string } & Props) {
       aria-label={label}
       data-bs-title={label}
     >
-      <i className={icon} />
+      {/* make button a circle with `w-[1em]` (width: 1em) */}
+      <i className={cx(icon, "w-[1em]")} />
     </Button>
   );
 }
