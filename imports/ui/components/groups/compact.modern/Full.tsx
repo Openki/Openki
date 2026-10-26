@@ -42,8 +42,6 @@ export function Full({ group }: { group: GroupModel }) {
   const locationPreview = group.nextEvent?.venue?.name || group.nextEvent?.venue?.address;
 
   return (
-    // add some padding to prevent overlapping screen keyboard on the our touch screens
-    <div style={{ paddingBottom: "360px" }}>
       <div className="card">
         {group?.publicUrlForDetailsImage() ? (
           <div
@@ -151,6 +149,6 @@ export function Full({ group }: { group: GroupModel }) {
           </p>
         </div>
       </div>
-    </div>
+    
   );
 }
