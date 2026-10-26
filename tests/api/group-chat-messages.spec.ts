@@ -7,7 +7,7 @@ describe("group-chat-messages - publications", () => {
     const roleId = SystemRoles.Team.id;
 
     it("should only allow access for authenticated users", () => {
-      cy.callPublication("groupChatMessages", groupId, roleId).then((subscription) => {
+      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
         cy.allSubscriptionsReady();
 
         cy.getMeteor().then((Meteor) => {
@@ -27,7 +27,7 @@ describe("group-chat-messages - publications", () => {
     it("should not allow access for authenticated users who are not members of the group", () => {
       cy.login("Bob");
 
-      cy.callPublication("groupChatMessages", groupId, roleId).then((subscription) => {
+      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
         cy.allSubscriptionsReady();
 
         cy.getMeteor().then((Meteor) => {
@@ -47,7 +47,7 @@ describe("group-chat-messages - publications", () => {
     it("should not allow access for instance admins who are not members of the group", () => {
       cy.login("FeeLing");
 
-      cy.callPublication("groupChatMessages", groupId, roleId).then((subscription) => {
+      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
         cy.allSubscriptionsReady();
 
         cy.getMeteor().then((Meteor) => {
@@ -67,7 +67,7 @@ describe("group-chat-messages - publications", () => {
     it("should allow access for users who are part of the group coordination-team", () => {
       cy.login("IvanZ");
 
-      cy.callPublication("groupChatMessages", groupId, roleId).then((subscription) => {
+      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
         cy.allSubscriptionsReady();
 
         cy.getMeteor().then((Meteor) => {
@@ -87,7 +87,7 @@ describe("group-chat-messages - publications", () => {
     it("should allow access for instance admins who are also part of the group coordination-team", () => {
       cy.login("greg");
 
-      cy.callPublication("groupChatMessages", groupId, roleId).then((subscription) => {
+      cy.startSubscription("groupChatMessages", groupId, roleId).then((subscription) => {
         cy.allSubscriptionsReady();
 
         cy.getMeteor().then((Meteor) => {

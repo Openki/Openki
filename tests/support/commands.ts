@@ -13,7 +13,7 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
-      callPublication(
+      startSubscription(
         publication: string,
         ...args: unknown[]
       ): Chainable<Meteor.SubscriptionHandle>;
@@ -104,10 +104,10 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
   });
 });
 
-Cypress.Commands.add("callPublication", (publication: string, ...args: unknown[]) => {
+Cypress.Commands.add("startSubscription", (publication: string, ...args: unknown[]) => {
   return cy.getMeteor().then((Meteor) => {
     Cypress.log({
-      name: "callPublication",
+      name: "startSubscription",
       consoleProps: () => ({ name: publication, args }),
     });
 
