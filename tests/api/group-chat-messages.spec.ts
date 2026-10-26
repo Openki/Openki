@@ -1,51 +1,10 @@
 import { SystemRoles } from "../../imports/api/groups/lib/Role";
-import { getMeteorCollection } from "../support/getMeteorCollection";
+import {
+  expectNoDataReturnedFromPublication,
+  expectPublicationReturnsData,
+} from "../support/publication-test-utils";
 
-function expectNoDataReturnedFromPublication({
-  publication,
-  args,
-  collectionName,
-}: {
-  /** Meteor publication name */
-  publication: string;
-  /** Subscription arguments */
-  args: unknown[];
-  /** Collection name */
-  collectionName: string;
-}) {
-  cy.testSubscription(publication, ...args).then(({ subscription, Meteor }) => {
-    const collection = getMeteorCollection(collectionName, Meteor);
-
-    expect(collection.find().fetch()).length(0);
-
-    // Cleanup
-    subscription.stop();
-  });
-}
-
-function expectPublicationReturnsData({
-  publication,
-  args,
-  collectionName,
-}: {
-  /** Meteor publication name */
-  publication: string;
-  /** Subscription arguments */
-  args: unknown[];
-  /** Collection name */
-  collectionName: string;
-}) {
-  cy.testSubscription(publication, ...args).then(({ subscription, Meteor }) => {
-    const collection = getMeteorCollection(collectionName, Meteor);
-
-    expect(collection.find().fetch().length).to.be.above(0);
-
-    // Cleanup
-    subscription.stop();
-  });
-}
-
-describe("group-chat-messages", () => {
+describe("GroupChatMessages", () => {
   describe("publication", () => {
     const groupId = "5dbf3bec62";
     const roleId = SystemRoles.Team.id;
