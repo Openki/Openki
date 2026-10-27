@@ -480,9 +480,9 @@ export function Edit({
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
-              onChange={(newValue, numberOfVissibleCharacters) => {
+              onChange={(newValue, numberOfVisibleCharacters) => {
                 setDescription(newValue);
-                setNumberOfCharacters(numberOfVissibleCharacters);
+                setNumberOfCharacters(numberOfVisibleCharacters);
               }}
               onFocus={() => startMeasureFocusTime()}
               onBlur={() => {
