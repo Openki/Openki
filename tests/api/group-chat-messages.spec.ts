@@ -105,4 +105,51 @@ describe("GroupChatMessages", () => {
       });
     });
   });
+
+  describe.only("UI", () => {
+    const groupId = "5dbf3bec62"; // "Elektronik" group in "Testistan" region
+
+    beforeEach(() => {
+      // For some reason, calling cy.visitOpenki() with a username doesn't work reliably
+      // directly in test cases.
+      // Therefore, I used the workaround to first navigate in beforeEach() and then login with the expected user.
+      // It's much slower (due to double full page reloads), but it works and I don't want to debug the router/Meteor/Cypress state right now.
+      cy.visitOpenki(`/group/${groupId}/elektronik`);
+    });
+
+    it("shows the public group discussions for unauthenticated users", () => {
+      // cy.visitOpenki(`/group/${groupId}/elektronik`)
+
+      cy.get(".group-role-chat-tabs").should("not.exist");
+      cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
+      cy.get("#discussion .discussion-conversation").should("be.visible");
+    });
+
+    it("shows the public group discussions for users who are not part of the group", () => {
+      // cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "Bob" });
+      cy.login("Bob");
+
+      cy.get(".group-role-chat-tabs").should("not.exist");
+      cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
+      cy.get("#discussion .discussion-conversation").should("be.visible");
+    });
+
+    it("shows the public group discussions for group members who are not part of the team", () => {
+      // cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "Barbie92" });
+      cy.login("Barbie92");
+
+      cy.get(".group-role-chat-tabs").should("not.exist");
+      cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
+      cy.get("#discussion .discussion-conversation").should("be.visible");
+    });
+
+    it("shows the team chat for group team members", () => {
+      // cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "IvanZ" });
+      cy.login("IvanZ");
+
+      cy.get(".group-role-chat-tabs").should("be.visible");
+      cy.getByRole("tab", { name: /team chat/i }).should("be.visible");
+      cy.get("#discussion .discussion-conversation").should("not.be.visible");
+    });
+  });
 });
