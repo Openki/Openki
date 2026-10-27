@@ -123,6 +123,11 @@ export function GroupRoleChat({ group, roleId }: Props) {
               />
             );
           })}
+          {(messages.length === 0 || !hasOtherParticipants) && (
+            <div className="fst-italic fst-bold">
+              Tip: Invite other team members and use this chat to organize.
+            </div>
+          )}
           {/*
             Preserve scroll position when messages are re-rendered due to a data change.
             The height: 1 is important to make it work.
