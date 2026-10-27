@@ -106,7 +106,7 @@ describe("GroupChatMessages", () => {
     });
   });
 
-  describe.only("UI", () => {
+  describe("UI", () => {
     const groupId = "5dbf3bec62"; // "Elektronik" group in "Testistan" region
 
     beforeEach(() => {
