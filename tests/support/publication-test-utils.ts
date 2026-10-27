@@ -1,5 +1,9 @@
 import { getMeteorCollection } from "./getMeteorCollection";
 
+/**
+ * This method is useful to verify that a publication does not return any data,
+ * for when called with invalid arguments - or when the current user can't access the resource.
+ */
 export function expectNoDataReturnedFromPublication({
   publication,
   args = [],
@@ -22,6 +26,10 @@ export function expectNoDataReturnedFromPublication({
   });
 }
 
+/**
+ * This method is useful to verify that a publication returns data when called with valid
+ * arguments, and the current user has valid authorization.
+ */
 export function expectPublicationReturnsData({
   publication,
   args = [],
