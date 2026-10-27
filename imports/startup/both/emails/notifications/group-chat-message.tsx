@@ -69,8 +69,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   let sender: UserModel | undefined;
   let senderName: string | undefined;
 
+  // TODO: What should happen if we don't have a message? Probably abort sending?
+
   if (message) {
     group = await Groups.findOneAsync(message.groupId);
+
     if (message.userId) {
       sender = await Users.findOneAsync(message.userId);
     }
@@ -88,10 +91,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
-      const campaign = "commentNotify";
+      const campaign = "groupChatNotify";
 
       if (!message) {
-        throw new Error("Comment does not exist (0.o)");
+        throw new Error("Group chat message does not exist (0.o)");
       }
       if (!group) {
         throw new Error("Group does not exist (0.o)");
@@ -99,54 +102,40 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const subjectvars = {
         GROUP: truncate(group.name, { length: 10 }),
-        SENDER: "",
-        ROLE: message.roleId,
+        SENDER: truncate(senderName, { length: 20 }),
+        // Not ideal to hard code the role like this,
+        // but this is OK since we currently only use it for the team role.
+        ROLE: "Team",
       };
 
-      let subject;
-      if (sender) {
-        subjectvars.SENDER = truncate(senderName, { length: 20 });
-        subject = t(
-          "notification.comment.mail.subject",
-          "Comment on {GROUP} by {SENDER}: {TITLE}",
-          subjectvars,
-        );
-      } else {
-        subject = t(
-          "notification.comment.mail.subject.anon",
-          "Anonymous comment on {GROUP}: {TITLE}",
-          subjectvars,
-        );
-      }
+      const subject = t(
+        "notification.groupChatMessage.mail.subject",
+        "{SENDER} sent a message to the {ROLE} chat in {GROUP}",
+        subjectvars,
+      );
 
       let region: RegionModel | undefined;
       if (group.region) {
         region = await Regions.findOneAsync(group.region);
       }
-      const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
       const groupLink = Router.url("showGroup", group, {
         query: { campaign },
       });
-      const commentLink = Router.url("showGroup", group, {
-        query: { select: message._id, campaign },
-      });
+      const messageLink = Router.url("showGroup", group, { query: { campaign } });
 
       return {
         group: <a href={groupLink}>{group.name}</a>,
-        commentLink,
+        messageLink,
         subject,
-        comment: message,
-        commenter: sender,
-        commenterLink: Router.url(
+        message,
+        senderName,
+        senderLink: Router.url(
           "userprofile",
           { _id: message.userId, username: senderName },
           { query: { campaign } },
         ),
-        commenterName: senderName,
-        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
-        customSiteName: siteName,
-        customEmailLogo: emailLogo,
+        siteName,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },
         campaign,
       };

@@ -1,20 +1,18 @@
 import React, { ReactNode } from "react";
-import { GroupDiscussionEntity } from "../../api/group-discussions/group-discussions";
-import { UserModel } from "../../api/users/users";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { type GroupChatMessageEntity } from "/imports/api/group-chat-messages/group-chat-messages";
 
 export interface Props {
   username: string;
   group: ReactNode;
-  commentLink: string;
+  messageLink: string;
   subject: string;
-  comment: GroupDiscussionEntity;
-  commenter: UserModel | undefined;
-  commenterLink: string;
-  commenterName: string | undefined;
-  customSiteName: string;
+  message: GroupChatMessageEntity;
+  senderLink: string;
+  senderName: string | undefined;
+  siteName: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
@@ -23,12 +21,11 @@ export interface Props {
 export function Comment({
   username,
   group,
-  commentLink,
-  comment,
-  commenter,
-  commenterLink,
-  commenterName,
-  customSiteName,
+  message,
+  messageLink,
+  senderLink,
+  senderName,
+  siteName,
   unsubscribe,
   campaign,
   lng,
@@ -41,50 +38,34 @@ export function Comment({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
-            {commenter
-              ? t("notification.comment.mail.intro", "There was a comment by {USER} on {GROUP}:", {
-                  USER: <a href={commenterLink}>{commenterName}</a>,
-                  GROUP: group,
-                })
-              : t(
-                  "notification.comment.mail.intro.anon",
-                  "There was an anonymous comment on {GROUP}:",
-                  { GROUP: group },
-                )}
+            {t(
+              "notification.groupChatMessage.mail.intro",
+              "{USER} sent a message to the {ROLE} chat in {GROUP}:",
+              {
+                USER: <a href={senderLink}>{senderName}</a>,
+                GROUP: group,
+              },
+            )}
           </p>
           <table className="comment-box">
             <tr>
-              <td>
-                <h5 className="title">{comment.title}</h5>
-                <p dangerouslySetInnerHTML={{ __html: comment.text }}></p>
-              </td>
+              <td dangerouslySetInnerHTML={{ __html: message.content }}></td>
             </tr>
           </table>
+
           <p>
-            <a href={commentLink}>
-              {t("notification.comment.mail.linktext", "➜ See comment on {SITENAME}", {
-                SITENAME: customSiteName,
-              })}
-            </a>
-            {!!commenter && (
-              <>
-                <br />
-                <a href={commenterLink}>
-                  {t("notification.comment.mail.commenterlink", "➜ See profile from {USER}", {
-                    USER: commenterName,
-                  })}
-                </a>
-              </>
-            )}
+            <p className="text-center">
+              <a className="button" href={messageLink}>
+                {t("notification.groupChatMessage.mail.replyButton", "Reply via {SITENAME}", {
+                  SITENAME: siteName,
+                })}
+              </a>
+            </p>
           </p>
         </td>
       </tr>
       <Footer
-        receiveNote={
-          comment.notifyAll
-            ? t("notification.event.mail.notice", { GROUP: group })
-            : t("email.base.receiveNote.groupTeam", { GROUP: group })
-        }
+        receiveNote={t("email.base.receiveNote.groupTeam", { GROUP: group })}
         unsubscribe={unsubscribe}
         campaign={campaign}
         lng={lng}
