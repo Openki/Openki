@@ -6,7 +6,7 @@ import {
 
 describe("GroupChatMessages", () => {
   describe("publication", () => {
-    const groupId = "5dbf3bec62";
+    const groupId = "5dbf3bec62"; // "Elektronik" group in "Testistan" region
     const roleId = SystemRoles.Team.id;
 
     const defaultArgs = {
@@ -21,25 +21,21 @@ describe("GroupChatMessages", () => {
 
     it("should not allow access for authenticated users who are not members of the group", () => {
       cy.login("Bob");
-
       expectNoDataReturnedFromPublication(defaultArgs);
     });
 
     it("should not allow access for instance admins who are not members of the group", () => {
       cy.login("FeeLing");
-
       expectNoDataReturnedFromPublication(defaultArgs);
     });
 
     it("should allow access for users who are part of the group coordination-team", () => {
       cy.login("IvanZ");
-
       expectPublicationReturnsData(defaultArgs);
     });
 
     it("should allow access for instance admins who are also part of the group coordination-team", () => {
       cy.login("greg");
-
       expectPublicationReturnsData(defaultArgs);
     });
   });

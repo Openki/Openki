@@ -12,6 +12,8 @@ declare global {
       getMeteor(): Chainable<any>;
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callMethodAsync<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callMethodAndIgnoreErrors<T = any>(method: string, ...params: any[]): Chainable<T>;
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
       testSubscription(
         publication: string,
@@ -84,6 +86,47 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
     });
   });
 });
+
+Cypress.Commands.add("callMethodAsync", (method: string, ...params: any[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "callMethodAsync",
+      consoleProps: () => ({ name: method, params }),
+    });
+
+    return Meteor.callAsync(method, ...params)
+      .then((result: unknown) => {
+        console.log(`%c${method}`, "color: red; font-style: italic;", result);
+        return result;
+      })
+      .catch((err: unknown) => {
+        throw new Error("Failed callMethodAsync", { cause: err });
+      });
+  });
+});
+
+Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: any[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "callMethodAndIgnoreErrors",
+      consoleProps: () => ({ name: method, params }),
+    });
+
+    try {
+      Meteor.callAsync(method, ...params).then((result: unknown) => {
+        console.log(`%c${method}`, "color: red; font-style: italic;", result);
+        return result;
+      });
+    } catch (error: unknown) {
+      console.log(
+        `Ignoring error from method: %c${method}`,
+        "color: red; font-style: italic;",
+        error,
+      );
+    }
+  });
+});
+
 Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: any[]) => {
   return cy.getMeteor().then((Meteor) => {
     Cypress.log({
