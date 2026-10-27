@@ -42,7 +42,7 @@ describe("GroupChatMessages", () => {
 
   const methodName = "groupChatMessages.send";
 
-  describe.only(`method ${methodName}`, () => {
+  describe(`method ${methodName}`, () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
@@ -72,7 +72,7 @@ describe("GroupChatMessages", () => {
       });
     });
 
-    it.only("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
+    it("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
       cy.login("IvanZ");
 
       const userId = "itqnv9HJgc3msz5op"; // Group member "Etha Eis"
