@@ -58,7 +58,7 @@ const usernamesToUserIds = new Map<UserModel["username"], UserModel["_id"]>();
  * Caches results since many messages will be sent by the same users.
  */
 async function getUserId(username: string) {
-  // The implementation could be simplified by using `Map.getOrInsertComputed()`
+  // When we use Node.js 26, the implementation could be simplified by using `Map.getOrInsertComputed()`
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/getOrInsertComputed
   const existingId = usernamesToUserIds.get(username);
   if (existingId) {
