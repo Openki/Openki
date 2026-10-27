@@ -11,7 +11,7 @@ describe("Log", () => {
       collectionName: "Log",
     };
 
-    it("should only allow access for authenticated users", () => {
+    it("should not allow access for unauthenticated users", () => {
       expectNoDataReturnedFromPublication(defaultArgs);
     });
 
