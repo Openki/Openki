@@ -14,10 +14,11 @@ interface Props {
   roleId: GroupRole["id"];
 }
 
+/**
+ * A sequence of messages are sent by the same user, and within a short time.
+ */
 const messageSequenceTimeLimit = 1000 * 60 * 15; // 15 min
 
-// TODO: Test with group with chat history: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
-// TODO: Test with group with no chat history: http://localhost:3000/group/c294d35055/deutschkurs
 export function GroupRoleChat({ group, roleId }: Props) {
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -112,7 +113,6 @@ export function GroupRoleChat({ group, roleId }: Props) {
           {messages.map((message, i) => {
             const previousMessage = messages.at(i - 1);
             const nextMessage = messages.at(i + 1);
-            // A sequence of messages are sent by the same user, and within a short time.
             const isFirstInSequence =
               previousMessage?.userId !== message.userId ||
               Math.abs(previousMessage.createdAt.getTime() - message.createdAt.getTime()) >
