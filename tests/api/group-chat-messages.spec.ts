@@ -46,6 +46,14 @@ describe("GroupChatMessages", () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
+    before(() => {
+      // Reset the group messages before each test so we have a consistent state.
+      cy.login("greg");
+      cy.callMethodAsync("testOnly.groupChatMessages.deleteAllForGroupAndRole", groupId, roleId);
+      cy.allSubscriptionsReady();
+      cy.logout();
+    });
+
     it("should throw an error if the user is not signed in", () => {
       cy.expectCallMethodThrowsError(methodName, {
         content: "hello",

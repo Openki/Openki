@@ -112,18 +112,18 @@ Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: an
       consoleProps: () => ({ name: method, params }),
     });
 
-    try {
-      Meteor.callAsync(method, ...params).then((result: unknown) => {
+    Meteor.callAsync(method, ...params)
+      .then((result: unknown) => {
         console.log(`%c${method}`, "color: red; font-style: italic;", result);
         return result;
+      })
+      .catch((error: unknown) => {
+        console.log(
+          `Ignoring error from method: %c${method}`,
+          "color: red; font-style: italic;",
+          error,
+        );
       });
-    } catch (error: unknown) {
-      console.log(
-        `Ignoring error from method: %c${method}`,
-        "color: red; font-style: italic;",
-        error,
-      );
-    }
   });
 });
 

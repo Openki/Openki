@@ -73,3 +73,22 @@ export const sendGroupChatMessage = ServerMethod(
     });
   },
 );
+
+// Test utilities
+if (Meteor.isDevelopment) {
+  Meteor.methods({
+    "testOnly.groupChatMessages.deleteAllForGroupAndRole": async function ({
+      groupId,
+      roleId,
+    }: {
+      groupId: string;
+      roleId: string;
+    }) {
+      const user = await Meteor.userAsync();
+      if (!user || !user.hasPrivilege("admin")) {
+        throw new Meteor.Error(403, "Admin role required");
+      }
+      await GroupChatMessages.removeAsync({ $and: [{ groupId }, { roleId }] });
+    },
+  });
+}
