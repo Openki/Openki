@@ -7,6 +7,7 @@ import { useGroupChatMessages } from "/imports/api/group-chat-messages/publicati
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { GroupChatMessage } from "./group-chat-message";
 import { ProfileLink } from "../../profile-link";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   group: GroupModel;
@@ -18,12 +19,11 @@ const messageSequenceTimeLimit = 1000 * 60 * 15; // 15 min
 // TODO: Test with group with chat history: http://localhost:3000/group/5dbf3bec62/elektronik#discussion
 // TODO: Test with group with no chat history: http://localhost:3000/group/c294d35055/deutschkurs
 export function GroupRoleChat({ group, roleId }: Props) {
-  // TODO: Add translation strings
-
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useTranslation();
   const role = group.roles.find((groupRole) => groupRole.id === roleId);
   if (!role) {
     throw new Error(`Expected role to exist in group: ${roleId}`);
@@ -81,9 +81,16 @@ export function GroupRoleChat({ group, roleId }: Props) {
         <header className="small border-bottom border-secondary">
           <details>
             <summary className="d-flex justify-content-between align-items-center p-2">
-              {/* TODO: Use the plural rules to adapt he count based on the locale. */}
-              <span>Group chat with you and {chatParticipants.length - 1} others.</span>
-              <span className="btn btn-sm btn-light">Show participants</span>
+              <span>
+                {t(
+                  "group.roleChats.description",
+                  "Group chat with you and {NUM, plural, one{other} other{# others}}.",
+                  { NUM: chatParticipants.length - 1 },
+                )}
+              </span>
+              <span className="btn btn-sm btn-light">
+                {t("group.roleChats.showParticipants", "Show participants")}
+              </span>
             </summary>
 
             <ul className="m-0 pe-2 pb-2">
@@ -125,15 +132,17 @@ export function GroupRoleChat({ group, roleId }: Props) {
           })}
           {(messages.length === 0 || !hasOtherParticipants) && (
             <div className="fst-italic fst-bold">
-              Tip: Invite other team members and use this chat to organize.
+              {t(
+                "group.roleChats.emptyMessage",
+                "Tip: Invite other team members and use this chat to organize.",
+              )}
             </div>
           )}
           {/*
             Preserve scroll position when messages are re-rendered due to a data change.
             The height: 1 is important to make it work.
             Learn more: https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/
-          */}
-          {/*
+
             NOTE: The `overflow-anchor` CSS property is baseline newly available in September 2026,
             but it's only Safari that has weak support right now.
 
@@ -150,7 +159,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
         <AutoGrowTextArea
           ref={messageInputRef}
           className="form-control flex-fill pt-2"
-          placeholder="Message"
+          placeholder={t("group.roleChats.inputPlaceholder", "Message")}
           // oxlint-disable jsx-a11y/no-autofocus
           autoFocus={true}
           disabled={!hasOtherParticipants}
@@ -161,8 +170,8 @@ export function GroupRoleChat({ group, roleId }: Props) {
           onClick={sendMessage}
           disabled={!hasOtherParticipants || isSubmitting}
           id="send-group-chat-message"
-          aria-label={"Send message"}
-          data-bs-title={"Send message"}
+          aria-label={t("group.roleChats.sendMessage", "Send message")}
+          data-bs-title={t("group.roleChats.sendMessage", "Send message")}
         >
           <span className="fa-solid fa-paper-plane cursor-pointer fa-xl fa-fw"></span>
         </button>

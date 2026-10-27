@@ -87,6 +87,7 @@ function DiscussionWithGroupChatTabs({
 }: Omit<Props, "groupId"> & { group: GroupModel; availableRoleChats: GroupRole[] }) {
   const [isLoading, regionRoles] = useRegionRoles(group.region);
   const { roleShort } = useRoleDisplay(regionRoles);
+  const { t } = useTranslation();
 
   if (isLoading()) {
     return null;
@@ -94,12 +95,11 @@ function DiscussionWithGroupChatTabs({
 
   const tabs: { id: string; title: string }[] = [
     // The general group discussions
-    { id: "discussions", title: "Public" },
+    { id: "discussions", title: t("group.discussion.tabTitle", "Public") },
     // Role chat tabs
     ...availableRoleChats.map((role) => ({
       id: role.id,
-      // TODO: Replace this with a formatted i18n string: `{ROLE} chat`, generic for all roles.
-      title: `${roleShort(role)} chat`,
+      title: t("group.roleChats.tabTitle", "{ROLE} chat", { ROLE: roleShort(role) }),
     })),
   ] as const;
 
