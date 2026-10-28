@@ -81,6 +81,10 @@ audit:
 reset *ARGS:
     meteor reset {{ ARGS }}
 
+# Preview HTML emails in the browser
+preview-emails:
+    python -m http.server --directory .temp/ 8080
+
 alias i := install
 alias d := dev
 alias t := test-ui
