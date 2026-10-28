@@ -12,7 +12,7 @@ export interface Props {
   message: GroupChatMessageEntity;
   senderLink: string;
   senderName: string | undefined;
-  siteName: string;
+  customSiteName: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
@@ -25,7 +25,7 @@ export function GroupChatMessage({
   messageLink,
   senderLink,
   senderName,
-  siteName,
+  customSiteName,
   unsubscribe,
   campaign,
   lng,
@@ -57,7 +57,7 @@ export function GroupChatMessage({
             <p className="text-center">
               <a className="button" href={messageLink}>
                 {t("notification.groupChatMessage.mail.replyButton", "Reply via {SITENAME}", {
-                  SITENAME: siteName,
+                  SITENAME: customSiteName,
                 })}
               </a>
             </p>

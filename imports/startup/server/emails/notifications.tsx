@@ -120,9 +120,9 @@ async function send(
             >
               {model.template({
                 ...vars,
-                // For everything that is global use siteName from global settings, eg. unsubscribe
+                // For everything global, use siteName from global settings, eg. unsubscribe
                 siteName,
-                // For everything context specific us customSiteName from the region, eg. groups
+                // For everything context specific, use customSiteName from the region, eg. groups
                 customSiteUrl: vars.customSiteUrl || siteUrl,
                 customSiteName: vars.customSiteName || siteName,
                 username,

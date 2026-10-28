@@ -69,8 +69,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   let sender: UserModel | undefined;
   let senderName: string | undefined;
 
-  // TODO: What should happen if we don't have a message? Probably abort sending?
-
   if (message) {
     group = await Groups.findOneAsync(message.groupId);
 
@@ -118,7 +116,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (group.region) {
         region = await Regions.findOneAsync(group.region);
       }
-      const siteName = getSiteName(region);
+      const customEmailLogo = region?.custom?.emailLogo;
+      const customSiteName = getSiteName(region);
       const groupLink = Router.url("showGroup", group, {
         query: { campaign },
       });
@@ -135,7 +134,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           { _id: message.userId, username: senderName },
           { query: { campaign } },
         ),
-        siteName,
+        customSiteName,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
+        customEmailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },
         campaign,
       };
