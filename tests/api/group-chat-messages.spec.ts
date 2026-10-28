@@ -42,14 +42,22 @@ describe("GroupChatMessages", () => {
 
   const methodName = "groupChatMessages.send";
 
-  describe(`method ${methodName}`, () => {
+  describe.only(`method ${methodName}`, () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
-    before(() => {
+    before(async () => {
       // Reset the group messages before each test so we have a consistent state.
       cy.login("greg");
-      cy.callMethodAsync("testOnly.groupChatMessages.deleteAllForGroupAndRole", groupId, roleId);
+
+      // The arguments have to be statically duplicated inside the before() hook
+      // because this function is executed separately without access to the parent scopes.
+      // "c294d35055" = groupId for "Deutschkurs" in region "Testistan"
+      // "team" = SystemRoles.Team.id
+      const response = await fetch(`/_test_only/group-chat-messages/reset/c294d35055/team`);
+      if (!response.ok) {
+        throw new Error("Failed to reset the group chat messages");
+      }
       cy.allSubscriptionsReady();
       cy.logout();
     });

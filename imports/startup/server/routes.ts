@@ -1,6 +1,9 @@
+import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 
 import * as Profile from "/imports/utils/profile";
+import { NotEmptyString } from "/imports/utils/CustomChecks";
+import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 
 // Server only routes
 
@@ -49,3 +52,34 @@ Router.route("profilePrivateMessagesUnsubscribe", {
   },
   where: "server",
 });
+
+// HACK: This TEST ONLY route is needed because we run all Cypress tests from the client side.
+// where we can not make direct DB queries.
+// Using a Meteor Method ended up causing weird errors, so a simple HTTP request should be enough
+if (Meteor.isDevelopment) {
+  Router.route("TEST_ONLY_groupChatMessages_deleteAllForGroupAndRole", {
+    path: "/_test_only/group-chat-messages/reset/:groupId/:roleId",
+    async action() {
+      // TODO: We need to access the user token somehow.
+      // IDEA: Maybe make this into a WebApp endpoint instead? Important to only allow admin users to delete data.
+      const user = await Meteor.userAsync();
+      if (!user || !user.hasPrivilege("admin")) {
+        throw new Meteor.Error(403, "Admin permission required");
+      }
+
+      check(this.params.groupId, NotEmptyString());
+      check(this.params.roleId, NotEmptyString());
+
+      const groupId = this.params.groupId;
+      const roleId = this.params.roleId;
+
+      console.dir({ DELETING_MESSAGES_FOR: { groupId, roleId } });
+
+      await GroupChatMessages.removeAsync({ groupId, roleId });
+
+      this.response.writeHead(200);
+      this.response.end();
+    },
+    where: "server",
+  });
+}
