@@ -6,6 +6,7 @@ import { Groups } from "/imports/api/groups/groups";
 import { Type } from "/imports/utils/CustomChecks";
 import { sanitizeHtml } from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
+import { Notification } from "/imports/startup/both/emails/notification";
 
 function sanitizeMessage(rawMessage: { content: string; groupId: string; roleId: string }) {
   return {
@@ -63,7 +64,7 @@ export const sendGroupChatMessage = ServerMethod(
 
     const now = new Date();
 
-    await GroupChatMessages.insertAsync({
+    const messageId = await GroupChatMessages.insertAsync({
       content: message.content,
       userId: user._id,
       groupId: group._id,
@@ -71,6 +72,8 @@ export const sendGroupChatMessage = ServerMethod(
       createdAt: now,
       updatedAt: now,
     });
+
+    await Notification.GroupChatMessage.record(messageId);
   },
 );
 
