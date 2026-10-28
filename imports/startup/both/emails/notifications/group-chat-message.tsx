@@ -12,7 +12,7 @@ import { Log } from "../../../../api/log/log";
 
 import { getSiteName } from "../../../../utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
-import { Comment, Props } from "../../../../emails/notifications/GroupChatMessage";
+import { GroupChatMessage, Props } from "../../../../emails/notifications/GroupChatMessage";
 import { getUniqueValues } from "/imports/utils/getUniqueValues";
 import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 
@@ -140,6 +140,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         campaign,
       };
     },
-    template: (props) => <Comment {...props} />,
+    template: (props) => <GroupChatMessage {...props} />,
   };
 }

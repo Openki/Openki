@@ -18,7 +18,7 @@ export interface Props {
   lng: string;
 }
 
-export function Comment({
+export function GroupChatMessage({
   username,
   group,
   message,
@@ -47,7 +47,7 @@ export function Comment({
               },
             )}
           </p>
-          <table className="comment-box">
+          <table className="groupChatMessage-box">
             <tr>
               <td dangerouslySetInnerHTML={{ __html: message.content }}></td>
             </tr>
