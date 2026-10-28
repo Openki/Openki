@@ -46,18 +46,28 @@ describe("GroupChatMessages", () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
-    before(async () => {
+    before(() => {
       // Reset the group messages before each test so we have a consistent state.
       cy.login("greg");
 
-      // The arguments have to be statically duplicated inside the before() hook
-      // because this function is executed separately without access to the parent scopes.
-      // "c294d35055" = groupId for "Deutschkurs" in region "Testistan"
-      // "team" = SystemRoles.Team.id
-      const response = await fetch(`/_test_only/group-chat-messages/reset/c294d35055/team`);
-      if (!response.ok) {
-        throw new Error("Failed to reset the group chat messages");
-      }
+      cy.window({ log: false }).then(async (window) => {
+        // Since we have logged in at this point, the window object should have the Meteor and Accounts globals available.
+        // @ts-expect-error Don't care about the missing type.
+        const token = window.Accounts._storedLoginToken();
+
+        // The arguments have to be statically duplicated inside the before() hook
+        // because this function is executed separately without access to the parent scopes.
+        // "c294d35055" = groupId for "Deutschkurs" in region "Testistan"
+        // "team" = SystemRoles.Team.id
+        const response = await fetch(`/_test_only/group-chat-messages/reset/c294d35055/team`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to reset the group chat messages", { cause: response });
+        }
+      });
       cy.allSubscriptionsReady();
       cy.logout();
     });

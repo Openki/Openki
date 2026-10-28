@@ -6,7 +6,6 @@ import { Groups } from "/imports/api/groups/groups";
 import { Type } from "/imports/utils/CustomChecks";
 import { sanitizeHtml } from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { NotEmptyString } from "/imports/utils/CustomChecks";
 import { Notification } from "/imports/startup/both/emails/notification";
 
 function sanitizeMessage(rawMessage: { content: string; groupId: string; roleId: string }) {
@@ -77,37 +76,3 @@ export const sendGroupChatMessage = ServerMethod(
     await Notification.GroupChatMessage.record(messageId);
   },
 );
-
-// Test utilities
-if (Meteor.isDevelopment) {
-  Meteor.methods({
-    "testOnly.groupChatMessages.deleteAllForGroupAndRole": async function ({
-      groupId,
-      roleId,
-    }: {
-      groupId: string;
-      roleId: string;
-    }) {
-      check(groupId, NotEmptyString());
-      check(roleId, NotEmptyString());
-
-      const user = await Meteor.userAsync();
-      if (!user || !user.hasPrivilege("admin")) {
-        throw new Meteor.Error(403, "Admin role required");
-      }
-      // TODO: Problem: the groupId and roleId is always undefined for some reason...
-
-      // TODO: Only delete the wanted documents
-      // await GroupChatMessages.rawCollection().deleteMany({ groupId, roleId });
-      const matchingIds = await GroupChatMessages.find(
-        { groupId, roleId },
-        { projection: { _id: 1 } },
-      ).mapAsync(({ _id }) => _id);
-
-      debugger;
-
-      console.log(matchingIds);
-      await GroupChatMessages.removeAsync({ _id: { $in: matchingIds } });
-    },
-  });
-}

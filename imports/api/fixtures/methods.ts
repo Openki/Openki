@@ -104,8 +104,7 @@ export const createFixtures = ServerMethod(
         shouldUpdateDBCache = true;
       }
 
-      // TODO: temporary to re-create only the chat messages
-      if (true || (await GroupChatMessages.countDocuments()) === 0) {
+      if ((await GroupChatMessages.countDocuments()) === 0) {
         await groupChatMessagesDataCreate();
         shouldUpdateDBCache = true;
       }

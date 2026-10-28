@@ -1,9 +1,9 @@
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
+import type { ServerResponse } from "node:http";
 
 import * as Profile from "/imports/utils/profile";
-import { NotEmptyString } from "/imports/utils/CustomChecks";
-import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
+import type { UserEntity } from "/imports/api/users/users";
 
 // Server only routes
 
@@ -53,33 +53,52 @@ Router.route("profilePrivateMessagesUnsubscribe", {
   where: "server",
 });
 
-// HACK: This TEST ONLY route is needed because we run all Cypress tests from the client side.
-// where we can not make direct DB queries.
-// Using a Meteor Method ended up causing weird errors, so a simple HTTP request should be enough
+// HACK: This TEST ONLY route is needed because we run all Cypress tests from the client side
+// where we can not make direct DB queries to reset the DB before each test suite runs.
+// Using a Meteor Method ended up causing weird errors, so using Express HTTP handler was a simpler solution
 if (Meteor.isDevelopment) {
-  Router.route("TEST_ONLY_groupChatMessages_deleteAllForGroupAndRole", {
-    path: "/_test_only/group-chat-messages/reset/:groupId/:roleId",
-    async action() {
-      // TODO: We need to access the user token somehow.
-      // IDEA: Maybe make this into a WebApp endpoint instead? Important to only allow admin users to delete data.
-      const user = await Meteor.userAsync();
-      if (!user || !user.hasPrivilege("admin")) {
-        throw new Meteor.Error(403, "Admin permission required");
-      }
+  // oxlint-disable-next-line unicorn/consistent-function-scoping
+  async function registerTestOnlyRoutes() {
+    if (!Meteor.isDevelopment) {
+      throw new Error("Test only routes");
+    }
+    const { WebApp } = await import("meteor/webapp");
+    const { check } = await import("meteor/check");
+    const { createAuthMiddleware } = await import("meteor/accounts-express");
 
-      check(this.params.groupId, NotEmptyString());
-      check(this.params.roleId, NotEmptyString());
+    const { NotEmptyString } = await import("/imports/utils/CustomChecks");
+    const { GroupChatMessages } =
+      await import("/imports/api/group-chat-messages/group-chat-messages");
 
-      const groupId = this.params.groupId;
-      const roleId = this.params.roleId;
+    WebApp.handlers.use(
+      "/_test_only/group-chat-messages/reset/:groupId/:roleId",
+      createAuthMiddleware({ required: true }),
+      (_req: any, _res: any, next: any) =>
+        Promise.resolve(
+          (async (req: any, res: ServerResponse) => {
+            const user = (await Meteor.users.findOneAsync(req.userId, {
+              projection: { privileges: 1 },
+            })) as undefined | Pick<UserEntity, "privileges">;
 
-      console.dir({ DELETING_MESSAGES_FOR: { groupId, roleId } });
+            if (!user || !user.privileges?.includes("admin")) {
+              throw new Meteor.Error(403, "Admin permission required");
+            }
 
-      await GroupChatMessages.removeAsync({ groupId, roleId });
+            const { groupId, roleId } = req.params;
 
-      this.response.writeHead(200);
-      this.response.end();
-    },
-    where: "server",
-  });
+            // @ts-expect-error Ignoring this for now
+            check(groupId, NotEmptyString());
+            // @ts-expect-error Ignoring this for now
+            check(roleId, NotEmptyString());
+
+            await GroupChatMessages.removeAsync({ groupId, roleId });
+
+            res.writeHead(200);
+            res.end();
+          })(_req, _res),
+        ).catch(next),
+    );
+  }
+
+  registerTestOnlyRoutes();
 }
