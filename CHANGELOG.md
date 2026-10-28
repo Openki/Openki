@@ -1,3 +1,11 @@
+# Unreleased
+
+## Fixes
+
+- Important security updates: Updated to Meteor 3.5.4 which includes updated of several bundled dependencies.
+- Bugfixes.
+- Accessibility improvements.
+
 # v0.13.2 - 2026-10-22
 
 ## Fixes
