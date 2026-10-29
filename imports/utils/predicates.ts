@@ -49,6 +49,17 @@ export const id: Predicate<string> = function (paramOrState) {
   return string(paramOrState === "all" ? "" : paramOrState);
 };
 
+/**
+ * Check if two arrays contain the exact same values
+ */
+function hasSameValues<T>(state: T[], otherStates: T[]) {
+  return (
+    state.length === otherStates.length &&
+    // All values from `otherStates` need to be in `state`
+    new Set(state).intersection(new Set(otherStates)).size === state.length
+  );
+}
+
 export const ids: Predicate<string[]> = function (paramOrState) {
   if (paramOrState === "") {
     return undefined;
@@ -84,11 +95,7 @@ export const ids: Predicate<string[]> = function (paramOrState) {
       return state;
     },
     equals(other) {
-      const otherIds = other.get();
-      return (
-        state.length === otherIds.length &&
-        new Set(state).intersection(new Set(otherIds)).size === state.length
-      );
+      return hasSameValues(state, other.get());
     },
   };
 };
@@ -271,12 +278,12 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
     state = getUniqueValues(state);
 
     state = state.map((v) => {
-      const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
+      const stateWithUppercase = states.find((s) => s.toUpperCase() === v.toUpperCase());
 
-      if (state === undefined) {
+      if (stateWithUppercase === undefined) {
         throw new FilteringReadError("", "Invalid value");
       }
-      return state;
+      return stateWithUppercase;
     });
 
     return {
@@ -296,11 +303,7 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
         return state;
       },
       equals(other) {
-        const otherStates = other.get();
-        return (
-          state.length === otherStates.length &&
-          new Set(state).intersection(new Set(otherStates)).size === state.length
-        );
+        return hasSameValues(state, other.get());
       },
     };
   };
