@@ -143,6 +143,7 @@ if (Meteor.isServer) {
   const defaults = {
     admins: [] as string[],
     prng: "",
+    testdata: false,
     siteEmail: "",
     reporter: {
       sender: "reporter@mail.openki.net",
