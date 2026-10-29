@@ -1,6 +1,6 @@
 import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-import { Deprecated, StringEnum, Type } from "./CustomChecks";
+import { StringEnum, Type } from "./CustomChecks";
 import { C3SettingsPattern } from "/imports/startup/both/c3-oauth-settings";
 
 export const PrivateSettingsPattern = Match.ObjectIncluding({
@@ -22,9 +22,8 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   /**
    * Generates test data, is not needed for the production environment.
    * @default false
-   * @deprecated use `public.testdata` instead (October 2026)
    */
-  testdata: Match.Maybe(Deprecated(Boolean, "use `public.testdata` instead (October 2026)")),
+  testdata: Boolean,
 
   /**
    * Sender e-mail address in mails

@@ -1,10 +1,10 @@
 {
   "admins": ["greg", "Support", "FeeLing"],
+  "testdata": true,
   "prng": "static",
   "public": {
     "siteName": "Hmmm",
     "siteStage": "DEV",
-    "testdata": true,
     "testWarning": false,
     "headerLogo": {
       "src": "openki-logo-web-2020.svg",

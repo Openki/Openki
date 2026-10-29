@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Groups } from "../groups/groups";
@@ -17,19 +18,18 @@ import { generate as eventsDataGenerate } from "./events/generate";
 import { create as organizationsDataCreate } from "./organizations/create";
 import { create as venuesDataCreate } from "./venues/create";
 import { generate as groupDiscussionsDataGenerate } from "./group-discussions/generate";
+import { create as groupChatMessagesDataCreate } from "./group-chat-messages/create";
 import { create as regionsDataCreate } from "./regions/create";
 import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
 import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { create as groupChatMessagesDataCreate } from "/imports/api/fixtures/group-chat-messages/create";
 
 export const cleanFixtures = ServerMethod(
   "fixtures.clean",
   async () => {
-    if (!PublicSettings.testdata) {
+    if (!PrivateSettings.testdata) {
       return;
     }
 
@@ -41,7 +41,6 @@ export const cleanFixtures = ServerMethod(
     try {
       await Promise.all([
         GroupDiscussions.removeAsync({}),
-        GroupChatMessages.removeAsync({}),
         Events.removeAsync({}),
         Groups.removeAsync({}),
         Venues.removeAsync({}),
@@ -63,7 +62,7 @@ export const cleanFixtures = ServerMethod(
 export const createFixtures = ServerMethod(
   "fixtures.create",
   async () => {
-    if (!PublicSettings.testdata) {
+    if (!PrivateSettings.testdata) {
       return;
     }
 

@@ -2,9 +2,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
 import { Template } from "meteor/templating";
-
 import { cx } from "/imports/utils/cx";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import "./styles.scss";
 
@@ -42,15 +40,11 @@ export function AdminPanelPage() {
       icon: "fa-solid fa-chart-line",
       route: "stats",
     },
-    ...(PublicSettings.testdata
-      ? [
-          {
-            name: t("adminPanel.tasks.testdata", "Testdata"),
-            icon: "fa-solid fa-database",
-            route: "testdata",
-          },
-        ]
-      : []),
+    {
+      name: t("adminPanel.tasks.testdata", "Testdata"),
+      icon: "fa-solid fa-database",
+      route: "testdata",
+    },
   ];
 
   return (
