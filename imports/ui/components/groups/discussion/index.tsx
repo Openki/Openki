@@ -26,9 +26,7 @@ function useAvailableRoleChats(group: GroupModel | undefined): GroupRole[] {
   if (
     !group ||
     // Only available for signed in users
-    !user ||
-    // NOTE: Only enabled during development for now until the feature is ready for production.
-    !Meteor.isDevelopment
+    !user
   ) {
     return [];
   }
