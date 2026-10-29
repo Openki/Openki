@@ -1,6 +1,6 @@
 {
   "name": "openki",
-  "version": "0.11.0",
+  "version": "0.13.3",
   "description": "GroupOrganizationPlatform",
   "main": "server/main.ts",
   "directories": {
