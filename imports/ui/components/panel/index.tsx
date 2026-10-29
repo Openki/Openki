@@ -172,9 +172,16 @@ export function Panel({
                   aria-label={t("_button.close")}
                 />
               </div>
+              {!inIframe && (
+                // add some height to prevent overlapping screen keyboard on the our touch screens
+                /* oxlint-disable-next-line jsx-a11y/click-events-have-key-events
+                   jsx-a11y/no-static-element-interactions This element is not needed for keyboard only user
+                */
+                <div style={{ height: "360px" }} onClick={handleClose}></div>
+              )}{" "}
             </div>
           </div>
-          <div className="modal-backdrop show"></div>
+          <div className="modal-backdrop show" />
         </div>
       )}
     </div>

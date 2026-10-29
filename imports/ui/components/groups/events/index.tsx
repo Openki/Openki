@@ -16,10 +16,9 @@ import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Add } from "./add";
-import { DeleteEvents } from "../delete-events";
 import { Modal as DeleteEventsModal } from "../delete-events/modal";
 import { EventList } from "/imports/ui/components/events/list";
-import { Button } from "/imports/ui/components/Buttons";
+import { Button, ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -85,13 +84,6 @@ export function Events({ group }: Props) {
   function showHasMoreEvents() {
     return hasMoreEvents() && !showAllEvents;
   }
-  function deleteGroupEventsArgs() {
-    return {
-      onShowEventsDeleteModal: () => {
-        setShowModal(true);
-      },
-    };
-  }
   function deleteEventsModalArgs() {
     const upcomingEvents = events.toSorted(compareByStartDate).filter((e) => e.start > now);
     return {
@@ -130,7 +122,13 @@ export function Events({ group }: Props) {
                   </h4>
                   <div>
                     {group.editableBy(user) && hasEvents() && (
-                      <DeleteEvents {...deleteGroupEventsArgs()} />
+                      <ButtonIcon
+                        id="group-events-delete"
+                        className="btn-lg btn-primary"
+                        onClick={() => setShowModal(true)}
+                        label={t("group.event.edit.deleteEvents", "Delete events")}
+                        icon="fa-solid fa-trash-can"
+                      />
                     )}
                     {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
                   </div>

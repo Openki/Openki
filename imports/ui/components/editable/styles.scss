@@ -98,6 +98,9 @@
   font-size: small;
   transition: color 0.25s;
   pointer-events: none;
+
+  /* makes the button to a circle */
+  float: inline-end;
 }
 
 .editable-icon-container {
@@ -127,10 +130,14 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .editable-wrap-multiline .editable-icon-container {
-  @include td-pos(right, -14px);
+  /* 
+  NOTE: Setting to 0 means that the button is may be overlapping with the text.
+  Otherwise it is cut when the description text is to long. See https://gitlab.com/Openki/Openki/-/work_items/2472
+  */
+  @include td-pos(right, 0);
 
   position: absolute;
-  top: -12px;
+  top: 0;
 }
 
 .editable:focus + .editable-icon,

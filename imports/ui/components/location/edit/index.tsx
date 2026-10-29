@@ -64,6 +64,11 @@ function IconControl({
 
 export type Coordinates = [long: number, lat: number];
 
+function toGeoJson(marker: L.Marker<unknown>): Coordinates {
+  const latLng = marker.getLatLng();
+  return [latLng.lng, latLng.lat];
+}
+
 export function Edit(
   props: {
     id?: string | undefined;
@@ -94,11 +99,6 @@ export function Edit(
   const mapRef = useRef<L.Map>(null);
   const markerRef = useRef<L.Marker<unknown>>(null);
   const [level, setLevel] = useState(props.level);
-
-  function toGeoJson(marker: L.Marker<unknown>): Coordinates {
-    const latLng = marker.getLatLng();
-    return [latLng.lng, latLng.lat];
-  }
 
   const handleDragend = () => {
     if (!markerRef.current) return;
@@ -148,7 +148,7 @@ export function Edit(
           }}
         />
       )}
-      <ClassName value={`location-map focus-ring ${props.className}`} />
+      <ClassName value={cx("location-map focus-ring", props.className)} />
       <Props
         id={props.id}
         aria-labelledby={props["aria-labelledby"]}

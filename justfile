@@ -63,6 +63,16 @@ test-only *ARGS:
 outdated:
     meteor npm outdated
 
+[doc("""
+Audit dependencies against known security vulnerabilities.
+
+IMPORTANT: This does not check the bundled Meteor dependencies,
+so this command only reports a small fraction of the actual vulnerabilities.
+""")]
+[no-exit-message]
+audit:
+    meteor npm audit
+
 # Reset meteor cache. Pass `--db` to also reset the local MongoDB.
 reset *ARGS:
     meteor reset {{ ARGS }}
@@ -71,3 +81,4 @@ alias i := install
 alias d := dev
 alias t := test-ui
 alias o := outdated
+alias a := audit

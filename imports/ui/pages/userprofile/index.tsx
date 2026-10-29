@@ -30,6 +30,10 @@ export interface Props {
   user: UserModel;
 }
 
+function organizationMember(organization: OrganizationEntity, user: UserModel) {
+  return !!(user && organization?.members?.some((m) => m.user === user._id));
+}
+
 export function UserprofilePage({ user }: Props) {
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
@@ -54,9 +58,6 @@ export function UserprofilePage({ user }: Props) {
   }
   function allowPrivateMessages() {
     return user.allowPrivateMessages || Boolean(currentUser?.hasPrivilege("admin"));
-  }
-  function organizationMember(organization: OrganizationEntity, user: UserModel) {
-    return !!(user && organization?.members?.some((m) => m.user === user._id));
   }
   function showInviteOrganizations() {
     if (user._id === currentUser?._id) {
@@ -391,9 +392,9 @@ export function UserprofilePage({ user }: Props) {
                     'Remove the user profile "{NAME}" permanently? {GROUPS, number} Groups created by this user (with {INTERESTED, number} members and {EVENTS, number} upcoming events) will also be removed.',
                     {
                       NAME: user.getDisplayName(),
-                      GROUPS: numberOfGroupsAffectedByDelete,
-                      INTERESTED: numberOfInterestedAffectedByDelete,
-                      EVENTS: numberOfFutureEventsAffectedByDelete,
+                      GROUPS: numberOfGroupsAffectedByDelete(),
+                      INTERESTED: numberOfInterestedAffectedByDelete(),
+                      EVENTS: numberOfFutureEventsAffectedByDelete(),
                     },
                   )}
                 </p>
@@ -417,7 +418,7 @@ export function UserprofilePage({ user }: Props) {
                     onClick={() => handleConfirmDeleteUser()}
                     busyText={t("profile.account.delete.confirm.button.busy", "Deleting profile…")}
                   >
-                    {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
+                    {t("profile.account.delete.confirm.button", "Delete user and all their traces")}
                   </Button>{" "}
                   <ButtonCancel
                     id="userprofile-confirm-delete-user-cancel"

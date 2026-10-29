@@ -108,6 +108,11 @@ $utilities: map.merge(
   @include ellipsis-multiline(4);
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
+.w-\[1em\] {
+  width: 1em;
+}
+
 .shadow-md {
   box-shadow: 0.1rem 0.1rem 0.6rem rgb(0 0 0 / 25%);
 }
