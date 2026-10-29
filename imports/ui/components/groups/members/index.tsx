@@ -81,7 +81,7 @@ export function Members({ group }: { group: GroupModel }) {
               id="group-members-notify-all"
               className="btn-lg btn-primary"
               onClick={handleContactMembersClick}
-              title={t("group.details.members.contact-members", "Contact all members")}
+              label={t("group.details.members.contact-members", "Contact all members")}
               icon="fa-solid fa-paper-plane"
             />
           )}

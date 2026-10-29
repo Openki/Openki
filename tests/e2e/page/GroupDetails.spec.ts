@@ -26,7 +26,7 @@ describe("group details page", () => {
     });
 
     it("should allow a member a team organization to send a message to all", () => {
-      cy.get('[data-test="group-details"] i.contact-members').click();
+      cy.get("#group-members-notify-all").click();
       cy.get("#discussion div.richtext").type(
         "Postet mal wenn ihr Zeit habt für ein nächstes Treffen.",
       );

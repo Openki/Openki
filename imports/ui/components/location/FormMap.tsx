@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { Coordinates, Edit } from "/imports/ui/components/location/edit";
 import { useTranslation } from "react-i18next";
-import { cx } from "/imports/utils/cx";
 
 export function FormMap({
   id,
@@ -63,9 +62,11 @@ export function FormMap({
       </div>
       <Edit
         id={id}
-        className={cx(!!error && "focus-ring-danger is-invalid")}
+        className={error ? "focus-ring-danger is-invalid" : undefined}
         region={region}
-        center={center as any} // one of "center" or "coordinates" are set, so we can ignore the error from typescript
+        // One of "center" or "coordinates" are set, so we can ignore the error from typescript
+        // oxlint-disable-next-line no-explicit-any
+        center={center as any}
         coordinates={value}
         level={level}
         onChange={onChange}

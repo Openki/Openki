@@ -56,7 +56,6 @@ async function loadWeblateStats() {
       ) {
         return cachedStats.response;
       }
-      // oxlint-disable-next-line no-unused-vars
     } catch {
       // Unable to use the cached Weblate stats file, for whatever reason.
     }

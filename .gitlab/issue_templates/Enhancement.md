@@ -10,7 +10,7 @@
 
 ### Further details
 
-<!-- If applicable, include logs or screenshots, describe use cases and how users benefits from the change, or how it contibutes to our goals and vision. -->
+<!-- If applicable, include logs or screenshots, describe use cases and how users benefits from the change, or how it contributes to our goals and vision. -->
 
 <!-- After creating, please link this issue to already existing issues that affect this one) -->
 

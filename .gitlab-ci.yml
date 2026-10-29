@@ -1,4 +1,4 @@
-image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
+# image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 workflow:
   rules:
@@ -7,6 +7,7 @@ workflow:
     - if: $CI_COMMIT_BRANCH =~ /^(dev|staging|main)$/ || $CI_MERGE_REQUEST_ID
 
 stages:
+  - prepare-ci-container
   - lint
   - cleanup
   - prepare
@@ -26,10 +27,33 @@ variables:
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
   DEV_BRANCH: "dev"
+  OPENKI_CI_IMAGE_TAG: registry.gitlab.com/openki/openki/openki-ci:latest
+
+# -------------------------------------------------------------------
+# Stage: prepare-ci-container
+# Rebuild the CI container - but only when ci/Dockerfile.ci changed
+# -------------------------------------------------------------------
+rebuild-ci-container:
+  stage: prepare-ci-container
+  # Temporarily allow this stage to run for every commit until it works as expected.
+  rules:
+    - changes:
+        - ci/Dockerfile.ci
+  image: docker:29.7.2-cli
+  services:
+    - docker:29.7.2-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - echo "Building CI container..."
+    - docker build --tag $OPENKI_CI_IMAGE_TAG -f ci/Dockerfile.ci .
+    - docker push $OPENKI_CI_IMAGE_TAG
+  allow_failure: false
 
 # Static analysis / formatting checks
 lint:
   stage: lint
+  image: $OPENKI_CI_IMAGE_TAG
   tags:
     - gitlab-org
   script: ./ci/lint.sh
@@ -38,6 +62,7 @@ lint:
 # Cleanup generated/cached dependencies
 cleanup:
   stage: cleanup
+  image: $OPENKI_CI_IMAGE_TAG
   script:
     - rm -rf .meteor/ .npm/ node_modules/
 
@@ -47,6 +72,7 @@ cleanup:
 # -------------------------------------------------------------------
 prepare_version:
   stage: prepare
+  image: $OPENKI_CI_IMAGE_TAG
   before_script:
     - git fetch --tags # Required for git describe to find annotated tags
   script:
@@ -61,6 +87,7 @@ prepare_version:
 # Unit / E2E / integration tests
 test:
   stage: test
+  image: $OPENKI_CI_IMAGE_TAG
   tags:
     - gitlab-org-docker
   variables:

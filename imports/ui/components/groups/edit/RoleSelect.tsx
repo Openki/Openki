@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { chain } from "lodash-es";
 import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
@@ -118,22 +118,28 @@ export function RoleSelect({
   }
 
   function isRoleEnabled(roleId: string) {
-    const regionRole = regionRoles.find((regionRole) => regionRole.id === roleId);
-    return regionRole?.preset ?? false;
+    return regionRoles.find((regionRole) => regionRole.id === roleId)?.preset || false;
   }
+
+  useEffect(() => {
+    if (isLoadingRegionRoles()) {
+      return;
+    }
+    // When no roles have yet been defined, initialize with the preset roles.
+    // NOTE: This data loading should ideally be handled in the parent component instead.
+    // The parent Edit component knows about outerValue, isNewGroup and can load the availableRoles too.
+    // However, we might need to create a custom hook to load available region roles, which re-runs
+    // multiple times until get the expected data.
+    if (!outerValue && isNewGroup) {
+      onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
+    }
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies react-hooks/exhaustive-deps
+  }, [isLoadingRegionRoles]);
 
   if (isLoadingRegionRoles()) {
     return null;
   }
 
-  /**
-   * on undefined: initialize with the preset region roles
-   * maybe this is not the right place to do this...
-   */
-  if (!outerValue && isNewGroup) {
-    onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
-    return null;
-  }
   const value = outerValue || [];
 
   const options = availableRoles()

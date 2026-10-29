@@ -183,7 +183,7 @@ export function EventParticipants({ event }: Props) {
               id="events-participants-notify-all"
               className="btn-lg btn-primary"
               onClick={toggleModal}
-              title={t("event.details.participants.contact-all", "Contact all participants")}
+              label={t("event.details.participants.contact-all", "Contact all participants")}
               icon="fa-solid fa-paper-plane"
             />
           )}
