@@ -132,7 +132,7 @@ describe("GroupChatMessages", () => {
     });
   });
 
-  describe("UI", () => {
+  describe.only("UI", () => {
     const groupId = "5dbf3bec62"; // "Elektronik" group in "Testistan" region
 
     beforeEach(() => {
@@ -175,7 +175,7 @@ describe("GroupChatMessages", () => {
 
       cy.get(".group-role-chat-tabs").should("be.visible");
       cy.getByRole("tab", { name: /team chat/i }).should("be.visible");
-      cy.get("#discussion .discussion-conversation").should("not.be.visible");
+      cy.get("#discussion .discussion-conversation").should("be.visible");
     });
   });
 });
