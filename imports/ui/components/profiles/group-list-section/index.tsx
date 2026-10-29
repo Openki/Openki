@@ -17,6 +17,10 @@ import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
+function showArchived(role: RoleEntity) {
+  return role.id === SystemRoles.Team.id;
+}
+
 export function GroupListSection({
   regionId,
   user,
@@ -59,19 +63,14 @@ export function GroupListSection({
   function groupsByRoleCount(role: string, archived: boolean) {
     return groupsByRole(role, archived).length;
   }
-  function isInvolved() {
-    return groups.length > 0 || archivedGroups.length > 0;
-  }
-  function showArchived(role: RoleEntity) {
-    return role.id === SystemRoles.Team.id;
-  }
+  const isInvolved = groups.length > 0 || archivedGroups.length > 0;
 
   if (isLoadingRegionRoles()) {
     return null;
   }
 
   return (
-    isInvolved() && (
+    isInvolved && (
       <div className="page-component page-component-seperated profile-grouplist">
         <>
           <h2>{region?.name}</h2>

@@ -40,7 +40,6 @@ export function GroupChatMessage({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
-            {/* TODO: This one doesn't get replaced correctly */}
             {t(
               "notification.groupChatMessage.mail.intro",
               "{USER} sent a message to the {ROLE} chat in {GROUP}:",
