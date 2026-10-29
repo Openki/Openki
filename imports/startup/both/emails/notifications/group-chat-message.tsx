@@ -98,12 +98,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Group does not exist (0.o)");
       }
 
+      // Not ideal to hard code the role like this,
+      // but this is OK since we currently only use it for the team role.
+      const roleLabel = "Team";
+
       const subjectvars = {
         GROUP: truncate(group.name, { length: 10 }),
         SENDER: truncate(senderName, { length: 20 }),
-        // Not ideal to hard code the role like this,
-        // but this is OK since we currently only use it for the team role.
-        ROLE: "Team",
+        ROLE: roleLabel,
       };
 
       const subject = t(
@@ -125,6 +127,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       return {
         group: <a href={groupLink}>{group.name}</a>,
+        role: roleLabel,
         messageLink,
         subject,
         message,

@@ -7,6 +7,7 @@ import { type GroupChatMessageEntity } from "/imports/api/group-chat-messages/gr
 export interface Props {
   username: string;
   group: ReactNode;
+  role: string;
   messageLink: string;
   subject: string;
   message: GroupChatMessageEntity;
@@ -20,6 +21,7 @@ export interface Props {
 
 export function GroupChatMessage({
   username,
+  role,
   group,
   message,
   messageLink,
@@ -38,11 +40,13 @@ export function GroupChatMessage({
         <td>
           <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
+            {/* TODO: This one doesn't get replaced correctly */}
             {t(
               "notification.groupChatMessage.mail.intro",
               "{USER} sent a message to the {ROLE} chat in {GROUP}:",
               {
                 USER: <a href={senderLink}>{senderName}</a>,
+                ROLE: role,
                 GROUP: group,
               },
             )}
