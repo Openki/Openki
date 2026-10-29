@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Groups } from "../groups/groups";
@@ -31,6 +32,12 @@ export const cleanFixtures = ServerMethod(
     if (!PublicSettings.testdata) {
       return;
     }
+
+    const user = await Meteor.userAsync();
+    if (!user || !user.hasPrivilege("admin")) {
+      return;
+    }
+
     try {
       await Promise.all([
         GroupDiscussions.removeAsync({}),
@@ -57,6 +64,11 @@ export const createFixtures = ServerMethod(
   "fixtures.create",
   async () => {
     if (!PublicSettings.testdata) {
+      return;
+    }
+
+    const user = await Meteor.userAsync();
+    if (!user || !user.hasPrivilege("admin")) {
       return;
     }
 
