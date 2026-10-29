@@ -68,7 +68,7 @@ export const createFixtures = ServerMethod(
        *
        * NOTE: The user fixtures might change and will currently not cause the DB cache to update.
        * This should be unlikely though, since most of the time, the other DB collections are changing.
-       * If you need to enure the fixtures are fully re-created and the DB cache is fully updated,
+       * If you need to ensure the fixtures are fully recreated and the DB cache is fully updated,
        * you can reset the DB and thereby re-create all fixtures (including users).
        */
       let shouldUpdateDBCache = false;

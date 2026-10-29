@@ -83,7 +83,7 @@ Please re-create the testdata for groups or reset the DB.`,
       }
 
       // NOTE: Here, we might want to ensure the group has all roles defined in `fixture.requiredMembers[number].roles[number]`.
-      // Check if they are system roles and add them like that in that case. Otherwise add them as custom roles to the group.
+      // Check if they are system roles and add them like that in that case. Otherwise, add them as custom roles to the group.
       // This will become relevant when we add chats for custom roles and not just the `team`.
 
       await Promise.all(
