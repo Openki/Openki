@@ -98,12 +98,15 @@ export function GroupListSection({
                           href={`#section-${region?._id}-${role.id}`}
                           onClick={(event) => {
                             event.preventDefault();
-                            const roleLabel = event.currentTarget;
                             const rolePosition =
-                              $(roleLabel.getAttribute("href") || "").offset()?.top || 0;
-                            // subtract the amount of pixels of the height of the navbar
-                            $("html, body").animate({
-                              scrollTop: rolePosition - ScssVars.navbarHeight,
+                              document.querySelector<HTMLElement>(
+                                event.currentTarget.getAttribute("href") || "",
+                              )?.offsetTop || 0;
+
+                            window.scrollTo({
+                              // Subtract the amount of pixels of the height of the navbar
+                              top: rolePosition - ScssVars.navbarHeight,
+                              behavior: "smooth",
                             });
                           }}
                         >
