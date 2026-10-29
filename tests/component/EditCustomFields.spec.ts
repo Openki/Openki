@@ -23,7 +23,6 @@ describe("EditCustomFields", () => {
       username: "Tara",
     });
     cy.get("#events-display-body-edit").click();
-    cy.wait(4000);
     cy.get("#group-custom-field-target").clear();
     cy.get("#group-custom-field-target").type("Kinder, mit Begleitperson");
     cy.get("#events-edit-save").click();
