@@ -32,9 +32,9 @@ dev:
 fix:
     meteor npm run lint:fix || just oxlint-errors
 
-# Only run the regular linting
-lint:
-    meteor npm run lint || just oxlint-errors
+# Run linting and type checking
+check:
+    meteor npm run lint || just oxlint-errors && meteor npm run type-check
 
 # Only print the oxlint errors so they are easier to find and fix.
 oxlint-errors:
@@ -43,10 +43,6 @@ oxlint-errors:
 # Extract translations into i18n files
 translations:
     meteor npm run extract-translations
-
-# Run linting and type checking
-check:
-    meteor npm run lint && meteor npm run type-check
 
 # Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
