@@ -7,7 +7,7 @@ export function getBootstrapStyles<
 >(props: {
   isInvalid?: boolean | undefined;
   styles?: StylesConfig<Option, IsMulti, Group> | undefined;
-}): import("react-select").StylesConfig<Option, IsMulti, Group> | undefined {
+}): StylesConfig<Option, IsMulti, Group> | undefined {
   return mergeStyles(
     {
       menu: (styles) => ({
