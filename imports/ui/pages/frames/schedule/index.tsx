@@ -1,13 +1,14 @@
 import React from "react";
-import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
+import { sortBy, uniq } from "es-toolkit/compat";
+import { useTranslation } from "react-i18next";
+
+import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
-import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { chain, sortBy } from "es-toolkit/compat";
 
 import { useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -40,29 +41,32 @@ function useOptions() {
     scheduleStart = moment(now).startOf("week");
   }
 
-  const seps = chain(query.sep || "")
-    .split(",")
-    .filter((sep) => sep.length > 0) // get rid of 0-length
-    .map((sep) => {
-      if (sep.length < 3) {
-        return Number.parseInt(`${sep}00`, 10);
-      }
-      return Number.parseInt(sep, 10);
-    }) // standardize format
-    .filter((hm) => !Number.isNaN(hm)) // filter NaN's
-    .map((hm) => {
-      const h = Math.floor(hm / 100);
-      const m = hm % 100;
-      return h * 60 + m;
-    }) /* convert to minutes */
-    .uniq()
-    .value();
-  const separators = seps;
+  const separators: number[] = uniq(
+    (query.sep || "")
+      .split(",")
+      // Only keep
+      .filter((sep) => sep.length > 0)
+      .map((sep) => {
+        // Standardize format
+        if (sep.length < 3) {
+          return Number.parseInt(`${sep}00`, 10);
+        }
+        return Number.parseInt(sep, 10);
+      })
+      // Only keep valid numbers
+      .filter((hm) => !Number.isNaN(hm))
+      .map((hm) => {
+        // Convert to minutes
+        const h = Math.floor(hm / 100);
+        const m = hm % 100;
+        return h * 60 + m;
+      }),
+  );
 
   const readInterval = Number.parseInt(query.interval || "", 10);
   if (!Number.isNaN(readInterval) && readInterval > 0) {
     interval = readInterval;
-  } else if (seps.length > 0) {
+  } else if (separators.length > 0) {
     interval = 24 * 60;
   } else {
     interval = 60;

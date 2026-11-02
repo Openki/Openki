@@ -1,7 +1,8 @@
-import { chain, sumBy } from "es-toolkit/compat";
+import { sumBy, min as minInArray, max as maxInArray, groupBy, orderBy } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
 import React, { useEffect, useMemo, useRef } from "react";
+
 import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
@@ -171,14 +172,16 @@ export function Timetable({
     ],
     [events, externalEvents],
   );
-  const startLocal = chain(allEvents)
-    .map((e) => e.startLocal)
-    .min()
-    .value();
-  const endLocal = chain(allEvents)
-    .map((e) => e.endLocal)
-    .max()
-    .value();
+  const startLocal = minInArray(allEvents.map((e) => e.startLocal));
+  const endLocal = maxInArray(allEvents.map((e) => e.endLocal));
+
+  if (!startLocal) {
+    throw new Error("startLocal is missing for allEvents:", { cause: { allEvents } });
+  }
+
+  if (!endLocal) {
+    throw new Error("endLocal is missing for allEvents:", { cause: { allEvents } });
+  }
 
   let start = regionZone.fromString(startLocal);
   // show in min +/- 5 hours free time space before and after event
@@ -212,10 +215,10 @@ export function Timetable({
     };
   });
 
-  const rooms = chain(allEvents)
-    .groupBy((e) => e.room?.toUpperCase() || "")
-    .orderBy((g) => g[0].room)
-    .value();
+  const rooms = orderBy(
+    groupBy(allEvents, (e) => e.room?.toUpperCase() || ""),
+    (g) => g[0].room,
+  );
 
   const totalCols = sumBy(viewModel, (v) => v.hours.length) + 1; // +1 for first empty/room column
 

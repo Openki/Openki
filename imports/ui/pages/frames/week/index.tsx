@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { chain } from "es-toolkit/compat";
+import { take } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
@@ -123,10 +123,10 @@ export function WeekPage(props: Record<string, string>) {
 
       weekdays.push({
         date: current,
-        dayEvents: chain(events)
-          .filter((e) => e.start > after && e.start <= end)
-          .take(limit)
-          .value(),
+        dayEvents: take(
+          events.filter((e) => e.start > after && e.start <= end),
+          limit,
+        ),
       });
       current = next;
     }

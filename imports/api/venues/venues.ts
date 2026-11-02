@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn, escapeRegExp, chain } from "es-toolkit/compat";
+import { assignIn, escapeRegExp, uniq } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -200,12 +200,11 @@ class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
       const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
 
-      const recentLocations = chain(recentEvents)
-        .map((event) => event.venue?._id) // get ids
-        .filter((venueId) => venueId) // filter empty ids
-        .uniq() // make unique
-        .slice(0, limit || 10) // and limit it
-        .value();
+      const recentLocations = uniq(
+        recentEvents
+          .map((event) => event.venue?._id) // get ids
+          .filter((venueId) => venueId), // filter empty ids
+      ).slice(0, limit || 10); // and limit it
 
       find._id = { $in: recentLocations as string[] };
     }

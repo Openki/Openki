@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { chain } from "es-toolkit/compat";
 import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
+import { uniq } from "es-toolkit/compat";
 
 import { GroupRole } from "/imports/api/groups/groups";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
@@ -90,10 +90,7 @@ export function RoleSelect({
   const { roleShort, roleDescription } = useRoleDisplay(regionRoles);
 
   const disabledCreateRoles = useMemo(() => {
-    return chain(organizations)
-      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
-      .uniq()
-      .value();
+    return uniq(organizations.flatMap(({ disableCreateRoles }) => disableCreateRoles ?? []));
   }, [organizations]);
 
   function availableRoles() {

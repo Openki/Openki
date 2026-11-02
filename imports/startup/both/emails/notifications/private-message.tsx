@@ -4,7 +4,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { chain, truncate } from "es-toolkit/compat";
+import { uniq, truncate } from "es-toolkit/compat";
 
 import { Groups } from "/imports/api/groups/groups";
 import { Log } from "/imports/api/log/log";
@@ -98,17 +98,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     // Check how many messages a user has sent and block if there are too many
     const observePeriod = new Date();
     observePeriod.setHours(observePeriod.getHours() - 1);
-    const recipient = chain(
+    const recipient = uniq(
       await Log.find({
         tr: "Notification.Send",
         ts: { $gte: observePeriod },
         "body.model": "PrivateMessage",
         "body.sender": body.sender,
-      }).fetchAsync(),
-    )
-      .map((m) => (m.body as { targetRecipient: string }).targetRecipient)
-      .uniq()
-      .value();
+      }).mapAsync((m) => (m.body as { targetRecipient: string }).targetRecipient),
+    );
 
     if (recipient.length === PrivateSettings.allowedPrivateMessagesPerHour + 1) {
       await sendAlert(
