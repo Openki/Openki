@@ -1,26 +1,39 @@
 import React, { type FocusEventHandler } from "react";
-import { filter, chain } from "es-toolkit/compat";
+import { filter } from "es-toolkit/compat";
 
 import { EventEntity, EventVenue } from "/imports/api/events/events";
 
 import { SearchBase } from "/imports/ui/components/events/edit-venue/search/SearchBase";
 import { useData } from "/imports/ui/hooks/useData";
 
-async function requestVenuesFromC3nav(locations: any, query: string): Promise<EventVenue[]> {
-  const relevantLocations = chain(locations)
-    .filter((l) => !!l.point)
-    .map((l) => ({
-      level: l.point[0],
-      loc: {
-        type: "Point" as const,
-        coordinates: [l.point[1], l.point[2]] as [long: number, lat: number],
-      },
+interface C3Location {
+  point?: [number, number, number] | null;
+  title: string;
+  subtitle: string;
+  add_search: string;
+}
 
-      address: l.subtitle,
-      name: l.title,
-      searchIndex: (l.title + " " + l.subtitle + " " + l.add_search).toUpperCase(),
-    }))
-    .value();
+async function requestVenuesFromC3nav(
+  locations: C3Location[] | null,
+  query: string,
+): Promise<EventVenue[]> {
+  if (!locations) return [];
+
+  const relevantLocations = (
+    locations.filter((l) => !!l.point) as (C3Location & {
+      point: NonNullable<C3Location["point"]>;
+    })[]
+  ).map((l) => ({
+    level: l.point[0],
+    loc: {
+      type: "Point" as const,
+      coordinates: [l.point[1], l.point[2]] as [long: number, lat: number],
+    },
+
+    address: l.subtitle,
+    name: l.title,
+    searchIndex: (l.title + " " + l.subtitle + " " + l.add_search).toUpperCase(),
+  }));
 
   query = query.toUpperCase();
   return filter(relevantLocations, (l) => l.searchIndex.includes(query));
@@ -47,7 +60,7 @@ export function C3navSearch({
   onChange: (newValue: EventEntity["venue"]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
-  const locations = useData(apiUrl + "/map/locations/", {
+  const locations = useData<C3Location[]>(apiUrl + "/map/locations/", {
     // The header is needed for c3nav
     headers: { "X-API-Key": "anonymous" },
   });
