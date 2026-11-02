@@ -19,6 +19,7 @@ import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
 import { CompactPropose } from "/imports/ui/components/groups/compact.modern.propose";
 import { Button } from "/imports/ui/components/Buttons";
+import { LanguageSelection } from "/imports/ui/components/language-selection";
 
 import "./styles.scss";
 
@@ -145,6 +146,9 @@ export function KioskRummagePage() {
             zIndex: 86400001,
           }}
         >
+          <div className="rummage-language-selection">
+            <LanguageSelection />
+          </div>
           <button
             id="rummage-about-btn"
             className="btn text-nowrap btn-lg btn-outline-primary d-inline-flex rounded-circle p-2 m-3 float-end fs-3 border-3"
