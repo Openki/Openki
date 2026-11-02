@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactSelect, { GroupBase, StylesConfig } from "react-select";
 
-import { FindParams, GroupModel } from "/imports/api/groups/groups";
+import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
 import { useDetails } from "/imports/api/organizations/publications";
 import * as Predicates from "/imports/utils/predicates";
@@ -141,7 +141,11 @@ export function KioskRummagePage() {
   };
 
   const query = useSearchParams();
-  const style = new CssFromQuery(query).getCssRules();
+  const style = new CssFromQuery(query, [
+    ["color", "color", ".rummage-about-btn"],
+    ["color", "border-color", ".rummage-about-btn"],
+    ["color", "color", ".rummage-language-selection .btn"],
+  ]).getCssRules();
 
   // Extract organizations from query
   const allOrganizations =
@@ -243,12 +247,11 @@ export function KioskRummagePage() {
           </div>
           <button
             id="rummage-about-btn"
-            className="btn text-nowrap btn-lg btn-outline-primary d-inline-flex rounded-circle p-2 m-3 float-end fs-3 border-3"
+            className="rummage-about-btn btn text-nowrap btn-lg btn-outline-primary d-inline-flex rounded-circle p-2 m-3 float-end fs-3 border-3"
             aria-label={t("rummagePage.aboutBtn", "Open about panel")}
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvas"
             aria-controls="offcanvas"
-            style={{ color: DododoColor, borderColor: DododoColor }}
           >
             <i className="fa-solid fa-question w-[1em]" />
           </button>
@@ -336,6 +339,10 @@ export function KioskRummagePage() {
             "position-absolute top-0 start-0 end-0 bottom-0 overflow-hidden",
             slideOut && "pointer-events-none",
           )}
+          style={{
+            /* special case for draggable: 86400000 is the top z-index and +3 to set it as top layer */
+            zIndex: 86400003,
+          }}
         >
           <div
             className={cx(
