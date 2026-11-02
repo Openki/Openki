@@ -77,11 +77,20 @@ export function Navbar() {
     }
   }
 
-  useEventListener(document.documentElement, "keydown", (event) => {
-    if (event.key === "Escape") {
-      close();
-    }
-  });
+  useEventListener(
+    document.documentElement,
+    "keydown",
+    Meteor.isDevelopment
+      ? (event) => {
+          // DX improvement: Allow closing the mobile navbar with the keyboard
+          if (event.key === "Escape") {
+            close();
+          }
+        }
+      : () => {
+          /* No-op function since React doesn't allow conditional hooks */
+        },
+  );
 
   useEventListener(collapseRef, "show.bs.collapse", () => {
     setNavbarIsCollapsed(false);
