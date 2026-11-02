@@ -14,12 +14,14 @@ export function Tag({ region }: { region: string }) {
     return null;
   }
 
-  const REGION = regions.find((r) => r._id === region)?.name;
+  const regionName = regions.find((r) => r._id === region)?.name;
 
   return (
     <div className="region-tag p-2 text-light d-flex align-items-center gap-1">
       <i className="fa-solid fa-location-dot" />
-      <span className="small">{t("regionTag.inRegion", "in {REGION}", { REGION })}</span>
+      <span className="small">
+        {t("regionTag.inRegion", "in {REGION}", { REGION: regionName })}
+      </span>
     </div>
   );
 }
