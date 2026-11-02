@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { FindParams } from "/imports/api/groups/groups";
@@ -74,6 +74,25 @@ export function KioskRummagePage() {
 
   const [sorted, setSorted] = useState(false);
   const [animated, setAnimated] = useState(false);
+  const [slideOut, setSlideOut] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    timerRef.current = setTimeout(() => {
+      setSlideOut(true);
+    }, 5000);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  const handleSlideOut = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setSlideOut(true);
+  };
 
   let query = useSearchParams();
   const style = new CssFromQuery(query).getCssRules();
@@ -185,6 +204,26 @@ export function KioskRummagePage() {
                   ? t("rummagePage.sortBtn.shuffle", "Shuffle")
                   : t("rummagePage.sortBtn.sort", "Sort")}
               </Button>
+            </div>
+          </div>
+        </div>
+        <div
+          className={cx(
+            "position-absolute top-0 start-0 end-0 bottom-0 overflow-hidden",
+            slideOut && "pointer-events-none",
+          )}
+        >
+          <div
+            className={cx(
+              "position-absolute top-0 start-0 end-0 bottom-0 text-white fs-1",
+              slideOut && "slide-out",
+            )}
+            style={{ backgroundColor: DododoColor }}
+            onClick={handleSlideOut}
+          >
+            <div className="position-absolute top-50 start-50 translate-middle fs-1 fw-bold text-center">
+              <div>DO DO DO</div>
+              <div>{t("rummagePage.touchMe", "You can touch me :) 👆")}</div>
             </div>
           </div>
         </div>

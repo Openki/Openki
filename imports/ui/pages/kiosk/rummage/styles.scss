@@ -17,3 +17,20 @@
     rotate: none !important;
   }
 }
+
+.slide-out {
+  transform: translateX(0);
+  animation: slide-out-animation 0.6s ease-in-out 0s forwards;
+}
+
+@keyframes slide-out-animation {
+  0% {
+    transform: translateX(0);
+    width: 100vw;
+  }
+
+  100% {
+    transform: translateX(100vw);
+    width: 20vw;
+  }
+}

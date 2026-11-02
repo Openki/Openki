@@ -108,6 +108,10 @@ $utilities: map.merge(
   @include ellipsis-multiline(4);
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 /* stylelint-disable-next-line selector-class-pattern */
 .w-\[1em\] {
   width: 1em;
