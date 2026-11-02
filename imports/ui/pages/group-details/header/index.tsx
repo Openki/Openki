@@ -3,7 +3,7 @@ import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { saveGroup } from "/imports/api/groups/methods";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
@@ -26,7 +26,7 @@ export function Header({ group }: { group: GroupModel }) {
     placeholder: t("group.title.placeholder"),
     store: {
       onSave: async (newName) => {
-        await saveGroup(group._id, { name: newName });
+        await GroupsMethods.save(group._id, { name: newName });
       },
       onSuccess: (newName) => {
         Alert.success(

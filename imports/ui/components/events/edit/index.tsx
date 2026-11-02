@@ -20,7 +20,7 @@ import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useAccountTasks } from "/imports/ui/hooks/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { saveGroup } from "/imports/api/groups/methods";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import * as EventsMethods from "/imports/api/events/methods";
@@ -497,7 +497,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
 
       if (event.groupId && customFieldValues) {
-        await saveGroup(event.groupId, { customFields: customFieldValues });
+        await GroupsMethods.save(event.groupId, { customFields: customFieldValues });
       }
 
       afterSave();

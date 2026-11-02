@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { uniq } from "es-toolkit/compat";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { saveGroup, type SaveFields } from "/imports/api/groups/methods";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { GroupCustomField } from "/imports/api/groups/groups";
 
@@ -169,7 +169,7 @@ export function Edit(props: Props) {
       return;
     }
 
-    const changes: SaveFields = {
+    const changes: GroupsMethods.SaveFields = {
       name: StringTools.sanitizeSingleline(title),
     };
 
@@ -200,7 +200,7 @@ export function Edit(props: Props) {
         return;
       }
 
-      const groupId = await saveGroup("", changes);
+      const groupId = await GroupsMethods.save("", changes);
 
       Analytics.trackEvent(
         "Group creations",

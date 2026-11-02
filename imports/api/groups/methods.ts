@@ -96,290 +96,287 @@ export type CreateFields = Type<typeof CreateFieldsPattern>;
 /** currently needed because the save method makes currently both create and update */
 export type SaveFields = Partial<CreateFields> & UpdateFields;
 
-export const saveGroup = ServerMethod(
-  "group.save",
-  async (groupId: string, changes: SaveFields) => {
-    check(groupId, String);
+export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
+  check(groupId, String);
 
-    const isNew = groupId === "";
+  const isNew = groupId === "";
 
-    const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
-    check(changes, expectedFields);
+  const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
+  check(changes, expectedFields);
 
-    const user = await Meteor.userAsync();
-    if (!user) {
-      throw new Meteor.Error(401, "please log in");
+  const user = await Meteor.userAsync();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
+
+  let group;
+  if (isNew) {
+    group = new Group() as GroupModel;
+  } else {
+    group = await loadGroup(groupId);
+
+    if (!group.editableBy(user)) {
+      throw new Meteor.Error(401, "edit not permitted");
     }
+  }
 
-    let group;
+  /* Changes we want to perform */
+  const set = {} as Mongo.OptionalId<GroupEntity>;
+
+  // validation: only allow uniq roles
+  const changedRoles = uniqGroupRole(changes.roles || []);
+  if (changedRoles) {
     if (isNew) {
-      group = new Group() as GroupModel;
-    } else {
-      group = await loadGroup(groupId);
+      const regionRoles = await loadRoles(changes.region as string);
+      const disabledRoles = await loadDisabledRoles(changes.organizations || []);
+      const notDisabledRoles = regionRoles.filter(
+        (regionRole) => !disabledRoles.includes(regionRole.id),
+      );
 
-      if (!group.editableBy(user)) {
-        throw new Meteor.Error(401, "edit not permitted");
-      }
-    }
+      const groupRoles: GroupRole[] = notDisabledRoles
+        // add all not editable but preset predefined roles
+        .filter((r) => r.preset && !r.editable)
+        .map((r) => predefinedRole(r.id));
 
-    /* Changes we want to perform */
-    const set = {} as Mongo.OptionalId<GroupEntity>;
+      groupRoles.push(
+        ...changedRoles
+          .filter((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // only allow predefined roles that are known and not disabled in a organization
+                return notDisabledRoles.some((regionRole) => regionRole.id === role.id);
 
-    // validation: only allow uniq roles
-    const changedRoles = uniqGroupRole(changes.roles || []);
-    if (changedRoles) {
-      if (isNew) {
-        const regionRoles = await loadRoles(changes.region as string);
-        const disabledRoles = await loadDisabledRoles(changes.organizations || []);
-        const notDisabledRoles = regionRoles.filter(
-          (regionRole) => !disabledRoles.includes(regionRole.id),
-        );
-
-        const groupRoles: GroupRole[] = notDisabledRoles
-          // add all not editable but preset predefined roles
-          .filter((r) => r.preset && !r.editable)
-          .map((r) => predefinedRole(r.id));
-
-        groupRoles.push(
-          ...changedRoles
-            .filter((role) => {
-              switch (role.type) {
-                case RoleType.Predefined:
-                  // only allow predefined roles that are known and not disabled in a organization
-                  return notDisabledRoles.some((regionRole) => regionRole.id === role.id);
-
-                case RoleType.Custom:
-                  // allow any custom role
-                  return true;
-
-                default:
-                  throw new Error("Unexpected value for role.type");
-              }
-            })
-            .map((role) => {
-              switch (role.type) {
-                case RoleType.Predefined:
-                  // no changes needed for predefined roles
-                  return role;
-
-                case RoleType.Custom:
-                  // add a id to custom roles
-                  role.id = Random.id();
-                  return role;
-
-                default:
-                  throw new Error("Unexpected value for role.type");
-              }
-            }),
-        );
-
-        set.roles = groupRoles;
-
-        /* When a group is created, the creator is automatically added as sole member of the team */
-        set.members = [
-          {
-            user: user._id,
-            roles: uniqBy(
-              [
-                SystemRoles.Participant,
-                SystemRoles.Team,
-                ...(changes.subs || []).map(predefinedRole),
-              ],
-              (role) => role.id,
-              // only allow not disabled predefined roles
-            ).filter((role) => notDisabledRoles.some((regionRole) => regionRole.id === role.id)),
-            comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
-              lng: user.locale,
-            }),
-          },
-        ];
-      } else {
-        const regionRoles = await loadRoles(group.region);
-
-        // handle some lost predefined roles; in the most cases this code is not needed, it is more
-        // for validation or when the role settings are changed
-        const groupRoles: GroupRole[] = group.roles.filter((groupRole) => {
-          if (groupRole.type !== RoleType.Predefined) {
-            return false;
-          }
-
-          if (changedRoles.some((role) => isSameRole(role, groupRole))) {
-            return false;
-          }
-
-          // if a predefined role has been removed we need a deeper look
-
-          const regionRole = regionRoles.find((regionRole) => regionRole.id === groupRole.id);
-
-          // keep it when it is already known in the group and
-          if (!regionRole) {
-            // not exists anymore in the settings
-            return true;
-          } else if (!regionRole.editable) {
-            // or it's not allowed to be removed
-            return true;
-          }
-
-          // the rest we can handle later
-          return false;
-        });
-
-        // the new order is relevant
-        groupRoles.push(
-          ...changedRoles
-            .filter((role) => {
-              if (group.roles.some((groupRole) => isSameRole(role, groupRole))) {
-                // allow roles that are part of the group already
+              case RoleType.Custom:
+                // allow any custom role
                 return true;
-              }
 
-              switch (role.type) {
-                case RoleType.Predefined:
-                  // allow predefined roles that are editable
-                  return regionRoles.some(
-                    (regionRole) => regionRole.id === role.id && regionRole.editable,
-                  );
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          })
+          .map((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // no changes needed for predefined roles
+                return role;
 
-                case RoleType.Custom:
-                  // allow new custom roles
-                  return !role.id;
+              case RoleType.Custom:
+                // add a id to custom roles
+                role.id = Random.id();
+                return role;
 
-                default:
-                  throw new Error("Unexpected value for role.type");
-              }
-            })
-            .map((role) => {
-              switch (role.type) {
-                case RoleType.Predefined:
-                  // no changes needed for predefined roles
-                  return role;
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          }),
+      );
 
-                case RoleType.Custom:
-                  // add an id to new custom roles
-                  if (!role.id) {
-                    role.id = Random.id();
-                  }
-                  return role;
+      set.roles = groupRoles;
 
-                default:
-                  throw new Error("Unexpected value for role.type");
-              }
-            }),
-        );
+      /* When a group is created, the creator is automatically added as sole member of the team */
+      set.members = [
+        {
+          user: user._id,
+          roles: uniqBy(
+            [
+              SystemRoles.Participant,
+              SystemRoles.Team,
+              ...(changes.subs || []).map(predefinedRole),
+            ],
+            (role) => role.id,
+            // only allow not disabled predefined roles
+          ).filter((role) => notDisabledRoles.some((regionRole) => regionRole.id === role.id)),
+          comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
+            lng: user.locale,
+          }),
+        },
+      ];
+    } else {
+      const regionRoles = await loadRoles(group.region);
 
-        set.roles = groupRoles;
-
-        const removedRoles = differenceWith(group.roles, groupRoles, isSameRole).map(
-          ({ id, type }) => ({ id, type }),
-        );
-        if (removedRoles.length > 0) {
-          await Groups.updateAsync(
-            { _id: groupId },
-            {
-              $pull: {
-                roles: { $or: removedRoles } as any,
-                "members.$[].roles": { $or: removedRoles },
-              },
-            },
-          );
+      // handle some lost predefined roles; in the most cases this code is not needed, it is more
+      // for validation or when the role settings are changed
+      const groupRoles: GroupRole[] = group.roles.filter((groupRole) => {
+        if (groupRole.type !== RoleType.Predefined) {
+          return false;
         }
+
+        if (changedRoles.some((role) => isSameRole(role, groupRole))) {
+          return false;
+        }
+
+        // if a predefined role has been removed we need a deeper look
+
+        const regionRole = regionRoles.find((regionRole) => regionRole.id === groupRole.id);
+
+        // keep it when it is already known in the group and
+        if (!regionRole) {
+          // not exists anymore in the settings
+          return true;
+        } else if (!regionRole.editable) {
+          // or it's not allowed to be removed
+          return true;
+        }
+
+        // the rest we can handle later
+        return false;
+      });
+
+      // the new order is relevant
+      groupRoles.push(
+        ...changedRoles
+          .filter((role) => {
+            if (group.roles.some((groupRole) => isSameRole(role, groupRole))) {
+              // allow roles that are part of the group already
+              return true;
+            }
+
+            switch (role.type) {
+              case RoleType.Predefined:
+                // allow predefined roles that are editable
+                return regionRoles.some(
+                  (regionRole) => regionRole.id === role.id && regionRole.editable,
+                );
+
+              case RoleType.Custom:
+                // allow new custom roles
+                return !role.id;
+
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          })
+          .map((role) => {
+            switch (role.type) {
+              case RoleType.Predefined:
+                // no changes needed for predefined roles
+                return role;
+
+              case RoleType.Custom:
+                // add an id to new custom roles
+                if (!role.id) {
+                  role.id = Random.id();
+                }
+                return role;
+
+              default:
+                throw new Error("Unexpected value for role.type");
+            }
+          }),
+      );
+
+      set.roles = groupRoles;
+
+      const removedRoles = differenceWith(group.roles, groupRoles, isSameRole).map(
+        ({ id, type }) => ({ id, type }),
+      );
+      if (removedRoles.length > 0) {
+        await Groups.updateAsync(
+          { _id: groupId },
+          {
+            $pull: {
+              roles: { $or: removedRoles } as any,
+              "members.$[].roles": { $or: removedRoles },
+            },
+          },
+        );
       }
     }
+  }
 
-    if (changes.description) {
-      set.description = HtmlTools.sanitizeHtml(changes.description);
-    }
+  if (changes.description) {
+    set.description = HtmlTools.sanitizeHtml(changes.description);
+  }
 
-    if (changes.categories) {
-      set.categories = changes.categories.slice(0, 20);
-    }
-    if (changes.name) {
-      set.name = StringTools.sanitizeSingleline(changes.name, 1000);
-      set.slug = StringTools.slug(set.name);
-    }
-    if (changes.customFields) {
-      set.customFields = changes.customFields.map((i) => {
-        const result = {
-          name: i.name.substring(0, 50),
-          displayText: i.displayText,
-          value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
-          visibleFor: i.visibleFor,
-        };
+  if (changes.categories) {
+    set.categories = changes.categories.slice(0, 20);
+  }
+  if (changes.name) {
+    set.name = StringTools.sanitizeSingleline(changes.name, 1000);
+    set.slug = StringTools.slug(set.name);
+  }
+  if (changes.customFields) {
+    set.customFields = changes.customFields.map((i) => {
+      const result = {
+        name: i.name.substring(0, 50),
+        displayText: i.displayText,
+        value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
+        visibleFor: i.visibleFor,
+      };
 
-        if (!i.displayValue) {
-          return result;
+      if (!i.displayValue) {
+        return result;
+      }
+
+      return { ...result, displayValue: i.displayValue };
+    });
+  }
+  if (changes.internal !== undefined) {
+    set.internal = changes.internal;
+  }
+
+  if (changes.singleEvent !== undefined) {
+    set.singleEvent = changes.singleEvent;
+  }
+
+  if (isNew) {
+    // You can add newly created groups to any organization
+    let organizations = changes.organizations || [];
+    organizations = uniq(organizations);
+    organizations = await Promise.all(
+      organizations.map(async (organizationId) => {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (!organization) {
+          throw new Meteor.Error(404, `no organization with id ${organizationId}`);
         }
+        return organization._id;
+      }),
+    );
+    set.organizations = organizations;
+    set.teamOrganizations = organizations;
 
-        return { ...result, displayValue: i.displayValue };
+    /* region cannot be changed */
+    if (!changes.region) {
+      throw new Meteor.Error(404, "region missing");
+    }
+    const region = await Regions.findOneAsync({ _id: changes.region });
+    if (!region) {
+      throw new Meteor.Error(404, "region missing");
+    }
+    set.region = region._id;
+
+    set.archived = false;
+    set.createdby = user._id;
+    set.time_created = new Date();
+    const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
+
+    groupId = await Groups.insertAsync(enrichedSet);
+
+    await Notification.Group.record(groupId);
+
+    if (set.teamOrganizations.length > 0) {
+      await Notification["Organization.Group"].record(groupId);
+    }
+
+    // Init calculated fields
+    await nextEventDenormalizer.updateNextEvent(groupId);
+    await editorsDenormalizer.updateEditors(groupId);
+  } else {
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
+    await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
+
+    await historyDenormalizer.afterUpdate(groupId, user._id);
+    if (changes.categories) {
+      // if categories are update, update those from the event
+      await eventsCategoriesDenormalizer.afterGroupUpdateCategories({
+        _id: groupId,
+        categories: changes.categories,
       });
     }
-    if (changes.internal !== undefined) {
-      set.internal = changes.internal;
-    }
+  }
 
-    if (changes.singleEvent !== undefined) {
-      set.singleEvent = changes.singleEvent;
-    }
-
-    if (isNew) {
-      // You can add newly created groups to any organization
-      let organizations = changes.organizations || [];
-      organizations = uniq(organizations);
-      organizations = await Promise.all(
-        organizations.map(async (organizationId) => {
-          const organization = await Organizations.findOneAsync(organizationId);
-          if (!organization) {
-            throw new Meteor.Error(404, `no organization with id ${organizationId}`);
-          }
-          return organization._id;
-        }),
-      );
-      set.organizations = organizations;
-      set.teamOrganizations = organizations;
-
-      /* region cannot be changed */
-      if (!changes.region) {
-        throw new Meteor.Error(404, "region missing");
-      }
-      const region = await Regions.findOneAsync({ _id: changes.region });
-      if (!region) {
-        throw new Meteor.Error(404, "region missing");
-      }
-      set.region = region._id;
-
-      set.archived = false;
-      set.createdby = user._id;
-      set.time_created = new Date();
-      const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
-
-      groupId = await Groups.insertAsync(enrichedSet);
-
-      await Notification.Group.record(groupId);
-
-      if (set.teamOrganizations.length > 0) {
-        await Notification["Organization.Group"].record(groupId);
-      }
-
-      // Init calculated fields
-      await nextEventDenormalizer.updateNextEvent(groupId);
-      await editorsDenormalizer.updateEditors(groupId);
-    } else {
-      const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
-      await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
-
-      await historyDenormalizer.afterUpdate(groupId, user._id);
-      if (changes.categories) {
-        // if categories are update, update those from the event
-        await eventsCategoriesDenormalizer.afterGroupUpdateCategories({
-          _id: groupId,
-          categories: changes.categories,
-        });
-      }
-    }
-
-    return groupId;
-  },
-);
+  return groupId;
+});
 
 export const updateImage = ServerMethod(
   "group.update.image",
