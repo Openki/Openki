@@ -4,6 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { isEmpty } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
@@ -298,7 +299,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noVenue: {
         field: "venue",
-        isValid: () => Boolean(selectedVenue && Object.entries(selectedVenue).length),
+        isValid: () => Boolean(selectedVenue && !isEmpty(selectedVenue)),
         text() {
           return t("event.edit.venueRequired", "Please select a venue.");
         },

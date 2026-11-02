@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
-import { assignIn, escapeRegExp } from "es-toolkit/compat";
+import { intersection, assignIn, escapeRegExp } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";
@@ -161,9 +161,7 @@ export class OEvent {
     if (!user) {
       return false;
     }
-    return user.badges.some((organizationIdOrUserId) =>
-      this.editors.includes(organizationIdOrUserId),
-    );
+    return intersection(user.badges, this.editors).length > 0;
   }
 
   sameTime(

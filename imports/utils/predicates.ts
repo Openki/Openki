@@ -1,5 +1,5 @@
 import moment from "moment";
-import { union, difference, uniq } from "es-toolkit/compat";
+import { union, difference, intersection, uniq } from "es-toolkit/compat";
 
 import { FilteringReadError } from "./filtering";
 
@@ -48,17 +48,6 @@ export const id: Predicate<string> = function (paramOrState) {
   return string(paramOrState === "all" ? "" : paramOrState);
 };
 
-/**
- * Check if two arrays contain the exact same values
- */
-function hasSameValues<T>(state: T[], otherStates: T[]) {
-  return (
-    state.length === otherStates.length &&
-    // All values from `otherStates` need to be in `state`
-    new Set(state).intersection(new Set(otherStates)).size === state.length
-  );
-}
-
 export const ids: Predicate<string[]> = function (paramOrState) {
   if (paramOrState === "") {
     return undefined;
@@ -94,7 +83,10 @@ export const ids: Predicate<string[]> = function (paramOrState) {
       return state;
     },
     equals(other) {
-      return hasSameValues(state, other.get());
+      const otherIds = other.get();
+      return (
+        state.length === otherIds.length && intersection(state, otherIds).length === state.length
+      );
     },
   };
 };
@@ -302,7 +294,11 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
         return state;
       },
       equals(other) {
-        return hasSameValues(state, other.get());
+        const otherStates = other.get();
+        return (
+          state.length === otherStates.length &&
+          intersection(state, otherStates).length === state.length
+        );
       },
     };
   };

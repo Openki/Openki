@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { isNil, omitBy } from "es-toolkit/compat";
+import { isEmpty, omitBy, isNil } from "es-toolkit/compat";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 import { EventModel } from "/imports/api/events/events";
@@ -133,7 +133,7 @@ export function Full({
 
         <hr className="hr-flush border-dark" />
 
-        {!!event.venue && Object.entries(omitBy(event.venue, isNil)).length && (
+        {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
           <>
             <h4 className="card-title">{t("event.details.location", "Location")}</h4>
             <p id="place" className="card-text">

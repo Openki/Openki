@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn, escapeRegExp } from "es-toolkit/compat";
+import { intersection, assignIn, escapeRegExp } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -186,9 +186,7 @@ export class Group {
     if (!user) {
       return false;
     }
-    return user.badges.some((organizationIdOrUserId) =>
-      this.editors.includes(organizationIdOrUserId),
-    );
+    return intersection(user.badges, this.editors).length > 0;
   }
 
   /**
