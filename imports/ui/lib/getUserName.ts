@@ -1,4 +1,4 @@
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 import { i18n } from "/imports/startup/both/i18next";
 import { Tracker } from "meteor/tracker";
 

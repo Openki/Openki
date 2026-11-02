@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq } from "lodash-es";
+import { uniq } from "es-toolkit/compat";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { saveGroup, type SaveFields } from "/imports/api/groups/methods";

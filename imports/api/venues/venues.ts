@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn, escapeRegExp, chain } from "lodash-es";
+import { assignIn, escapeRegExp, chain } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 

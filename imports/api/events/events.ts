@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
-import { assignIn, escapeRegExp } from "lodash-es";
+import { assignIn, escapeRegExp } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";

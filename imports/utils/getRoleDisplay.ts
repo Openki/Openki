@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { i18n, type TOptions } from "i18next";
 import { useTranslation } from "react-i18next";
-import { upperFirst } from "lodash-es";
+import { upperFirst } from "es-toolkit/compat";
 
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { RoleEntity } from "/imports/utils/PublicSettings";

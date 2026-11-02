@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 
 export type UserPrivilege = "admin" | "visitor";
 

@@ -7,7 +7,7 @@ import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
-import { chain, sortBy } from "lodash-es";
+import { chain, sortBy } from "es-toolkit/compat";
 
 import { useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";

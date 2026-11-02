@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { shuffle, sample } from "lodash-es";
+import { shuffle, sample } from "es-toolkit/compat";
 
 import { Groups } from "../../groups/groups";
 import { EventEntity, Events } from "/imports/api/events/events";

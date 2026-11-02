@@ -1,8 +1,7 @@
 import moment from "moment";
-import { union, difference } from "lodash-es";
+import { union, difference, uniq } from "es-toolkit/compat";
 
 import { FilteringReadError } from "./filtering";
-import { getUniqueValues } from "./getUniqueValues";
 
 export interface StateWrapper<State = unknown, Query = State> {
   merge(other: StateWrapper<State, Query>): StateWrapper<State, Query>;
@@ -76,7 +75,7 @@ export const ids: Predicate<string[]> = function (paramOrState) {
     return undefined;
   }
 
-  state = getUniqueValues(state);
+  state = uniq(state);
 
   return {
     merge(other) {
@@ -275,7 +274,7 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
       return undefined;
     }
 
-    state = getUniqueValues(state);
+    state = uniq(state);
 
     state = state.map((v) => {
       const stateWithUppercase = states.find((s) => s.toUpperCase() === v.toUpperCase());

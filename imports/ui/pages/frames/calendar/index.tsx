@@ -3,7 +3,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { chain } from "lodash-es";
+import { chain } from "es-toolkit/compat";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 

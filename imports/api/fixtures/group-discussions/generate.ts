@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { sampleSize } from "lodash-es";
+import { sampleSize } from "es-toolkit/compat";
 import { type PRNG } from "seedrandom";
 
 import { Groups } from "../../groups/groups";

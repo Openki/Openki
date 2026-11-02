@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, union } from "lodash-es";
+import { uniq, union } from "es-toolkit/compat";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, FindParams } from "/imports/api/groups/groups";

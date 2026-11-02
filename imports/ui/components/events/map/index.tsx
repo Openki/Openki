@@ -3,7 +3,7 @@ import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
-import { chain } from "lodash-es";
+import { chain } from "es-toolkit/compat";
 
 import { EventModel, EventVenue, EventVenueRef } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";

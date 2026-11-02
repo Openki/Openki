@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { truncate } from "lodash-es";
+import { uniq, truncate } from "es-toolkit/compat";
 import i18next from "i18next";
 
 import { GroupDiscussions } from "/imports/api/group-discussions/group-discussions";
@@ -16,7 +16,6 @@ import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/Comment";
 import { Events } from "/imports/api/events/events";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
-import { getUniqueValues } from "/imports/utils/getUniqueValues";
 
 export const ModelName = "Comment";
 
@@ -80,7 +79,7 @@ export async function record(commentId: string) {
     recipients = recipients.filter((r) => r !== comment.userId);
   }
 
-  recipients = getUniqueValues(recipients);
+  recipients = uniq(recipients);
 
   const body: Body = {
     commentId: comment._id,

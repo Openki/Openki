@@ -2,7 +2,7 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
-import { differenceWith, uniq, uniqBy } from "lodash-es";
+import { differenceWith, uniq, uniqBy } from "es-toolkit/compat";
 import { Random } from "meteor/random";
 
 import { Groups, Group, GroupEntity, GroupModel, GroupRolePattern, GroupRole } from "./groups";

@@ -1,4 +1,4 @@
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { createSeededRNG } from "../createSeededRNG";

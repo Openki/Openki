@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { truncate } from "lodash-es";
+import { uniq, truncate } from "es-toolkit/compat";
 import i18next from "i18next";
 
 import { GroupModel, Groups } from "../../../../api/groups/groups";
@@ -13,7 +13,6 @@ import { Log } from "../../../../api/log/log";
 import { getSiteName } from "../../../../utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { GroupChatMessage, Props } from "../../../../emails/notifications/GroupChatMessage";
-import { getUniqueValues } from "/imports/utils/getUniqueValues";
 import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 
 export const ModelName = "GroupChatMessage";
@@ -51,7 +50,7 @@ export async function record(messageId: string) {
     recipients = recipients.filter((r) => r !== message.userId);
   }
 
-  recipients = getUniqueValues(recipients);
+  recipients = uniq(recipients);
 
   const body: Body = {
     messageId: message._id,

@@ -1,4 +1,4 @@
-import { chain, sumBy } from "lodash-es";
+import { chain, sumBy } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
 import React, { useEffect, useMemo, useRef } from "react";

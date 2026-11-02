@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import moment from "moment";
 import { Accounts } from "meteor/accounts-base";
-import { assignIn, range } from "lodash-es";
+import { assignIn, range } from "es-toolkit/compat";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
 import "bootstrap-datepicker";

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { chain } from "lodash-es";
+import { chain } from "es-toolkit/compat";
 import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
 
 import { GroupRole } from "/imports/api/groups/groups";

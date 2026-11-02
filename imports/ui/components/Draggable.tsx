@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from "react";
-import { random } from "lodash-es";
+import { random } from "es-toolkit/compat";
 import { cx } from "/imports/utils/cx";
 
 export function Draggable({

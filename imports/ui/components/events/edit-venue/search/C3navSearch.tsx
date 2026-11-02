@@ -1,5 +1,5 @@
 import React, { type FocusEventHandler } from "react";
-import { filter, chain } from "lodash-es";
+import { filter, chain } from "es-toolkit/compat";
 
 import { EventEntity, EventVenue } from "/imports/api/events/events";
 

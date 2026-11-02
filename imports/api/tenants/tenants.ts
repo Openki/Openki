@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";

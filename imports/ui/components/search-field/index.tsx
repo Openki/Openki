@@ -1,4 +1,4 @@
-import { debounce } from "lodash-es";
+import { debounce } from "es-toolkit/compat";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useState } from "react";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useSiteName } from "/imports/utils/getSiteName";
-import { omitBy } from "/imports/utils/omitBy";
+import { isNil, omitBy } from "es-toolkit/compat";
 
+import { useSiteName } from "/imports/utils/getSiteName";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
@@ -133,31 +133,28 @@ export function Full({
 
         <hr className="hr-flush border-dark" />
 
-        {!!event.venue &&
-          Object.entries(
-            omitBy(event.venue, (value: unknown) => value === null || value === undefined),
-          ).length && (
-            <>
-              <h4 className="card-title">{t("event.details.location", "Location")}</h4>
-              <p id="place" className="card-text">
-                <i className="fa-solid fa-fw fa-location-dot" />
-                {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
-                {!!event.room && (
-                  <>
-                    <br />
-                    {t("event.details.room", "Room:")} {event.room}
-                  </>
-                )}
-                {!!event.venue?.loc?.coordinates && (
-                  <Display
-                    region={event.region}
-                    level={event.venue.level}
-                    coordinates={event.venue?.loc?.coordinates}
-                  />
-                )}
-              </p>
-            </>
-          )}
+        {!!event.venue && Object.entries(omitBy(event.venue, isNil)).length && (
+          <>
+            <h4 className="card-title">{t("event.details.location", "Location")}</h4>
+            <p id="place" className="card-text">
+              <i className="fa-solid fa-fw fa-location-dot" />
+              {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
+              {!!event.room && (
+                <>
+                  <br />
+                  {t("event.details.room", "Room:")} {event.room}
+                </>
+              )}
+              {!!event.venue?.loc?.coordinates && (
+                <Display
+                  region={event.region}
+                  level={event.venue.level}
+                  coordinates={event.venue?.loc?.coordinates}
+                />
+              )}
+            </p>
+          </>
+        )}
 
         {!isRegionLoading() && !!organizedByOrganizations?.length && (
           <p className="card-text">
