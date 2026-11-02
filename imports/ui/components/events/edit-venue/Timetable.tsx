@@ -19,7 +19,9 @@ function ScrollIntoView({ children }: { children: React.ReactNode }) {
       inline: "center",
       behavior: "instant",
       container: "nearest",
-    } as any);
+      // Explicitly cast the type to support the `container` property
+      // since it's not part of the DOM definitions for TypeScript 5.x
+    } as ScrollIntoViewOptions);
   }, []);
 
   return <div ref={elementRef}>{children}</div>;
