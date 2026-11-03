@@ -87,7 +87,6 @@ export function SendMessage(props: Props) {
         <FormControl
           id="send-message-textarea"
           type="textarea"
-          rows={5}
           // oxlint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={props.autoFocus}
           label={t("profile.mail.message", "Message")}
@@ -97,6 +96,7 @@ export function SendMessage(props: Props) {
           onBlur={() => message.length && checkValidity("message")}
           error={errors.message}
           disabled={!hasVerifiedEmail}
+          className="min-h-[5lh]"
         />
       </div>
       {hasVerifiedEmail

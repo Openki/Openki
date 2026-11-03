@@ -107,7 +107,6 @@ export function Notify({
             <FormControl
               id="event-edit-notify-message"
               type="textarea"
-              rows={3}
               label={t("group.event.edit.AddMessage", "Add message")}
               optional
               prepend="fa-solid fa-pencil fa-fw"
@@ -125,6 +124,7 @@ export function Notify({
               value={message}
               maxLength={2000}
               onChange={onMessageChange}
+              className="min-h-[3lh]"
             />
           ) : (
             <div className="form-text">
