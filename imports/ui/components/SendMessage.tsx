@@ -87,7 +87,7 @@ export function SendMessage(props: Props) {
         <FormControl
           id="send-message-textarea"
           type="textarea"
-          rows={7}
+          rows={5}
           // oxlint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={props.autoFocus}
           label={t("profile.mail.message", "Message")}
