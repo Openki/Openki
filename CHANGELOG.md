@@ -9,7 +9,11 @@
 - **Reduced memory usage and improved server startup time for production environments**: Previously, we imported `testdata` and kept related data and code in memory even if it was never used. Now, this only happens when `testdata` is explicitly enabled in the instance settings.
 
 - Ensure only admin users can reset the instance DB when `testdata` is enabled. Previously, any authenticated user could make this request even
-  - The `testdata` setting is ususally only enablbed for test instances, so the risk that this would be exploited in practice is low. However, this is an important fix since it's a potentially massive negative impact if `testdata` would be accidentaly enabled in a production environment.
+  - The `testdata` setting is usually only enabled for test instances, so the risk that this would be exploited in practice is low. However, this is an important fix since it's a potentially massive negative impact if `testdata` would be accidentally enabled in a production environment.
+
+# v0.13.3 - 2026-10-29
+
+## Fixes
 
 - Important security updates: Updated to Meteor 3.5.4 which includes updated of several bundled dependencies.
 - Bugfixes.
