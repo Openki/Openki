@@ -130,7 +130,7 @@ export function RoleSelect({
     if (!outerValue && isNewGroup) {
       onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
     }
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingRegionRoles]);
 
   if (isLoadingRegionRoles()) {

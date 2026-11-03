@@ -74,8 +74,9 @@ function EditGroupCustomFields({
       }
       onChange(group.customFields);
     }
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies This effect only needs to be
-    // executed if the group has changed; otherwise, it will be executed too often.
+    // This effect only needs to be executed if the group has changed;
+    // otherwise, it will be executed too often.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [group]);
 
   if (isLoadingGroup() || isLoadingOrganizations()) {
@@ -340,15 +341,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     if (changes.descriptionNumberOfCharacters > 0) {
       checkValidity("description");
     }
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies This effect only needs to be
-    // executed if the description has changed; otherwise, it will be executed too often.
+    // This effect only needs to be executed if the description has changed;
+    // otherwise, it will be executed too often.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [changes.description]);
 
   useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies Only run when values that get
-    // checked are changed.
+    // Only run when values that get checked are changed.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [venue, allParallelEvents]);
 
   function showRegionSelection() {
