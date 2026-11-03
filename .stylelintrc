@@ -1,1 +1,9 @@
-{ "extends": ["stylelint-config-standard-scss"] }
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "_comments": [
+    "When using stylelint 18.0.0, the rule `value-no-invalid` does not seem to understand SASS variables"
+  ],
+  "rules": {
+    "value-no-invalid": null
+  }
+}
