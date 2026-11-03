@@ -1,4 +1,4 @@
-function assertGoodHeaders(response: Cypress.Response<any>) {
+function assertGoodHeaders(response: Cypress.Response<unknown>) {
   expect(response.status).to.eq(200);
   expect(response.headers["content-type"]).to.include("application/json");
 }
