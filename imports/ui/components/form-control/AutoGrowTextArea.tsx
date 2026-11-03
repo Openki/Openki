@@ -62,6 +62,8 @@ export function AutoGrowTextArea(
           overflowY: "hidden",
           resize: "none",
           fieldSizing: "content",
+          // TODO: Change all `row` to use explicit height instead
+
           // Backwards compatibility with old styling approach with explicit rows.
           // NOTE: Once we start to only using the field-sizing: content solution for textareas,
           // then we should also revisit every usage of <FormControl type="textarea" rows={n} />

@@ -1,6 +1,6 @@
-import { RegionModel } from "/imports/api/regions/regions";
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { RegionModel } from "./regions";
+import { PublicSettings } from "../../utils/PublicSettings";
+import { SystemRoles } from "../groups/lib/Role";
 
 export function extractRoles(region: RegionModel) {
   if (!region.roles?.length) {

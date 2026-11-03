@@ -6,7 +6,7 @@ import { Regions } from "../../regions/regions";
 import { type UserModel } from "../../users/users";
 import { ensure } from "../ensureFixture";
 import { fixtureGroupChatMessages, type FixtureGroupWithChatMessages } from "./data";
-import { extractRoles } from "/imports/utils/extractRoles";
+import { extractRoles } from "../../regions/extractRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 import { sum } from "/imports/utils/sum";
 
