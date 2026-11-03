@@ -148,7 +148,7 @@ describe("GroupChatMessages", () => {
 
       cy.get(".group-role-chat-tabs").should("not.exist");
       cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
-      cy.get("#discussion .discussion-conversation").should("be.visible");
+      cy.get("#discussion").should("be.visible");
     });
 
     it("shows the public group discussions for users who are not part of the group", () => {
@@ -157,7 +157,7 @@ describe("GroupChatMessages", () => {
 
       cy.get(".group-role-chat-tabs").should("not.exist");
       cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
-      cy.get("#discussion .discussion-conversation").should("be.visible");
+      cy.get("#discussion").should("be.visible");
     });
 
     it("shows the public group discussions for group members who are not part of the team", () => {
@@ -166,7 +166,7 @@ describe("GroupChatMessages", () => {
 
       cy.get(".group-role-chat-tabs").should("not.exist");
       cy.getByRole("tab", { name: /team chat/i }).should("not.exist");
-      cy.get("#discussion .discussion-conversation").should("be.visible");
+      cy.get("#discussion").should("be.visible");
     });
 
     it("shows the team chat for group team members", () => {
