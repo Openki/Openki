@@ -1,13 +1,10 @@
 import { GroupChatMessages } from "../../group-chat-messages/group-chat-messages";
 import { Groups } from "../../groups/groups";
-import { getRoleType } from "../../groups/lib/Role";
+import { predefinedRole } from "../../groups/lib/Role";
 import { Log } from "../../log/log";
-import { Regions } from "../../regions/regions";
 import { type UserModel } from "../../users/users";
 import { ensure } from "../ensureFixture";
 import { fixtureGroupChatMessages, type FixtureGroupWithChatMessages } from "./data";
-import { extractRoles } from "../../regions/extractRoles";
-import { RoleEntity } from "/imports/utils/PublicSettings";
 import { sum } from "/imports/utils/sum";
 
 function getMessagesWithUpdatedDates({
@@ -49,8 +46,8 @@ function getMessagesWithUpdatedDates({
   });
 }
 
-function getRoles(roleIds: string[], regionRoles: RoleEntity[]) {
-  return roleIds.map((id) => ({ id, type: getRoleType(id, regionRoles) }));
+function getRoles(roleIds: string[]) {
+  return roleIds.map((id) => predefinedRole(id));
 }
 
 const usernamesToUserIds = new Map<UserModel["username"], UserModel["_id"]>();
@@ -85,17 +82,6 @@ Please re-create the testdata for groups or reset the DB.`,
         );
       }
 
-      const region = await Regions.findOneAsync({ _id: group.region });
-      if (!region) {
-        throw new Error(
-          `Expected region with id "${group.region}" to exist. It may have been renamed or deleted.
-
-Please re-create the testdata for regions or reset the DB.`,
-        );
-      }
-
-      const regionRoles = extractRoles(region);
-
       // NOTE: Here, we might want to ensure the group has all roles defined in `fixture.requiredMembers[number].roles[number]`.
       // Check if they are system roles and add them like that in that case. Otherwise, add them as custom roles to the group.
       // This will become relevant when we add chats for custom roles and not just the `team`.
@@ -116,7 +102,7 @@ Please re-create the testdata for regions or reset the DB.`,
               await Groups.updateAsync(
                 { _id: group._id, "members.user": userId },
                 {
-                  $addToSet: { "members.$.roles": getRoles(missingRoles, regionRoles) },
+                  $addToSet: { "members.$.roles": getRoles(missingRoles) },
                 },
               );
             } else {
@@ -127,7 +113,7 @@ Please re-create the testdata for regions or reset the DB.`,
                   $addToSet: {
                     members: {
                       user: userId,
-                      roles: getRoles(roles, regionRoles),
+                      roles: getRoles(roles),
                     },
                   },
                 },
