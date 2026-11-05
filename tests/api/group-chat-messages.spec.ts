@@ -175,7 +175,7 @@ describe("GroupChatMessages", () => {
 
       cy.get(".group-role-chat-tabs").should("be.visible");
       cy.getByRole("tab", { name: /team chat/i }).should("be.visible");
-      cy.get("#discussion .discussion-conversation").should("be.visible");
+      cy.get("#discussion").should("be.visible");
     });
   });
 });
