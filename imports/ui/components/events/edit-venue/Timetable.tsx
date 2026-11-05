@@ -172,15 +172,20 @@ export function Timetable({
     ],
     [events, externalEvents],
   );
+
+  if (allEvents.length <= 1) {
+    // only show if more then 1 event found
+    return null;
+  }
+
   const startLocal = minInArray(allEvents.map((e) => e.startLocal));
   const endLocal = maxInArray(allEvents.map((e) => e.endLocal));
-
   if (!startLocal) {
-    throw new Error("startLocal is missing for allEvents:", { cause: { allEvents } });
+    throw new Error("Unexpected undefined for startLocal: ", { cause: { allEvents } });
   }
 
   if (!endLocal) {
-    throw new Error("endLocal is missing for allEvents:", { cause: { allEvents } });
+    throw new Error("Unexpected undefined for endLocal: ", { cause: { allEvents } });
   }
 
   let start = regionZone.fromString(startLocal);
@@ -221,11 +226,6 @@ export function Timetable({
   );
 
   const totalCols = sumBy(viewModel, (v) => v.hours.length) + 1; // +1 for first empty/room column
-
-  if (allEvents.length <= 1) {
-    // only show if more then 1 event found
-    return null;
-  }
 
   const inSameRoom = allParallelEvents.find(
     (e) => e.room && currentEvent.room && e.room.toUpperCase() === currentEvent.room.toUpperCase(),
