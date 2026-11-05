@@ -1,4 +1,4 @@
-import { Meteor } from "meteor/meteor";
+// import { Meteor } from "meteor/meteor";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
@@ -33,10 +33,10 @@ export const cleanFixtures = ServerMethod(
       return;
     }
 
-    const user = await Meteor.userAsync();
-    if (!user || !user.hasPrivilege("admin")) {
-      return;
-    }
+    // const user = await Meteor.userAsync();
+    // if (!user || !user.hasPrivilege("admin")) {
+    //   return;
+    // }
 
     try {
       await Promise.all([
@@ -66,10 +66,10 @@ export const createFixtures = ServerMethod(
       return;
     }
 
-    const user = await Meteor.userAsync();
-    if (!user || !user.hasPrivilege("admin")) {
-      return;
-    }
+    // const user = await Meteor.userAsync();
+    // if (!user || !user.hasPrivilege("admin")) {
+    //   return;
+    // }
 
     try {
       await usersDataCreate();
