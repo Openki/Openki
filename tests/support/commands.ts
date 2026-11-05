@@ -100,6 +100,7 @@ Cypress.Commands.add("callMethodAsync", (method: string, ...params: any[]) => {
         return result;
       })
       .catch((err: unknown) => {
+        console.error(err);
         throw new Error("Failed callMethodAsync", { cause: err });
       });
   });
@@ -128,23 +129,29 @@ Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: an
 });
 
 Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: any[]) => {
-  return cy.getMeteor().then((Meteor) => {
-    Cypress.log({
-      name: "expectCallMethodThrowsError",
-      consoleProps: () => ({ name: method, params }),
-    });
+  return (
+    cy
+      .getMeteor()
+      .then((Meteor) => {
+        Cypress.log({
+          name: "expectCallMethodThrowsError",
+          consoleProps: () => ({ name: method, params }),
+        });
 
-    return new Promise((resolve, reject) => {
-      Meteor.call(method, ...params, (err: unknown) => {
-        console.log(`%c${method}`, "color: red; font-style: italic;", err);
-        if (err) {
-          resolve(err);
-          return;
-        }
-        reject(new Error(`Expected ${method} to fail`));
-      });
-    });
-  });
+        return new Promise((resolve, reject) => {
+          Meteor.call(method, ...params, (err: unknown) => {
+            console.log(`%c${method}`, "color: red; font-style: italic;", err);
+            if (err) {
+              resolve(err);
+              return;
+            }
+            reject(new Error(`Expected ${method} to fail`));
+          });
+        });
+      })
+      // TODO: Figure out why this does not properly handle expected failures
+      .should("throw")
+  );
 });
 
 Cypress.Commands.add("testSubscription", (publication: string, ...args: unknown[]) => {

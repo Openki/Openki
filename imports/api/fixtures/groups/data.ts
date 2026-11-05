@@ -266,6 +266,7 @@ export const groups = [
     description: "Würdich gerne auch Deutsch lernen, findich super.",
     roles: ["team", "participant", "mentor", "host"],
     members: [
+      { user: "IvanZ", roles: ["team"] },
       { user: "Maryellen Moyers", roles: ["participant"] },
       { user: "Otto Oshields", roles: ["participant"] },
       { user: "Hui Hung", roles: ["participant"] },

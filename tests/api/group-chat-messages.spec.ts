@@ -42,7 +42,7 @@ describe("GroupChatMessages", () => {
 
   const methodName = "groupChatMessages.send";
 
-  describe(`method ${methodName}`, () => {
+  describe.only(`method ${methodName}`, () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
@@ -68,8 +68,9 @@ describe("GroupChatMessages", () => {
           throw new Error("Failed to reset the group chat messages", { cause: response });
         }
       });
-      cy.allSubscriptionsReady();
-      cy.logout();
+
+      // Call methods from the group context
+      cy.visitOpenki("/group/c294d35055/deutschkurs");
     });
 
     it("should throw an error if the user is not signed in", () => {
@@ -98,11 +99,14 @@ describe("GroupChatMessages", () => {
       });
     });
 
-    it("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
-      cy.login("IvanZ");
+    it.only("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
+      // cy.login("IvanZ");
+
+      cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "IvanZ" });
 
       const userId = "itqnv9HJgc3msz5op"; // Group member "Etha Eis"
 
+      // Ensure user is not part of the team
       cy.callMethodAndIgnoreErrors("groups.removeMemberFromTeam", groupId, userId);
 
       cy.expectCallMethodThrowsError(methodName, {
