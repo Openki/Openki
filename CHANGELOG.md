@@ -8,8 +8,10 @@
 
 - **Reduced memory usage and improved server startup time for production environments**: Previously, we imported `testdata` and kept related data and code in memory even if it was never used. Now, this only happens when `testdata` is explicitly enabled in the instance settings.
 
-- Ensure only admin users can reset the instance DB when `testdata` is enabled. Previously, any authenticated user could make this request even
-  - The `testdata` setting is usually only enabled for test instances, so the risk that this would be exploited in practice is low. However, this is an important fix since it's a potentially massive negative impact if `testdata` would be accidentally enabled in a production environment.
+- Ensure only admin users can reset the instance DB when `testdata` is enabled. Previously, any authenticated user could make forged API requests.
+  - The `testdata` setting is usually only enabled for test instances, so the risk that this would be exploited in practice is low.
+  - The UI was hidden, so this required good knowledge of how Openki works, and creating a forged API request.
+  - However, this is an important fix since this problem could cause a potentially massive negative impact if `testdata` would be accidentally enabled in a production environment.
 
 # v0.13.3 - 2026-10-29
 
