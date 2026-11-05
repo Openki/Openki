@@ -26,7 +26,7 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
         ? dbevent.title
         : i18n("ical.event.canceled", "Canceled: {EVENT}", { EVENT: dbevent.title }),
       location:
-        dbevent.venue && isEmpty(dbevent.venue)
+        dbevent.venue && !isEmpty(dbevent.venue)
           ? omitBy(
               {
                 title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
