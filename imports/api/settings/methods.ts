@@ -5,7 +5,7 @@ import { PublicSettings, PublicSettingsPattern } from "../../utils/PublicSetting
 
 export const checkSettings = ServerMethod(
   "checkSettings",
-  // NOTE: There should be a type Match.Error in the "meteor/check" but the current type definition 
+  // NOTE: There should be a type Match.Error in the "meteor/check" but the current type definition
   // do not define it
   (): (Error | { errorType: "Match.Error"; message: string; path: string })[] => {
     const errors = [];
