@@ -12,6 +12,12 @@ import { UserEntity, Users } from "/imports/api/users/users";
 import { slug } from "/imports/utils/string-tools";
 
 export const ensure = {
+  /**
+   * Generate a deterministic ID by hashing input strings.
+   *
+   * Useful for making tests reliable.
+   * This function should only be used for testdata, and only on the server side.
+   */
   fixedId(strings: string[]) {
     const md5 = crypto.createHash("md5");
     for (const str of strings) {
