@@ -34,7 +34,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
+class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
   constructor() {
     super("Invitations");
 

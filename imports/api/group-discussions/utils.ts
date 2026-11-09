@@ -1,7 +1,7 @@
-import { GroupMember } from "/imports/api/groups/groups";
-import { UserModel } from "/imports/api/users/users";
-import { hasRoleUser } from "../api/groups/lib/hasRole";
-import { SystemRoles } from "/imports/api/groups/lib/Role";
+import { GroupMember } from "../groups/groups";
+import { UserModel } from "../users/users";
+import { hasRoleUser } from "../groups/lib/hasRole";
+import { SystemRoles } from "../groups/lib/Role";
 
 export function canDeletePost(
   user: UserModel | undefined | null,

@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 import { Session } from "meteor/session";
 
@@ -149,7 +149,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
+class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
   constructor() {
     super("Regions", {
       transform(regionEntity) {

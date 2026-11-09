@@ -1,13 +1,12 @@
 import type { JSX } from "react";
-import { i18n } from "i18next";
+import { i18n, type TOptions } from "i18next";
 import { useTranslation } from "react-i18next";
-import { upperFirst } from "lodash-es";
+import { upperFirst } from "es-toolkit/compat";
 
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { PrimitiveType } from "intl-messageformat";
-import { $Dictionary } from "i18next/typescript/helpers";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
 export type Role =
@@ -56,7 +55,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
           const roleKey = `${role.id}.${key}`;
           if (i18n.exists(`roles:${roleKey}`)) {
             return variables
-              ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
+              ? i18n.t(`roles:${roleKey}`, variables as TOptions)
               : i18n.t(`roles:${roleKey}`);
           }
 
@@ -162,6 +161,12 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   };
 }
 
+/**
+ * Get i18n formatting helpers for roles.
+ *
+ * @param roles The roles to format. Pass an empty array if you only need to format `GroupCustomRole`s,
+ * since custom group roles include their own labels.
+ */
 export function useRoleDisplay(roles: RoleEntity[]) {
   const { i18n } = useTranslation();
 

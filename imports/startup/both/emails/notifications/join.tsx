@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { capitalize, truncate } from "lodash-es";
+import { capitalize, truncate } from "es-toolkit/compat";
 
 import { Groups } from "/imports/api/groups/groups";
 import { RegionModel, Regions } from "/imports/api/regions/regions";

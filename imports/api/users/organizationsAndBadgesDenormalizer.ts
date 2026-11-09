@@ -11,9 +11,10 @@ export async function updateOrganizationsAndBadges(
 ) {
   await Promise.all(
     await Users.find(userIdOrSelector).mapAsync(async (user) => {
-      const organizations = await Organizations.find({ "members.user": user._id }).mapAsync(
-        (organization) => organization._id,
-      );
+      const organizations = await Organizations.find(
+        { "members.user": user._id },
+        { projection: { _id: 1 } },
+      ).mapAsync(({ _id }) => _id);
 
       const badges = organizations.slice();
       badges.push(user._id);

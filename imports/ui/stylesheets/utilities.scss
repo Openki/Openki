@@ -30,6 +30,8 @@ $utilities: map.merge(
       class: max-h,
       values: (
         none: none,
+        50vh: 50vh,
+        75vh: 75vh,
       ),
     ),
     "min-h": (
@@ -37,6 +39,8 @@ $utilities: map.merge(
       class: min-h,
       values: (
         \[2lh\]: 2lh,
+        \[3lh\]: 3lh,
+        \[5lh\]: 5lh,
       ),
     ),
     "max-w": (
@@ -89,6 +93,14 @@ $utilities: map.merge(
           )
         ),
     ),
+    "overflow-anchor": (
+      property: overflow-anchor,
+      class: overflow-anchor,
+      values: (
+        none: none,
+        auto: auto,
+      ),
+    ),
   )
 );
 
@@ -123,6 +135,14 @@ $utilities: map.merge(
 
 .truncate {
   @include ellipsis;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 // Optional Bootstrap Utilities

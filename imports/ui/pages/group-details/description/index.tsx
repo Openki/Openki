@@ -50,7 +50,7 @@ export function Description({
       {group?.editableBy(user) ? (
         <Editable {...editableDescription} onStartEditing={onStartEditing} />
       ) : (
-        <p dangerouslySetInnerHTML={{ __html: group.description || "" }}></p>
+        <div dangerouslySetInnerHTML={{ __html: group.description || "" }}></div>
       )}
     </div>
   );

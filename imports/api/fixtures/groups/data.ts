@@ -1,4 +1,4 @@
-export const groups: {
+export interface FixtureGroup {
   name: string;
   categories?: string[];
   tags: string[];
@@ -17,7 +17,9 @@ export const groups: {
   archived?: boolean;
   comment?: string;
   internal?: boolean;
-}[] = [
+}
+
+export const groups = [
   {
     name: "Meditation & Yoga/Qi-Gong",
     categories: ["sports", "spiritual"],
@@ -122,8 +124,8 @@ export const groups: {
     roles: ["team", "participant", "mentor", "host"],
     members: [
       { user: "greg", roles: ["host", "team"] },
-      { user: "LeOnI", roles: ["participant"] },
-      { user: "IvanZ", roles: ["participant"] },
+      { user: "LeOnI", roles: ["participant", "team"] },
+      { user: "IvanZ", roles: ["participant", "team"] },
       { user: "Barbie92", roles: ["participant"] },
     ],
   },
@@ -264,6 +266,7 @@ export const groups: {
     description: "Würdich gerne auch Deutsch lernen, findich super.",
     roles: ["team", "participant", "mentor", "host"],
     members: [
+      { user: "IvanZ", roles: ["team"] },
       { user: "Maryellen Moyers", roles: ["participant"] },
       { user: "Otto Oshields", roles: ["participant"] },
       { user: "Hui Hung", roles: ["participant"] },
@@ -1614,4 +1617,4 @@ export const groups: {
     ],
     region: "Projectistan",
   },
-];
+] as const satisfies FixtureGroup[];

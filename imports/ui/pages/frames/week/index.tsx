@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { chain } from "lodash-es";
+import { take } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
@@ -31,6 +31,10 @@ const DefaultLimit = 200;
 interface Weekday {
   date: moment.Moment;
   dayEvents: EventModel[];
+}
+
+function hasDayEvents(weekday: Weekday) {
+  return weekday.dayEvents.length > 0;
 }
 
 export function WeekPage(props: Record<string, string>) {
@@ -106,27 +110,23 @@ export function WeekPage(props: Record<string, string>) {
     };
   }
 
-  function hasDayEvents(weekday: Weekday) {
-    return weekday.dayEvents.length > 0;
-  }
-
-  function weekdays() {
+  function getWeekdays() {
     const start = startOfWeek;
-    const end = moment(start).add(1, "week");
+    const endOfWeek = moment(start).add(1, "week");
 
     const weekdays = [];
     let current = moment(start);
-    while (current.isBefore(end)) {
+    while (current.isBefore(endOfWeek)) {
       const next = moment(current).add(1, "day");
       const after = current.toDate();
       const end = next.toDate();
 
       weekdays.push({
         date: current,
-        dayEvents: chain(events)
-          .filter((e) => e.start > after && e.start <= end)
-          .take(limit)
-          .value(),
+        dayEvents: take(
+          events.filter((e) => e.start > after && e.start <= end),
+          limit,
+        ),
       });
       current = next;
     }
@@ -163,7 +163,7 @@ export function WeekPage(props: Record<string, string>) {
       <AccountTasks />
       {control() && <CalendarNavWeek {...calendarNavAttr()} />}
       <div className="py-4">
-        {weekdays().map((weekday) => (
+        {getWeekdays().map((weekday) => (
           <>
             <div className="js-calendar-date frame-week-date">
               {calendarDayFormat(weekday.date)}

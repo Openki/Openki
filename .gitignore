@@ -9,6 +9,9 @@ providers_secret.js
 *.sublime-workspace
 codekit-config.json
 
+# Local drafts for issues and merge requests
+.gitlab/**/DRAFT*.md
+
 dump/
 
 .temp

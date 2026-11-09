@@ -95,7 +95,6 @@ export function Create({ tenant }: Props) {
         <FormControl
           id="tenant-invitations-create-emails"
           type="textarea"
-          rows={5}
           label={t(
             "invitations.create.field.emails",
             "Send e-mail invitations to join {TENANT}. Each invitation can only be used once.",
@@ -112,6 +111,7 @@ export function Create({ tenant }: Props) {
             checkValidity("emails");
           }}
           error={errors.emails}
+          className="min-h-[5lh]"
         />
       </div>
       <Button id="invitations-create-submit" submit className="btn-add" isBusy={isBusy}>

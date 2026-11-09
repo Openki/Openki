@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { uniq } from "lodash-es";
+import { uniq } from "es-toolkit/compat";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";
 import { Events } from "/imports/api/events/events";

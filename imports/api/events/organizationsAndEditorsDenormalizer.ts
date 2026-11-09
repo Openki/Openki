@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { union } from "lodash-es";
+import { union } from "es-toolkit/compat";
 
 import { Groups } from "../groups/groups";
 import { Events, EventEntity } from "/imports/api/events/events";

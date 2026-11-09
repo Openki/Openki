@@ -81,11 +81,11 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 <FormControl
                   id={`group-custom-field-${field.name}`}
                   type="textarea"
-                  rows={3}
                   label={getLocalizedValue(field.editText) ?? ""}
                   placeholder={getLocalizedValue(field.editPlaceholder)}
                   value={value(field.name) as string}
                   onChange={handleChange(field.name)}
+                  className="min-h-[3lh]"
                 />
               ) : field.type === "option" ? (
                 <FormControl

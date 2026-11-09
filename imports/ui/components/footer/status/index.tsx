@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { checkSettings } from "/imports/api/settings/methods";
 import { useTranslation } from "react-i18next";
+
+import { checkSettings } from "/imports/api/settings/methods";
 
 export function Status() {
   const { t } = useTranslation();
-  const [errors, setErrors] = useState<unknown[] | undefined>(undefined);
+  const [errors, setErrors] = useState<Awaited<ReturnType<typeof checkSettings>>>();
 
   useEffect(() => {
     if (!errors) {
@@ -23,10 +24,12 @@ export function Status() {
       className="text-danger"
       title={`${t("footer.errorInSettings", "Error(s) in settings:")}\n ${errors
         .map((e) => {
-          if (e instanceof Error) {
+          console.error(e);
+
+          if (e instanceof Error || "errorType" in e) {
             return e.message.replace("Match error: ", "");
           } else {
-            return String(e);
+            return "Unknown error in settings: See console for details";
           }
         })
         .join("\n ")}`}

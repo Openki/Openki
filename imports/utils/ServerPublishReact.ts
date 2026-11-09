@@ -2,7 +2,7 @@ import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";
-import { isObject } from "lodash-es";
+import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
 import { publish, QueryBuilder } from "./ServerPublishUtils";

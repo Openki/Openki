@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { chain } from "lodash-es";
 import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
+import { uniq } from "es-toolkit/compat";
 
 import { GroupRole } from "/imports/api/groups/groups";
 import { OrganizationModel } from "/imports/api/organizations/organizations";
@@ -90,10 +90,7 @@ export function RoleSelect({
   const { roleShort, roleDescription } = useRoleDisplay(regionRoles);
 
   const disabledCreateRoles = useMemo(() => {
-    return chain(organizations)
-      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
-      .uniq()
-      .value();
+    return uniq(organizations.flatMap(({ disableCreateRoles }) => disableCreateRoles ?? []));
   }, [organizations]);
 
   function availableRoles() {
@@ -133,7 +130,7 @@ export function RoleSelect({
     if (!outerValue && isNewGroup) {
       onChange(availableRoles().filter((r) => isRoleEnabled(r.id)));
     }
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingRegionRoles]);
 
   if (isLoadingRegionRoles()) {

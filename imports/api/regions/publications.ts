@@ -27,14 +27,14 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
   "Regions.findFilter",
   async (filter: FindFilter = {}, limit?: number, skip?: number, sort?: FieldSort[]) => {
     let tenants;
-    const visibleTenants = await visibleTenantsAsync();
+    const currentlyVisibleTenants = await visibleTenantsAsync();
     if (filter.tenants) {
-      if (filter.tenants.some((tenant) => !visibleTenants.includes(tenant))) {
+      if (filter.tenants.some((tenant) => !currentlyVisibleTenants.includes(tenant))) {
         throw new Meteor.Error(401, "Not permitted");
       }
       tenants = filter.tenants;
     } else {
-      tenants = visibleTenants;
+      tenants = currentlyVisibleTenants;
     }
 
     return Regions.findFilter({ ...filter, tenants }, limit, skip, sort);

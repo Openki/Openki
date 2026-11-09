@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { take } from "lodash-es";
+import { take } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";

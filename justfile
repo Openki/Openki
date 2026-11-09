@@ -30,19 +30,19 @@ dev:
 
 # Fix linting and formatting errors and warn for serious problems
 fix:
-    meteor npm run lint:fix
+    meteor npm run lint:fix || just oxlint-errors
 
-# Only run the regular linting
-lint:
-    meteor npm run lint
+# Run linting and type checking
+check:
+    meteor npm run lint || just oxlint-errors && meteor npm run type-check
+
+# Only print the oxlint errors so they are easier to find and fix.
+oxlint-errors:
+    meteor npx oxlint --quiet
 
 # Extract translations into i18n files
 translations:
     meteor npm run extract-translations
-
-# Run linting and type checking
-check:
-    meteor npm run lint && meteor npm run type-check
 
 # Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
@@ -76,6 +76,10 @@ audit:
 # Reset meteor cache. Pass `--db` to also reset the local MongoDB.
 reset *ARGS:
     meteor reset {{ ARGS }}
+
+# Preview HTML emails in the browser
+preview-emails:
+    python -m http.server --directory .temp/ 8080
 
 alias i := install
 alias d := dev

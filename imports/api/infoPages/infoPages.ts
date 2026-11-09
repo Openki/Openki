@@ -30,7 +30,7 @@ Openki ist eine offene Bildungsplattform.`
 })
  */
 
-export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
+class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
   constructor() {
     super("InfoPages");
 

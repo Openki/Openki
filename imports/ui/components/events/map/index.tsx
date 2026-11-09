@@ -3,7 +3,7 @@ import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
-import { chain } from "lodash-es";
+import { uniq, groupBy, map } from "es-toolkit/compat";
 
 import { EventModel, EventVenue, EventVenueRef } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
@@ -46,13 +46,17 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
 
   events = events.filter((e) => e.venue?.loc);
 
-  const regions = chain(events)
-    .map((e) => e.region)
-    .uniq()
-    .value();
+  const regions = uniq(events.map((e) => e.region));
 
   events = events.filter((e) => !(regions.length > 1 && e.venue && isOnCustomMap(e.venue)));
 
+  const eventsWithVenues = events.filter(
+    /*
+     * TypeGuard is not passed on correctly. Hard to read. Maybe there will be
+     * a better solution in the future...
+     */
+    (e): e is Omit<typeof e, "venue"> & { venue: EventVenueRef } => isEventVenueRef(e.venue),
+  );
   const markers: {
     key: string;
     loc: {
@@ -61,17 +65,10 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
     };
     venue: Venue;
     events: EventModel[];
-  }[] = chain(events)
-    /*
-     * TypeGuard is not passed on correctly. Hard to read. Maybe there will be
-     * a better solution in the future...
-     */
-    .filter((e): e is Omit<typeof e, "venue"> & { venue: EventVenueRef } =>
-      isEventVenueRef(e.venue),
-    )
-    .groupBy((e) => e.venue._id)
-    .map((events) => {
-      const venue = events[0].venue;
+  }[] = map(
+    groupBy(eventsWithVenues, (e) => e.venue._id),
+    (eventsWithSameVenue) => {
+      const venue = eventsWithSameVenue[0].venue;
 
       return {
         key: venue._id,
@@ -80,10 +77,10 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
           lng: venue.loc.coordinates[0],
         },
         venue,
-        events,
+        events: eventsWithSameVenue,
       };
-    })
-    .value();
+    },
+  );
 
   markers.push(
     ...events

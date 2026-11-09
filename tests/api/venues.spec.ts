@@ -19,7 +19,7 @@ describe("Venue save", () => {
         const updatedVenue = { ...venue, name: venue.name + "!" };
         cy.callMethod("venue.save", venueId, updatedVenue)
           .should("be.a", "string")
-          .then((venueId) => {
+          .then(() => {
             // Finally, remove the venue to avoid influencing other tests
             cy.callMethod("venue.remove", venueId);
           });

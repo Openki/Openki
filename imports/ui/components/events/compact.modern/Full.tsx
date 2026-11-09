@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useSiteName } from "/imports/utils/getSiteName";
-import { isEmpty, omitBy, isNil } from "lodash-es";
+import { isEmpty, omitBy, isNil } from "es-toolkit/compat";
 
+import { useSiteName } from "/imports/utils/getSiteName";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 

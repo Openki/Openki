@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 import { useCurrentRouteName } from "/imports/ui/hooks/react-meteor-router";
 import { useMeteorStatus } from "/imports/ui/hooks/react-meteor-data";
@@ -37,50 +37,34 @@ export function Navbar() {
 
   const [navbarIsCollapsed, setNavbarIsCollapsed] = useState(true);
 
-  function headerLogo() {
-    let headerLogo;
+  function getHeaderLogo() {
+    // Use the region's custom logo if available. Otherwise use the general logo for the Openki instance.
+    const logoSrc = currentRegion?.custom?.headerLogo?.src || PublicSettings.headerLogo.src;
 
-    if (currentRegion?.custom?.headerLogo?.src) {
-      // the region has a custom logo
-      headerLogo = currentRegion.custom.headerLogo.src;
-    } else {
-      // general logo
-      headerLogo = PublicSettings.headerLogo.src;
+    if (
+      // 1) Base64 image
+      logoSrc.startsWith("data:image/") ||
+      // 2) Image from our S3 storage
+      logoSrc.startsWith(PublicSettings.s3.publicUrlBase)
+    ) {
+      return logoSrc;
     }
 
-    if (headerLogo.startsWith("data:image/")) {
-      // base64 image
-      return headerLogo;
-    }
+    // Fallback: Image from the Openki repository and the "public/logo/" directory
+    return `/logo/${logoSrc}`;
+  }
+  const headerAlt =
+    getLocalizedValue(currentRegion?.custom?.headerLogo?.alt) ||
+    getLocalizedValue(PublicSettings.headerLogo.alt);
 
-    if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
-      // in our s3 file storage
-      return headerLogo;
-    }
+  const siteStage = currentRegion?.custom?.siteStage || PublicSettings.siteStage;
 
-    // in the openki repository folder "public/logo/"
-    return `/logo/${headerLogo}`;
-  }
-  function headerAlt() {
-    return (
-      getLocalizedValue(currentRegion?.custom?.headerLogo?.alt) ||
-      getLocalizedValue(PublicSettings.headerLogo.alt)
-    );
-  }
-  function siteStage() {
-    if (currentRegion?.custom?.siteStage) {
-      return currentRegion.custom.siteStage;
-    }
+  const links = PublicSettings.nav.customEntries.map((entry) => ({
+    link: entry.link,
+    icon: entry.icon,
+    text: getLocalizedValue(entry.key || entry.text, { SITENAME: siteName }),
+  }));
 
-    return PublicSettings.siteStage;
-  }
-  function links() {
-    return PublicSettings.nav.customEntries.map((entry) => ({
-      link: entry.link,
-      icon: entry.icon,
-      text: getLocalizedValue(entry.key || entry.text, { SITENAME: siteName }),
-    }));
-  }
   function currentRouteIs(...routeNames: string[]) {
     return routeNames.includes(currentRouteName);
   }
@@ -92,6 +76,21 @@ export function Navbar() {
       console.error("Unexpected falsy: collapseRef.current");
     }
   }
+
+  useEventListener(
+    document.documentElement,
+    "keydown",
+    Meteor.isDevelopment
+      ? (event) => {
+          // DX improvement: Allow closing the mobile navbar with the keyboard
+          if (event.key === "Escape") {
+            close();
+          }
+        }
+      : () => {
+          /* No-op function since React doesn't allow conditional hooks */
+        },
+  );
 
   useEventListener(collapseRef, "show.bs.collapse", () => {
     setNavbarIsCollapsed(false);
@@ -127,7 +126,7 @@ export function Navbar() {
             }}
           >
             {status === "connected" ? (
-              <img src={headerLogo()} alt={headerAlt()} />
+              <img src={getHeaderLogo()} alt={headerAlt} />
             ) : status === "connecting" ? (
               <>
                 <span
@@ -148,7 +147,7 @@ export function Navbar() {
             )}
 
             <span className="site-name text-white">{siteName}</span>
-            <span className="site-stage">{siteStage()}</span>
+            <span className="site-stage">{siteStage}</span>
           </a>
           <button
             data-test="navbar-toggler"
@@ -173,7 +172,7 @@ export function Navbar() {
                       "nav-link text-white",
                       currentRouteIs("search", "showGroup") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Groups", "Find")}
                     <div className="nav-marker-caret"></div>
@@ -188,7 +187,7 @@ export function Navbar() {
                       "nav-link text-white",
                       currentRouteIs("proposeGroup", "createEvent") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}
                     <div className="nav-marker-caret"></div>
@@ -203,7 +202,7 @@ export function Navbar() {
                       "nav-link calendar-link text-white",
                       currentRouteIs("calendar") && "active",
                     )}
-                    onClick={() => close()}
+                    onClick={close}
                   >
                     <i className="fa-regular fa-calendar-days fa-fw" />{" "}
                     {t("menue.Calendar", "Calendar")}
@@ -212,9 +211,9 @@ export function Navbar() {
                   </a>
                 </li>
               )}
-              {links().map((link) => (
+              {links.map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
-                  <a href={link.link} className="nav-link text-white" onClick={() => close()}>
+                  <a href={link.link} className="nav-link text-white" onClick={close}>
                     <i className={cx(link.icon, "fa-fw")} /> {link.text}
                   </a>
                 </li>
@@ -225,14 +224,9 @@ export function Navbar() {
                 className="nav-item text-center col col-lg-auto"
                 autoFocus
                 size="small"
-                onSelect={() => close()}
+                onSelect={close}
               />
-              <LanguageSelection
-                inNavbar
-                onSelect={() => {
-                  close();
-                }}
-              />
+              <LanguageSelection inNavbar onSelect={close} />
             </ul>
             <ul className="navbar-nav text-center">
               <li className="dropdown login-link">
@@ -247,7 +241,7 @@ export function Navbar() {
       </nav>
       <div
         className={cx("navbar-custom-modal", navbarIsCollapsed && "d-none")}
-        onClick={() => close()}
+        onClick={close}
       ></div>
     </>
   );

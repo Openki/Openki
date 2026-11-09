@@ -1,4 +1,4 @@
-import { extractRoles } from "../../utils/extractRoles";
+import { extractRoles } from "../../api/regions/extractRoles";
 import { useDetails } from "../../api/regions/publications";
 import { RegionEntity } from "../../api/regions/regions";
 import { RoleEntity } from "../../utils/PublicSettings";

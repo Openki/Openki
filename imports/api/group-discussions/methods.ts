@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 
 import { Groups } from "../groups/groups";
 import { GroupDiscussionEntity, GroupDiscussions } from "./group-discussions";
-import * as GroupDiscussionUtils from "../../utils/group-discussion-utils";
+import * as GroupDiscussionUtils from "./utils";
 import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";

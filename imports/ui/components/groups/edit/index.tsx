@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, union } from "lodash-es";
+import { uniq, union } from "es-toolkit/compat";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, FindParams } from "/imports/api/groups/groups";
@@ -218,6 +218,8 @@ export function Edit({
 
   useEffect(() => {
     checkValidity("description");
+    // In this case, we want to re-run the validation when the description changes.
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
   }, [description, checkValidity]);
 
   function showRegionSelection() {
@@ -478,9 +480,9 @@ export function Edit({
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
-              onChange={(newValue, numberOfCharacters) => {
+              onChange={(newValue, numberOfVisibleCharacters) => {
                 setDescription(newValue);
-                setNumberOfCharacters(numberOfCharacters);
+                setNumberOfCharacters(numberOfVisibleCharacters);
               }}
               onFocus={() => startMeasureFocusTime()}
               onBlur={() => {

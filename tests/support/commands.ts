@@ -1,4 +1,36 @@
-// Custom Cypress Commands für Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
+// Custom Cypress Commands for Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
+
+// Add types for our custom Cypress commands
+declare global {
+  // oxlint-disable-next-line no-namespace
+  namespace Cypress {
+    interface Chainable<Subject = any, T = any> {
+      getById(
+        selector: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
+      ): Chainable<JQuery<HTMLElement>>;
+      getMeteor(): Chainable<any>;
+      allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
+      callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callMethodAsync<T = any>(method: string, ...params: any[]): Chainable<T>;
+      callMethodAndIgnoreErrors<T = any>(method: string, ...params: any[]): Chainable<T>;
+      expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
+      testSubscription(
+        publication: string,
+        ...args: unknown[]
+      ): Chainable<{ subscription: Meteor.SubscriptionHandle; Meteor: any }>;
+      logout(): Chainable<void>;
+      login(username: string, password?: string): Chainable<void>;
+      visitOpenki(
+        url?: string,
+        state?:
+          | { locale?: string | undefined; region?: string | undefined }
+          | { username: string; password?: string | undefined },
+      ): Chainable<void>;
+      mount(component: string, props?: Record<string, any>): Chainable<void>;
+    }
+  }
+}
 
 // Get DOM elements by id. this command adds the prefix "data-test".
 Cypress.Commands.add("getById", (selector, ...args) => {
@@ -54,22 +86,85 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
     });
   });
 });
-Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: any[]) => {
+
+Cypress.Commands.add("callMethodAsync", (method: string, ...params: any[]) => {
   return cy.getMeteor().then((Meteor) => {
     Cypress.log({
-      name: "expectCallMethodThrowsError",
+      name: "callMethodAsync",
       consoleProps: () => ({ name: method, params }),
     });
 
-    return new Promise((resolve, reject) => {
-      Meteor.call(method, ...params, (err: unknown) => {
-        console.log(`%c${method}`, "color: red; font-style: italic;", err);
-        if (err) {
-          resolve(err);
-          return;
-        }
-        reject(new Error(`Expected ${method} to fail`));
+    return Meteor.callAsync(method, ...params)
+      .then((result: unknown) => {
+        console.log(`%c${method}`, "color: red; font-style: italic;", result);
+        return result;
+      })
+      .catch((err: unknown) => {
+        console.error(err);
+        throw new Error("Failed callMethodAsync", { cause: err });
       });
+  });
+});
+
+Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: any[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "callMethodAndIgnoreErrors",
+      consoleProps: () => ({ name: method, params }),
+    });
+
+    Meteor.callAsync(method, ...params)
+      .then((result: unknown) => {
+        console.log(`%c${method}`, "color: red; font-style: italic;", result);
+        return result;
+      })
+      .catch((error: unknown) => {
+        console.log(
+          `Ignoring error from method: %c${method}`,
+          "color: red; font-style: italic;",
+          error,
+        );
+      });
+  });
+});
+
+Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: any[]) => {
+  return (
+    cy
+      .getMeteor()
+      .then((Meteor) => {
+        Cypress.log({
+          name: "expectCallMethodThrowsError",
+          consoleProps: () => ({ name: method, params }),
+        });
+
+        return new Promise((resolve, reject) => {
+          Meteor.call(method, ...params, (err: unknown) => {
+            console.log(`%c${method}`, "color: red; font-style: italic;", err);
+            if (err) {
+              resolve(err);
+              return;
+            }
+            reject(new Error(`Expected ${method} to fail`));
+          });
+        });
+      })
+      // TODO: Figure out why this does not properly handle expected failures
+      .should("throw")
+  );
+});
+
+Cypress.Commands.add("testSubscription", (publication: string, ...args: unknown[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "testSubscription",
+      consoleProps: () => ({ name: publication, args }),
+    });
+
+    const subscription = Meteor.subscribe(publication, ...args) as Meteor.SubscriptionHandle;
+
+    return cy.allSubscriptionsReady().then(() => {
+      return { subscription, Meteor };
     });
   });
 });
@@ -154,33 +249,6 @@ Cypress.Commands.add("mount", (component: string, props: Record<string, any> = {
   cy.visit("/component/" + component, { qs: { args: JSON.stringify(props) } });
   cy.allSubscriptionsReady();
 });
-
-// add types
-
-declare global {
-  // oxlint-disable-next-line no-namespace
-  namespace Cypress {
-    interface Chainable<Subject = any, T = any> {
-      getById(
-        selector: string,
-        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
-      ): Chainable<JQuery<HTMLElement>>;
-      getMeteor(): Chainable<any>;
-      allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
-      callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
-      expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
-      logout(): Chainable<void>;
-      login(username: string, password?: string): Chainable<void>;
-      visitOpenki(
-        url?: string,
-        state?:
-          | { locale?: string | undefined; region?: string | undefined }
-          | { username: string; password?: string | undefined },
-      ): Chainable<void>;
-      mount(component: string, props?: Record<string, any>): Chainable<void>;
-    }
-  }
-}
 
 // Mark this as an ES module
 // oxlint-disable-next-line unicorn/require-module-specifiers

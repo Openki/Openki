@@ -10,6 +10,7 @@ import * as eventContactParticipants from "./notifications/event.contact-partici
 import * as rsvp from "./notifications/rsvp";
 import * as rsvpTeam from "./notifications/rsvp.team";
 import * as comment from "./notifications/comment";
+import * as groupChatMessage from "./notifications/group-chat-message";
 import * as join from "./notifications/join";
 import * as group from "./notifications/group";
 import * as organizationGroup from "./notifications/organization.group";
@@ -50,6 +51,7 @@ export const Notification = {
   [comment.ModelName]: comment,
   [join.ModelName]: join,
   [group.ModelName]: group,
+  [groupChatMessage.ModelName]: groupChatMessage,
   [organizationGroup.ModelName]: organizationGroup,
   [privateMessage.ModelName]: privateMessage,
 };

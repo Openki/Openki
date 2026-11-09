@@ -24,7 +24,7 @@ export function plainToHtml(text: string) {
 
 export function sanitizeHtml(
   unsaneHtml: string | UnsafeString,
-  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody */,
 ): string {
   // String-truncating HTML may leave a broken tag at the end
   // The sanitizer will have to clean the mess.

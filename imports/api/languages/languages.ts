@@ -138,7 +138,7 @@ export const LanguagesRaw: Record<string, Omit<LanguageEntity, "_id">> = {
   },
 };
 
-export class LanguagesCollection extends Mongo.Collection<LanguageEntity> {
+class LanguagesCollection extends Mongo.Collection<LanguageEntity> {
   constructor() {
     super("Languages");
   }

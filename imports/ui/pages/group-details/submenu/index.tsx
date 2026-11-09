@@ -84,7 +84,7 @@ export function Submenu({ group }: { group: GroupModel }) {
         <div
           className={cx(
             "tab-pane active",
-            !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+            descriptionTruncated ? "overflow-hidden" : "max-h-none overflow-visible",
           )}
           id="description"
           role="tabpanel"
@@ -95,7 +95,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <div
               className={cx(
                 "group-description",
-                !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+                descriptionTruncated ? "overflow-hidden" : "max-h-none overflow-visible",
               )}
               ref={elementRef}
             >
@@ -111,15 +111,14 @@ export function Submenu({ group }: { group: GroupModel }) {
             {descriptionTruncated && <div className="group-description-fade-bottom" />}
           </div>
           {descriptionTruncated && (
-            <div
-              role="button"
-              className="link-primary text-center"
+            <button
+              className="link-primary text-center mx-auto d-block bg-transparent border-none"
               onClick={() => {
                 setDescriptionTruncated(false);
               }}
             >
               — {t("groupDetails.showMore", "show more")} —
-            </div>
+            </button>
           )}
         </div>
         <div
