@@ -147,17 +147,20 @@ export function KioskRummagePage() {
     ["color", "color", ".rummage-language-selection .btn"],
   ]).getCssRules();
 
-  // Extract organizations from query
-  const allOrganizations =
-    new Filtering({
-      organizations: Predicates.ids,
-    })
-      .read(query)
-      .get("organizations") || [];
+  const filter = new Filtering({
+    teamOrganization: Predicates.id,
+    otherOrganizations: Predicates.ids,
+  }).read(query);
+
+  const teamOrganization = filter.get("teamOrganization");
+  const otherOrganizations = filter.get("otherOrganizations") || [];
+  const allOrganizations = teamOrganization
+    ? [teamOrganization, ...otherOrganizations]
+    : otherOrganizations;
 
   // State for selected organization
   const [selectedOrganizationId, setSelectedOrganizationId] = useState<string | undefined>(
-    allOrganizations[0],
+    teamOrganization,
   );
 
   const [isLoadingOrganization, organization] = useDetails(
@@ -299,7 +302,7 @@ export function KioskRummagePage() {
                         }
                       }}
                     />
-                    {selectedOrganizationId !== allOrganizations[0] &&
+                    {selectedOrganizationId !== teamOrganization &&
                       !isLoadingOrganization() &&
                       !!organization && (
                         <p
