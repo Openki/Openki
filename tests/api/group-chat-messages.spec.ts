@@ -99,7 +99,11 @@ describe("GroupChatMessages", () => {
       });
     });
 
-    it.only("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
+    // This test is broken and will be fixed in a follow-up MR.
+    // The cause is that userId changes every time the DB is reset.
+    // We want to move to fixed Ids for user fixtures to make testing easier.
+    // Similar to our IDs for other fixture data.
+    it.skip("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
       // cy.login("IvanZ");
 
       cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "IvanZ" });
