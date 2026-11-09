@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { toArray } from "es-toolkit/compat";
 import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
+import { ensure } from "/imports/api/fixtures/ensureFixture";
 
 import * as UsersMethods from "/imports/api/users/methods";
 import { UserModel, UserProfile } from "/imports/api/users/users";
@@ -108,6 +109,11 @@ Accounts.onCreateUser(
   */
   (options: any, proposedUser) => {
     const user = { ...proposedUser } as UserModel;
+
+    // When testdata is enabled, we use fixed user IDs to make automated tests deterministic.
+    if (PrivateSettings.testdata) {
+      user._id = ensure.fixedId([user.username]);
+    }
     if (options.profile) {
       user.profile = options.profile as UserProfile;
     } else {
