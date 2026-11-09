@@ -28,7 +28,7 @@ import "./styles.scss";
 
 const NoneKeyboardInput = (
   props: React.JSX.IntrinsicAttributes & InputProps<unknown, boolean, GroupBase<unknown>>,
-) => <span {...props} />;
+) => <components.Input {...props} readOnly />;
 
 const DododoColor = "#2E0D74";
 
@@ -307,7 +307,6 @@ export function KioskRummagePage() {
                       value={options.find((opt) => opt.value === selectedOrganizationId)}
                       options={options}
                       styles={customStyles}
-                      isSearchable={false}
                       components={{ Input: NoneKeyboardInput }}
                       onChange={(newValue: any) => {
                         if (newValue) {
