@@ -308,6 +308,8 @@ export function KioskRummagePage() {
                       options={options}
                       styles={customStyles}
                       isSearchable={false}
+                      blurInputOnSelect={true}
+                      openMenuOnClick={true}
                       components={{ Input: NoneKeyboardInput }}
                       onChange={(newValue: any) => {
                         if (newValue) {
