@@ -42,7 +42,7 @@ describe("GroupChatMessages", () => {
 
   const methodName = "groupChatMessages.send";
 
-  describe.only(`method ${methodName}`, () => {
+  describe(`method ${methodName}`, () => {
     const groupId = "c294d35055"; // Group "Deutschkurs" in region "Testistan"
     const roleId = SystemRoles.Team.id;
 
