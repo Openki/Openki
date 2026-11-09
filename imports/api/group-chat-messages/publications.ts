@@ -35,6 +35,6 @@ export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
     return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
   },
   (groupId: string, roleId: string) => {
-    return GroupChatMessages.find({ groupId, roleId });
+    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
   },
 );
