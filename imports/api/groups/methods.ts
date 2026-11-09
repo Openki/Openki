@@ -748,7 +748,7 @@ export const removeMemberFromTeam = ServerMethod(
   },
 );
 
-export const archiveGroup = ServerMethod("group.archive", async (groupId: string) => {
+export const archive = ServerMethod("group.archive", async (groupId: string) => {
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
@@ -758,7 +758,7 @@ export const archiveGroup = ServerMethod("group.archive", async (groupId: string
   await Groups.updateAsync(group._id, { $set: { archived: true } });
 });
 
-export const unarchiveGroup = ServerMethod("group.unarchive", async (groupId: string) => {
+export const unarchive = ServerMethod("group.unarchive", async (groupId: string) => {
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
@@ -768,7 +768,7 @@ export const unarchiveGroup = ServerMethod("group.unarchive", async (groupId: st
   await Groups.updateAsync(group._id, { $set: { archived: false } });
 });
 
-export const removeGroup = ServerMethod("group.remove", async (groupId: string) => {
+export const remove = ServerMethod("group.remove", async (groupId: string) => {
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
