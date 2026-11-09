@@ -48,7 +48,7 @@ export function Description({
   return (
     <div className="group-details-description" id="group-description">
       {group?.editableBy(user) ? (
-        <Editable {...editableDescription} onStartEditing={onStartEditing} className="p-0 pe-5" />
+        <Editable {...editableDescription} onStartEditing={onStartEditing} />
       ) : (
         <div dangerouslySetInnerHTML={{ __html: group.description || "" }}></div>
       )}
