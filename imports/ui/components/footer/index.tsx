@@ -54,9 +54,6 @@ export function Footer() {
     );
   }
 
-  const versionName =
-    version && version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
-
   const fullInfo =
     version &&
     `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
@@ -65,19 +62,27 @@ export function Footer() {
       .locale(locale)
       .format("lll")}`;
 
+  const branch = !!version && (version.branch !== "main" ? ` ${version.branch} ` : "");
+
   const commit = version?.commitShort;
   const deployed = version?.activation;
 
-  const tagLink = `https://gitlab.com/Openki/Openki/-/tree/${version?.basic}?ref_type=tags`;
   const commitLink = `https://gitlab.com/Openki/Openki/-/tree/${commit}`;
+
+  // This should result in a link to a changelog tag:
+  // https://gitlab.com/Openki/Openki/-/blob/dev/CHANGELOG.md#v0140---2026-11-09
+  // We assume that the commit date is the same date as in the changelog.
+  // This might not always be the case, but it's good enough.
+  const releaseNotesLinkForTag = `https://gitlab.com/Openki/Openki/-/blob/dev/CHANGELOG.md#${version?.basic.replaceAll(".", "")}---${new Date(version?.commitDate ?? "").toISOString().slice(0, 10)}`;
 
   return (
     <footer className="footer bg-brand">
       <Links />
       <span title={fullInfo} className="footer-deployed-version">
-        <a href={tagLink} target="_blank" rel="noreferrer">
-          {versionName}
-        </a>{" "}
+        <a href={releaseNotesLinkForTag} target="_blank" rel="noreferrer">
+          {version?.basic}
+        </a>
+        {branch}
         <a href={commitLink} target="_blank" rel="noreferrer">
           {commit}
         </a>{" "}
