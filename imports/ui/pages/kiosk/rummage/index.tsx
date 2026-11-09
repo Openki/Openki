@@ -154,14 +154,14 @@ export function KioskRummagePage() {
 
   const filter = new Filtering({
     teamOrganization: Predicates.id,
-    otherOrganizations: Predicates.ids,
+    linkedOrganizations: Predicates.ids,
   }).read(query);
 
   const teamOrganization = filter.get("teamOrganization");
-  const otherOrganizations = filter.get("otherOrganizations") || [];
+  const linkedOrganizations = filter.get("linkedOrganizations") || [];
   const allOrganizations = teamOrganization
-    ? [teamOrganization, ...otherOrganizations]
-    : otherOrganizations;
+    ? [teamOrganization, ...linkedOrganizations]
+    : linkedOrganizations;
 
   // State for selected organization
   const [selectedOrganizationId, setSelectedOrganizationId] = useState<string | undefined>(
@@ -372,7 +372,7 @@ export function KioskRummagePage() {
               {PublicSettings.rummageLogoBig.src && (
                 <img src={PublicSettings.rummageLogoBig.src} alt="" style={{ maxWidth: "800px" }} />
               )}
-              <div className="mt-5">{t("rummagePage.touchMe", "You can touch me :) 👆")}</div>
+              <div className="mt-5">{t("rummagePage.touchMe", "You can touch me :)")}</div>
             </div>
           </div>
         </div>
