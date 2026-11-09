@@ -28,14 +28,7 @@ import "./styles.scss";
 
 const NoneKeyboardInput = (
   props: React.JSX.IntrinsicAttributes & InputProps<unknown, boolean, GroupBase<unknown>>,
-) => (
-  <components.Input
-    {...props}
-    onFocus={(e) => {
-      e.target.blur();
-    }}
-  />
-);
+) => <span {...props} />;
 
 const DododoColor = "#2E0D74";
 
