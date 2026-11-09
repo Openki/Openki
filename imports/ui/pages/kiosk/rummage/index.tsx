@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import ReactSelect, { GroupBase, StylesConfig } from "react-select";
+import ReactSelect, { components, GroupBase, InputProps, StylesConfig } from "react-select";
 
 import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
@@ -24,6 +24,10 @@ import { LanguageSelection } from "/imports/ui/components/language-selection";
 import { OrganizationName } from "/imports/ui/components/OrganizationName";
 
 import "./styles.scss";
+
+const NoneKeyboardInput = (
+  props: React.JSX.IntrinsicAttributes & InputProps<unknown, boolean, GroupBase<unknown>>,
+) => <components.Input {...props} inputMode="none" />;
 
 const DododoColor = "#2E0D74";
 
@@ -296,6 +300,7 @@ export function KioskRummagePage() {
                       options={options}
                       styles={customStyles}
                       isSearchable={false}
+                      components={{ Input: NoneKeyboardInput }}
                       onChange={(newValue: any) => {
                         if (newValue) {
                           setSelectedOrganizationId(newValue.value);
