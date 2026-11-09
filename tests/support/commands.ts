@@ -13,7 +13,21 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       callMethodAsync<T = any>(method: string, ...params: any[]): Chainable<T>;
+      /**
+       * Use this to call Meteor methods where you don't care about the result.
+       *
+       * @param method Name of a Meteor method.
+       * @param params Arguments to pass to the method.
+       */
       callMethodAndIgnoreErrors<T = any>(method: string, ...params: any[]): Chainable<T>;
+      /**
+       * Use this to call a Meteor method and assert that it fails.
+       *
+       * Useful to test error states and validation for invalid input.
+       *
+       * @param method Name of a Meteor method.
+       * @param params Arguments to pass to the method.
+       */
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
       testSubscription(
         publication: string,
