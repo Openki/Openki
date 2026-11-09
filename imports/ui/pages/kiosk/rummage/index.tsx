@@ -28,7 +28,14 @@ import "./styles.scss";
 
 const NoneKeyboardInput = (
   props: React.JSX.IntrinsicAttributes & InputProps<unknown, boolean, GroupBase<unknown>>,
-) => <components.Input {...props} inputMode="none" />;
+) => (
+  <components.Input
+    {...props}
+    onFocus={(e) => {
+      e.target.blur();
+    }}
+  />
+);
 
 const DododoColor = "#2E0D74";
 
@@ -308,8 +315,6 @@ export function KioskRummagePage() {
                       options={options}
                       styles={customStyles}
                       isSearchable={false}
-                      blurInputOnSelect={true}
-                      openMenuOnClick={true}
                       components={{ Input: NoneKeyboardInput }}
                       onChange={(newValue: any) => {
                         if (newValue) {
