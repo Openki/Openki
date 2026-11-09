@@ -6,6 +6,7 @@ import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
 import { useDetails } from "/imports/api/organizations/publications";
 import * as Predicates from "/imports/utils/predicates";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
@@ -270,14 +271,21 @@ export function KioskRummagePage() {
             aria-labelledby="offcanvasLabel"
           >
             <div className="offcanvas-header">
-              <h2 className="offcanvas-title" id="offcanvasLabel">
-                DO DO DO
-                <br />
-                by Openki
-              </h2>
+              {PublicSettings.rummageLogoSmall.src && (
+                <h2 className="offcanvas-title" id="offcanvasLabel">
+                  {/* a decorative logo */}
+                  <img
+                    src={PublicSettings.rummageLogoSmall.src}
+                    alt=""
+                    style={{ maxWidth: "200px" }}
+                  />
+                  <br />
+                  by Openki
+                </h2>
+              )}
               <button
                 type="button"
-                className="btn-close btn-close-white"
+                className="btn-close btn-close-white align-self-start"
                 data-bs-dismiss="offcanvas"
                 aria-label={t("_button.close")}
               />
@@ -354,15 +362,18 @@ export function KioskRummagePage() {
         >
           <div
             className={cx(
-              "position-absolute top-0 start-0 end-0 bottom-0 text-white fs-1",
+              "position-absolute top-0 start-0 end-0 bottom-0 text-white fs-1 overflow-hidden",
               slideOut && "slide-out",
             )}
             style={{ backgroundColor: DododoColor }}
             onClick={handleSlideOut}
           >
             <div className="position-absolute top-50 start-50 translate-middle fs-1 fw-bold text-center">
-              <div>DO DO DO</div>
-              <div>{t("rummagePage.touchMe", "You can touch me :) 👆")}</div>
+              {/* a decorative logo */}
+              {PublicSettings.rummageLogoBig.src && (
+                <img src={PublicSettings.rummageLogoBig.src} alt="" style={{ maxWidth: "800px" }} />
+              )}
+              <div className="mt-5">{t("rummagePage.touchMe", "You can touch me :) 👆")}</div>
             </div>
           </div>
         </div>

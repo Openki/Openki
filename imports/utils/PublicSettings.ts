@@ -148,6 +148,12 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   ogLogo: { src: String },
 
   /**
+   * NOTE: Temporarily, until openki.net and the theme are ready to define it more generally.
+   */
+  rummageLogoBig: { src: String },
+  rummageLogoSmall: { src: String },
+
+  /**
    * Can be a logo from the `/private/*` folder, from our s3 file storage (must
    * start with the `"publicUrlBase"` setting) or a base64 encoded string.
    */
@@ -560,6 +566,8 @@ const defaults = {
   headerLogoKiosk: { src: "", alt: "" },
   avatarLogo: { src: "", alt: "" },
   ogLogo: { src: "openki_logo_2018.png" },
+  rummageLogoBig: { src: "" },
+  rummageLogoSmall: { src: "" },
   theme: {
     brand: "#38829c",
   },
