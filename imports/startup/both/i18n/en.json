@@ -781,6 +781,7 @@
   "noUser_placeholder": "someone",
   "organization.claim.placeholder": "The core idea",
   "organization.description.placeholder": "Describe the audience, the interests and activities of your organization.",
+  "organization.details.abbreviation": "Abbreviation:",
   "organization.details.venues": "{NUM, plural, one{Venue:} other{Venues:} }",
   "organization.missing": "Organization does not exist",
   "organization.name.placeholder": "Name of your organization, institution, community or program",

@@ -278,7 +278,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
           </div>
           <div
             className={cx(
-              "details-header organization-details-header clearfix",
+              "details-header organization-details-header clearfix d-md-flex gap-5",
               organization.logoUrl && "has-logo",
               canEdit && "is-editable",
             )}
@@ -291,8 +291,13 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
             <div className="organization-details-name">
               {canEdit ? <Editable {...editableNameAttr} /> : organization.name}
             </div>{" "}
-            <div className="organization-details-short">
-              {canEdit ? <Editable {...editableShortAttr} /> : organization.short}
+            <div className="organization-details-short ms-3">
+              {canEdit && (
+                <Editable
+                  label={t("organization.details.abbreviation", "Abbreviation:")}
+                  {...editableShortAttr}
+                />
+              )}
             </div>
           </div>
           <div className="details-body organization-details-body">

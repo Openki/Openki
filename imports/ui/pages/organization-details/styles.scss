@@ -64,6 +64,10 @@
 .organization-details-short {
   padding-left: 0;
 
+  .editable-wrap {
+    align-items: baseline;
+  }
+
   .editable {
     margin-left: 0;
   }
