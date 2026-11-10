@@ -22,11 +22,6 @@ const messageSequenceTimeLimit = 1000 * 60 * 15; // 15 min
 export function GroupRoleChat({ group, roleId }: Props) {
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
 
-  // Sort messages in ascending order.
-  // This would be better to do in the publication instead,
-  // but the clientside minimongo sorting does not work.
-  const sortedMessages = messages.toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,9 +111,9 @@ export function GroupRoleChat({ group, roleId }: Props) {
           className="p-3 max-h-50vh overflow-y-auto overflow-anchor-none"
           ref={messagesContainerRef}
         >
-          {sortedMessages.map((message, i) => {
-            const previousMessage = sortedMessages.at(i - 1);
-            const nextMessage = sortedMessages.at(i + 1);
+          {messages.map((message, i) => {
+            const previousMessage = messages.at(i - 1);
+            const nextMessage = messages.at(i + 1);
             const isFirstInSequence =
               previousMessage?.userId !== message.userId ||
               Math.abs(previousMessage.createdAt.getTime() - message.createdAt.getTime()) >
@@ -136,7 +131,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
               />
             );
           })}
-          {(sortedMessages.length === 0 || !hasOtherParticipants) && (
+          {(messages.length === 0 || !hasOtherParticipants) && (
             <div className="fst-italic fst-bold">
               {t(
                 "group.roleChats.emptyMessage",

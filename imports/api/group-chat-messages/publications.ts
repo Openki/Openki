@@ -32,11 +32,9 @@ export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
       throw new Meteor.Error(403, `User can not access group chat for role ${roleId}`);
     }
 
-    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
+    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: 1 } });
   },
   (groupId: string, roleId: string) => {
-    // NOTE: The client-side minimongo sort does not work.
-    // Sorting has to be done by users of this publication instead.
-    return GroupChatMessages.find({ groupId, roleId });
+    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: 1 } });
   },
 );
