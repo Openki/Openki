@@ -19,7 +19,7 @@ type DeepPartial<T> = T extends object
  */
 declare function publication<A extends any[], T>(...args: A): [isLoading: () => boolean, data: T];
 /**
- * Subsribe to the record set, when the condition is true.
+ * Subscribe to the record set, when the condition is true.
  * @param condition true: date get loaded; false: none date get loaded, isLoading() will always return false
  */
 declare function publication<A extends any[], T>(

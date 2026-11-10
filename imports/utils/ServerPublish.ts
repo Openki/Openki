@@ -36,7 +36,9 @@ export function ServerPublishMany<A extends any[], T, U>(
  * make sure the `projection` includes all properties needed for MongoDB queries
  * (using `.find()` and similar) in the `queryBuilder` function.
  * @param queryBuilder Function called on the client, this is useful if the call on the client
- * differ from the server eg. `.findOne(...)`.
+ * differ from the server eg. `.findOne(...)`. Note: Keep in mind that this runs on the client side 
+ * using Minimoongo; some of MongoDB's advanced features may not work yet—for example, use `1` 
+ * instead of `"asc"` for sorting.
  * See https://guide.meteor.com/data-loading.html
  * @returns A Publication that a client can subscribe to.
  */
