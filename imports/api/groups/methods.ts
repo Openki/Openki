@@ -2,14 +2,15 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
-import { differenceWith, uniq, uniqBy } from "lodash-es";
+import { differenceWith, uniq, uniqBy } from "es-toolkit/compat";
 import { Random } from "meteor/random";
 
 import { Groups, Group, GroupEntity, GroupModel, GroupRolePattern, GroupRole } from "./groups";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
-import { GroupDiscussions } from "../group-discussions/group-discussions";
+import { GroupDiscussions } from "/imports/api/group-discussions/group-discussions";
+import { GroupChatMessages } from "/imports/api/group-chat-messages/group-chat-messages";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 import * as historyDenormalizer from "./historyDenormalizer";
@@ -776,5 +777,6 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
   }
   await Events.removeAsync({ groupId });
   await GroupDiscussions.removeAsync({ groupId });
+  await GroupChatMessages.removeAsync({ groupId });
   await Groups.removeAsync(groupId);
 });

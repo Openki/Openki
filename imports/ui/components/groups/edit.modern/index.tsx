@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq } from "lodash-es";
+import { uniq } from "es-toolkit/compat";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -251,9 +251,9 @@ export function Edit(props: Props) {
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
-              onChange={(newValue, numberOfCharacters) => {
+              onChange={(newValue, numberOfVisibleCharacters) => {
                 setDescription(newValue);
-                setNumberOfCharacters(numberOfCharacters);
+                setNumberOfCharacters(numberOfVisibleCharacters);
               }}
               onFocus={() => startMeasureFocusTime()}
               onBlur={() => {

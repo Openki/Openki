@@ -59,6 +59,10 @@ $input-placeholder-color: $gray;
 $dropdown-bg: color.adjust($blue-lighter, $lightness: 8.7%) !default;
 $hr-color: $blue-lighter;
 
+// Canvas
+$offcanvas-padding-y: 2rem;
+$offcanvas-padding-x: 2rem;
+
 // Modals
 
 $modal-sm: 400px;

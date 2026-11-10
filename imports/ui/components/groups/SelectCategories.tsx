@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, difference } from "lodash-es";
+import { uniq, difference } from "es-toolkit/compat";
 
 import { Categories } from "/imports/api/categories/categories";
 

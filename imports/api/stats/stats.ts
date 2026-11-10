@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { uniq } from "lodash-es";
+import { uniq } from "es-toolkit/compat";
 
 import { GroupEntity, GroupModel, Groups } from "../groups/groups";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
@@ -116,9 +116,9 @@ function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
     // inspired from groups.findFilter in /imports/api/groups/groups
     groups: {
       total: notArchived.length,
-      proposed: notArchived.filter((g) => g.hasState() === "proposal").length,
-      resting: notArchived.filter((g) => g.hasState() === "resting").length,
-      upcoming: notArchived.filter((g) => g.hasState() === "upcomingEvent").length,
+      proposed: notArchived.filter((g) => g.hasState("proposal")).length,
+      resting: notArchived.filter((g) => g.hasState("resting")).length,
+      upcoming: notArchived.filter((g) => g.hasState("upcomingEvent")).length,
       archived: groups.filter((g) => g.archived).length,
       enrollments: members.length,
       users: uniq(members.map((m) => m.user)).length,

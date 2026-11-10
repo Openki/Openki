@@ -20,7 +20,7 @@ export function Thumb({ group }: Props) {
     <div
       className={cx(
         "card border-2",
-        group.hasState() === "proposal" ? "border-dashed" : "border-dark-subtle",
+        group.hasState("proposal") ? "border-dashed" : "border-dark-subtle",
       )}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
@@ -33,10 +33,7 @@ export function Thumb({ group }: Props) {
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
       <div
-        className={cx(
-          "card-body rounded-bottom-1",
-          group.hasState() === "upcomingEvent" && "bg-group",
-        )}
+        className={cx("card-body rounded-bottom-1", group.hasState("upcomingEvent") && "bg-group")}
       >
         <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">{group.name}</h3>
         <i className="fs-4 fa-solid fa-arrow-right-long" />

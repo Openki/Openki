@@ -1,5 +1,5 @@
 import moment from "moment";
-import { union, difference, intersection, uniq } from "lodash-es";
+import { union, difference, intersection, uniq } from "es-toolkit/compat";
 
 import { FilteringReadError } from "./filtering";
 
@@ -269,12 +269,12 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
     state = uniq(state);
 
     state = state.map((v) => {
-      const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
+      const stateWithUppercase = states.find((s) => s.toUpperCase() === v.toUpperCase());
 
-      if (state === undefined) {
+      if (stateWithUppercase === undefined) {
         throw new FilteringReadError("", "Invalid value");
       }
-      return state;
+      return stateWithUppercase;
     });
 
     return {

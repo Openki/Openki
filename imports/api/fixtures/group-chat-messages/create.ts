@@ -1,0 +1,148 @@
+import { GroupChatMessages } from "../../group-chat-messages/group-chat-messages";
+import { Groups } from "../../groups/groups";
+import { predefinedRole } from "../../groups/lib/Role";
+import { Log } from "../../log/log";
+import { type UserModel } from "../../users/users";
+import { ensure } from "../ensureFixture";
+import { fixtureGroupChatMessages, type FixtureGroupWithChatMessages } from "./data";
+import { sum } from "/imports/utils/sum";
+
+function getMessagesWithUpdatedDates({
+  messages,
+  offsetDays,
+}: {
+  messages: FixtureGroupWithChatMessages["messages"];
+  offsetDays: number;
+}) {
+  const sorted = messages
+    // Revive timestamps into dates.
+    .map((m) => ({
+      ...m,
+      createdAt: new Date(m.createdAt),
+      // Assume message was unchanged unless an explicit updatedAt was provided.
+      updatedAt: new Date(m.updatedAt ?? m.createdAt),
+    }))
+    // Ensure messages are sorted by creation time
+    .toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+
+  /**
+   * By comparing with the last message, we can preserve the relative times between messages
+   */
+  const lastMessageCreatedAt = sorted.at(-1)?.createdAt.getTime();
+  if (!lastMessageCreatedAt) {
+    throw new Error("Expected to find at least one message");
+  }
+  const now = Date.now();
+
+  return sorted.map((m) => {
+    const delta = lastMessageCreatedAt - m.createdAt.getTime();
+    // Update the date so the messages appear to be creted recently,
+    // but still preserving the delta relative to the last message.
+    // Calculate offsetDays as hours rather than calendar days to get correct offsets.
+    m.createdAt = new Date(now - offsetDays * 24 * 60 * 60 * 1000 - delta);
+    // Setting correct updatedAt would be easier by generating testdata instead.
+    m.updatedAt = m.createdAt;
+    return m;
+  });
+}
+
+function getRoles(roleIds: string[]) {
+  return roleIds.map((id) => predefinedRole(id));
+}
+
+const usernamesToUserIds = new Map<UserModel["username"], UserModel["_id"]>();
+
+/**
+ * Ensure that a user exists and return their userId.
+ *
+ * Caches results since many messages will be sent by the same users.
+ */
+async function getUserId(username: string) {
+  // When we use Node.js 26, the implementation could be simplified by using `Map.getOrInsertComputed()`
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/getOrInsertComputed
+  const existingId = usernamesToUserIds.get(username);
+  if (existingId) {
+    return existingId;
+  }
+
+  const userId = (await ensure.user(username))._id;
+  usernamesToUserIds.set(username, userId);
+  return userId;
+}
+
+export async function create() {
+  await Promise.all(
+    fixtureGroupChatMessages.map(async (fixture) => {
+      const group = await Groups.findOneAsync({ name: fixture.groupName });
+      if (!group) {
+        throw new Error(
+          `Expected group with name "${fixture.groupName}" to exist. It may have been renamed or deleted.
+
+Please re-create the testdata for groups or reset the DB.`,
+        );
+      }
+
+      // NOTE: Here, we might want to ensure the group has all roles defined in `fixture.requiredMembers[number].roles[number]`.
+      // Check if they are system roles and add them like that in that case. Otherwise, add them as custom roles to the group.
+      // This will become relevant when we add chats for custom roles and not just the `team`.
+
+      await Promise.all(
+        fixture.requiredMembers.map(async ({ user: username, roles }) => {
+          // First make sure the user with a specific username exists
+          const userId = await getUserId(username);
+          const member = group.members.find((m) => m.user === userId);
+
+          if (member) {
+            // If the user is a group member, add any missing roles
+            const missingRoles = roles.filter(
+              (roleId) => !member.roles.some(({ id }) => id === roleId),
+            );
+
+            if (missingRoles.length) {
+              await Groups.updateAsync(
+                { _id: group._id, "members.user": userId },
+                {
+                  $addToSet: { "members.$.roles": getRoles(missingRoles) },
+                },
+              );
+            } else {
+              // Else if the user is not yet a group member, add them and all their expected roles.
+              await Groups.updateAsync(
+                { _id: group._id },
+                {
+                  $addToSet: {
+                    members: {
+                      user: userId,
+                      roles: getRoles(roles),
+                    },
+                  },
+                },
+              );
+            }
+          }
+        }),
+      );
+
+      await Promise.all(
+        getMessagesWithUpdatedDates({ messages: fixture.messages, offsetDays: 5 }).map(
+          async ({ content, createdAt, updatedAt, user, roleId }) => {
+            const userId = await getUserId(user);
+
+            await GroupChatMessages.insertAsync({
+              content,
+              groupId: group._id,
+              roleId,
+              userId,
+              createdAt,
+              updatedAt,
+            });
+          },
+        ),
+      );
+    }),
+  );
+
+  Log.record("testdata", ["GroupChatMessages"], {
+    message: `Inserted ${sum(fixtureGroupChatMessages.map((fixture) => fixture.messages.length))} group chat message fixtures.`,
+  });
+}

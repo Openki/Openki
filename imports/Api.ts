@@ -19,7 +19,7 @@ type ExtractQuery<P> = P extends StateWrapper<infer _G, infer Q> ? Q : never;
 
 type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
 
-export interface ApiCollection<T, U, P extends Record<string, Predicate<any>>, F = ToFilter<P>> {
+interface ApiCollection<T, U, P extends Record<string, Predicate<any>>, F = ToFilter<P>> {
   findFilter(
     filter?: Partial<F>,
     limit?: number,

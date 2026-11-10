@@ -348,7 +348,6 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           <FormControl
             id="editform-address"
             type="textarea"
-            rows={3}
             label={t("venue.details.route")}
             optional
             prepend="fa-solid fa-signs-post"
@@ -358,6 +357,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             )}
             value={changes.route}
             onChange={(value) => setChanges((prevState) => ({ ...prevState, route: value }))}
+            className="min-h-[3lh]"
           />
         </div>
 

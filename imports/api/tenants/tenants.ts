@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -43,7 +43,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
+class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
   constructor() {
     super("Tenants", {
       transform(tenant) {

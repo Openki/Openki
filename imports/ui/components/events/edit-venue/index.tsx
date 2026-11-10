@@ -1,6 +1,6 @@
 import React, { FocusEventHandler, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "es-toolkit/compat";
 
 import { EventEntity } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";

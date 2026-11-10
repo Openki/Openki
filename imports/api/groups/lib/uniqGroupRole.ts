@@ -1,4 +1,4 @@
-import { groupBy } from "lodash-es";
+import { groupBy } from "es-toolkit/compat";
 
 import { type GroupRole, type GroupCustomRole } from "/imports/api/groups/groups";
 import { RoleType } from "/imports/api/groups/lib/Role";

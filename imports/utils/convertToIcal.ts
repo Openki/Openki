@@ -1,8 +1,8 @@
 import { Router } from "meteor/iron:router";
-import { isEmpty, omitBy } from "lodash-es";
-import { i18n } from "/imports/startup/both/i18next";
+import { isEmpty, omitBy } from "es-toolkit/compat";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
 
+import { i18n } from "/imports/startup/both/i18next";
 import { EventModel } from "/imports/api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { isOnCustomMap } from "./isOnCustomMap";

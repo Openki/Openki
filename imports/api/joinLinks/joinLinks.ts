@@ -24,7 +24,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class JoinLinksCollection extends Mongo.Collection<JoinLinkEntity> {
+class JoinLinksCollection extends Mongo.Collection<JoinLinkEntity> {
   constructor() {
     super("JoinLinks");
 

@@ -22,7 +22,7 @@ export interface GroupDiscussionEntity {
   parentId?: string;
 }
 
-export class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussionEntity> {
+class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussionEntity> {
   constructor() {
     super("GroupDiscussions");
 

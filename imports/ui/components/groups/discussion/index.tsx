@@ -1,14 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 
-import * as GroupDiscussions from "/imports/api/group-discussions/publications";
+import { useDetails } from "/imports/api/groups/publications";
+import { type GroupRole, type GroupModel } from "/imports/api/groups/groups";
+import { SystemRoles } from "/imports/api/groups/lib/Role";
 
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useEventListener } from "/imports/ui/hooks/useEventListener";
-
-import { LoadingRow } from "/imports/ui/pages/loading";
-import { Post, type Props as PostProps } from "./post";
+import { GeneralGroupDiscussion } from "/imports/ui/components/groups/discussion/general-group-discussion";
+import { useUser } from "/imports/ui/hooks/react-meteor-data";
+import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { GroupRoleChat } from "./group-role-chat";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -18,117 +20,138 @@ export interface Props {
   eventId?: string | undefined;
 }
 
+function useAvailableRoleChats(group: GroupModel | undefined): GroupRole[] {
+  const user = useUser();
+
+  if (
+    !group ||
+    // Only available for signed in users
+    !user
+  ) {
+    return [];
+  }
+
+  const rolesWithChatEnabled: GroupRole[] = [SystemRoles.Team];
+
+  const availableRoleChats = group.roles.filter((groupRole) =>
+    rolesWithChatEnabled.some(
+      (role) =>
+        // The chat needs to be enabledfor the specific role
+        groupRole.id === role.id &&
+        // The user needs the specific role, unless they have the team role and should have access to all role chats.
+        (group.userHasRole(user._id, role) || group.userHasRole(user._id, SystemRoles.Team)),
+    ),
+  );
+  return availableRoleChats;
+}
+
 export function Discussion({ select, groupId, eventId }: Props) {
+  const [isLoading, group] = useDetails(groupId);
   const { t } = useTranslation();
-  const userId = useUserId();
-  // If we want to jump to a comment we don't fold the comments
-  const [limit, setLimit] = useState(select ? 0 : 3);
-  const [edit, setEdit] = useState(false);
-  const [notifyAll, setNotifyAll] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const availableRoleChats = useAvailableRoleChats(group);
 
-  const [isLoading, posts] = GroupDiscussions.useForGroup(groupId);
-
-  function allDiscussions() {
-    return posts
-      .filter((p) => !p.parentId)
-      .toSorted((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
+  if (isLoading() || !group) {
+    return null;
   }
 
-  function discussions() {
-    let filteredPosts = allDiscussions();
-
-    if (limit) {
-      filteredPosts = filteredPosts.slice(0, limit);
-    }
-
-    return filteredPosts;
-  }
-
-  function responses(discussionId: string) {
-    return posts
-      .filter((p) => p.parentId === discussionId)
-      .toSorted((a, b) => a.time_created.valueOf() - b.time_created.valueOf());
-  }
-  function newPostAttr() {
-    return {
-      post: {
-        new: true,
-        groupId,
-        eventId,
-        userId,
-        title: "",
-        text: "",
-        notifyAll,
-      } as PostProps["post"],
-      edit,
-      onCancel: () => {
-        setEdit(false);
-        setNotifyAll(false);
-      },
-    };
-  }
-  function limited() {
-    if (limit) {
-      return allDiscussions().length > limit;
-    }
-    return false;
-  }
-
-  useEventListener(elementRef, "notifyAll", () => {
-    setEdit(true);
-    setNotifyAll(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  });
-
-  useEventListener(elementRef, "writeComment", () => {
-    setEdit(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  });
-
-  useEffect(() => {
-    if (!select) {
-      return;
-    }
-    // Jump to the selected comment.
-    // This method should work for screenreaders too.
-    window.location.hash = `#comment${select}`;
-    routerAutoscroll.scheduleScroll();
-  });
-
-  // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div className="page-component discussion mt-4" id="discussion" ref={elementRef}>
+    <div className="page-component discussion mt-4 mb-5">
       <div className="page-component-header">
         <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
-      {isLoading() ? (
-        <LoadingRow />
+      {availableRoleChats.length ? (
+        <DiscussionWithGroupChatTabs
+          select={select}
+          group={group}
+          eventId={eventId}
+          availableRoleChats={availableRoleChats}
+        />
       ) : (
-        <>
-          <Post {...newPostAttr()} />
-          {discussions().map((post) => (
-            <div key={post._id} className="discussion-conversation">
-              <Post post={post} responses={responses(post._id)} />
-            </div>
-          ))}
-          {limited() && (
-            <button
-              className="btn btn-add page-component-btn"
-              type="button"
-              onClick={() => setLimit(0)}
-            >
-              <i className="fa-solid fa-chevron-down fa-fw" />
-              {t("group.discussions.showAllComment", "Show all {NUM} comments", {
-                NUM: allDiscussions().length,
-              })}
-            </button>
-          )}
-        </>
+        <GeneralGroupDiscussion select={select} groupId={groupId} eventId={eventId} />
       )}
     </div>
+  );
+}
+
+/**
+ * This component only exists so we only load data for the role chats for users with access.
+ */
+function DiscussionWithGroupChatTabs({
+  select,
+  group,
+  eventId,
+  availableRoleChats,
+}: Omit<Props, "groupId"> & { group: GroupModel; availableRoleChats: GroupRole[] }) {
+  const [isLoading, regionRoles] = useRegionRoles(group.region);
+  const { roleShort } = useRoleDisplay(regionRoles);
+  const { t } = useTranslation();
+
+  if (isLoading()) {
+    return null;
+  }
+
+  const tabs: { id: string; title: string }[] = [
+    // The general group discussions
+    { id: "discussions", title: t("group.discussion.tabTitle", "Public") },
+    // Role chat tabs
+    ...availableRoleChats.map((role) => ({
+      id: role.id,
+      title: t("group.roleChats.tabTitle", "{ROLE} chat", { ROLE: roleShort(role) }),
+    })),
+  ] as const;
+
+  return (
+    <>
+      <nav className="mt-2 group-role-chat-tabs">
+        <div className="nav nav-tabs" role="tablist">
+          {tabs.map(({ id, title }, i) => {
+            const tabId = `tab-${id}`;
+            const tabContentId = `tab-${id}-content`;
+            return (
+              <button
+                key={id}
+                className={cx("nav-link border-bottom-0", i === 0 && "active")}
+                id={tabId}
+                data-bs-toggle="tab"
+                data-bs-target={`#${tabContentId}`}
+                role="tab"
+                aria-controls={tabContentId}
+                aria-selected={i === 0}
+              >
+                {title}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+      <div className="tab-content border-0">
+        {tabs.map(({ id }, i) => {
+          const tabId = `tab-${id}`;
+          const tabContentId = `tab-${id}-content`;
+          const isChatTab = id !== "discussions";
+          return (
+            <div
+              key={id}
+              className={cx(
+                "tab-pane max-h-none",
+                i === 0 && "show active",
+                isChatTab && "group-chat-tab",
+              )}
+              id={tabContentId}
+              role="tabpanel"
+              aria-labelledby={tabId}
+              tabIndex={0}
+            >
+              {isChatTab ? (
+                <GroupRoleChat roleId={id} group={group} />
+              ) : (
+                <GeneralGroupDiscussion select={select} groupId={group._id} eventId={eventId} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }

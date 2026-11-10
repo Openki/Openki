@@ -1,3 +1,14 @@
+# v0.14.0 - 2026-11-09
+
+## Features
+
+- **Group role chats**: Added an internal chat to each group where the coordination team members can chat with group members with specific roles.
+- **New Rummage view layout** — Add design for DO DO DO and make other organizations more visible.
+
+## Fixes
+
+- **Improve memory usage and startup time**: Reduced memory usage and improved server startup time for production environments.
+
 # v0.13.3 - 2026-10-29
 
 ## Fixes

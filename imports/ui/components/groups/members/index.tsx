@@ -11,6 +11,10 @@ import { Button, ButtonIcon } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
+function handleContactAllMembersClick() {
+  document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
+}
+
 export function Members({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -59,33 +63,29 @@ export function Members({ group }: { group: GroupModel }) {
     return (group?.members.length || 0) > membersDisplayLimit;
   }
 
-  function handleContactMembersClick() {
-    document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
-  }
-
   function handleShowMoreMembersClick() {
     setMembersDisplayLimit(membersDisplayLimit + increaseBy);
   }
 
   return (
     <>
-      <div className="page-component-header">
+      <div className="page-component-header d-flex align-items-center gap-4 justify-content-between">
         <h4>
           {t(
             "group.details.members.title",
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
             { NUM: howManyEnrolled() },
-          )}{" "}
-          {canNotifyAll() && (
-            <ButtonIcon
-              id="group-members-notify-all"
-              className="btn-lg btn-primary"
-              onClick={handleContactMembersClick}
-              label={t("group.details.members.contact-members", "Contact all members")}
-              icon="fa-solid fa-paper-plane"
-            />
           )}
         </h4>
+        {canNotifyAll() && (
+          <ButtonIcon
+            id="group-members-notify-all"
+            className="btn-lg btn-primary"
+            onClick={handleContactAllMembersClick}
+            label={t("group.details.members.contact-members", "Contact all members")}
+            icon="fa-solid fa-paper-plane"
+          />
+        )}
       </div>
       {!!group?.members && (
         <div className="group-members">

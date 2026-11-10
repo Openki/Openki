@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { intersection, assignIn, escapeRegExp } from "lodash-es";
+import { intersection, assignIn, escapeRegExp } from "es-toolkit/compat";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -17,7 +17,7 @@ import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { NotEmptyString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-import { isSameRole } from "/imports/api/groups/lib/isRole";
+import { isSameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { RoleType } from "/imports/api/groups/lib/Role";
 
 export const GroupPredefinedRolePattern = {
@@ -132,6 +132,12 @@ export interface GroupEntity {
 
 export type GroupModel = Group & GroupEntity;
 
+const groupStates = {
+  upcomingEvent: "upcomingEvent",
+  resting: "resting",
+  proposal: "proposal",
+} as const;
+
 export class Group {
   members: GroupEntity["members"] = [];
 
@@ -143,7 +149,7 @@ export class Group {
 
   lastEvent: GroupLastEventRef | null = null;
 
-  hasState(this: GroupModel) {
+  getState(this: GroupModel): keyof typeof groupStates {
     if (this.nextEvent) {
       return "upcomingEvent";
     } else if (this.lastEvent) {
@@ -153,6 +159,10 @@ export class Group {
     }
   }
 
+  hasState(this: GroupModel, state: keyof typeof groupStates) {
+    return this.getState() === state;
+  }
+
   /**
    * Check whether a user can edit the group.
    */
@@ -160,18 +170,41 @@ export class Group {
     if (!user) {
       return false;
     }
-    return (
-      user.hasPrivilege("admin") /* Admins can edit all groups */ ||
-      intersection(user.badges, this.editors).length > 0
-    );
+
+    // Admins can edit all groups
+    return user.hasPrivilege("admin") || this.hasTeamMember(user);
   }
 
   /**
-   * Get list of members with specified role
-   * @param role like 'team'
+   * Check if a given user is either part of:
+   * 1) The coordination-team for the group.
+   * 2) Any teamOrganizations for the group.
+   *
+   * What makes this method unique is that it also checks teamOrganizations.
+   */
+  hasTeamMember(this: GroupModel, user: UserModel | null | undefined) {
+    if (!user) {
+      return false;
+    }
+    return intersection(user.badges, this.editors).length > 0;
+  }
+
+  /**
+   * Get list of members with a specific role.
    */
   membersWithRole(this: GroupModel, role: GroupRoleRef) {
     return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role)));
+  }
+
+  /**
+   * Get a list of members who can access the group chat for a specific `role`.
+   *
+   * Participants include:
+   * 1) All group members with the specific `role`
+   * 2) Group members with the team role, since they should be able to read and write in all chats.
+   */
+  getGroupChatParticipants(this: GroupModel, role: GroupRoleRef): GroupMember[] {
+    return this.members.filter((m) => m.roles.some((r) => isSameRole(r, role) || isTeam(r)));
   }
 
   userHasRole(this: GroupModel, userId: string | undefined | null, role: GroupRoleRef) {
@@ -224,7 +257,7 @@ export const FindParams = {
 
 const searchTermDelimiter = /\s+/;
 
-export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
+class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
   constructor() {
     super("Groups", {
       transform(group) {

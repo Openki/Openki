@@ -1,4 +1,4 @@
-import { random } from "lodash-es";
+import { random } from "es-toolkit/compat";
 import { Users } from "/imports/api/users/users";
 
 export async function update() {

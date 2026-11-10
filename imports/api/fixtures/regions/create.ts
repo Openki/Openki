@@ -1,11 +1,11 @@
 import { Log } from "../../log/log";
 import { RegionEntity, Regions } from "../../regions/regions";
 import { ensure } from "../ensureFixture";
-import { Prng } from "../Prng";
+import { createSeededRNG } from "../createSeededRNG";
 import { regions } from "./data";
 
 export async function create() {
-  const prng = Prng("createRegions");
+  const prng = createSeededRNG("createRegions");
   for (const template of regions) {
     const region = {
       ...template,
