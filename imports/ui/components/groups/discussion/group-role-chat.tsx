@@ -113,7 +113,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
       {!isLoading() && (
         <div
-          className="p-2 max-h-50vh overflow-y-auto overflow-anchor-none"
+          className="p-3 max-h-50vh overflow-y-auto overflow-anchor-none"
           ref={messagesContainerRef}
         >
           {sortedMessages.map((message, i) => {
