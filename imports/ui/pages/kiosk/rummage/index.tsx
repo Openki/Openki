@@ -111,9 +111,9 @@ function Rummage({
         animated && "animated",
       )}
     >
-      <CompactPropose organization={organization} draggable />
+      <CompactPropose organization={organization} draggable={!sorted} />
       {groups.map((group) => (
-        <GroupCompact key={group._id} group={group} draggable />
+        <GroupCompact key={group._id} group={group} draggable={!sorted} />
       ))}
     </div>
   );
