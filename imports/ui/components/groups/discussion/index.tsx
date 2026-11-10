@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useDetails } from "/imports/api/groups/publications";
@@ -87,7 +87,6 @@ function DiscussionWithGroupChatTabs({
   const [isLoading, regionRoles] = useRegionRoles(group.region);
   const { roleShort } = useRoleDisplay(regionRoles);
   const { t } = useTranslation();
-  const [hasScrolled, setHasScrolled] = useState(false);
 
   if (isLoading()) {
     return null;
@@ -110,7 +109,6 @@ function DiscussionWithGroupChatTabs({
           {tabs.map(({ id, title }, i) => {
             const tabId = `tab-${id}`;
             const tabContentId = `tab-${id}-content`;
-            const isChatTab = id !== "discussions";
             return (
               <button
                 key={id}
@@ -121,29 +119,6 @@ function DiscussionWithGroupChatTabs({
                 role="tab"
                 aria-controls={tabContentId}
                 aria-selected={i === 0}
-                onClick={
-                  // NOTE: This is a quick and dirty solution and should ideally be solved in the
-                  // GroupRoleChat component instead. That wasn't straightforward though.
-                  isChatTab && !hasScrolled
-                    ? () => {
-                        // Scroll to bottom to show the most recent group chat message.
-                        // This only happens the first time the tab is opened,
-                        // so the user's scroll position is preserved if they close the chat tab
-                        // and then come back to it later.
-                        const container = document.querySelector(".group-chat-tab .chat-messages");
-                        if (!container) {
-                          throw new Error("Failed to find group chat messages container");
-                        }
-
-                        // Only proceed if the messages have been loaded and rendered
-                        if (container.children.length) {
-                          // Scroll to the bottom only when first the messages
-                          container.scrollTop = container.scrollHeight;
-                          setHasScrolled(true);
-                        }
-                      }
-                    : undefined
-                }
               >
                 {title}
               </button>
