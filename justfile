@@ -39,6 +39,10 @@ compose *ARGS:
 docker-dev:
     docker compose -f {{ COMPOSE_FILE }} --env-file .env.local up --build
 
+# Delete the containerized local development environment
+delete-docker-dev:
+    podman compose down --rmi local --volumes
+
 # Enter into the app container to run commands
 [no-exit-message]
 run-app:
