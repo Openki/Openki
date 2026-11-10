@@ -1,7 +1,7 @@
 # Garage config for LOCAL DEVELOPMENT ONLY (used by docker-compose.local.yml).
 # Single-node cluster, no replication. The secrets below are dev-only dummies
 # committed to the repo on purpose, same as the fake S3 creds in
-# settings/docker-dev.json - do NOT reuse them anywhere real.
+# settings/docker-local.json - do NOT reuse them anywhere real.
 
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
