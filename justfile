@@ -15,7 +15,7 @@
 
 set default-list
 
-export COMPOSE_FILE := 'docker-compose.dev.yml'
+export COMPOSE_FILE := 'docker-compose.local.yml'
 export METEOR_NO_RELEASE_CHECK := 'true'
 
 # Combined installation of both npm and Meteor Atmosphere packages.
@@ -33,22 +33,22 @@ dev:
 
 # Main docker compose wrapper with common config
 compose *ARGS:
-    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev {{ ARGS }}
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.local {{ ARGS }}
 
 # Start the containerized local development environment
 docker-dev:
-    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev up --build
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.local up --build
 
 # Enter into the app container to run commands
 [no-exit-message]
 run-app:
-    docker compose -f {{ COMPOSE_FILE }} --env-file .env.dev run app bash
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.local run app bash
 
 # Fully rebuild the docker containers
 docker-dev-rebuild:
     docker compose \
       -f {{ COMPOSE_FILE }} \
-      --env-file .env.dev \
+      --env-file .env.local \
       up \
       --force-recreate \
       --always-recreate-deps \
