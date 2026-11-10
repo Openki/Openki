@@ -35,6 +35,8 @@ export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
     return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
   },
   (groupId: string, roleId: string) => {
-    return GroupChatMessages.find({ groupId, roleId }, { sort: { createdAt: "asc" } });
+    // NOTE: The client-side minimongo sort does not work.
+    // Sorting has to be done by users of this publication instead.
+    return GroupChatMessages.find({ groupId, roleId });
   },
 );
