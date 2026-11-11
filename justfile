@@ -47,7 +47,7 @@ Delete the containerized local development environment. Useful to remove old con
 Pass `--volumes` to also delete all persisted data. This clears the local S3 storage.
 """)]
 delete-docker-dev *ARGS:
-    docker compose down --rmi local {{ ARGS }}
+    docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} down --rmi local {{ ARGS }}
 
 # Fix linting and formatting errors and warn for serious problems.
 fix:
