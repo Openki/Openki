@@ -1,8 +1,13 @@
 FROM node:24-trixie-slim
 
-ENV DEBIAN_FRONTEND=noninteractive
+# Should match the version defined in `.meteor/release`
+ARG METEOR_VERSION=3.5.4
 
-# NOTE: Try if the install can be done via npx instead
+# This removes the need for sudo access when running meteor commands in the container
+ENV METEOR_NO_RELEASE_CHECK=true
+# Disable Meteor telemetry
+ENV DO_NOT_TRACK=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
   # Install system dependencies
@@ -12,7 +17,6 @@ RUN apt-get update \
   # Reduce container size
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/cache/*
 
-# Create app directory and set permissions
 WORKDIR /app
 
 # TODO: Ideally remove this if possible since it's a huge security risk

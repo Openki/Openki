@@ -30,7 +30,7 @@ services:
     image: dxflrs/garage:v2.4.1
     restart: unless-stopped
     volumes:
-      - ./docker/garage.toml:/etc/garage.toml:Z
+      - ./docker/garage.toml:/etc/garage.toml:z
       - garage-meta:/var/lib/garage/meta
       - garage-data:/var/lib/garage/data
     ports:
@@ -54,7 +54,7 @@ services:
       - garages3
     network_mode: "service:garages3"
     volumes:
-      - ./docker/garage.toml:/etc/garage.toml:Z
+      - ./docker/garage.toml:/etc/garage.toml:z
       - garage-meta:/var/lib/garage/meta
     restart: "no"
 
@@ -74,18 +74,16 @@ services:
       - "${APP_INSPECT_PORT:-9229}:9229" # node --inspect debugger
     environment:
       ROOT_URL: ${ROOT_URL:-http://localhost:3000}
-      PORT: 3000
+      PORT: "${APP_PORT:-3000}"
+      INSPECT_PORT: "${APP_INSPECT_PORT:-9229}"
       MONGO_URL: mongodb://mongo:27017/openki
-      METEOR_VERSION: 3.5.2
-      METEOR_NO_RELEASE_CHECK: true # This removes the need for sudo access when running meteor
-      DO_NOT_TRACK: 1 # Disable Meteor telemetry
     command: /start.local.sh
     volumes:
-      - type: bind
-        source: .
-        target: /app
-      # TODO: the `app-*` volumes should potentially be removed so we can install
-      # node_modules and run the meteor build fully inside of the container
+      - ./:/app:z
+      # NOTE: It would be good to use separate volumes for dependencies and the meteor cache to isolate them from the host system.
+      # However, this conflicts with the bind mount for the Openki project root directory.
+      # So for now, we have to let the container read and write to the host system.
+      # This is bad from a security standpoint.
       # - app-node-modules:/app/node_modules:Z
       # - app-meteor:/app/.meteor:Z
     networks:
@@ -95,8 +93,8 @@ volumes:
   mongo-data:
   garage-meta:
   garage-data:
-  app-node-modules:
-  app-meteor:
+  # app-node-modules:
+  # app-meteor:
 
 networks:
   app-network:

@@ -37,7 +37,7 @@ compose *ARGS:
 
 # Start the containerized local development environment
 docker-dev:
-    docker compose -f {{ COMPOSE_FILE }} --env-file .env.local up --build
+    docker compose -f {{ COMPOSE_FILE }} --env-file .env.local up
 
 # Delete the containerized local development environment
 delete-docker-dev:
