@@ -1,8 +1,9 @@
-# Unreleased
+# v0.14.2 - 2026-11-11
 
 ## Fixes
 
 - **Group chat and direct messages**: Improved text wrapping, preserving the layout even for long words.
+- **Improved rummage page**: Keep the panel always open and improve the logo size.
 
 # v0.14.1 - 2026-11-11
 
