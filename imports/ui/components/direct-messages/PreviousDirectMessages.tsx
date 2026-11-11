@@ -57,7 +57,9 @@ export function PreviousDirectMessages({
                     wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
                   )}
                 >
-                  <div className="whitespace-pre-line text-dark">{body.message}</div>
+                  <div className="whitespace-pre-line word-break-break-all overflow-wrap-break-word text-dark">
+                    {body.message}
+                  </div>
 
                   <time
                     dateTime={ts.toISOString()}

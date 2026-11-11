@@ -21,27 +21,18 @@
 }
 
 .rummage-language-selection {
-  display: inline-block;
-  line-height: $line-height-base;
-  scale: 1.5;
-  margin-top: 20px;
-}
-
-.rummage-about-btn {
-  // Do Do Do Color
-  color: #2e0d74;
-  border-color: #2e0d74;
+  scale: 1.25;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding-right: 0.5rem;
 }
 
 .rummage-language-selection .btn {
-  // Do Do Do Color
-  color: #2e0d74;
+  color: white;
 }
 
 .rummage-language-selection > li {
   list-style: none;
-  margin-right: 45px;
-  margin-top: -2px;
 }
 
 .rummage-language-selection > li > {

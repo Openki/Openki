@@ -13,7 +13,7 @@ import "bootstrap/js/dist/tab";
 // import "bootstrap/js/dist/dropdown";
 // import "bootstrap/js/dist/modal";
 // import "bootstrap/js/dist/tooltip";
-export { Collapse, Dropdown, Modal, Tooltip, Offcanvas } from "bootstrap";
+export { Collapse, Dropdown, Modal, Tooltip } from "bootstrap";
 
 // Use the ScrollBarHelper class to hide the scrollbar when a panel is opened.
 // This prevents the page from jumping when the scrollbar disappears.
