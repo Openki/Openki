@@ -113,7 +113,7 @@ Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: an
       consoleProps: () => ({ name: method, params }),
     });
 
-    Meteor.callAsync(method, ...params)
+    return Meteor.callAsync(method, ...params)
       .then((result: unknown) => {
         console.log(`%c${method}`, "color: red; font-style: italic;", result);
         return result;
@@ -144,6 +144,17 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
         }
         reject(new Error(`Expected ${method} to fail`));
       });
+      // TODO: Determine which implementation is better.
+      // return new Promise((resolve, reject) => {
+      //   console.log(`%c${method}`, "color: red; font-style: italic;");
+      //   Meteor.callAsync(method, ...params)
+      //     .then(() => {
+      //       reject(new Error(`Expected ${method} to fail`));
+      //     })
+      //     .catch((error: unknown) => {
+      //       console.log(`Ignoring expected error when calling ${method}:`);
+      //       resolve(error);
+      //     });
     });
   });
 });
