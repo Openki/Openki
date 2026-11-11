@@ -68,18 +68,13 @@ export function Footer() {
   const deployed = version?.activation;
 
   const commitLink = `https://gitlab.com/Openki/Openki/-/tree/${commit}`;
-
-  // This should result in a link to a changelog tag:
-  // https://gitlab.com/Openki/Openki/-/blob/dev/CHANGELOG.md#v0140---2026-11-09
-  // We assume that the commit date is the same date as in the changelog.
-  // This might not always be the case, but it's good enough.
-  const releaseNotesLinkForTag = `https://gitlab.com/Openki/Openki/-/blob/dev/CHANGELOG.md#${version?.basic.replaceAll(".", "")}---${new Date(version?.commitDate ?? "").toISOString().slice(0, 10)}`;
+  const tagLink = `https://gitlab.com/Openki/Openki/-/releases/${version?.basic}`;
 
   return (
     <footer className="footer bg-brand">
       <Links />
       <span title={fullInfo} className="footer-deployed-version">
-        <a href={releaseNotesLinkForTag} target="_blank" rel="noreferrer">
+        <a href={tagLink} target="_blank" rel="noreferrer">
           {version?.basic}
         </a>
         {branch}
