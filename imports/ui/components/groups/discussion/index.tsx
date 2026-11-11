@@ -11,6 +11,7 @@ import { useRegionRoles } from "/imports/ui/hooks/useRegionRoles";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { GroupRoleChat } from "./group-role-chat";
 import { cx } from "/imports/utils/cx";
+import { isSameRole } from "/imports/api/groups/lib/isRole";
 
 import "./styles.scss";
 
@@ -37,7 +38,7 @@ function useAvailableRoleChats(group: GroupModel | undefined): GroupRole[] {
     rolesWithChatEnabled.some(
       (role) =>
         // The chat needs to be enabledfor the specific role
-        groupRole.id === role.id &&
+        isSameRole(groupRole, role) &&
         // The user needs the specific role, unless they have the team role and should have access to all role chats.
         (group.userHasRole(user._id, role) || group.userHasRole(user._id, SystemRoles.Team)),
     ),

@@ -13,6 +13,7 @@ import { ButtonSave, ButtonCancel } from "../Buttons";
 import "./styles.scss";
 
 export interface Props {
+  label?: string | undefined;
   className?: string | undefined;
   text?: string | undefined;
   multiline?: boolean;
@@ -24,6 +25,7 @@ export interface Props {
 }
 
 export function Editable({
+  label,
   className,
   text = "",
   multiline,
@@ -322,6 +324,11 @@ export function Editable({
           onEditEmptyText();
         }}
       >
+        {!!label && (
+          <span className="fs-6" onClick={handleEdit}>
+            {label}
+          </span>
+        )}
         <div
           ref={elementRef}
           className={cx(
@@ -336,6 +343,7 @@ export function Editable({
             }
           }}
           role="textbox"
+          aria-label={label}
           aria-multiline={multiline}
         />
 

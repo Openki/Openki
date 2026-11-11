@@ -70,7 +70,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         GROUP: truncate(group.name, { length: 10 }),
       };
 
-      const subject = t("notification.group.mail.subject", "Your proposed {GROUP}", subjectvars);
+      const subject = t("notification.group.mail.subject", "Your proposal {GROUP}", subjectvars);
 
       let region: RegionModel | undefined;
       if (group.region) {

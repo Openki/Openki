@@ -21,8 +21,10 @@ const messageSequenceTimeLimit = 1000 * 60 * 15; // 15 min
 
 export function GroupRoleChat({ group, roleId }: Props) {
   const [isLoading, messages] = useGroupChatMessages(group._id, roleId);
+
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const role = group.roles.find((groupRole) => groupRole.id === roleId);
@@ -58,7 +60,6 @@ export function GroupRoleChat({ group, roleId }: Props) {
       });
   }
 
-  const [hasScrolled, setHasScrolled] = useState(false);
   const hasOtherParticipants = chatParticipants.length >= 2;
 
   // Allow sending messages with a keyboard shortcut
@@ -69,11 +70,34 @@ export function GroupRoleChat({ group, roleId }: Props) {
   });
 
   useEffect(() => {
-    if (!hasScrolled && !isLoading() && messagesContainerRef.current) {
-      // Scroll to the bottom only when first rendering the messages
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-      setHasScrolled(true);
+    const container = messagesContainerRef.current;
+    // Don't do anything until the messages have been rendered
+    if (!container || hasScrolled || isLoading()) {
+      return;
     }
+
+    // Scroll to bottom to show the most recent group chat message.
+    // This only happens the first time the group chat tab becomes visible,
+    // because we want to preserve the user's scroll position if they close
+    // the group chat tab and then come back to it later.
+    const observer = new IntersectionObserver(
+      ([{ isIntersecting, target }], observerInstance) => {
+        if (isIntersecting) {
+          target.scrollTop = target.scrollHeight;
+          // Prevent scrolling even if the messages reload
+          setHasScrolled(true);
+          // Stop as soon as scroll position has been updated once.
+          observerInstance.disconnect();
+        }
+      },
+      // Use a small threshold because we want to detect when the container shows the first time
+      { threshold: 0.0001 },
+    );
+
+    observer.observe(container);
+
+    // Abort when the component unmounts
+    return () => observer.disconnect();
   }, [hasScrolled, isLoading]);
 
   return (
@@ -107,7 +131,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
 
       {!isLoading() && (
         <div
-          className="p-2 max-h-50vh overflow-y-auto overflow-anchor-none"
+          className="chat-messages p-3 max-h-50vh overflow-y-auto overflow-anchor-none"
           ref={messagesContainerRef}
         >
           {messages.map((message, i) => {

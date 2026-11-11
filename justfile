@@ -81,6 +81,10 @@ reset *ARGS:
 preview-emails:
     python -m http.server --directory .temp/ 8080
 
+# Remove emails created by the dev server.
+reset-emails:
+    rm -f .temp/*.html
+
 alias i := install
 alias d := dev
 alias t := test-ui

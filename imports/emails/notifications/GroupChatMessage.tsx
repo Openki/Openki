@@ -50,7 +50,7 @@ export function GroupChatMessage({
               },
             )}
           </p>
-          <table className="groupChatMessage-box">
+          <table className="comment-box">
             <tr>
               <td dangerouslySetInnerHTML={{ __html: message.content }}></td>
             </tr>
