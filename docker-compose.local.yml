@@ -27,7 +27,7 @@ services:
   # Garage - S3-compatible object storage
   # ─────────────────────────────────────────────
   garages3:
-    image: dxflrs/garage:v2.4.1
+    image: dxflrs/garage:v2.5.0
     restart: unless-stopped
     volumes:
       - ./docker/garage.toml:/etc/garage.toml:z
