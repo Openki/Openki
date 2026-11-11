@@ -158,8 +158,10 @@ export function Panel({
           ref={fullRef}
           className="position-relative"
           style={{
-            /* special case for draggable: 86400000 is the top z-index over all cards */
-            zIndex: 86400000,
+            /* special case for draggable: 86400000 is the top z-index over all cards and 
+               add some extra 10 so there some index between.
+            */
+            zIndex: 86400010,
           }}
         >
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>

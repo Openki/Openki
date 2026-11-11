@@ -38,7 +38,9 @@ export function GroupChatMessage({ message, isFirstInSequence, isLastInSequence 
         {!wasSentByCurrentUser && isFirstInSequence && (
           <span className="fw-bold mb-2">{senderUserName}</span>
         )}
-        <div className="whitespace-pre-line text-dark">{message.content}</div>
+        <div className="whitespace-pre-line word-break-break-all overflow-wrap-break-word text-dark">
+          {message.content}
+        </div>
 
         {isLastInSequence && (
           <time

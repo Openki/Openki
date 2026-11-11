@@ -58,11 +58,11 @@ export function Background({ organizationId }: { organizationId?: string | undef
               className="d-inline-block bg-white rounded-circle"
               style={{
                 backgroundImage: `url(${organizationLogoUrl})`,
-                backgroundSize: "contain",
+                backgroundSize: "135px",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                width: "300px",
-                height: "300px",
+                width: "200px",
+                height: "200px",
               }}
             />
           </div>
@@ -236,116 +236,101 @@ export function KioskRummagePage() {
       >
         <AccountTasks />
       </div>
-      <div className="position-relative">
-        <div className="position-absolute top-0 start-0 end-0 bottom-0" style={{ zIndex: -1 }}>
+      <div className="position-relative container-fluid">
+        <div className="position-absolute top-0 start-0 bottom-0 col-9" style={{ zIndex: -1 }}>
           <Background organizationId={selectedOrganizationId} />
         </div>
-        <div className="overflow-hidden min-vh-100">
-          <Rummage sorted={sorted} animated={animated} organization={selectedOrganizationId} />
-        </div>
-        <div
-          className="position-absolute top-0 end-0"
-          style={{
-            /* special case for draggable: 86400000 is the top z-index over all cards  */
-            zIndex: 86400001,
-          }}
-        >
-          <div className="rummage-language-selection">
-            <LanguageSelection />
+        <div className="row">
+          <div className="col-9 overflow-hidden min-vh-100">
+            <Rummage sorted={sorted} animated={animated} organization={selectedOrganizationId} />
           </div>
-          <button
-            id="rummage-about-btn"
-            className="rummage-about-btn btn text-nowrap btn-lg btn-outline-primary d-inline-flex rounded-circle p-2 m-3 float-end fs-3 border-3"
-            aria-label={t("rummagePage.aboutBtn", "Open about panel")}
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas"
-            aria-controls="offcanvas"
-          >
-            <i className="fa-solid fa-question w-[1em]" />
-          </button>
           <div
-            className="offcanvas offcanvas-end text-white"
-            style={{ backgroundColor: DododoColor }}
-            tabIndex={-1}
-            id="offcanvas"
-            aria-labelledby="offcanvasLabel"
+            className="position-fixed top-0 end-0 bottom-0 col-3 text-white d-flex"
+            style={{
+              backgroundColor: DododoColor,
+              /* special case for draggable: 86400000 is the top z-index over all cards  */
+              zIndex: 86400001,
+            }}
           >
-            <div className="offcanvas-header">
-              {PublicSettings.rummageLogoSmall.src && (
-                <h2 className="offcanvas-title" id="offcanvasLabel">
-                  {/* a decorative logo */}
-                  <img
-                    src={PublicSettings.rummageLogoSmall.src}
-                    alt=""
-                    style={{ maxWidth: "200px" }}
-                  />
-                  <br />
-                  by Openki
-                </h2>
-              )}
-              <button
-                type="button"
-                className="btn-close btn-close-white align-self-start"
-                data-bs-dismiss="offcanvas"
-                aria-label={t("_button.close")}
-              />
+            <div className="rummage-language-selection position-absolute" style={{ zIndex: 1 }}>
+              <LanguageSelection />
             </div>
-            <div className="offcanvas-body d-flex flex-column justify-content-between">
-              <div>
-                <div className="fs-4">
-                  {t(
-                    "rummagePage.aboutText",
-                    "DO DO DO is the platform for everyone who wants to make a difference – simply and for free. Share your idea and get started.",
-                    { SITENAME: siteName },
+            <div
+              className="d-flex text-white flex-column flex-grow-1"
+              style={{ backgroundColor: DododoColor }}
+            >
+              {PublicSettings.rummageLogoSmall.src && (
+                <div className="p-4">
+                  <h2>
+                    {/* a decorative logo */}
+                    <img
+                      src={PublicSettings.rummageLogoSmall.src}
+                      alt=""
+                      style={{ maxWidth: "200px" }}
+                    />
+                    <br />
+                    by Openki
+                  </h2>
+                </div>
+              )}
+
+              <div className="d-flex flex-column justify-content-between overflow-y-auto flex-grow-1 p-4">
+                <div>
+                  <div className="fs-4">
+                    {t(
+                      "rummagePage.aboutText",
+                      "DO DO DO is the platform for everyone who wants to make a difference – simply and for free. Share your idea and get started.",
+                      { SITENAME: siteName },
+                    )}
+                  </div>
+                  {!!(options?.length > 1) && (
+                    <div className="fs-5 mt-5">
+                      {t("rummagePage.togetherWith", "Together with")}
+                      <ReactSelect
+                        className="mt-1 fs-3"
+                        value={options.find((opt) => opt.value === selectedOrganizationId)}
+                        options={options}
+                        styles={customStyles}
+                        components={{ Input: NoneKeyboardInput }}
+                        onChange={(newValue: any) => {
+                          if (newValue) {
+                            setSelectedOrganizationId(newValue.value);
+                          }
+                        }}
+                      />
+                      {selectedOrganizationId !== teamOrganization &&
+                        !isLoadingOrganization() &&
+                        !!organization && (
+                          <p
+                            className="lead m-1"
+                            dangerouslySetInnerHTML={{ __html: organization.description }}
+                          />
+                        )}
+                    </div>
                   )}
                 </div>
-                {!!(options?.length > 1) && (
-                  <div className="fs-5 mt-5">
-                    {t("rummagePage.togetherWith", "Together with")}
-                    <ReactSelect
-                      className="mt-1 fs-3"
-                      value={options.find((opt) => opt.value === selectedOrganizationId)}
-                      options={options}
-                      styles={customStyles}
-                      components={{ Input: NoneKeyboardInput }}
-                      onChange={(newValue: any) => {
-                        if (newValue) {
-                          setSelectedOrganizationId(newValue.value);
-                        }
-                      }}
-                    />
-                    {selectedOrganizationId !== teamOrganization &&
-                      !isLoadingOrganization() &&
-                      !!organization && (
-                        <p
-                          className="lead m-1"
-                          dangerouslySetInnerHTML={{ __html: organization.description }}
-                        />
-                      )}
-                  </div>
-                )}
-              </div>
 
-              <Button
-                block
-                className="btn-outline-light fs-3 rounded-pill border-2"
-                size="large"
-                id="rummage-sort-btn"
-                onClick={() => {
-                  if (sorted) {
-                    setTimeout(() => {
-                      setAnimated(false);
-                    }, 500);
-                  } else {
-                    setAnimated(true);
-                  }
-                  setSorted(!sorted);
-                }}
-              >
-                {sorted
-                  ? t("rummagePage.sortBtn.shuffle", "Shuffle")
-                  : t("rummagePage.sortBtn.sort", "Sort")}
-              </Button>
+                <Button
+                  block
+                  className="btn-outline-light fs-3 rounded-pill border-2"
+                  size="large"
+                  id="rummage-sort-btn"
+                  onClick={() => {
+                    if (sorted) {
+                      setTimeout(() => {
+                        setAnimated(false);
+                      }, 500);
+                    } else {
+                      setAnimated(true);
+                    }
+                    setSorted(!sorted);
+                  }}
+                >
+                  {sorted
+                    ? t("rummagePage.sortBtn.shuffle", "Shuffle")
+                    : t("rummagePage.sortBtn.sort", "Sort")}
+                </Button>
+              </div>
             </div>
           </div>
         </div>

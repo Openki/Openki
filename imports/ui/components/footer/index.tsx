@@ -19,18 +19,16 @@ function Links() {
   const { getLocalizedValue } = useLocalizedSetting();
   const siteName = useSiteName();
 
-  function links() {
-    return PublicSettings.footerLinks.map((linkSpec) => ({
-      link: linkSpec.link,
-      text: getLocalizedValue(linkSpec.key || linkSpec.text, { SITENAME: siteName }),
-      title: getLocalizedValue(linkSpec.title_key || linkSpec.title, { SITENAME: siteName }),
-    }));
-  }
+  const links = PublicSettings.footerLinks.map((linkSpec) => ({
+    link: linkSpec.link,
+    text: getLocalizedValue(linkSpec.key || linkSpec.text, { SITENAME: siteName }),
+    title: getLocalizedValue(linkSpec.title_key || linkSpec.title, { SITENAME: siteName }),
+  }));
 
   return (
     <>
-      {links().map((l, index) => (
-        <a key={index} className="footer-link" href={l.link} title={l.title}>
+      {links.map((l) => (
+        <a key={l.link} className="footer-link" href={l.link} title={l.title}>
           {l.text}
         </a>
       ))}
@@ -43,47 +41,49 @@ export function Footer() {
   const [isLoading, version] = useDetails();
   const locale = useTracker(() => Session.get("timeLocale")) || "en";
 
-  function versionName() {
-    return version && version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
-  }
-  function fullInfo() {
-    return (
-      version &&
-      `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
-        version.lastStart,
-      )
-        .locale(locale)
-        .format("lll")}`
-    );
-  }
-
-  function commit() {
-    return version?.commitShort;
-  }
-
-  function deployed() {
-    return version?.activation;
-  }
-
-  if (!isLoading()) {
+  if (isLoading()) {
     return (
       <footer className="footer bg-brand">
         <Links />
-        <span title={fullInfo()} className="footer-deployed-version">
-          {versionName()} {commit()} <Status />
+        <span className="footer-deployed-version">
+          <span className="placeholder" style={{ minWidth: "100px" }}></span>
           <br />
-          {t("footer.deployedAt", "deployed:")} {moment(deployed()).locale(locale).format("L")}
+          <span className="placeholder" style={{ minWidth: "100px" }}></span>
         </span>
       </footer>
     );
   }
+
+  const fullInfo =
+    version &&
+    `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
+      version.lastStart,
+    )
+      .locale(locale)
+      .format("lll")}`;
+
+  const branch = !!version && (version.branch !== "main" ? ` ${version.branch} ` : "");
+
+  const commit = version?.commitShort;
+  const deployed = version?.activation;
+
+  const commitLink = `https://gitlab.com/Openki/Openki/-/tree/${commit}`;
+  const tagLink = `https://gitlab.com/Openki/Openki/-/releases/${version?.basic}`;
+
   return (
     <footer className="footer bg-brand">
       <Links />
-      <span className="footer-deployed-version">
-        <span className="placeholder" style={{ minWidth: "100px" }}></span>
+      <span title={fullInfo} className="footer-deployed-version">
+        <a href={tagLink} target="_blank" rel="noreferrer">
+          {version?.basic}
+        </a>
+        {branch}
+        <a href={commitLink} target="_blank" rel="noreferrer">
+          {commit}
+        </a>{" "}
+        <Status />
         <br />
-        <span className="placeholder" style={{ minWidth: "100px" }}></span>
+        {t("footer.deployedAt", "deployed:")} {moment(deployed).locale(locale).format("L")}
       </span>
     </footer>
   );
