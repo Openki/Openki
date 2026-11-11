@@ -42,7 +42,7 @@ docker-dev:
 
 # Delete the containerized local development environment. Useful to reset the environment before a full rebuild.
 delete-docker-dev:
-    podman compose down --rmi local --volumes
+    docker compose down --rmi local --volumes
 
 # This can both be run standalone and when the other docker compose services are running.
 # Note that commands that depend on the host environment, like `git` need to be run outside of the
