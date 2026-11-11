@@ -39,11 +39,14 @@ compose *ARGS:
 docker-dev:
     docker compose -f {{ COMPOSE_FILE }} --env-file .env.local up
 
-# Delete the containerized local development environment
+# Delete the containerized local development environment. Useful to reset the environment before a full rebuild.
 delete-docker-dev:
     podman compose down --rmi local --volumes
 
-# Enter into the app container to run commands
+# This can both be run standalone and when the other docker compose services are running.
+# Note that commands that depend on the host environment, like `git` need to be run outside of the
+# app container.
+[doc("Start a shell in the app container to run commands. Useful to run more specific dev tasks.")]
 [no-exit-message]
 run-app:
     docker compose -f {{ COMPOSE_FILE }} --env-file .env.local run app bash
