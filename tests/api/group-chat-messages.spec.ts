@@ -75,7 +75,7 @@ describe("GroupChatMessages", () => {
 
     it("should throw an error if the user is not signed in", () => {
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 1",
         groupId,
         roleId,
       });
@@ -84,16 +84,25 @@ describe("GroupChatMessages", () => {
     it("should throw an error if the user is signed in but not part of the group or the group role chat", () => {
       cy.login("Bob");
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 2",
         groupId,
         roleId,
       });
     });
 
     it("should throw an error if the user is a group member but not part of the group chat for the specific roleId", () => {
+      cy.login("Lalo");
+      cy.expectCallMethodThrowsError(methodName, {
+        content: "hello 3",
+        groupId,
+        roleId,
+      });
+    });
+
+    it("should throw an error if the user is not part of the group chat, even if they previously had (but no longer have) access to the group chat for the specific roleId", () => {
       cy.login("Barbie92");
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 4",
         groupId,
         roleId,
       });
