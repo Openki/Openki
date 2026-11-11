@@ -27,7 +27,7 @@ export ENV_FILE := '.env.local'
 install *ARGS:
     meteor npm install {{ ARGS }}
 
-# Start the development server
+# Start the Meteor development server
 [no-exit-message]
 dev:
     meteor npm run debug
@@ -36,21 +36,17 @@ dev:
 compose *ARGS:
     docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} {{ ARGS }}
 
-# Start the containerized local development environment
+# Start the local S3 instance in the containerized local development environment
 docker-dev:
     docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} up
 
-# Delete the containerized local development environment. Useful to reset the environment before a full rebuild.
-delete-docker-dev:
-    docker compose down --rmi local --volumes
+[doc("""
+Delete the containerized local development environment. Useful to remove old containers before a rebuild.
 
-# This can both be run standalone and when the other docker compose services are running.
-# Note that commands that depend on the host environment, like `git` need to be run outside of the
-# app container.
-[doc("Start a shell in the app container to run commands. Useful to run more specific dev tasks.")]
-[no-exit-message]
-run-app:
-    docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} run app bash
+Pass `--volumes` to also delete all persisted data. This clears the local S3 storage.
+""")]
+delete-docker-dev *ARGS:
+    docker compose down --rmi local {{ ARGS }}
 
 # Fix linting and formatting errors and warn for serious problems.
 fix:
@@ -77,8 +73,7 @@ test-ui:
 test:
     meteor npm run test
 
-# Run only specific tests in a headless browser.
-# For example, `tests/component/Navbar.spec.ts`
+# Run only specific tests in a headless browser. For example, `tests/component/Navbar.spec.ts`
 test-only *ARGS:
     meteor npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
 
