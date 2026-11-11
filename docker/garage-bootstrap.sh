@@ -1,7 +1,7 @@
 #!/bin/sh
 # One-shot bootstrap for the local dev Garage node: assigns the single-node
 # layout, then creates the bucket + access key the app expects
-# (see settings/docker-local.json). Safe to run again on every `docker compose up`.
+# (see settings/local.json). Safe to run again on every `docker compose up`.
 set -eu
 
 BUCKET="openki-dev"
