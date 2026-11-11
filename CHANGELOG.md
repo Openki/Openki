@@ -1,3 +1,9 @@
+# Unreleased
+
+## Fixes
+
+- **Group chat and direct messages**: Improved text wrapping, preserving the layout even for long words.
+
 # v0.14.1 - 2026-11-11
 
 ## Fixes
