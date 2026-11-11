@@ -3,7 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { chain, truncate } from "lodash-es";
+import { uniq, truncate } from "es-toolkit/compat";
 
 import { Groups } from "/imports/api/groups/groups";
 import { Organizations } from "/imports/api/organizations/organizations";
@@ -36,14 +36,12 @@ export async function record(groupId: string) {
     throw new Meteor.Error(`No group entry for ${groupId}`);
   }
 
-  const recipients = chain(
-    await Organizations.find({ _id: { $in: group.teamOrganizations } }).mapAsync((o) => o.members),
-  )
-    .flatten()
-    .filter((m) => m.notify)
-    .map((m) => m.user)
-    .uniq()
-    .value();
+  const recipients = uniq(
+    (await Organizations.find({ _id: { $in: group.teamOrganizations } }).mapAsync((o) => o.members))
+      .flat()
+      .filter((m) => m.notify)
+      .map((m) => m.user),
+  );
 
   const body: Body = {
     groupId: group._id,

@@ -69,11 +69,10 @@ export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
                 )}
               </label>
               <textarea
-                className="form-control"
+                className="form-control min-h-[5lh]"
                 id="reportMessage"
                 // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
-                rows={5}
                 placeholder={t("report.placeholder", "My hovercraft is full of eels.")}
                 required
                 minLength={6}

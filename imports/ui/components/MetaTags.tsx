@@ -1,7 +1,7 @@
 import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { textPlain } from "/imports/utils/html-tools";
-import { truncate } from "lodash-es";
+import { truncate } from "es-toolkit/compat";
 
 function getSiteDefaultImage() {
   const ogLogo = PublicSettings.ogLogo.src;

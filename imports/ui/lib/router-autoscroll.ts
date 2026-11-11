@@ -45,7 +45,7 @@ class RouterAutoscroll {
       this.backToPosition = this.scrollPositions.get(window.location.href);
     });
 
-    Router.onBeforeAction(async function (this: { next: () => void }) {
+    Router.onBeforeAction(function (this: { next: () => void }) {
       if (!self._cancelNext) {
         document.documentElement.style.scrollBehavior = "auto";
         window.scrollTo({ top: 0, behavior: "auto" });

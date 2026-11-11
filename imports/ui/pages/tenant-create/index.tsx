@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { omit } from "lodash-es";
+import { omit } from "es-toolkit/compat";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useTranslation } from "react-i18next";

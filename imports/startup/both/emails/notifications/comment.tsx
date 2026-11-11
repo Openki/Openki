@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { uniq, truncate } from "lodash-es";
+import { uniq, truncate } from "es-toolkit/compat";
 import i18next from "i18next";
 
 import { GroupDiscussions } from "/imports/api/group-discussions/group-discussions";

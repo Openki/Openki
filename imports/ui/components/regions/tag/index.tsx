@@ -5,24 +5,23 @@ import { useAll } from "/imports/api/regions/publications";
 
 import "./styles.scss";
 
-export function Tag(props: { region: string }) {
+export function Tag({ region }: { region: string }) {
   const { t } = useTranslation();
   const [isLoading, regions] = useAll();
 
-  function regionName(region: string) {
-    return regions.find((r) => r._id === region)?.name;
-  }
-
   // do not show region name if only one region exists
-  if (!isLoading() && regions.length > 1) {
-    return (
-      <div className="region-tag p-2 text-light">
-        <i className="fa-solid fa-location-dot" />
-        &nbsp;
-        {t("regionTag.inRegion", "in {REGION}", { REGION: regionName(props.region) })}
-      </div>
-    );
+  if (isLoading() || regions.length < 2) {
+    return null;
   }
 
-  return null;
+  const regionName = regions.find((r) => r._id === region)?.name;
+
+  return (
+    <div className="region-tag p-2 text-light d-flex align-items-center gap-1">
+      <i className="fa-solid fa-location-dot" />
+      <span className="small">
+        {t("regionTag.inRegion", "in {REGION}", { REGION: regionName })}
+      </span>
+    </div>
+  );
 }

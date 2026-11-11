@@ -71,6 +71,7 @@ export async function afterSubscribeToCustomRole(
       history: {
         dateTime: new Date(),
         type: "userSubscribedToCustomRole",
+        // We store the roleLabel so we can show it even if the custom role changes.
         data: { user: userId, role: roleLabel },
       },
     },
@@ -87,6 +88,7 @@ export async function afterUnsubscribeFromCustomRole(
       history: {
         dateTime: new Date(),
         type: "userUnsubscribedFromCustomRole",
+        // We store the roleLabel so we can show it even if the custom role changes.
         data: { user: userId, role: roleLabel },
       },
     },

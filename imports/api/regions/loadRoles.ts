@@ -1,6 +1,6 @@
 import { Regions } from "/imports/api/regions/regions";
 
-import { extractRoles } from "/imports/utils/extractRoles";
+import { extractRoles } from "./extractRoles";
 
 /**
  * Server-side loading of roles

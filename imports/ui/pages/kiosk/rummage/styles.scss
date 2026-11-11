@@ -1,3 +1,5 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
 .rummage {
   max-height: 100vh;
   overflow-y: visible;
@@ -15,5 +17,59 @@
     left: 0 !important;
     top: 0 !important;
     rotate: none !important;
+  }
+}
+
+.rummage-language-selection {
+  display: inline-block;
+  line-height: $line-height-base;
+  scale: 1.5;
+  margin-top: 20px;
+}
+
+.rummage-about-btn {
+  // Do Do Do Color
+  color: #2e0d74;
+  border-color: #2e0d74;
+}
+
+.rummage-language-selection .btn {
+  // Do Do Do Color
+  color: #2e0d74;
+}
+
+.rummage-language-selection > li {
+  list-style: none;
+  margin-right: 45px;
+  margin-top: -2px;
+}
+
+.rummage-language-selection > li > {
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $primary;
+  }
+}
+
+.rummage-language-selection > li > .dropdown-menu {
+  @include td-pos(left, auto);
+  @include td-pos(right, 0);
+}
+
+.slide-out {
+  transform: translateX(0);
+  animation: slide-out-animation 0.6s ease-in-out 0s forwards;
+}
+
+@keyframes slide-out-animation {
+  0% {
+    transform: translateX(0);
+    width: 100vw;
+  }
+
+  100% {
+    transform: translateX(100vw);
+    width: 20vw;
   }
 }

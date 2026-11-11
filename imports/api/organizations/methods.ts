@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";

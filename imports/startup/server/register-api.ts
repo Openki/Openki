@@ -2,6 +2,8 @@ import "/imports/api/groups/methods";
 import "/imports/api/groups/publications";
 import "/imports/api/group-discussions/methods";
 import "/imports/api/group-discussions/publications";
+import "/imports/api/group-chat-messages/methods";
+import "/imports/api/group-chat-messages/publications";
 import "/imports/api/emails/methods";
 import "/imports/api/emails/publications";
 import "/imports/api/events/methods";

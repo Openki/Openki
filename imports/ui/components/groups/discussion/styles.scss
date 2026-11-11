@@ -12,3 +12,20 @@
 .page-component-btn + .discussion-conversation {
   margin-top: $page-component-seperator-height;
 }
+
+.group-role-chat-tabs .nav-link.active {
+  box-shadow: none;
+}
+
+.group-role-chat-tabs .nav-link::first-letter {
+  text-transform: uppercase;
+}
+
+.group-chat-tab header {
+  margin-top: 3px;
+  background-color: $gray-200;
+
+  .profilelink {
+    text-decoration: underline;
+  }
+}

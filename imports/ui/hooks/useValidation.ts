@@ -1,4 +1,4 @@
-import { omit } from "lodash-es";
+import { omit } from "es-toolkit/compat";
 import { ReactNode, useEffect, useState } from "react";
 
 export type Mapping<T extends string> = Record<

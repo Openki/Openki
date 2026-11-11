@@ -1,4 +1,4 @@
-import { debounce } from "lodash-es";
+import { debounce } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

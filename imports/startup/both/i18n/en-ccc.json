@@ -406,7 +406,7 @@
   "group.details.is-proposalTag": "Proposal",
   "group.details.members.title": "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
   "group.details.noEvents": "No events planned",
-  "group.details.removeTeam.others.header": "Remove member from the team",
+  "group.details.removeTeam.others.header": "Remove team member",
   "group.details.removeTeam.self.header": "Remove yourself from the team",
   "group.discussion.allNotified": "All interested notified",
   "group.discussion.anon": "Anonymous comment",

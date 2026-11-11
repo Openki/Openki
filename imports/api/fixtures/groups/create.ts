@@ -1,13 +1,13 @@
 import { GroupEntity, Groups } from "../../groups/groups";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
-import { Prng } from "/imports/api/fixtures/Prng";
-import * as StringTools from "/imports/utils/string-tools";
+import { createSeededRNG } from "../createSeededRNG";
+import { slug } from "/imports/utils/string-tools";
 
-import { groups as groupsBase } from "./data";
+import { type FixtureGroup, groups as groupsBase } from "./data";
 import { groups as groupsZuerichLernt } from "./zuerichlernt";
 import { Log } from "../../log/log";
-import { PRNG } from "seedrandom";
-import { predefinedRole } from "/imports/api/groups/lib/Role";
+import { type PRNG } from "seedrandom";
+import { predefinedRole, RoleType } from "/imports/api/groups/lib/Role";
 
 async function mapSync<T, U>(
   array: T[],
@@ -24,7 +24,7 @@ async function mapSync<T, U>(
 }
 
 export async function create() {
-  const prng = Prng("createCourses");
+  const prng = createSeededRNG("createCourses");
 
   await Promise.all([createBase(prng), createZuerichLernt(prng)]);
 
@@ -34,7 +34,7 @@ export async function create() {
 }
 
 async function createBase(prng: PRNG) {
-  for (const template of groupsBase) {
+  for (const template of groupsBase as FixtureGroup[]) {
     let region: string;
     if (template.region) {
       region = await ensure.region(template.region);
@@ -59,7 +59,7 @@ async function createBase(prng: PRNG) {
       description: template.description,
       compactImage: "",
       image: "",
-      slug: StringTools.slug(template.name),
+      slug: slug(template.name),
       region,
       customFields: [],
       createdby: (await ensure.user(template.createdby, region))._id,
@@ -69,7 +69,7 @@ async function createBase(prng: PRNG) {
       members: await Promise.all(
         template.members.map(async (member) => ({
           ...member,
-          roles: member.roles.map((role) => ({ id: role, type: "predefined" })),
+          roles: member.roles.map((role) => ({ id: role, type: RoleType.Predefined })),
           user: (await ensure.user(member.user, region))._id,
         })),
       ),
@@ -96,7 +96,7 @@ async function createZuerichLernt(prng: PRNG) {
       description: template.description,
       compactImage: template.image,
       image: template.image,
-      slug: StringTools.slug(template.name),
+      slug: slug(template.name),
       region: template.region,
       customFields: template.customFields,
       createdby: (await ensure.user(template.createdby, template.region))._id,
@@ -105,7 +105,7 @@ async function createZuerichLernt(prng: PRNG) {
       roles: template.roles.map((r) => predefinedRole(r)),
       members: await mapSync(template.members, async (member) => ({
         ...member,
-        roles: member.roles.map((r) => ({ id: r, type: "predefined" })),
+        roles: member.roles.map((r) => ({ id: r, type: RoleType.Predefined })),
         user: (await ensure.user(member.user, template.region))._id,
       })),
       internal: template.internal || false,

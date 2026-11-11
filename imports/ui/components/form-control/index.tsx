@@ -35,6 +35,7 @@ interface CommonProps {
    * when only a boolean is given; by true: displays the control as invalid
    */
   error?: ReactNode;
+  className?: string | undefined;
 }
 
 interface TextInputProps {
@@ -50,7 +51,6 @@ interface TextInputProps {
 
 interface TextareaProps {
   type: "textarea";
-  rows?: number | undefined;
   autoFocus?: boolean | undefined;
   /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
@@ -183,12 +183,13 @@ function getDescribedby(
  * Factory to create input elements based on `type`
  */
 function createInputElement<K extends string>(props: Props<K>) {
-  const { id, type, size, prepend, append, optional, disabled, onFocus, onBlur, error } = props;
+  const { id, type, size, prepend, append, optional, disabled, onFocus, onBlur, error, className } =
+    props;
 
   const isInvalid = !!error;
   const commonProps = {
     id,
-    className: getControlClassNames(type, size, prepend, append, isInvalid).join(" "),
+    className: cx(...getControlClassNames(type, size, prepend, append, isInvalid), className),
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     required: !optional,
@@ -223,7 +224,6 @@ function createInputElement<K extends string>(props: Props<K>) {
       return (
         <AutoGrowTextArea
           {...commonProps}
-          rows={props.rows}
           autoFocus={props.autoFocus}
           placeholder={props.placeholder}
           value={props.value}

@@ -31,7 +31,7 @@ $group-details-content-padding-horizontal: (
     right: $tab-content-border-width * -1;
   }
 
-  padding: 15px $group-details-content-padding-horizontal;
+  padding: 16px !important;
 }
 
 .group-description:not(.max-h-none) {

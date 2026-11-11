@@ -6,7 +6,7 @@ import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-disc
 import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
-import * as GroupDiscussionUtils from "/imports/utils/group-discussion-utils";
+import * as GroupDiscussionUtils from "/imports/api/group-discussions/utils";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 

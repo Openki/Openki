@@ -38,7 +38,6 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
             id="event-cancel-message"
             type="textarea"
             prepend="fa-solid fa-pencil"
-            rows={3}
             maxLength={2000}
             placeholder={t(
               "event.cancel.reason.placeholder",
@@ -47,6 +46,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
             value={reason}
             onChange={setReason}
             label={t("event.cancel.reason", "Reason")}
+            className="min-h-[3lh]"
           />
         </div>
       )}

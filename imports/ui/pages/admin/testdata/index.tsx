@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { clean, create } from "/imports/api/fixtures/methods";
+import { cleanFixtures, createFixtures } from "/imports/api/fixtures/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
 import { Button } from "../../../components/Buttons";
@@ -32,8 +32,8 @@ export function TestdataPage() {
             return;
           }
           try {
-            await clean();
-            await create();
+            await cleanFixtures();
+            await createFixtures();
             Alert.success(t("testdata.finish", "Finish!"));
           } catch (e) {
             Alert.serverError(

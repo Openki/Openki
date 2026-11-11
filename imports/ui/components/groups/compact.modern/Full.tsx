@@ -53,9 +53,7 @@ export function Full({ group }: { group: GroupModel }) {
       ) : (
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
-      <div
-        className={cx("card-body animated-bg", group.hasState() === "upcomingEvent" && "bg-group")}
-      >
+      <div className={cx("card-body animated-bg", group.hasState("upcomingEvent") && "bg-group")}>
         <h3 className="card-title min-h-[2lh] fw-bold">{group.name}</h3>
         <div className="panel-hide-line-1">
           <i className="fs-4 fa-solid fa-arrow-right-long" />

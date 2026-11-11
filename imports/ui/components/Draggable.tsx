@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from "react";
-import { random } from "lodash-es";
+import { random } from "es-toolkit/compat";
 import { cx } from "/imports/utils/cx";
 
 export function Draggable({
@@ -30,9 +30,10 @@ export function Draggable({
     const box = elementRef.current;
     if (!box || !box.offsetParent) return;
 
-    drag.current.currentLeft = random(-60, box.offsetParent.clientWidth - 270) - box.offsetLeft;
-
-    drag.current.currentTop = random(-60, box.offsetParent.clientHeight - 270) - box.offsetTop;
+    drag.current.currentLeft =
+      random(-60, box.offsetParent.clientWidth - box.clientWidth + 60) - box.offsetLeft;
+    drag.current.currentTop =
+      random(-60, box.offsetParent.clientHeight - box.clientHeight + 60) - box.offsetTop;
 
     box.style.left = `${drag.current.currentLeft}px`;
     box.style.top = `${drag.current.currentTop}px`;

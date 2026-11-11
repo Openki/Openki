@@ -49,3 +49,4 @@ mys:fonts
 # DEV
 zodern:types                    # Pull in type declarations from other Meteor packages
 typescript@5.11.1               # Enable TypeScript syntax in .ts and .tsx modules
+accounts-express                # Only used for tests. Not needed for the production build.

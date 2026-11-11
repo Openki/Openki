@@ -3,7 +3,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { chain } from "lodash-es";
+import { groupBy, take } from "es-toolkit/compat";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
@@ -77,10 +77,9 @@ export function CalendarPage() {
     ["start", "asc"],
   ]);
 
-  const groupedEvents = chain(events)
-    .take(limit)
-    .groupBy((event) => moment(event.start).locale(timeLocale).format("LL"))
-    .value();
+  const groupedEvents = groupBy(take(events, limit), (event) =>
+    moment(event.start).locale(timeLocale).format("LL"),
+  );
 
   function days() {
     return Object.keys(groupedEvents);

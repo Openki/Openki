@@ -2,7 +2,7 @@ import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";
-import { isObject } from "lodash-es";
+import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
 import { publish, QueryBuilder } from "./ServerPublishUtils";
@@ -19,7 +19,7 @@ type DeepPartial<T> = T extends object
  */
 declare function publication<A extends any[], T>(...args: A): [isLoading: () => boolean, data: T];
 /**
- * Subsribe to the record set, when the condition is true.
+ * Subscribe to the record set, when the condition is true.
  * @param condition true: date get loaded; false: none date get loaded, isLoading() will always return false
  */
 declare function publication<A extends any[], T>(

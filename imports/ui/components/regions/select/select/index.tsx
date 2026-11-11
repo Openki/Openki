@@ -114,16 +114,13 @@ export function Select({ className, size, autoFocus, append, onClose, onSelect }
     onClose?.();
   }
 
-  function allGroups() {
-    return Regions.find()
-      .fetch()
-      .reduce((acc, region) => acc + region.groupCount, 0);
-  }
-  function allUpcomingEvents() {
-    return Regions.find()
-      .fetch()
-      .reduce((acc, region) => acc + region.futureEventCount, 0);
-  }
+  const allGroupsCount = Regions.find()
+    .fetch()
+    .reduce((acc, region) => acc + region.groupCount, 0);
+  const allUpcomingEventsCount = Regions.find()
+    .fetch()
+    .reduce((acc, region) => acc + region.futureEventCount, 0);
+
   function hasMore() {
     const minNumber = minNumberOfRegionInSelection;
 
@@ -277,20 +274,20 @@ export function Select({ className, size, autoFocus, append, onClose, onSelect }
                     title={t(
                       "regions.allGroups.title",
                       "{COUNT, plural, =0{no groups} one{one group} other{# groups} } on {SITENAME}",
-                      { COUNT: allGroups(), SITENAME: siteName },
+                      { COUNT: allGroupsCount, SITENAME: siteName },
                     )}
                   >
-                    {allGroups()}
+                    {allGroupsCount}
                   </span>{" "}
                   <span
                     className="badge bg-success text-dark rounded-pill"
                     title={t(
                       "regions.allUpcomingEvents.title",
                       "{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } on {SITENAME}",
-                      { COUNT: allUpcomingEvents(), SITENAME: siteName },
+                      { COUNT: allUpcomingEventsCount, SITENAME: siteName },
                     )}
                   >
-                    {allUpcomingEvents()}
+                    {allUpcomingEventsCount}
                   </span>
                 </div>
                 {!currentRegion ? (

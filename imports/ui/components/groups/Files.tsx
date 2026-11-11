@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { GroupModel } from "/imports/api/groups/groups";
-import * as GroupMethods from "/imports/api/groups/methods";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
 import {
@@ -21,7 +21,7 @@ export function Files({ group }: { group: GroupModel }) {
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
         try {
-          await GroupMethods.updateImage(group._id, file);
+          await GroupsMethods.updateImage(group._id, file);
           Alert.success(t("group.edit.image.updated", "Image have been saved."));
         } catch (err) {
           Alert.serverError(err, t("group.edit.image.updated.error", "Could not save image."));
@@ -30,7 +30,7 @@ export function Files({ group }: { group: GroupModel }) {
       onDelete: group.image
         ? async function () {
             try {
-              await GroupMethods.deleteImage(group._id);
+              await GroupsMethods.deleteImage(group._id);
               Alert.success(t("group.edit.image.removed", "Image have been removed."));
             } catch (err) {
               Alert.serverError(

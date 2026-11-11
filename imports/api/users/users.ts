@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { assignIn } from "lodash-es";
+import { assignIn } from "es-toolkit/compat";
 
 export type UserPrivilege = "admin" | "visitor";
 
@@ -103,10 +103,10 @@ export interface UserEntity extends Meteor.User {
   theme?: "light" | "system" | "dark";
   /**
    * (calculated) union of user's id and organization ids for permission checking, calculated by
-   * updateBadges()
+   * updateOrganizationsAndBadges()
    */
   badges: string[];
-  /** (calculated) List of organizations the user is a member of, calculated by updateBadges() */
+  /** (calculated) List of organizations the user is a member of, calculated by updateOrganizationsAndBadges() */
   organizations: string[];
 
   /** (calculated) List of venues the user is a editor of */

@@ -1,6 +1,6 @@
 import { useTracker } from "meteor/react-meteor-data";
 import moment from "moment-timezone";
-import { isObject } from "lodash-es";
+import { isObject } from "es-toolkit/compat";
 
 import { Regions } from "/imports/api/regions/regions";
 

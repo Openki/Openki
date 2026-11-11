@@ -1,3 +1,21 @@
+# v0.14.1 - 2026-11-11
+
+## Fixes
+
+- **Group chat message order**: New message now shown on the bottom.
+- **Rummage scrolling**: Scrolling is now possible in places where it wasn't possible before.
+
+# v0.14.0 - 2026-11-09
+
+## Highlights
+
+- **Group role chats**: Added an internal chat to each group where the coordination team members can chat with group members with specific roles.
+- **New Rummage view layout** — Add design for DO DO DO and make other organizations more visible.
+
+## Fixes
+
+- **Improve memory usage and startup time**: Reduced memory usage and improved server startup time for production environments.
+
 # v0.13.3 - 2026-10-29
 
 ## Fixes

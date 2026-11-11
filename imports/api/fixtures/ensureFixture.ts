@@ -2,14 +2,14 @@ import { Accounts } from "meteor/accounts-base";
 import crypto from "node:crypto";
 import { Mongo } from "meteor/mongo";
 
-import { Prng } from "/imports/api/fixtures/Prng";
+import { createSeededRNG } from "./createSeededRNG";
 import { Organizations } from "../organizations/organizations";
 import { Tenants } from "/imports/api/tenants/tenants";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import { UserEntity, Users } from "/imports/api/users/users";
 
-import * as StringTools from "/imports/utils/string-tools";
+import { slug } from "/imports/utils/string-tools";
 
 export const ensure = {
   fixedId(strings: string[]) {
@@ -83,7 +83,7 @@ export const ensure = {
   },
 
   async user(name: string, region?: string | undefined, verified = true, locale = "en") {
-    const prng = Prng(`ensureUser${name}`);
+    const prng = createSeededRNG(`ensureUser${name}`);
 
     if (!name) {
       name = "Ed Dillinger";
@@ -181,7 +181,7 @@ export const ensure = {
   },
 
   async venue(name: string, regionId: string, id?: string) {
-    const prng = Prng(`ensureVenue${name}`);
+    const prng = createSeededRNG(`ensureVenue${name}`);
 
     let venue = await Venues.findOneAsync({ name, region: regionId });
     if (venue) {
@@ -193,7 +193,7 @@ export const ensure = {
       region: regionId,
     } as VenueEntity;
 
-    venueEntity.slug = StringTools.slug(venueEntity.name);
+    venueEntity.slug = slug(venueEntity.name);
 
     const region = await Regions.findOneAsync(regionId);
     if (!region || !region.loc) {

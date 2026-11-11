@@ -1,7 +1,8 @@
-import { chain, sumBy } from "lodash-es";
+import { sumBy, min as minInArray, max as maxInArray, groupBy, orderBy } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
 import React, { useEffect, useMemo, useRef } from "react";
+
 import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
@@ -19,7 +20,9 @@ function ScrollIntoView({ children }: { children: React.ReactNode }) {
       inline: "center",
       behavior: "instant",
       container: "nearest",
-    } as any);
+      // Explicitly cast the type to support the `container` property
+      // since it's not part of the DOM definitions for TypeScript 5.x
+    } as ScrollIntoViewOptions);
   }, []);
 
   return <div ref={elementRef}>{children}</div>;
@@ -169,14 +172,21 @@ export function Timetable({
     ],
     [events, externalEvents],
   );
-  const startLocal = chain(allEvents)
-    .map((e) => e.startLocal)
-    .min()
-    .value();
-  const endLocal = chain(allEvents)
-    .map((e) => e.endLocal)
-    .max()
-    .value();
+
+  if (allEvents.length <= 1) {
+    // only show if more then 1 event found
+    return null;
+  }
+
+  const startLocal = minInArray(allEvents.map((e) => e.startLocal));
+  const endLocal = maxInArray(allEvents.map((e) => e.endLocal));
+  if (!startLocal) {
+    throw new Error("Unexpected undefined for startLocal: ", { cause: { allEvents } });
+  }
+
+  if (!endLocal) {
+    throw new Error("Unexpected undefined for endLocal: ", { cause: { allEvents } });
+  }
 
   let start = regionZone.fromString(startLocal);
   // show in min +/- 5 hours free time space before and after event
@@ -210,17 +220,12 @@ export function Timetable({
     };
   });
 
-  const rooms = chain(allEvents)
-    .groupBy((e) => e.room?.toUpperCase() || "")
-    .orderBy((g) => g[0].room)
-    .value();
+  const rooms = orderBy(
+    groupBy(allEvents, (e) => e.room?.toUpperCase() || ""),
+    (g) => g[0].room,
+  );
 
   const totalCols = sumBy(viewModel, (v) => v.hours.length) + 1; // +1 for first empty/room column
-
-  if (allEvents.length <= 1) {
-    // only show if more then 1 event found
-    return null;
-  }
 
   const inSameRoom = allParallelEvents.find(
     (e) => e.room && currentEvent.room && e.room.toUpperCase() === currentEvent.room.toUpperCase(),
