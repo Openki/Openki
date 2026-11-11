@@ -12,7 +12,7 @@ services:
     # accepts connections and answers queries on kernel 7.0.10). This also means
     # MONGODB_INITDB_ROOT_USERNAME/PASSWORD-style env vars won't do anything here,
     # since the wrapper that reads those is exactly what we're bypassing.
-    image: ${MONGO_IMAGE:-mongodb/mongodb-community-server:4.4-ubuntu2204-slim}
+    image: ${MONGO_IMAGE:-mongodb/mongodb-community-server:8.0-ubuntu2204-slim}
     entrypoint: ["mongod"]
     command: ["--bind_ip_all"]
     restart: unless-stopped
