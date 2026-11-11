@@ -297,7 +297,7 @@
   },
   "s3": {
     "region": "garage",
-    "bucketEndpoint": "http://garages3:3900/openki-dev",
+    "bucketEndpoint": "http://localhost:3900/openki-dev",
     "accessKeyId": "GK87d4cfd9b5f2420952301704",
     "secretAccessKey": "47397becaa4bf89f106ddfee98a6cfd32db956ea67d7f557396adb28c869b286"
   },

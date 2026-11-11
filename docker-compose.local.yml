@@ -1,29 +1,5 @@
 services:
   # ─────────────────────────────────────────────
-  # MongoDB
-  # ─────────────────────────────────────────────
-  mongo:
-    # This image's real entrypoint (a compiled binary, not the docker-entrypoint.py
-    # you'll find if you `docker run --entrypoint cat ... /usr/local/bin/docker-entrypoint.py`,
-    # that file is unused) unconditionally refuses to start on Linux kernel 6.19+
-    # (TCMalloc/glibc rseq ABI issue, see MongoDB SERVER-121912) - there's no env
-    # var that bypasses it despite what some threads claim. We skip that wrapper
-    # entirely and run mongod directly instead, which starts fine (verified: it
-    # accepts connections and answers queries on kernel 7.0.10). This also means
-    # MONGODB_INITDB_ROOT_USERNAME/PASSWORD-style env vars won't do anything here,
-    # since the wrapper that reads those is exactly what we're bypassing.
-    image: ${MONGO_IMAGE:-mongodb/mongodb-community-server:8.0-ubuntu2204-slim}
-    entrypoint: ["mongod"]
-    command: ["--bind_ip_all"]
-    restart: unless-stopped
-    ports:
-      - "${MONGO_PORT:-27017}:27017"
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - app-network
-
-  # ─────────────────────────────────────────────
   # Garage - S3-compatible object storage
   # ─────────────────────────────────────────────
   garages3:
@@ -58,43 +34,9 @@ services:
       - garage-meta:/var/lib/garage/meta
     restart: "no"
 
-  # ─────────────────────────────────────────────
-  # Meteor app (dev mode, hot code reload + debugger)
-  # ─────────────────────────────────────────────
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile.local
-    restart: unless-stopped
-    depends_on:
-      - mongo
-      - garages3-init
-    ports:
-      - "${APP_PORT:-3000}:3000" # app
-      - "${APP_INSPECT_PORT:-9229}:9229" # node --inspect debugger
-    environment:
-      ROOT_URL: ${ROOT_URL:-http://localhost:3000}
-      PORT: "${APP_PORT:-3000}"
-      INSPECT_PORT: "${APP_INSPECT_PORT:-9229}"
-      MONGO_URL: mongodb://mongo:27017/openki
-    command: /start.local.sh
-    volumes:
-      - ./:/app:z
-      # NOTE: It would be good to use separate volumes for dependencies and the meteor cache to isolate them from the host system.
-      # However, this conflicts with the bind mount for the Openki project root directory.
-      # So for now, we have to let the container read and write to the host system.
-      # This is bad from a security standpoint.
-      # - app-node-modules:/app/node_modules:Z
-      # - app-meteor:/app/.meteor:Z
-    networks:
-      - app-network
-
 volumes:
-  mongo-data:
   garage-meta:
   garage-data:
-  # app-node-modules:
-  # app-meteor:
 
 networks:
   app-network:

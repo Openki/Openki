@@ -30,7 +30,8 @@ install *ARGS:
 # Start the Meteor development server
 [no-exit-message]
 dev:
-    meteor npm run debug
+    meteor npm run dev:startup
+    meteor run --inspect --settings settings/local.json
 
 # Main docker compose wrapper with common config
 compose *ARGS:
