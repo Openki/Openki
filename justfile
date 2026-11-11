@@ -48,18 +48,6 @@ delete-docker-dev:
 run-app:
     docker compose -f {{ COMPOSE_FILE }} --env-file .env.local run app bash
 
-# Fully rebuild the docker containers
-docker-dev-rebuild:
-    docker compose \
-      -f {{ COMPOSE_FILE }} \
-      --env-file .env.local \
-      up \
-      --force-recreate \
-      --always-recreate-deps \
-      --build \
-      --no-cache \
-      --remove-orphans
-
 # Fix linting and formatting errors and warn for serious problems.
 fix:
     meteor npm run lint:fix || just oxlint-errors
