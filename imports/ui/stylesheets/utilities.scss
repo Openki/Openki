@@ -101,6 +101,20 @@ $utilities: map.merge(
         auto: auto,
       ),
     ),
+    "overflow-wrap": (
+      property: overflow-wrap,
+      class: overflow-wrap,
+      values: (
+        break-word: break-word,
+      ),
+    ),
+    "word-break": (
+      property: word-break,
+      class: word-break,
+      values: (
+        break-all: break-all,
+      ),
+    ),
   )
 );
 
