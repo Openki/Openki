@@ -74,11 +74,11 @@ export function Footer() {
     <footer className="footer bg-brand">
       <Links />
       <span title={fullInfo} className="footer-deployed-version">
-        <a href={tagLink} target="_blank" rel="noreferrer">
+        <a href={tagLink} target="_blank" rel="noreferrer" className="text-white">
           {version?.basic}
         </a>{" "}
         {branch}
-        <a href={commitLink} target="_blank" rel="noreferrer">
+        <a href={commitLink} target="_blank" rel="noreferrer" className="text-white">
           {commit}
         </a>{" "}
         <Status />
