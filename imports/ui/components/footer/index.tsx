@@ -62,7 +62,7 @@ export function Footer() {
       .locale(locale)
       .format("lll")}`;
 
-  const branch = !!version && (version.branch !== "main" ? `${version.branch} ` : "");
+  const branch = !!version && `${version.branch} `;
 
   const commit = version?.commitShort;
   const deployed = version?.activation;
