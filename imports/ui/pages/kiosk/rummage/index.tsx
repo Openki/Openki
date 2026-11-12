@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactSelect, { components, GroupBase, InputProps, StylesConfig } from "react-select";
+import { uniq } from "es-toolkit";
 
 import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
@@ -160,7 +161,7 @@ export function KioskRummagePage() {
   const teamOrganization = filter.get("teamOrganization");
   const linkedOrganizations = filter.get("linkedOrganizations") || [];
   const allOrganizations = teamOrganization
-    ? [teamOrganization, ...linkedOrganizations]
+    ? uniq([teamOrganization, ...linkedOrganizations])
     : linkedOrganizations;
 
   // State for selected organization

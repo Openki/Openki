@@ -2,6 +2,7 @@
 
 ## Fixes
 
+- **Rummage page**: Show linked organizations only once in the select dropdown.
 - **Testdata**: Demo instances now use stable links to user profiles. ([#2148](https://gitlab.com/Openki/Openki/-/merge_requests/2148))
 - **Security updates**: Updated [Node.js](https://nodejs.org/en/blog/vulnerability/november-2026-security-releases) runtime.
 
