@@ -261,7 +261,7 @@ export function KioskRummagePage() {
             >
               {PublicSettings.rummageLogoSmall.src && (
                 <div className="p-4">
-                  <h2>
+                  <h5>
                     {/* a decorative logo */}
                     <img
                       src={PublicSettings.rummageLogoSmall.src}
@@ -270,7 +270,7 @@ export function KioskRummagePage() {
                     />
                     <br />
                     by Openki
-                  </h2>
+                  </h5>
                 </div>
               )}
 
