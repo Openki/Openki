@@ -120,6 +120,14 @@ function Rummage({
   );
 }
 
+// These are useful for testing changes locally.
+// This snippet would become a useful test helper if/when we add automated tests for the rummage page
+//
+//// OrganizationsIds for dev.openki.net - Projectistan ////
+// const FoodMakers = "cc1165e5ed";
+// const FoodMakersLinkedOrganizations = "cc1165e5ed,826adc62fb,a87213b720,f2068b0022";
+// console.log(`http://localhost:3000/kiosk/rummage?teamOrganization=${FoodMakers}&linkedOrganizations=${FoodMakersLinkedOrganizations}&region=5JyFCoKwkxnf8LWoh&bgcolor=555&color=fff&lg=de&mtm_campaign=screens&mtm_source=dododo#noGoBack`);
+
 export function KioskRummagePage() {
   const { t } = useTranslation();
   const siteName = useSiteName();
@@ -293,9 +301,9 @@ export function KioskRummagePage() {
                         options={options}
                         styles={customStyles}
                         components={{ Input: NoneKeyboardInput }}
-                        onChange={(newValue: any) => {
+                        onChange={(newValue) => {
                           if (newValue) {
-                            setSelectedOrganizationId(newValue.value);
+                            setSelectedOrganizationId((newValue as (typeof options)[number]).value);
                           }
                         }}
                       />
