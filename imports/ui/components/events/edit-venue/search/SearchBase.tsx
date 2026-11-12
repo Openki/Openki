@@ -3,6 +3,14 @@ import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { differenceBy, isUndefined, omitBy, uniqBy } from "es-toolkit/compat";
+import {
+  AsyncTypeahead,
+  BaseMenuItem,
+  Menu,
+  MenuItem,
+  RenderMenuProps,
+  TypeaheadInputSingle,
+} from "react-bootstrap-typeahead";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
@@ -12,14 +20,6 @@ import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
-import {
-  AsyncTypeahead,
-  BaseMenuItem,
-  Menu,
-  MenuItem,
-  RenderMenuProps,
-  TypeaheadInputSingle,
-} from "react-bootstrap-typeahead";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
 import { VenueEntity } from "/imports/api/venues/venues";

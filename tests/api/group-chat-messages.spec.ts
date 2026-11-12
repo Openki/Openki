@@ -75,7 +75,7 @@ describe("GroupChatMessages", () => {
 
     it("should throw an error if the user is not signed in", () => {
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 1",
         groupId,
         roleId,
       });
@@ -84,35 +84,39 @@ describe("GroupChatMessages", () => {
     it("should throw an error if the user is signed in but not part of the group or the group role chat", () => {
       cy.login("Bob");
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 2",
         groupId,
         roleId,
       });
     });
 
     it("should throw an error if the user is a group member but not part of the group chat for the specific roleId", () => {
-      cy.login("Barbie92");
+      cy.login("Lalo");
       cy.expectCallMethodThrowsError(methodName, {
-        content: "hello",
+        content: "hello 3",
         groupId,
         roleId,
       });
     });
 
-    // This test is broken and will be fixed in a follow-up MR.
-    // The cause is that userId changes every time the DB is reset.
-    // We want to move to fixed Ids for user fixtures to make testing easier.
-    // Similar to our IDs for other fixture data.
-    it.skip("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
-      // cy.login("IvanZ");
+    it("should throw an error if the user is not part of the group chat, even if they previously had (but no longer have) access to the group chat for the specific roleId", () => {
+      cy.login("Barbie92");
+      cy.expectCallMethodThrowsError(methodName, {
+        content: "hello 4",
+        groupId,
+        roleId,
+      });
+    });
 
+    it("should only allow group team members to send messages in the team chat when there are at least two participants in the chat", () => {
       cy.visitOpenki(`/group/${groupId}/elektronik`, { username: "IvanZ" });
 
-      const userId = "itqnv9HJgc3msz5op"; // Group member "Etha Eis"
+      const userId = "52d13ca83a"; // Group member "Etha Eis"
 
       // Ensure user is not part of the team
       cy.callMethodAndIgnoreErrors("groups.removeMemberFromTeam", groupId, userId);
 
+      // Should not allow sending messages when there is only one team member.
       cy.expectCallMethodThrowsError(methodName, {
         content: "Talking to myself",
         groupId,
