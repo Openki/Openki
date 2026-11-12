@@ -52,7 +52,7 @@
     "react-markdown": "8.0.7",
     "react-qr-code": "2.2.0",
     "react-select": "5.10.2",
-    "sanitize-html": "2.18.1",
+    "sanitize-html": "2.18.2",
     "seedrandom": "3.0.5",
     "serialize-error": "13.1.0",
     "shareon": "2.8.1",
