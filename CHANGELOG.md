@@ -1,3 +1,12 @@
+# v0.14.3 - 2026-11-12
+
+## Fixes
+
+- **Rummage page**: Show linked organizations only once in the select dropdown.
+- **Updated translations**: Updated German translations.
+- **Testdata**: Demo instances now use stable links to user profiles. ([#2148](https://gitlab.com/Openki/Openki/-/merge_requests/2148))
+- **Security updates**: Updated [Node.js](https://nodejs.org/en/blog/vulnerability/november-2026-security-releases) runtime.
+
 # v0.14.2 - 2026-11-11
 
 ## Fixes

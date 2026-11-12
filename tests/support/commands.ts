@@ -13,7 +13,21 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       callMethodAsync<T = any>(method: string, ...params: any[]): Chainable<T>;
+      /**
+       * Use this to call Meteor methods where you don't care about the result.
+       *
+       * @param method Name of a Meteor method.
+       * @param params Arguments to pass to the method.
+       */
       callMethodAndIgnoreErrors<T = any>(method: string, ...params: any[]): Chainable<T>;
+      /**
+       * Use this to call a Meteor method and assert that it fails.
+       *
+       * Useful to test error states and validation for invalid input.
+       *
+       * @param method Name of a Meteor method.
+       * @param params Arguments to pass to the method.
+       */
       expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
       testSubscription(
         publication: string,
@@ -113,7 +127,7 @@ Cypress.Commands.add("callMethodAndIgnoreErrors", (method: string, ...params: an
       consoleProps: () => ({ name: method, params }),
     });
 
-    Meteor.callAsync(method, ...params)
+    return Meteor.callAsync(method, ...params)
       .then((result: unknown) => {
         console.log(`%c${method}`, "color: red; font-style: italic;", result);
         return result;
@@ -136,14 +150,17 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
     });
 
     return new Cypress.Promise((resolve, reject) => {
-      Meteor.call(method, ...params, (err: unknown) => {
-        console.log(`%c${method}`, "color: red; font-style: italic;", err);
-        if (err) {
-          resolve(err);
-          return;
-        }
-        reject(new Error(`Expected ${method} to fail`));
-      });
+      console.log(`%c${method}`, "color: red; font-style: italic;");
+      // By using Meteor.callAsync(), we make sure Cypress doesn't treat our expected and intentional
+      // errors as if they were unhandled. This is needed to make this helper work as intended.
+      Meteor.callAsync(method, ...params)
+        .then(() => {
+          reject(new Error(`Expected ${method} to fail`));
+        })
+        .catch((error: unknown) => {
+          console.log(`Ignoring expected error when calling ${method}:`);
+          resolve(error);
+        });
     });
   });
 });

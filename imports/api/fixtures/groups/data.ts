@@ -127,6 +127,7 @@ export const groups = [
       { user: "LeOnI", roles: ["participant", "team"] },
       { user: "IvanZ", roles: ["participant", "team"] },
       { user: "Barbie92", roles: ["participant"] },
+      { user: "Lalo", roles: ["participant"] },
     ],
   },
   {
