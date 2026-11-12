@@ -109,7 +109,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const subject = t(
         "notification.groupChatMessage.mail.subject",
-        "{SENDER} sent a message to the {ROLE} chat in {GROUP}",
+        `New message from {SENDER} in "{GROUP}"`,
         subjectvars,
       );
 

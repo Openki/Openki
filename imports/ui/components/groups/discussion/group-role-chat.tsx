@@ -109,7 +109,7 @@ export function GroupRoleChat({ group, roleId }: Props) {
               <span>
                 {t(
                   "group.roleChats.description",
-                  "Group chat with you and {NUM, plural, one{other} other{# others}}.",
+                  "Group chat with you and {NUM, plural, =0{currently no one else} one{one other user} other{# others}}.",
                   { NUM: chatParticipants.length - 1 },
                 )}
               </span>

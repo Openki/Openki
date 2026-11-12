@@ -12,9 +12,17 @@ import { UserEntity, Users } from "/imports/api/users/users";
 import { slug } from "/imports/utils/string-tools";
 
 export const ensure = {
+  /**
+   * Generate a deterministic ID by hashing input strings.
+   *
+   * Useful for making tests reliable.
+   * This function should only be used for testdata, and only on the server side.
+   */
   fixedId(strings: string[]) {
     const md5 = crypto.createHash("md5");
-    strings.forEach((str) => md5.update(str));
+    for (const str of strings) {
+      md5.update(str);
+    }
     return md5.digest("hex").substring(0, 10);
   },
 
@@ -111,8 +119,7 @@ export const ensure = {
       {
         $set: {
           // Every password is set to "greg".
-          // Hashing a password with bcrypt is expensive so we use the
-          // computed hash.
+          // Hashing a password with bcrypt is expensive so we use the computed hash.
           services: {
             // @ts-expect-error Intentional override to avoid password reset for dev accounts.
             password: { bcrypt: "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq" },

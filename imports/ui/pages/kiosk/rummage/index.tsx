@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactSelect, { components, GroupBase, InputProps, StylesConfig } from "react-select";
+import { uniq } from "es-toolkit";
 
 import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
@@ -119,6 +120,14 @@ function Rummage({
   );
 }
 
+// These are useful for testing changes locally.
+// This snippet would become a useful test helper if/when we add automated tests for the rummage page
+//
+//// OrganizationsIds for dev.openki.net - Projectistan ////
+// const FoodMakers = "cc1165e5ed";
+// const FoodMakersLinkedOrganizations = "cc1165e5ed,826adc62fb,a87213b720,f2068b0022";
+// console.log(`http://localhost:3000/kiosk/rummage?teamOrganization=${FoodMakers}&linkedOrganizations=${FoodMakersLinkedOrganizations}&region=5JyFCoKwkxnf8LWoh&bgcolor=555&color=fff&lg=de&mtm_campaign=screens&mtm_source=dododo#noGoBack`);
+
 export function KioskRummagePage() {
   const { t } = useTranslation();
   const siteName = useSiteName();
@@ -160,7 +169,7 @@ export function KioskRummagePage() {
   const teamOrganization = filter.get("teamOrganization");
   const linkedOrganizations = filter.get("linkedOrganizations") || [];
   const allOrganizations = teamOrganization
-    ? [teamOrganization, ...linkedOrganizations]
+    ? uniq([teamOrganization, ...linkedOrganizations])
     : linkedOrganizations;
 
   // State for selected organization
@@ -261,7 +270,7 @@ export function KioskRummagePage() {
             >
               {PublicSettings.rummageLogoSmall.src && (
                 <div className="p-4">
-                  <h2>
+                  <h5>
                     {/* a decorative logo */}
                     <img
                       src={PublicSettings.rummageLogoSmall.src}
@@ -270,7 +279,7 @@ export function KioskRummagePage() {
                     />
                     <br />
                     by Openki
-                  </h2>
+                  </h5>
                 </div>
               )}
 
@@ -292,9 +301,9 @@ export function KioskRummagePage() {
                         options={options}
                         styles={customStyles}
                         components={{ Input: NoneKeyboardInput }}
-                        onChange={(newValue: any) => {
+                        onChange={(newValue) => {
                           if (newValue) {
-                            setSelectedOrganizationId(newValue.value);
+                            setSelectedOrganizationId((newValue as (typeof options)[number]).value);
                           }
                         }}
                       />

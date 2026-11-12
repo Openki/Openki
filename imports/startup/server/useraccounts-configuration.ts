@@ -97,6 +97,11 @@ Accounts.validateNewUser((user) => {
   return true;
 });
 
+// Only import fixture utils when it will be used
+const fixedId = PrivateSettings.testdata
+  ? (await import("/imports/api/fixtures/ensureFixture")).ensure.fixedId
+  : undefined;
+
 Accounts.onCreateUser(
   /**
   @param {{
@@ -108,6 +113,11 @@ Accounts.onCreateUser(
   */
   (options: any, proposedUser) => {
     const user = { ...proposedUser } as UserModel;
+
+    // When testdata is enabled, we use fixed user IDs to make automated tests deterministic.
+    if (PrivateSettings.testdata && fixedId) {
+      user._id = fixedId([user.username]);
+    }
     if (options.profile) {
       user.profile = options.profile as UserProfile;
     } else {
