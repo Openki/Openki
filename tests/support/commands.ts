@@ -151,6 +151,8 @@ Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: 
 
     return new Cypress.Promise((resolve, reject) => {
       console.log(`%c${method}`, "color: red; font-style: italic;");
+      // By using Meteor.callAsync(), we make sure Cypress doesn't treat our expected and intentional
+      // errors as if they were unhandled. This is needed to make this helper work as intended.
       Meteor.callAsync(method, ...params)
         .then(() => {
           reject(new Error(`Expected ${method} to fail`));
