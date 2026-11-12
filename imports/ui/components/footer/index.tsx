@@ -62,7 +62,7 @@ export function Footer() {
       .locale(locale)
       .format("lll")}`;
 
-  const branch = !!version && (version.branch !== "main" ? ` ${version.branch} ` : "");
+  const branch = !!version && (version.branch !== "main" ? `${version.branch} ` : "");
 
   const commit = version?.commitShort;
   const deployed = version?.activation;
@@ -76,7 +76,7 @@ export function Footer() {
       <span title={fullInfo} className="footer-deployed-version">
         <a href={tagLink} target="_blank" rel="noreferrer">
           {version?.basic}
-        </a>
+        </a>{" "}
         {branch}
         <a href={commitLink} target="_blank" rel="noreferrer">
           {commit}
