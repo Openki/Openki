@@ -67,7 +67,7 @@ export function Footer() {
   const commit = version?.commitShort;
   const deployed = version?.activation;
 
-  const commitLink = `https://gitlab.com/Openki/Openki/-/tree/${commit}`;
+  const commitLink = `https://gitlab.com/Openki/Openki/-/commit/${commit}`;
   const tagLink = `https://gitlab.com/Openki/Openki/-/releases/${version?.basic}`;
 
   return (
