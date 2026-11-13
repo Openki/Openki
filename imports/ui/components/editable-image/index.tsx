@@ -260,7 +260,7 @@ export function EditableImage(props: Props) {
             ) : props.thumbnail?.src ? (
               <img {...thumbnailAttributes()} src={props.thumbnail.src} alt="" />
             ) : (
-              <i className="fa-regular fa-image fa-5x" />
+              <i className="fa-solid fa-file-arrow-up fa-5x mb-2" />
             )}
           </div>
           {dragover ? (
@@ -333,7 +333,7 @@ export function EditableImage(props: Props) {
         />
       ) : (
         <i
-          className="fa-regular fa-image fa-5x cursor-pointer"
+          className="fa-solid fa-file-arrow-up fa-5x cursor-pointer"
           onClick={handleEditClick}
           onKeyDown={handleEditClick}
         />
