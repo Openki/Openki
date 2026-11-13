@@ -322,7 +322,7 @@ export function EditableImage(props: Props) {
     </>
   ) : (
     <div className="d-flex align-items-start gap-1">
-      <div className="d-flex flex-column gap-3 justify-content-center w-100">
+      <div className="d-flex flex-column gap-3">
         {props.thumbnail?.src ? (
           <img
             className="cursor-pointer img-thumbnail"
@@ -340,7 +340,7 @@ export function EditableImage(props: Props) {
           />
         )}
 
-        <button className="btn btn-secondary align-self-center" onClick={handleEditClick}>
+        <button className="btn btn-secondary" onClick={handleEditClick}>
           {deleteAllowed()
             ? t("fileUpload.change.text", "Replace file")
             : t("fileUpload.choose.text", "Choose a file")}
