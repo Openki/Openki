@@ -17,6 +17,8 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { cx } from "/imports/utils/cx";
 
+import { LoginButton } from "/imports/ui/components/navbar/LoginButton";
+import { UserFrame } from "/imports/ui/components/navbar/user-frame";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
@@ -262,6 +264,12 @@ export function KioskRummagePage() {
             }}
           >
             <div className="rummage-language-selection position-absolute" style={{ zIndex: 1 }}>
+              <li className="dropdown login-link">
+                <LoginButton />
+                <div className="dropdown-menu dropdown-menu-end login-dropdown w-max-content">
+                  <UserFrame onClose={() => void 0} />
+                </div>
+              </li>
               <LanguageSelection />
             </div>
             <div
