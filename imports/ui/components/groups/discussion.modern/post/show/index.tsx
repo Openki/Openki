@@ -53,7 +53,7 @@ export function Show({ post, onEdit }: Props) {
     post.parentId ? (
       <div className="list-group-item ps-5">
         <button type="button" className="btn btn-secondary" onClick={onEdit}>
-          {t("group.discussion.comment_answer", "Answer")}
+          {t("group.discussion.comment_answer", "Reply")}
         </button>
       </div>
     ) : (
