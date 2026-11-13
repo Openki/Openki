@@ -36,8 +36,8 @@ export interface Props {
   maxSize?: number | undefined;
   thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
   fullImage?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
-  onUpload: (file: UploadImage) => void;
-  onDelete?: (() => void) | undefined;
+  onUpload: (file: UploadImage) => Promise<void>;
+  onDelete?: (() => Promise<void>) | undefined;
 }
 
 function changeExt(fileName: string, newExt: string) {
@@ -131,7 +131,7 @@ export function EditableImage(props: Props) {
 
     setProgress("uploading");
 
-    props.onUpload(droppedFile);
+    await props.onUpload(droppedFile);
 
     setDroppedFile(undefined);
     setPreview(undefined);
