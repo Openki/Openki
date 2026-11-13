@@ -1,6 +1,6 @@
 import imageBlobReduce, { pica } from "image-blob-reduce";
 import { extension } from "mime-types";
-import React, { ChangeEvent, DragEvent, useId, useState } from "react";
+import React, { ChangeEvent, DragEvent, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { cx } from "/imports/utils/cx";
@@ -221,7 +221,9 @@ export function EditableImage(props: Props) {
     onDrop(file);
   }
 
-  function handleEditClick<T>(event: React.MouseEvent<T, MouseEvent>) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleEditClick<T>(event: React.MouseEvent<T> | React.KeyboardEvent<T>) {
     event.preventDefault();
 
     setProgress("edit");
@@ -244,6 +246,7 @@ export function EditableImage(props: Props) {
         onDrop={handleDrop}
       >
         <input
+          ref={fileInputRef}
           type="file"
           accept={SupportedMimeList.join(", ")}
           className="d-none"
@@ -253,9 +256,9 @@ export function EditableImage(props: Props) {
         <label htmlFor="file">
           <div className="mb-1">
             {preview ? (
-              <img {...thumbnailAttributes()} src={preview} />
+              <img {...thumbnailAttributes()} src={preview} alt="" />
             ) : props.thumbnail?.src ? (
-              <img {...thumbnailAttributes()} src={props.thumbnail.src} />
+              <img {...thumbnailAttributes()} src={props.thumbnail.src} alt="" />
             ) : (
               <i className="fa-regular fa-image fa-5x" />
             )}
@@ -267,11 +270,17 @@ export function EditableImage(props: Props) {
           ) : progress === "edit" ? (
             <>
               <div className="editable-image-actions">
-                <span className="btn btn-secondary">
+                <button
+                  className="btn btn-secondary"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    fileInputRef.current?.click();
+                  }}
+                >
                   {deleteAllowed()
                     ? t("fileUpload.change.text", "Replace file")
                     : t("fileUpload.choose.text", "Choose a file")}
-                </span>
+                </button>
                 {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}
               </div>
               {supportsDragndrop && (
@@ -319,9 +328,15 @@ export function EditableImage(props: Props) {
           {...thumbnailAttributes()}
           src={props.thumbnail.src}
           onClick={handleEditClick}
+          onKeyDown={handleEditClick}
+          alt=""
         />
       ) : (
-        <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
+        <i
+          className="fa-regular fa-image fa-5x cursor-pointer"
+          onClick={handleEditClick}
+          onKeyDown={handleEditClick}
+        />
       )}{" "}
       <div className="d-flex flex-column gap-1">
         {!!props.fullImage?.src && (
@@ -351,7 +366,7 @@ export function EditableImage(props: Props) {
                     ></button>
                   </div>
                   <div className="modal-body text-center">
-                    <img className="mw-100" src={props.fullImage.src} />
+                    <img className="mw-100" src={props.fullImage.src} alt="" />
                   </div>
                 </div>
               </div>
