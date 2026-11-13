@@ -1,3 +1,9 @@
+## Unreleased
+
+## Features
+
+- **Rummage page**: Make it easier to know who is signed in, and make it easier to sign out.
+
 # v0.14.4 - 2026-11-14
 
 ## Fixes
