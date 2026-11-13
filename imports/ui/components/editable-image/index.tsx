@@ -144,7 +144,7 @@ export function EditableImage(props: Props) {
     }
     setDroppedFile(undefined);
     setPreview(undefined);
-    setProgress("display");
+    setProgress("edit");
   }
 
   function onCancel() {
