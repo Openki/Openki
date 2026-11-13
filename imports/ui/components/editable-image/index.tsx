@@ -317,7 +317,7 @@ export function EditableImage(props: Props) {
         {progress === "ready" && (
           <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
         )}{" "}
-        <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
+        {props.thumbnail?.src && <ButtonCancel id="editable-image-cancel" onClick={onCancel} />}
       </div>
     </>
   ) : (
