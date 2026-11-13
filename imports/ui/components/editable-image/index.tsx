@@ -58,7 +58,7 @@ export function EditableImage(props: Props) {
       }
     | undefined
   >(undefined);
-  const [progress, setProgress] = useState("display");
+  const [progress, setProgress] = useState(props.thumbnail?.src ? "display" : "edit");
   const [copyRights, setCopyRights] = useState(false);
   const [dragover, setDragover] = useState(false);
   const [preview, setPreview] = useState<string | undefined>(undefined);
