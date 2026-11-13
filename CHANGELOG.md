@@ -1,3 +1,9 @@
+## Unreleased
+
+## Fixes
+
+- **Group details**: Fixed a bug where updating the group title or description accidentally deleted the group roles.
+
 # v0.14.3 - 2026-11-12
 
 ## Fixes
