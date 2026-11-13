@@ -270,7 +270,7 @@ export function KioskRummagePage() {
               style={{ backgroundColor: DododoColor }}
             >
               <div
-                className="d-flex justify-content-end align-items-center pt-4 gap-4"
+                className="d-flex justify-content-end align-items-center pt-3 gap-4 px-2"
                 style={{ zIndex: 1 }}
               >
                 {!!userId && (
@@ -287,7 +287,7 @@ export function KioskRummagePage() {
               </div>
 
               {PublicSettings.rummageLogoSmall.src && (
-                <div className="p-4">
+                <div className={cx("p-4", !userId && "mt-n5")}>
                   <h5>
                     {/* a decorative logo */}
                     <img
