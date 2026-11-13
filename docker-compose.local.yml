@@ -6,7 +6,7 @@ services:
     image: dxflrs/garage:v2.5.0
     restart: unless-stopped
     volumes:
-      - ./docker/garage.toml:/etc/garage.toml:z
+      - ./docker/garage.toml:/etc/garage.toml:ro
       - garage-meta:/var/lib/garage/meta
       - garage-data:/var/lib/garage/data
     ports:
@@ -30,7 +30,7 @@ services:
       - garages3
     network_mode: "service:garages3"
     volumes:
-      - ./docker/garage.toml:/etc/garage.toml:z
+      - ./docker/garage.toml:/etc/garage.toml:ro
       - garage-meta:/var/lib/garage/meta
     restart: "no"
 
