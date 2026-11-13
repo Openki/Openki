@@ -69,6 +69,7 @@
   100% {
     transform: translateX(100vw);
     width: 20vw;
+
     /*
       Hide the overlay once it has been shown to prevent overlap with the sidebar.
       This can happen when the viewport is resized, for example if someone zooms in/out.
