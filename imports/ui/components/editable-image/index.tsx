@@ -278,8 +278,8 @@ export function EditableImage(props: Props) {
                   }}
                 >
                   {deleteAllowed()
-                    ? t("fileUpload.change.text", "Replace file")
-                    : t("fileUpload.choose.text", "Choose a file")}
+                    ? t("fileUpload.change.text", "Replace image")
+                    : t("fileUpload.choose.text", "Choose image")}
                 </button>
                 {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}
               </div>
@@ -342,8 +342,8 @@ export function EditableImage(props: Props) {
 
         <button className="btn btn-secondary" onClick={handleEditClick}>
           {deleteAllowed()
-            ? t("fileUpload.change.text", "Replace file")
-            : t("fileUpload.choose.text", "Choose a file")}
+            ? t("fileUpload.change.text", "Replace image")
+            : t("fileUpload.choose.text", "Choose image")}
         </button>
       </div>
 
