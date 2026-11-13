@@ -322,22 +322,31 @@ export function EditableImage(props: Props) {
     </>
   ) : (
     <div className="d-flex align-items-start gap-1">
-      {props.thumbnail?.src ? (
-        <img
-          className="cursor-pointer img-thumbnail"
-          {...thumbnailAttributes()}
-          src={props.thumbnail.src}
-          onClick={handleEditClick}
-          onKeyDown={handleEditClick}
-          alt=""
-        />
-      ) : (
-        <i
-          className="fa-solid fa-file-arrow-up fa-5x cursor-pointer"
-          onClick={handleEditClick}
-          onKeyDown={handleEditClick}
-        />
-      )}{" "}
+      <div className="d-flex flex-column gap-3 justify-content-center w-100">
+        {props.thumbnail?.src ? (
+          <img
+            className="cursor-pointer img-thumbnail"
+            {...thumbnailAttributes()}
+            src={props.thumbnail.src}
+            onClick={handleEditClick}
+            onKeyDown={handleEditClick}
+            alt=""
+          />
+        ) : (
+          <i
+            className="fa-solid fa-file-arrow-up fa-5x cursor-pointer align-self-center"
+            onClick={handleEditClick}
+            onKeyDown={handleEditClick}
+          />
+        )}
+
+        <button className="btn btn-secondary align-self-center" onClick={handleEditClick}>
+          {deleteAllowed()
+            ? t("fileUpload.change.text", "Replace file")
+            : t("fileUpload.choose.text", "Choose a file")}
+        </button>
+      </div>
+
       <div className="d-flex flex-column gap-1">
         {!!props.fullImage?.src && (
           <>
@@ -373,9 +382,6 @@ export function EditableImage(props: Props) {
             </div>
           </>
         )}
-        <button onClick={handleEditClick} className="btn btn-light btn-sm">
-          <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
-        </button>
         {deleteAllowed() && (
           <button onClick={onDelete} className="btn btn-light btn-sm">
             <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>
