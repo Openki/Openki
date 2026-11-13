@@ -22,7 +22,7 @@ export function Files({ group }: { group: GroupModel }) {
       async onUpload(file: UploadImage) {
         try {
           await GroupsMethods.updateImage(group._id, file);
-          Alert.success(t("group.edit.image.updated", "Image have been saved."));
+          Alert.success(t("group.edit.image.updated", "Image has been saved."));
         } catch (err) {
           Alert.serverError(err, t("group.edit.image.updated.error", "Could not save image."));
         }
@@ -31,7 +31,7 @@ export function Files({ group }: { group: GroupModel }) {
         ? async function () {
             try {
               await GroupsMethods.deleteImage(group._id);
-              Alert.success(t("group.edit.image.removed", "Image have been removed."));
+              Alert.success(t("group.edit.image.removed", "Image has been removed."));
             } catch (err) {
               Alert.serverError(
                 err,
