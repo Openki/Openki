@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -42,10 +42,12 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
   );
 
   /**
-   * show comment when there is a comment or when the current member is the user
-   * so they can add or change the comment
+   * Only show the comment by default if it was written by the current user.
+   * Otherwise it has to be manually expanded.
+   *
+   * By hiding most comments by default, we reduce the likelyhood that the join comments are confused for a chat.
    */
-  const shouldShowComment = Boolean(member.comment) || memberIsCurrentUser;
+  const [showComment, setShowComment] = useState(member.comment && memberIsCurrentUser);
 
   function isProposalRole(role: GroupRole) {
     switch (role.type) {
@@ -67,6 +69,15 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
           <ProfileLink userId={member.user} />
           <Contribution userId={member.user} />
         </div>
+        {!!member.comment && (
+          <button
+            className="btn btn-link p-0 mx-2"
+            onClick={() => setShowComment(!showComment)}
+            aria-label={t("groupMember.showComment", "Show comment")}
+          >
+            <i className={cx("fa-solid fa-fw", showComment ? "fa-angle-up" : "fa-angle-down")}></i>
+          </button>
+        )}
         <ParticipantContact participant={member.user} group={group} />
         <div className="ms-auto d-flex flex-wrap align-items-center gap-1">
           {!isRolesLoading() &&
@@ -101,7 +112,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
         </div>
       </div>
 
-      {shouldShowComment && (
+      {showComment && (
         <div className="group-member-comment">
           <div className="group-member-comment-arrow" />
           <div className="group-member-comment-body">
