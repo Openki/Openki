@@ -9,6 +9,7 @@ import { useDetails } from "/imports/api/organizations/publications";
 import * as Predicates from "/imports/utils/predicates";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
@@ -192,6 +193,7 @@ export function KioskRummagePage() {
     value: id,
     label: <OrganizationName id={id} />,
   }));
+  const userId = useUserId();
 
   const customStyles: StylesConfig<unknown, boolean, GroupBase<unknown>> | undefined = {
     control: (provided) => ({
@@ -263,19 +265,27 @@ export function KioskRummagePage() {
               zIndex: 86400001,
             }}
           >
-            <div className="rummage-language-selection position-absolute" style={{ zIndex: 1 }}>
-              <li className="dropdown login-link">
-                <LoginButton />
-                <div className="dropdown-menu dropdown-menu-end login-dropdown w-max-content">
-                  <UserFrame onClose={() => void 0} />
-                </div>
-              </li>
-              <LanguageSelection />
-            </div>
             <div
               className="d-flex text-white flex-column flex-grow-1"
               style={{ backgroundColor: DododoColor }}
             >
+              <div
+                className="d-flex justify-content-end align-items-center pt-4 gap-4"
+                style={{ zIndex: 1 }}
+              >
+                {!!userId && (
+                  <div className="dropdown login-link rummage-account">
+                    <LoginButton />
+                    <div className="dropdown-menu dropdown-menu-end login-dropdown w-max-content">
+                      <UserFrame onClose={() => void 0} />
+                    </div>
+                  </div>
+                )}
+                <div className="rummage-language-selection">
+                  <LanguageSelection />
+                </div>
+              </div>
+
               {PublicSettings.rummageLogoSmall.src && (
                 <div className="p-4">
                   <h5>

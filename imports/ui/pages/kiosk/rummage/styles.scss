@@ -20,11 +20,16 @@
   }
 }
 
-.rummage-language-selection {
+.rummage-account button.btn-link {
+  padding: 0.5rem 1rem;
   scale: 1.25;
+}
+
+.rummage-language-selection {
   top: 1.5rem;
   right: 1.5rem;
   padding-right: 0.5rem;
+  scale: 1.25;
 }
 
 .rummage-language-selection .btn {
