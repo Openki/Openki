@@ -1,0 +1,42 @@
+services:
+  # ─────────────────────────────────────────────
+  # Garage - S3-compatible object storage
+  # ─────────────────────────────────────────────
+  garages3:
+    image: dxflrs/garage:v2.5.0
+    restart: unless-stopped
+    volumes:
+      - ./docker/garage.toml:/etc/garage.toml:ro
+      - garage-meta:/var/lib/garage/meta
+      - garage-data:/var/lib/garage/data
+    ports:
+      - "${GARAGE_S3_API_PORT:-3900}:3900" # S3 API (used by the app server)
+      - "${GARAGE_WEB_PORT:-3902}:3902" # public web endpoint (used by the browser to load uploaded files)
+      - "${GARAGE_ADMIN_PORT:-3903}:3903" # admin API
+    networks:
+      - app-network
+
+  # One-shot: creates the "openki-dev" bucket + access key on first start.
+  # Shares garages3's network namespace (so the CLI reaches it over localhost)
+  # *and* its metadata volume (the CLI needs to read the node identity key
+  # garages3 generates there on first boot to authenticate over RPC - without
+  # it, `garage status` fails with "Unable to read node key"). Re-running is
+  # safe, it skips steps already done.
+  garages3-init:
+    build:
+      context: ./docker
+      dockerfile: garage-init.Dockerfile
+    depends_on:
+      - garages3
+    network_mode: "service:garages3"
+    volumes:
+      - ./docker/garage.toml:/etc/garage.toml:ro
+      - garage-meta:/var/lib/garage/meta
+    restart: "no"
+
+volumes:
+  garage-meta:
+  garage-data:
+
+networks:
+  app-network:

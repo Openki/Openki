@@ -15,6 +15,10 @@
 
 set default-list
 
+export COMPOSE_FILE := 'docker-compose.local.yml'
+export METEOR_NO_RELEASE_CHECK := 'true'
+export ENV_FILE := '.env.local'
+
 # Combined installation of both npm and Meteor Atmosphere packages.
 # Optionally include `ARGS` to install specific npm package(s):
 # Example: `just install react react-dom`
@@ -23,12 +27,29 @@ set default-list
 install *ARGS:
     meteor npm install {{ ARGS }}
 
-# Start the development server
+# Start the Meteor development server
 [no-exit-message]
 dev:
-    meteor npm run debug
+    meteor npm run dev:startup
+    meteor run --inspect --settings settings/local.json
 
-# Fix linting and formatting errors and warn for serious problems
+# Main docker compose wrapper with common config
+compose *ARGS:
+    docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} {{ ARGS }}
+
+# Start the local S3 instance in the containerized local development environment
+docker-dev:
+    docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} up
+
+[doc("""
+Delete the containerized local development environment. Useful to remove old containers before a rebuild.
+
+Pass `--volumes` to also delete all persisted data. This clears the local S3 storage.
+""")]
+delete-docker-dev *ARGS:
+    docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} down --rmi local {{ ARGS }}
+
+# Fix linting and formatting errors and warn for serious problems.
 fix:
     meteor npm run lint:fix || just oxlint-errors
 
@@ -53,8 +74,7 @@ test-ui:
 test:
     meteor npm run test
 
-# Run only specific tests in a headless browser.
-# For example, `tests/component/Navbar.spec.ts`
+# Run only specific tests in a headless browser. For example, `tests/component/Navbar.spec.ts`
 test-only *ARGS:
     meteor npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
 

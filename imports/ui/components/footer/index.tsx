@@ -62,23 +62,23 @@ export function Footer() {
       .locale(locale)
       .format("lll")}`;
 
-  const branch = !!version && (version.branch !== "main" ? `${version.branch} ` : "");
+  const branch = !!version && `${version.branch} `;
 
   const commit = version?.commitShort;
   const deployed = version?.activation;
 
-  const commitLink = `https://gitlab.com/Openki/Openki/-/tree/${commit}`;
+  const commitLink = `https://gitlab.com/Openki/Openki/-/commit/${commit}`;
   const tagLink = `https://gitlab.com/Openki/Openki/-/releases/${version?.basic}`;
 
   return (
     <footer className="footer bg-brand">
       <Links />
       <span title={fullInfo} className="footer-deployed-version">
-        <a href={tagLink} target="_blank" rel="noreferrer">
+        <a href={tagLink} target="_blank" rel="noreferrer" className="text-white">
           {version?.basic}
         </a>{" "}
         {branch}
-        <a href={commitLink} target="_blank" rel="noreferrer">
+        <a href={commitLink} target="_blank" rel="noreferrer" className="text-white">
           {commit}
         </a>{" "}
         <Status />

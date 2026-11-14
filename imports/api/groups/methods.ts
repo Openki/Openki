@@ -123,8 +123,9 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<GroupEntity>;
 
-  // validation: only allow uniq roles
-  const changedRoles = uniqGroupRole(changes.roles || []);
+  // Validation: only allow uniq roles
+  // Important: We only want to update roles when an explicit array was passed into the method
+  const changedRoles = Array.isArray(changes.roles) && uniqGroupRole(changes.roles);
   if (changedRoles) {
     if (isNew) {
       const regionRoles = await loadRoles(changes.region as string);
