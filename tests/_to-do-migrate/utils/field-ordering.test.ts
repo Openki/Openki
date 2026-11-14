@@ -3,7 +3,7 @@ import { assert } from "chai";
 import { FieldOrdering } from "/imports/utils/field-ordering";
 import { SortSpec } from "/imports/utils/sort-spec";
 
-describe("Ordering by object fields ", () => {
+describe("Ordering by object fields", () => {
   const empty = {};
   const smallerB = { a: 1, b: 1 };
   const biggerB = { a: 1, b: 2 };
