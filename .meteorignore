@@ -4,12 +4,15 @@ i18next-parser.config.js
 
 .dockerignore
 Dockerfile
+docker/
 
 .codeclimate.yml
 .editorconfig
 justfile
 .oxfmtrc.jsonc
 .oxlintrc.jsonc
+.stylelintrc
+.stylelintignore
 
 LICENSE
 LICENSES/
@@ -17,3 +20,5 @@ LICENSES/
 .gitlab-ci.yml
 .gitlab
 ci/
+README.md
+example.env.local
