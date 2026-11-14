@@ -35,7 +35,7 @@ const jsonSendResponder = async function (res: any, process: () => Promise<ApiEv
         body.data.error = e.message;
       }
     } else {
-      console.log(e, e.stack);
+      console.log(e, e instanceof Error && e.stack);
       res.statusCode = 500;
       body.status = "error";
       body.message = "Server error";
