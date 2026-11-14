@@ -1,21 +1,14 @@
-import React, { RefAttributes } from "react";
+import React from "react";
+import CreatableSelect, { CreatableProps } from "react-select/creatable";
+import { type GroupBase } from "react-select";
 
-import CreatableSelect from "react-select/creatable";
-import { GroupBase } from "react-select";
-import Select from "react-select/dist/declarations/src/Select";
-import { StateManagerProps } from "react-select/dist/declarations/src/useStateManager";
-import { CreatableAdditionalProps } from "react-select/dist/declarations/src/useCreatable";
 import { getBootstrapStyles } from "/imports/ui/components/react-select/getBootstrapStyles";
 
 export interface Props<
   Option = unknown,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>,
->
-  extends
-    StateManagerProps<Option, IsMulti, Group>,
-    CreatableAdditionalProps<Option, Group>,
-    RefAttributes<Select<Option, IsMulti, Group>> {
+> extends CreatableProps<Option, IsMulti, Group> {
   isInvalid?: boolean | undefined;
 }
 
