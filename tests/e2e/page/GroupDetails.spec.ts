@@ -20,10 +20,11 @@ describe("group details page", () => {
     cy.allSubscriptionsReady();
 
     const title = "edit_test";
+    const description = "something";
 
     // Create a group with custom roles
     cy.get("#group-edit-title").type(title);
-    cy.get("#group-edit-description").type("something");
+    cy.get("#group-edit-description").type(description);
     cy.get("#group-edit-role-select").click();
     cy.get("div[class$='-menu']").contains("builder").click();
     cy.get("#groups-edit-save").click();
@@ -33,12 +34,14 @@ describe("group details page", () => {
     cy.get(".group-details-title .editable").type("2");
     cy.get("#editable-save").click();
     cy.get("#subscribe").contains("a builder").should("exist");
+    cy.get(".group-details-title .editable").contains(`${title}2`).should("exist");
 
     // // Edit description and verify that roles remain.
     cy.get("#group-description button").click();
     cy.get("#group-description .editable").type("2");
     cy.get("#editable-save").click();
     cy.get("#subscribe").contains("a builder").should("exist");
+    cy.get("#group-description .editable").contains(`${description}2`).should("exist");
 
     // Cleanup
     cy.get("#group-details-confirm-delete").click();
