@@ -3,6 +3,7 @@
   "version": "0.13.3",
   "description": "GroupOrganizationPlatform",
   "main": "server/main.ts",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
@@ -92,7 +93,7 @@
     "stylelint": "18.0.0",
     "stylelint-config-standard-scss": "18.0.0",
     "tinyexec": "1.3.1",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   },
   "scripts": {
     "dev:startup": "npm run extract-translations && npm run type-check",
