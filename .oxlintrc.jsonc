@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y", "react"],
+  "plugins": ["typescript", "eslint", "oxc", "node", "unicorn", "jsx-a11y", "react", "jest"],
   "settings": {
     "react": {
       "version": "19.3.0",
@@ -206,6 +206,8 @@
     {
       "files": ["**/*.test.ts", "**/*.app-test.ts", "**/*.spec.ts"],
       "rules": {
+        "jest/no-focused-tests": "error",
+        "jest/expect-expect": "off",
         "no-unused-expressions": "off",
       },
     },

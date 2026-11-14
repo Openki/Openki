@@ -8,7 +8,7 @@ describe("group details page", () => {
     cy.get("h1").contains("Page not found");
   });
 
-  it.only("should only update title and description without modifying other group data", () => {
+  it("should only update title and description without modifying other group data", () => {
     // Regression test for https://gitlab.com/Openki/Openki/-/work_items/2577
     cy.visitOpenki("/groups/propose", {
       username: "MazeSignal",
