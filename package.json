@@ -3,7 +3,6 @@
   "version": "0.13.3",
   "description": "GroupOrganizationPlatform",
   "main": "server/main.ts",
-  "type": "module",
   "directories": {
     "test": "tests"
   },
