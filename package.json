@@ -106,7 +106,7 @@
     "lint": "oxlint --report-unused-disable-directives && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' && oxfmt --check '**/*.{ts,tsx,scss,json*,js,md}'",
     "lint:fix": "oxlint --fix && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' --fix && echo 'Formatting and applying fixes...' && oxfmt --write '**/*.{ts,tsx,scss,json*,js,md}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
-    "type-check": "echo 'Linting and checking types...' && meteor lint && tsc",
+    "type-check": "echo 'Linting and checking types...' && meteor lint && meteor types && tsc",
     "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
