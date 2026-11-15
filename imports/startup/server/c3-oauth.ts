@@ -1,9 +1,10 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { WebApp } from "meteor/webapp";
-import { LocalhostSsl } from "/imports/utils/LocalhostSsl";
+import { OAuth } from "meteor/oauth";
 import { Accounts } from "meteor/accounts-base";
 import { AsyncLocalStorage } from "node:async_hooks";
 
+import { LocalhostSsl } from "/imports/utils/LocalhostSsl";
 import { C3Settings } from "/imports/startup/both/c3-oauth-settings";
 
 if (LocalhostSsl) {
@@ -58,6 +59,7 @@ async function getTokens(query: { code: any }) {
     throw new ConfigError();
   }
 
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   const body = OAuth._addValuesToQueryParams({
     grant_type: "authorization_code",
     code: query.code,
@@ -70,6 +72,7 @@ async function getTokens(query: { code: any }) {
     code_verifier: requestContext.getStore()?.request.cookies.verifier,
   }).toString();
 
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   return OAuth._fetch(config.tokenUrl, "POST", {
     headers: {
       Accept: "application/json",
@@ -114,6 +117,7 @@ async function getIdentity(accessToken: any) {
     throw new ConfigError();
   }
 
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   return OAuth._fetch(config.userInfoUrl, "GET", {
     headers: { Authorization: `Bearer ${accessToken}` },
   })
