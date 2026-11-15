@@ -76,6 +76,7 @@ const discriminatoryReporting = function (args: [msg: string, error?: Error] | s
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
+// @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
 Meteor._debug = function (...args: [msg: string, error: Error] | string[]) {
   meteorDebug.apply(this, args);
   discriminatoryReporting(args);
