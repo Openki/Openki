@@ -29,7 +29,7 @@ import { HtmlString, Type } from "/imports/utils/CustomChecks";
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
-import { UserModel } from "../users/users";
+import { getUserAsync, UserModel } from "../users/users";
 import { GeodataPattern } from "/imports/api/Geodata";
 import { subscribeToRole } from "/imports/api/groups/methods";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
@@ -167,7 +167,7 @@ export const save = ServerMethod(
 
     const editFields = changes as Partial<EventEntity>;
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -420,7 +420,7 @@ export const save = ServerMethod(
 );
 
 async function checkEditAllowed(eventId: string) {
-  const operator = await Meteor.userAsync();
+  const operator = await getUserAsync();
   if (!operator) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -520,7 +520,7 @@ export const addParticipant = ServerMethod(
     check(eventId, String);
     check(companions, Number);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -613,7 +613,7 @@ export const removeParticipant = ServerMethod(
     } else {
       let operator: UserModel | null = null;
 
-      operator = await Meteor.userAsync();
+      operator = await getUserAsync();
       if (!operator) {
         throw new Meteor.Error(401, "please log in");
       }

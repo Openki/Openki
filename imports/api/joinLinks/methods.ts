@@ -6,6 +6,7 @@ import { JoinLinks } from "./joinLinks";
 import { Tenants } from "/imports/api/tenants/tenants";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
+import { getUserAsync } from "../users/users";
 
 export const create = ServerMethod("joinLinks.create", async (tenantId: string) => {
   check(tenantId, String);
@@ -15,7 +16,7 @@ export const create = ServerMethod("joinLinks.create", async (tenantId: string) 
     throw new Meteor.Error(401, "Not permitted");
   }
 
-  const user = await Meteor.userAsync();
+  const user = await getUserAsync();
 
   // Only current tenant admins (or instance admins) can draft other people into it
   if (!user || !tenant.editableBy(user)) {
@@ -52,7 +53,7 @@ export const remove = ServerMethod("joinLinks.remove", async (tenantId: string) 
   }
 
   // Only current tenant admins (or instance admins) can draft other people into it
-  if (!tenant.editableBy(await Meteor.userAsync())) {
+  if (!tenant.editableBy(await getUserAsync())) {
     throw new Meteor.Error(401, "Not permitted");
   }
 

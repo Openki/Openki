@@ -11,6 +11,7 @@ import { Venues } from "/imports/api/venues/venues";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { getUserAsync } from "../users/users";
 
 export const CreateFieldsPattern = {
   tenant: String,
@@ -28,7 +29,7 @@ export type CreateFields = Type<typeof CreateFieldsPattern>;
 export const create = ServerMethod("region.create", async (changes: CreateFields) => {
   check(changes, CreateFieldsPattern);
 
-  const user = await Meteor.userAsync();
+  const user = await getUserAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -74,7 +75,7 @@ export const UpdateFieldsPattern = {
 };
 
 async function checkEditAllowed(regionId: string) {
-  const user = await Meteor.userAsync();
+  const user = await getUserAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }

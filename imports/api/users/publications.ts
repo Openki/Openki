@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
-import { Users } from "/imports/api/users/users";
+import { getUser, getUserAsync, Users } from "/imports/api/users/users";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
@@ -111,7 +111,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins can see other's privileges
-    if ((await Meteor.userAsync())?.hasPrivilege("admin")) {
+    if ((await getUserAsync())?.hasPrivilege("admin")) {
       projection.privileges = 1;
     }
 
@@ -128,7 +128,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins can see other's privileges
-    if (Meteor.user()?.hasPrivilege("admin")) {
+    if (getUser()?.hasPrivilege("admin")) {
       projection.privileges = 1;
     }
 

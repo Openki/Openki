@@ -5,6 +5,7 @@ import { GroupChatMessages } from "./group-chat-messages";
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
 import { Meteor } from "meteor/meteor";
 import { Groups } from "../groups/groups";
+import { getUserAsync } from "../users/users";
 
 export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
   "groupChatMessages",
@@ -12,7 +13,7 @@ export const [groupChatMessages, useGroupChatMessages] = ServerPublishMany(
     check(groupId, String);
     check(roleId, String);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }

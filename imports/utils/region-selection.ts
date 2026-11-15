@@ -8,6 +8,7 @@ import { RegionModel } from "/imports/api/regions/regions";
 
 import * as UserLocation from "/imports/utils/user-location";
 import { getQueryParam } from "/imports/utils/url-tools";
+import { getUserAsync } from "../api/users/users";
 
 /**
  * List of routes that show different results when the region changes.
@@ -111,7 +112,7 @@ export function init() {
   // We assume the initial onLogin() callback comes before the regions' ready.
   // We have no guarantee for this however!
   Accounts.onLogin(async () => {
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (user) {
       const { regionId } = user.profile;
       if (regionId) {

@@ -1,5 +1,5 @@
 import { Accounts } from "meteor/accounts-base";
-import { Meteor } from "meteor/meteor";
+import { getUserAsync } from "../api/users/users";
 
 /**
  * @param theme "light" | "system" | "dark" | undefined
@@ -20,7 +20,7 @@ export function setTheme(theme: string | undefined) {
 
 export function init() {
   Accounts.onLogin(async () => {
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       return;
     }

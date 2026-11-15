@@ -37,6 +37,7 @@ import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamP
 import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
 import { RolePattern } from "./lib/RolePattern";
 import { uniqGroupRole } from "./lib/uniqGroupRole";
+import { getUserAsync } from "../users/users";
 
 async function loadGroup(id: string) {
   const group = await Groups.findOneAsync({ _id: id });
@@ -104,7 +105,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
   check(changes, expectedFields);
 
-  const user = await Meteor.userAsync();
+  const user = await getUserAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -385,7 +386,7 @@ export const updateImage = ServerMethod(
     check(groupId, NotEmptyString());
     check(file, FileStorage.UploadFilePattern);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -434,7 +435,7 @@ export const deleteImage = ServerMethod(
   async (groupId: string) => {
     check(groupId, NotEmptyString());
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -531,7 +532,7 @@ export const subscribeToRole = ServerMethod(
     check(comment, Match.Optional(String));
     check(notifyTeam, Match.Optional(Boolean));
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -690,7 +691,7 @@ export const addMemberToTeam = ServerMethod(
     check(groupId, NotEmptyString());
     check(userId, NotEmptyString());
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -721,7 +722,7 @@ export const removeMemberFromTeam = ServerMethod(
     check(groupId, NotEmptyString());
     check(userId, NotEmptyString());
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -753,7 +754,7 @@ export const archive = ServerMethod("group.archive", async (groupId: string) => 
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
-  if (!group.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await getUserAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Groups.updateAsync(group._id, { $set: { archived: true } });
@@ -763,7 +764,7 @@ export const unarchive = ServerMethod("group.unarchive", async (groupId: string)
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
-  if (!group.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await getUserAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Groups.updateAsync(group._id, { $set: { archived: false } });
@@ -773,7 +774,7 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
   check(groupId, NotEmptyString());
 
   const group = await loadGroup(groupId);
-  if (!group.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await getUserAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Events.removeAsync({ groupId });

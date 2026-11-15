@@ -5,7 +5,7 @@ import { Email } from "meteor/email";
 import { Meteor } from "meteor/meteor";
 
 import { Version } from "/imports/api/version/version";
-import { Users } from "/imports/api/users/users";
+import { getUserAsync, Users } from "/imports/api/users/users";
 
 import { Notification } from "/imports/startup/both/emails/notification";
 import { ServerMethod } from "/imports/utils/ServerMethod";
@@ -45,7 +45,7 @@ export const sendPrivateMessage = ServerMethod(
     check(message, String);
     check(options, SendPrivateMessageOptionsPattern);
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -93,7 +93,7 @@ export const sendReport = ServerMethod(
     check(userAgent, String);
     check(reportMessage, String);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
 
     const version = await Version.findOneAsync();
 

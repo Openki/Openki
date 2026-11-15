@@ -5,7 +5,7 @@ import { random } from "es-toolkit/compat";
 import { ValidationError } from "meteor/mdg:validation-error";
 
 import { Log } from "/imports/api/log/log";
-import { Users } from "/imports/api/users/users";
+import { getUserAsync, Users } from "/imports/api/users/users";
 import { Group, Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
 import * as groupInterestedDenormalizer from "../groups/interestedDenormalizer";
@@ -88,7 +88,7 @@ export const updateUsername = ServerMethod(
   async (unsafeUsername: string) => {
     check(unsafeUsername, String);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new ValidationError([{ name: "username", type: "plzLogin" }], "Not logged-in");
     }
@@ -143,7 +143,7 @@ export const updateAutomatedNotification = ServerMethod(
   async (allow: boolean) => {
     check(allow, Boolean);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new ValidationError([{ name: "notifications", type: "plzLogin" }], "Not logged-in");
     }
@@ -162,7 +162,7 @@ export const updatePrivateMessages = ServerMethod(
   async (allow: boolean) => {
     check(allow, Boolean);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new ValidationError(
         [{ name: "allowPrivateMessages", type: "plzLogin" }],
@@ -198,7 +198,7 @@ export const updateEmail = ServerMethod(
   async (email: string) => {
     check(email, String);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new ValidationError([{ name: "email", type: "plzLogin" }], "Not logged-in");
     }
@@ -235,7 +235,7 @@ export const updateEmail = ServerMethod(
 );
 
 export const selfRemove = ServerMethod("user.self.remove", async () => {
-  const user = await Meteor.userAsync();
+  const user = await getUserAsync();
   if (user) {
     await Users.removeAsync({ _id: user._id });
   }
@@ -255,7 +255,7 @@ export const adminRemove = ServerMethod(
     check(reason, String);
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator?.hasPrivilege("admin")) {
       return;
     }
@@ -316,7 +316,7 @@ export const addPrivilege = ServerMethod(
     check(userId, String);
     check(privilege, String);
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator?.hasPrivilege("admin")) {
       // At the moment, only admins can hand out privileges, so this is easy
       return;
@@ -341,7 +341,7 @@ export const removePrivilege = ServerMethod(
       throw new Meteor.Error(404, "User not found");
     }
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
     if (!operator || (!operator.hasPrivilege("admin") && operator._id !== user._id)) {
       return;
     }
@@ -353,7 +353,7 @@ export const removePrivilege = ServerMethod(
 export const setHasContributed = ServerMethod("user.setHasContributed", async (userId: string) => {
   check(userId, String);
 
-  const operator = await Meteor.userAsync();
+  const operator = await getUserAsync();
 
   if (!operator || !operator.hasPrivilege("admin")) {
     return;
@@ -377,7 +377,7 @@ export const unsetHasContributed = ServerMethod(
   async (userId: string) => {
     check(userId, String);
 
-    const operator = await Meteor.userAsync();
+    const operator = await getUserAsync();
 
     if (!operator || !operator.hasPrivilege("admin")) {
       return;

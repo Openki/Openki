@@ -1,4 +1,3 @@
-import { Meteor } from "meteor/meteor";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
@@ -25,6 +24,7 @@ import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
 import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
+import { getUserAsync } from "../users/users";
 
 /**
  * Private method to reset fixture data. Should only be used on the server side when cleaning fixtures.
@@ -133,7 +133,7 @@ export async function serverOnlyCreateFixtures() {
 export const cleanFixtures = ServerMethod(
   "fixtures.clean",
   async () => {
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user || !user.hasPrivilege("admin")) {
       return;
     }
@@ -151,7 +151,7 @@ export const cleanFixtures = ServerMethod(
 export const createFixtures = ServerMethod(
   "fixtures.create",
   async () => {
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user || !user.hasPrivilege("admin")) {
       return;
     }

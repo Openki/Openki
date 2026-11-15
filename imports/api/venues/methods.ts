@@ -12,6 +12,7 @@ import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
+import { getUserAsync } from "../users/users";
 
 async function checkEditAllowed(venueId: string) {
   const venue = await Venues.findOneAsync(venueId);
@@ -19,7 +20,7 @@ async function checkEditAllowed(venueId: string) {
     throw new Meteor.Error(404, "Venue not found");
   }
 
-  if (!venue.editableBy(await Meteor.userAsync())) {
+  if (!venue.editableBy(await getUserAsync())) {
     throw new Meteor.Error(401, "Please log in");
   }
 
@@ -56,7 +57,7 @@ export const save = ServerMethod(
     check(venueId, String);
     check(changes, SaveFieldPattern);
 
-    const user = await Meteor.userAsync();
+    const user = await getUserAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
