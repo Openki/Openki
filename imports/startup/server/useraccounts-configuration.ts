@@ -132,10 +132,11 @@ Accounts.onCreateUser(
     } else {
       user.profile = {} as UserProfile;
     }
+    type NameProviders = ({ name?: string; username?: string } | undefined)[];
     // Collect info where a username could possibly be found
-    let nameProviders = [user, user.profile];
+    let nameProviders: NameProviders = [user, user.profile];
     if (user.services) {
-      nameProviders = [...nameProviders, ...toArray(proposedUser.services)];
+      nameProviders = [...nameProviders, ...(toArray(proposedUser.services) as NameProviders)];
     }
 
     // Try to glean a username
