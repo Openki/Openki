@@ -50,7 +50,7 @@
     ],
     "resolveJsonModule": true,
     "preserveSymlinks": true,
-    "skipLibCheck": true // because of a error in ./node_modules/i18next-chained-backend/ and ./node_modules/i18next-localstorage-backend/
+    "skipLibCheck": true // Recommended setting for all modern TS projects
   },
   "include": ["**/*.ts", "**/*.tsx", "./types/*.d.ts"],
   "exclude": ["./.meteor/local/isopacks/**", "./.meteor/local/plugin-cache/**", "./packages/**"]

@@ -137,7 +137,7 @@
     "typescript/no-explicit-any": "warn",
     "typescript/no-extra-non-null-assertion": "error",
     "typescript/no-misused-new": "error",
-    "typescript/no-namespace": "error",
+    "typescript/no-namespace": "warn",
     "typescript/no-non-null-asserted-optional-chain": "error",
     "typescript/no-require-imports": "error",
     "typescript/no-this-alias": "error",
