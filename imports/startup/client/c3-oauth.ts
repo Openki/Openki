@@ -93,6 +93,7 @@ function loginWithC3(options: any, callback: any) {
   requestCredential(options, credentialRequestCompleteCallback);
 }
 Accounts.registerClientLoginFunction("c3", loginWithC3);
+/** This function is called dynamically via `Meteor[`loginWith${service.serviceName}`]` */
 Meteor.loginWithC3 = (...args: any) => Accounts.applyLoginFunction("c3", args);
 
 // oxlint-disable no-shadow no-namespace
