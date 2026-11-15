@@ -10,7 +10,6 @@ email@3.2.1
 iron:router
 shell-server@0.7.2                  # Server-side component of the `meteor shell` command
 session@1.2.4
-mdg:validation-error
 dynamic-import@0.8.1
 ostrio:cookies
 

@@ -1,4 +1,4 @@
-import { ValidationError, type ValidationErrorDetail } from "meteor/mdg:validation-error";
+import { ValidationError, type ValidationErrorDetail } from "/imports/utils/validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Buttons";

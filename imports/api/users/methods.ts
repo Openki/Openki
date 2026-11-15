@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
 import { random } from "es-toolkit/compat";
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError } from "/imports/utils/validation-error";
 
 import { Log } from "/imports/api/log/log";
 import { getUserAsync, Users } from "/imports/api/users/users";

@@ -31,7 +31,7 @@ import { HtmlString, NotEmptyString, StringEnum, Type } from "/imports/utils/Cus
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError } from "/imports/utils/validation-error";
 import { isSameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
