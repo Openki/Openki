@@ -52,6 +52,6 @@
     "preserveSymlinks": true,
     "skipLibCheck": true // Recommended setting for all modern TS projects
   },
-  "include": ["**/*.ts", "**/*.tsx", "./types/*.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "./types/*"],
   "exclude": ["./.meteor/local/isopacks/**", "./.meteor/local/plugin-cache/**", "./packages/**"]
 }
