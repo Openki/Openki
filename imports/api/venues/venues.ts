@@ -198,7 +198,9 @@ class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
         projection: { "venue._id": 1 },
       };
 
-      const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
+      const recentEvents = Events.find(findRecent, findRecentOptions).fetch() as (EventEntity & {
+        venue: { _id: string };
+      })[];
 
       const recentLocations = uniq(
         recentEvents
