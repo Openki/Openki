@@ -50,6 +50,9 @@ export const createMany = ServerMethod(
         // Selector
         { tenant: i.tenant, to: i.to },
         // Modifier
+        // This error happens because the `meteor/mongo` types only allow `string` and not `Mongo.ObjectId`
+        // for the `$set` operator. This is supported by Mongo, but not by Meteor's wrapped type.
+        // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
         { $set: i, $unset: { acceptedBy: true } },
       );
     }

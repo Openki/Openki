@@ -365,6 +365,9 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     await editorsDenormalizer.updateEditors(groupId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
+    // This error happens because the `meteor/mongo` types only allow `string` and not `Mongo.ObjectId`
+    // for the `$set` operator. This is supported by Mongo, but not by Meteor's wrapped type.
+    // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
     await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
 
     await historyDenormalizer.afterUpdate(groupId, user._id);
