@@ -8,21 +8,21 @@ meteor-base@1.5.2             # Packages every Meteor app needs to have
 base64@1.0.15
 email@3.2.1
 iron:router
-shell-server                  # Server-side component of the `meteor shell` command
+shell-server@0.7.2                  # Server-side component of the `meteor shell` command
 session@1.2.4
 mdg:validation-error
-dynamic-import
+dynamic-import@0.8.1
 ostrio:cookies
 
 # Accounts
-accounts-password@3.3.2
-accounts-base@3.4.0
+accounts-password@3.3.3
+accounts-base@3.4.1
 accounts-facebook@1.3.5
 accounts-google@1.4.2
 accounts-github@1.5.2
-facebook-config-ui
-google-config-ui
-github-config-ui
+facebook-config-ui@1.1.0
+google-config-ui@1.1.0
+github-config-ui@1.0.3
 service-configuration@1.3.6
 oauth2@1.3.3
 oauth@3.0.5
@@ -42,12 +42,12 @@ mdg:seo
 # Build
 es5-shim@4.8.1                  # ECMAScript 5 compatibility for older browsers
 ecmascript@0.19.2               # Enable ECMAScript2015+ syntax in app code
-standard-minifier-css           # CSS minifier run for production mode
-standard-minifier-js            # JS minifier run for production mode
+standard-minifier-css@1.10.1           # CSS minifier run for production mode
+standard-minifier-js@3.3.0            # JS minifier run for production mode
 mys:fonts
 
 # DEV
 zodern:types                    # Pull in type declarations from other Meteor packages
 typescript@5.11.2               # Enable TypeScript syntax in .ts and .tsx modules
-accounts-express@1.0.0                # Only used for tests. Not needed for the production build.
+accounts-express@1.0.1                # Only used for tests. Not needed for the production build.
 underscore
