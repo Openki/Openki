@@ -168,46 +168,25 @@ export class User {
   }
 }
 
+/**
+ * Our Users collection extended with custom properties and methods.
+ *
+ * To get the correct type from Users collection, try to use `Users` instead of `Meteor.users`.
+ * This is needed because we can not override `var users` declared inside the `Meteor namespace`.
+ * Not ideal, but using the `Users` collection directly is more explicit anyway.
+ */
 export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel>;
 
 (Users as any)._transform = function (user: UserEntity) {
   return assignIn(new User(), user);
 };
 
-// --------------------------------------------------------------------------------------
-// The following function aliases are the simplest solution to allow our app to use
-// the custom `UserModel` type.
-//
-// There are a few reasons why this is needed:
-//
-// 1) Our type `UserModel` stores data in a different structure than what Meteor expects.
-//
-// 2) Our class `User` adds custom methods to the Meteor.users collection.
-//
-// 3) Among many improvements, Meteor's native TypeScript types, also introduced changes
-//    that prevent us from overriding the core Meteor namespace like we did before.
-//    More specifically, our `.d.ts` files should be replaced by overriding third-party
-//    types in regular `.ts` modules instead, and then import/export the code that needs
-//    to use the custom types.
-//
-// Luckily though we can alias the original Meteor functions to return our `UserModel`
-// type without changing any runtime behavior.
-// --------------------------------------------------------------------------------------
-
-/**
- * Get the current Meteor user.
- *
- * Use this instead of `Meteor.userAsync()` to get our custom `UserModel` type.
- */
-export const getUser = Meteor.user as (options?: {
-  fields?: Mongo.FieldSpecifier | undefined;
-}) => UserModel | null;
-
-/**
- * Asynchronously get the current Meteor user.
- *
- * Use this instead of `Meteor.userAsync()` to get our custom `UserModel` type.
- */
-export const getUserAsync = Meteor.userAsync as (options?: {
-  fields?: Mongo.FieldSpecifier | undefined;
-}) => Promise<UserModel | null>;
+declare module "meteor/meteor" {
+  // oxlint-disable-next-line no-namespace no-shadow
+  namespace Meteor {
+    function user(options?: { fields?: Mongo.FieldSpecifier | undefined }): UserModel | null;
+    function userAsync(options?: {
+      fields?: Mongo.FieldSpecifier | undefined;
+    }): Promise<UserModel | null>;
+  }
+}
