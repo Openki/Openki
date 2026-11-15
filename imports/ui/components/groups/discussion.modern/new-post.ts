@@ -1,5 +1,5 @@
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
-import { PickWithOptional } from "../../../../../types/type-utils";
+import { PickWithOptional } from "/types/type-utils";
 
 export type NewPost = PickWithOptional<
   GroupDiscussionEntity,
