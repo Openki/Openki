@@ -4,7 +4,7 @@ import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
 import * as UsersMethods from "/imports/api/users/methods";
-import { getUserAsync, UserEntity, UserModel, UserProfile } from "/imports/api/users/users";
+import { getUserAsync, UserModel, UserProfile } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -81,7 +81,16 @@ Meteor.startup(async () => {
   }
 });
 
-Accounts.validateNewUser((user) => {
+declare module "meteor/accounts-base" {
+  // oxlint-disable-next-line no-shadow no-namespace
+  namespace Accounts {
+    function removeDefaultRateLimit(): void;
+
+    export class LoginCancelledError extends Meteor.Error {}
+  }
+}
+
+Accounts.validateNewUser((user: UserModel) => {
   if (NotAllowedCharacters.some((c) => user.username.includes(c))) {
     throw new Meteor.Error(403, "Not allowed character");
   }
