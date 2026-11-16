@@ -56,7 +56,7 @@ export class ValidationError extends Meteor.Error {
     check(errors, errorsPattern);
     check(message, String);
 
-    // @ts-expect-error Not sure how to fix this, but we preserver the runtime behavior of the original library.
+    // @ts-expect-error Not sure how to fix this, but we preserve the runtime behavior of the original library.
     return super(ValidationError.ERROR_CODE, message, errors);
   }
 

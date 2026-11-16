@@ -1,6 +1,8 @@
 import { Router } from "meteor/iron:router";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Session } from "meteor/session";
+
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
@@ -296,6 +298,5 @@ export function ProfilePage() {
 // for Blaze
 
 import "./template.html";
-import { Session } from "meteor/session";
 
 Template.registerHelper("ProfilePage", () => ProfilePage);

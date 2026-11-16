@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Session } from "meteor/session";
 
 import { Select } from "../select/select";
 
@@ -101,6 +102,5 @@ export function Splash() {
 // for Blaze
 
 import "./template.html";
-import { Session } from "meteor/session";
 
 Template.registerHelper("RegionSplash", () => Splash);
