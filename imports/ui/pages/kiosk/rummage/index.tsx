@@ -243,8 +243,8 @@ export function KioskRummagePage() {
       <div
         className="position-relative"
         style={{
-          /* special case for draggable: 86400000 is the top z-index over all cards and +1 over a open canvas */
-          zIndex: 86400002,
+          /* special case for draggable: 86400000 is the top z-index over all cards and +10 more to over a open canvas */
+          zIndex: 86400020,
         }}
       >
         <AccountTasks />

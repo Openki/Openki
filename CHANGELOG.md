@@ -8,6 +8,7 @@
 ## Fixes
 
 - **Group members list**: Add toggle button for members' join comments to make it more intuitive that this is not a chat.
+- **Enable login again in rummage page**: Move the account task modal to the top of all layers in the rummage page.
 
 # v0.14.4 - 2026-11-14
 
