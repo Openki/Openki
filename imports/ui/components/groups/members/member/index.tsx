@@ -71,7 +71,7 @@ export function Member({ member, group }: { member: GroupMember; group: GroupMod
         </div>
         {!!member.comment && (
           <button
-            className="btn btn-link p-0 mx-2"
+            className="btn btn-link p-0 mr-2"
             onClick={() => setShowComment(!showComment)}
             aria-label={t("groupMember.showComment", "Show comment")}
           >
