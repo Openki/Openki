@@ -25,6 +25,18 @@ $utilities: map.merge(
         grabbing: grabbing,
       ),
     ),
+    "width": (
+      property: width,
+      class: w,
+      values:
+        map.merge(
+          // Extend with existing Bootstrap values
+          map.get(map.get($utilities, "width"), "values"),
+          (
+            max-content: max-content,
+          )
+        ),
+    ),
     "max-h": (
       property: max-height,
       class: max-h,

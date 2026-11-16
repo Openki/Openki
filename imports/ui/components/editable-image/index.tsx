@@ -1,6 +1,6 @@
 import imageBlobReduce, { pica } from "image-blob-reduce";
 import { extension } from "mime-types";
-import React, { ChangeEvent, DragEvent, useId, useState } from "react";
+import React, { ChangeEvent, DragEvent, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { cx } from "/imports/utils/cx";
@@ -36,8 +36,8 @@ export interface Props {
   maxSize?: number | undefined;
   thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
   fullImage?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
-  onUpload: (file: UploadImage) => void;
-  onDelete?: (() => void) | undefined;
+  onUpload: (file: UploadImage) => Promise<void>;
+  onDelete?: (() => Promise<void>) | undefined;
 }
 
 function changeExt(fileName: string, newExt: string) {
@@ -58,7 +58,7 @@ export function EditableImage(props: Props) {
       }
     | undefined
   >(undefined);
-  const [progress, setProgress] = useState("display");
+  const [progress, setProgress] = useState(props.thumbnail?.src ? "display" : "edit");
   const [copyRights, setCopyRights] = useState(false);
   const [dragover, setDragover] = useState(false);
   const [preview, setPreview] = useState<string | undefined>(undefined);
@@ -131,7 +131,7 @@ export function EditableImage(props: Props) {
 
     setProgress("uploading");
 
-    props.onUpload(droppedFile);
+    await props.onUpload(droppedFile);
 
     setDroppedFile(undefined);
     setPreview(undefined);
@@ -144,7 +144,7 @@ export function EditableImage(props: Props) {
     }
     setDroppedFile(undefined);
     setPreview(undefined);
-    setProgress("display");
+    setProgress("edit");
   }
 
   function onCancel() {
@@ -221,7 +221,9 @@ export function EditableImage(props: Props) {
     onDrop(file);
   }
 
-  function handleEditClick<T>(event: React.MouseEvent<T, MouseEvent>) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleEditClick<T>(event: React.MouseEvent<T> | React.KeyboardEvent<T>) {
     event.preventDefault();
 
     setProgress("edit");
@@ -244,6 +246,7 @@ export function EditableImage(props: Props) {
         onDrop={handleDrop}
       >
         <input
+          ref={fileInputRef}
           type="file"
           accept={SupportedMimeList.join(", ")}
           className="d-none"
@@ -253,11 +256,11 @@ export function EditableImage(props: Props) {
         <label htmlFor="file">
           <div className="mb-1">
             {preview ? (
-              <img {...thumbnailAttributes()} src={preview} />
+              <img {...thumbnailAttributes()} src={preview} alt="" />
             ) : props.thumbnail?.src ? (
-              <img {...thumbnailAttributes()} src={props.thumbnail.src} />
+              <img {...thumbnailAttributes()} src={props.thumbnail.src} alt="" />
             ) : (
-              <i className="fa-regular fa-image fa-5x" />
+              <i className="fa-solid fa-file-arrow-up fa-5x mb-2" />
             )}
           </div>
           {dragover ? (
@@ -267,11 +270,17 @@ export function EditableImage(props: Props) {
           ) : progress === "edit" ? (
             <>
               <div className="editable-image-actions">
-                <span className="btn btn-secondary">
+                <button
+                  className="btn btn-secondary"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    fileInputRef.current?.click();
+                  }}
+                >
                   {deleteAllowed()
-                    ? t("fileUpload.change.text", "Replace file")
-                    : t("fileUpload.choose.text", "Choose a file")}
-                </span>
+                    ? t("fileUpload.change.text", "Replace image")
+                    : t("fileUpload.choose.text", "Choose image")}
+                </button>
                 {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}
               </div>
               {supportsDragndrop && (
@@ -308,21 +317,36 @@ export function EditableImage(props: Props) {
         {progress === "ready" && (
           <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
         )}{" "}
-        <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
+        {props.thumbnail?.src && <ButtonCancel id="editable-image-cancel" onClick={onCancel} />}
       </div>
     </>
   ) : (
     <div className="d-flex align-items-start gap-1">
-      {props.thumbnail?.src ? (
-        <img
-          className="cursor-pointer img-thumbnail"
-          {...thumbnailAttributes()}
-          src={props.thumbnail.src}
-          onClick={handleEditClick}
-        />
-      ) : (
-        <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
-      )}{" "}
+      <div className="d-flex flex-column gap-3">
+        {props.thumbnail?.src ? (
+          <img
+            className="cursor-pointer img-thumbnail"
+            {...thumbnailAttributes()}
+            src={props.thumbnail.src}
+            onClick={handleEditClick}
+            onKeyDown={handleEditClick}
+            alt=""
+          />
+        ) : (
+          <i
+            className="fa-solid fa-file-arrow-up fa-5x cursor-pointer align-self-center"
+            onClick={handleEditClick}
+            onKeyDown={handleEditClick}
+          />
+        )}
+
+        <button className="btn btn-secondary" onClick={handleEditClick}>
+          {deleteAllowed()
+            ? t("fileUpload.change.text", "Replace image")
+            : t("fileUpload.choose.text", "Choose image")}
+        </button>
+      </div>
+
       <div className="d-flex flex-column gap-1">
         {!!props.fullImage?.src && (
           <>
@@ -351,16 +375,13 @@ export function EditableImage(props: Props) {
                     ></button>
                   </div>
                   <div className="modal-body text-center">
-                    <img className="mw-100" src={props.fullImage.src} />
+                    <img className="mw-100" src={props.fullImage.src} alt="" />
                   </div>
                 </div>
               </div>
             </div>
           </>
         )}
-        <button onClick={handleEditClick} className="btn btn-light btn-sm">
-          <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
-        </button>
         {deleteAllowed() && (
           <button onClick={onDelete} className="btn btn-light btn-sm">
             <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>

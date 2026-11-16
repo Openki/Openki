@@ -9,6 +9,7 @@ import { useDetails } from "/imports/api/organizations/publications";
 import * as Predicates from "/imports/utils/predicates";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
+import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
@@ -17,6 +18,8 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { cx } from "/imports/utils/cx";
 
+import { LoginButton } from "/imports/ui/components/navbar/LoginButton";
+import { UserFrame } from "/imports/ui/components/navbar/user-frame";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
@@ -190,6 +193,7 @@ export function KioskRummagePage() {
     value: id,
     label: <OrganizationName id={id} />,
   }));
+  const userId = useUserId();
 
   const customStyles: StylesConfig<unknown, boolean, GroupBase<unknown>> | undefined = {
     control: (provided) => ({
@@ -239,8 +243,8 @@ export function KioskRummagePage() {
       <div
         className="position-relative"
         style={{
-          /* special case for draggable: 86400000 is the top z-index over all cards and +1 over a open canvas */
-          zIndex: 86400002,
+          /* special case for draggable: 86400000 is the top z-index over all cards and +10 more to over a open canvas */
+          zIndex: 86400020,
         }}
       >
         <AccountTasks />
@@ -261,15 +265,29 @@ export function KioskRummagePage() {
               zIndex: 86400001,
             }}
           >
-            <div className="rummage-language-selection position-absolute" style={{ zIndex: 1 }}>
-              <LanguageSelection />
-            </div>
             <div
               className="d-flex text-white flex-column flex-grow-1"
               style={{ backgroundColor: DododoColor }}
             >
+              <div
+                className="d-flex justify-content-end align-items-center pt-3 gap-4 px-2"
+                style={{ zIndex: 1 }}
+              >
+                {!!userId && (
+                  <div className="dropdown login-link rummage-account">
+                    <LoginButton />
+                    <div className="dropdown-menu dropdown-menu-end login-dropdown w-max-content">
+                      <UserFrame onClose={() => void 0} />
+                    </div>
+                  </div>
+                )}
+                <div className="rummage-language-selection">
+                  <LanguageSelection />
+                </div>
+              </div>
+
               {PublicSettings.rummageLogoSmall.src && (
-                <div className="p-4">
+                <div className={cx("p-4", !userId && "mt-n5")}>
                   <h5>
                     {/* a decorative logo */}
                     <img

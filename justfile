@@ -105,6 +105,10 @@ preview-emails:
 reset-emails:
     rm -f .temp/*.html
 
+# After confirmation, remove all cached Meteor packages except the most recent version.
+delete-old-meteor-packages:
+    bash scripts/delete-old-meteor-packages.sh
+
 alias i := install
 alias d := dev
 alias t := test-ui
