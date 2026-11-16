@@ -4,3 +4,6 @@ node_modules
 .gitlab
 ci
 cypress
+
+# Openki scripts. For scripts that should be included in Docker containers, add them to `docker/` instead.
+scripts
