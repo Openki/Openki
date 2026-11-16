@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Session } from "meteor/session";
 import { assert } from "chai";
 import moment from "moment";
 

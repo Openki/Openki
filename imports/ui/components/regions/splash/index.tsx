@@ -101,5 +101,6 @@ export function Splash() {
 // for Blaze
 
 import "./template.html";
+import { Session } from "meteor/session";
 
 Template.registerHelper("RegionSplash", () => Splash);

@@ -12,6 +12,7 @@ import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { Session } from "meteor/session";
 
 export interface Props {
   inNavbar?: boolean | undefined;

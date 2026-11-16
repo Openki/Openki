@@ -115,5 +115,6 @@ export function EmailValidation() {
 // for Blaze
 
 import "./template.html";
+import { Session } from "meteor/session";
 
 Template.registerHelper("EmailValidation", () => EmailValidation);

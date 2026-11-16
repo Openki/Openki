@@ -296,5 +296,6 @@ export function ProfilePage() {
 // for Blaze
 
 import "./template.html";
+import { Session } from "meteor/session";
 
 Template.registerHelper("ProfilePage", () => ProfilePage);
