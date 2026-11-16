@@ -1,5 +1,5 @@
 # Use the same Node.js major version our Meteor version
-FROM node:24-trixie-slim
+FROM node:26-trixie-slim
 
 # Set version label
 ARG BUILD_DATE
