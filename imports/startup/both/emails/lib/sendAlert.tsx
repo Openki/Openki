@@ -1,4 +1,5 @@
 import { Email } from "meteor/email";
+import { Accounts } from "meteor/accounts-base";
 import React, { ReactNode } from "react";
 import { Version } from "/imports/api/version/version";
 import { Alert } from "/imports/emails/Alert";

@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { ReactiveVar } from "meteor/reactive-var";
 import i18next from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";

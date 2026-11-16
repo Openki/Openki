@@ -1,6 +1,7 @@
 import React, { JSX, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import scrollIntoView from "scroll-into-view-if-needed";
+import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
 import { cx } from "/imports/utils/cx";

@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { v5 as uuidv5, validate as isValidUUID } from "uuid";
 import { create } from "xmlbuilder2";
 import { ApiEvent } from "/imports/Api";

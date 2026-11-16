@@ -2,6 +2,7 @@
  * This file is used for database updates to migrate the database after the code has changed.
  */
 
+import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";

@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { WebApp } from "meteor/webapp";
 import type { ServerResponse } from "node:http";

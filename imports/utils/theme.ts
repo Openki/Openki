@@ -1,4 +1,5 @@
 import { Accounts } from "meteor/accounts-base";
+import { Meteor } from "meteor/meteor";
 
 /**
  * @param theme "light" | "system" | "dark" | undefined

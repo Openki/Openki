@@ -1,4 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 

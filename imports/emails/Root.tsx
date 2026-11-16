@@ -1,6 +1,9 @@
 import React, { ReactNode } from "react";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import { ICalCalendarMethod } from "ical-generator";
+
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export interface Props {
   subject: string | undefined;

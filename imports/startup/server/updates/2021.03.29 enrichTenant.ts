@@ -8,10 +8,10 @@ import { Users } from "/imports/api/users/users";
 export async function update() {
   let updated = 0;
 
-  const tenantId = await Tenants.insertAsync({
+  const tenantId = (await Tenants.insertAsync({
     name: Meteor.settings.public.siteName,
     members: [],
-  } as any);
+  } as any)) as string;
 
   updated += 1;
 
