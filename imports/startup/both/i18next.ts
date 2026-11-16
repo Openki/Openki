@@ -8,7 +8,6 @@ import { LanguagesRaw } from "/imports/api/languages/languages";
 // @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
 import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
-import { Template } from "meteor/templating";
 import { initReactI18next } from "react-i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";

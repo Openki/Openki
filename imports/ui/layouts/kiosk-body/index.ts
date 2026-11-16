@@ -1,4 +1,4 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Template as TemplateAny, TemplateStaticTyped } from "/imports/utils/templating";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 

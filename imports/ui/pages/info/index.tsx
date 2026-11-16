@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Template } from "meteor/templating";
 import { useParams } from "/imports/ui/hooks/react-meteor-router";
 import ReactMarkdown from "react-markdown";
 import $ from "jquery";
