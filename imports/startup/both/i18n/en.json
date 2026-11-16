@@ -561,6 +561,7 @@
   "groupDiscussions.postComment.error": "Posting your comment went wrong",
   "groupMember.message.placeholder": "My interests…",
   "groupMember.messageChanged": "Your enroll-message has been changed.",
+  "groupMember.showComment": "Show comment",
   "groups.creator.defaultMessage": "(has proposed this group)",
   "groups.details.editMode": "Edit mode",
   "groups.details.moreAboutThisGroup": "More about this group on {SITENAME}",

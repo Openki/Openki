@@ -95,6 +95,7 @@ export function ParticipantContact(props: Props) {
                     className="btn btn-link p-0"
                     type="button"
                     data-bs-title={t("user.privateMessage", "Contact directly")}
+                    aria-label={t("user.privateMessage", "Contact directly")}
                     onClick={() => setShowModal(true)}
                   >
                     <i className="fa-solid fa-comment fa-fw" />
