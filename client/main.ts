@@ -5,5 +5,6 @@
  * https://guide.meteor.com/structure.html#javascript-structure
  */
 
+import "./main.html";
 import "/imports/startup/both";
 import "/imports/startup/client";

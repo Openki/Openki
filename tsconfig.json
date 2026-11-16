@@ -1,5 +1,4 @@
 {
-  "files": ["./.meteor/types/packages.d.ts"],
   "compilerOptions": {
     /* Basic Options */
     "target": "ES2020",
@@ -51,6 +50,7 @@
     "preserveSymlinks": true,
     "skipLibCheck": true // Recommended setting for all modern TS projects
   },
+  "files": ["./.meteor/types/packages.d.ts"],
   "include": ["**/*.ts", "**/*.tsx", "./types/*"],
   "exclude": ["./.meteor/local/isopacks/**", "./.meteor/local/plugin-cache/**", "./packages/**"]
 }

@@ -34,3 +34,15 @@ tests/screenshots
 
 .env*
 .env.local
+
+# Rspack reserved output directories
+_build
+public/build-assets/
+public/build-chunks/
+private/build-assets/
+private/build-chunks/
+
+# Meteor Modern-Tools build context directories
+*/build-assets*
+*/build-chunks*
+.rsdoctor

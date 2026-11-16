@@ -113,6 +113,11 @@ reset-emails:
 delete-old-meteor-packages:
     bash scripts/delete-old-meteor-packages.sh
 
+reset-rspack:
+    rm -rf \
+      node_modules/.cache/rspack \
+      _build
+
 alias i := install
 alias d := dev
 alias t := test-ui

@@ -65,6 +65,13 @@
   },
   "devDependencies": {
     "@babel/preset-env": "7.29.7",
+    "@meteorjs/rspack": "3.0.0",
+    "@rsdoctor/rspack-plugin": "1.6.5",
+    "@rspack/cli": "2.3.2",
+    "@rspack/core": "2.3.2",
+    "@rspack/dev-server": "2.2.2",
+    "@rspack/plugin-react-refresh": "2.0.3",
+    "@swc/core": "1.16.2",
     "@types/bootstrap": "5.2.11",
     "@types/bootstrap-datepicker": "1.10.1",
     "@types/es6-promisify": "6.0.4",
@@ -87,6 +94,9 @@
     "oxlint": "1.93.0",
     "postcss": "8.5.32",
     "postcss-load-config": "6.0.1",
+    "react-refresh": "0.19.0",
+    "sass-embedded": "1.108.2",
+    "sass-loader": "17.1.0",
     "start-server-and-test": "3.0.13",
     "stylelint": "18.0.0",
     "stylelint-config-standard-scss": "18.0.0",
@@ -109,7 +119,17 @@
     "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
-    "modern": true
+    "modern": {
+      "verbose": true
+    },
+    "mainModule": {
+      "client": "client/main.ts",
+      "server": "server/main.ts"
+    },
+    "modules": [
+      "client/main.html",
+      "client/main.scss"
+    ]
   },
   "repository": {
     "type": "git",
@@ -133,6 +153,9 @@
   "homepage": "https://about.openki.net",
   "allowScripts": {
     "cypress": true,
-    "esbuild": true
+    "esbuild": true,
+    "@parcel/watcher": true,
+    "@swc/core": true,
+    "core-js": false
   }
 }
