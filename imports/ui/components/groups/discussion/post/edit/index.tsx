@@ -252,7 +252,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 <i className="fa-solid fa-paper-plane fa-fw" />{" "}
                 {isNewPost(post)
                   ? post.parentId
-                    ? t("group.discussion.comment_btn.answer", "Answer")
+                    ? t("group.discussion.comment_btn.answer", "Reply")
                     : t("group.discussion.comment_btn.write", "Write")
                   : t("group.discussion.comment_btn.update", "Update my comment")}
               </button>
