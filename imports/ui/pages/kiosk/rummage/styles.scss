@@ -20,11 +20,14 @@
   }
 }
 
+.rummage-account button.btn-link {
+  padding: 0.5rem 0.75rem;
+  scale: 1.25;
+  background: transparent !important;
+}
+
 .rummage-language-selection {
   scale: 1.25;
-  top: 1.5rem;
-  right: 1.5rem;
-  padding-right: 0.5rem;
 }
 
 .rummage-language-selection .btn {
