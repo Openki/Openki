@@ -24,10 +24,14 @@ export default defineConfig(() => ({
         test: /\.scss$/i,
         use: [
           {
+            // TODO: All sass imports need to be updated
+            // We also need to explicitly refer to variables by prefixing with the module name.
             loader: "sass-loader",
             options: {
               api: "modern-compiler",
               implementation: import.meta.resolve("sass-embedded"),
+              // Silence deprecations in bootstrap that we can not change.
+              quietDeps: true,
             },
           },
         ],
