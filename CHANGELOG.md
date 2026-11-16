@@ -1,4 +1,4 @@
-# Unreleased
+# v0.14.5 - 2026-11-16
 
 ## Highlights
 
