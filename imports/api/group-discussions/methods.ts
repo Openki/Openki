@@ -11,7 +11,6 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 import { Events } from "../events/events";
 import { SystemRoles } from "/imports/api/groups/lib/Role";
-import { getUserAsync } from "../users/users";
 
 const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
   const saneTitle = StringTools.sanitizeSingleline(comment.title, 200);
@@ -56,7 +55,7 @@ export const postComment = ServerMethod(
       saneComment.eventId = event._id;
     }
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (user && !comment.anon) {
       saneComment.userId = user._id;
       saneComment.notifyAll =
@@ -121,7 +120,7 @@ export const editComment = ServerMethod(
       throw new Meteor.Error(404, "no such comment");
     }
 
-    if (!GroupDiscussionUtils.canEditPost(await getUserAsync(), originalComment)) {
+    if (!GroupDiscussionUtils.canEditPost(await Meteor.userAsync(), originalComment)) {
       throw new Meteor.Error(401, "you cant");
     }
 
@@ -136,7 +135,7 @@ export const deleteComment = ServerMethod(
   async (commentId: string) => {
     check(commentId, String);
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }

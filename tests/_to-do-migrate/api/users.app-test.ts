@@ -3,7 +3,7 @@ import { assert } from "chai";
 import { Promise } from "meteor/promise";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
-import { getUserAsync, Users } from "/imports/api/users/users";
+import { Users } from "/imports/api/users/users";
 import * as usersMethods from "/imports/api/users/methods";
 import { updateUsername } from "/imports/api/users/methods";
 
@@ -48,7 +48,7 @@ if (Meteor.isClient) {
           )
           .then(async () => {
             // check if username has changed to the correct string
-            const user = await getUserAsync();
+            const user = await Meteor.userAsync();
             assert.strictEqual(newDummy, user?.username, "username was changed successfully");
           });
       });

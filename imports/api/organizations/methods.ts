@@ -3,7 +3,7 @@ import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
 import { assignIn } from "es-toolkit/compat";
 
-import { getUserAsync, Users } from "/imports/api/users/users";
+import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
 import * as groupEditorsDenormalizer from "../groups/editorsDenormalizer";
 import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
@@ -49,7 +49,7 @@ export const save = ServerMethod(
     check(organizationId, String);
     check(changes, SaveFieldPattern);
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -116,7 +116,7 @@ export const updateLogo = ServerMethod(
     check(organizationId, String);
     check(file, UploadFilePattern);
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -154,7 +154,7 @@ export const deleteLogo = ServerMethod(
   async (organizationId: string) => {
     check(organizationId, String);
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -182,7 +182,7 @@ export const deleteLogo = ServerMethod(
 export const remove = ServerMethod("organization.remove", async (organizationId: string) => {
   check(organizationId, String);
 
-  const user = await getUserAsync();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -214,7 +214,7 @@ export const updateMembership = ServerMethod(
     check(userId, String);
     check(organizationId, String);
 
-    const sender = await getUserAsync();
+    const sender = await Meteor.userAsync();
     if (!sender) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -256,7 +256,7 @@ export const toggleMemberNotify = ServerMethod(
   async (organizationId: string) => {
     check(organizationId, String);
 
-    const sender = await getUserAsync();
+    const sender = await Meteor.userAsync();
     if (!sender) {
       throw new Meteor.Error(401, "please log-in");
     }

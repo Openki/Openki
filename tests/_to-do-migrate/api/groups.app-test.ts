@@ -4,7 +4,7 @@ import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
 
 import { Groups } from "../../../imports/api/groups/groups";
-import { getUserAsync, UserModel } from "/imports/api/users/users";
+import { UserModel } from "/imports/api/users/users";
 
 import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -45,7 +45,7 @@ if (Meteor.isClient) {
         const groupsAsGast = Groups.findFilter().fetch();
 
         await Meteor.loginWithPasswordAsync("Schufien", "greg");
-        const schufien = (await getUserAsync()) as UserModel;
+        const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);
 

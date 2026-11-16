@@ -1,11 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import { Session } from "meteor/session";
-import { getUser } from "/imports/api/users/users";
 
 // There is a useUser in meteor/react-meteor-accounts but it do not work as expected at the moment ...
 export function useUser() {
-  return useTracker(() => getUser());
+  return useTracker(() => Meteor.user());
 }
 
 // There is a useUserId in meteor/react-meteor-accounts but it do not work as expected at the moment ...

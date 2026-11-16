@@ -7,7 +7,6 @@ import { Type } from "/imports/utils/CustomChecks";
 import { sanitizeHtml } from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { Notification } from "/imports/startup/both/emails/notification";
-import { getUserAsync } from "../users/users";
 
 function sanitizeMessage(rawMessage: { content: string; groupId: string; roleId: string }) {
   return {
@@ -32,7 +31,7 @@ export const sendGroupChatMessage = ServerMethod(
 
     const message = sanitizeMessage(rawMessage);
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }

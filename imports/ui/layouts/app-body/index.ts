@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -23,7 +24,6 @@ import "/imports/ui/components/reset-password-email-sent";
 import "/imports/ui/components/regions/splash";
 
 import "./template.html";
-import { getUser } from "/imports/api/users/users";
 
 const Template = TemplateAny as TemplateStaticTyped<"layout">;
 
@@ -55,7 +55,7 @@ template.helpers({
   },
 
   isAdmin() {
-    return getUser()?.hasPrivilege("admin");
+    return Meteor.user()?.hasPrivilege("admin");
   },
 
   isNotAdminPanel() {

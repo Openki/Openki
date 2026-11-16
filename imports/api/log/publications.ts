@@ -5,13 +5,12 @@ import { FindFilter } from "/imports/api/log/factory";
 import { Log } from "/imports/api/log/log";
 
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
-import { getUser, getUserAsync } from "../users/users";
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "log",
   async (filter: FindFilter, limit: number) => {
     check(limit, Match.Integer);
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
 
     if (!user || !user.hasPrivilege("admin")) {
       throw new Meteor.Error(401, "not permitted");
@@ -21,7 +20,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
   },
   (filter, limit) => {
     check(limit, Match.Integer);
-    const user = getUser();
+    const user = Meteor.user();
 
     if (!user || !user.hasPrivilege("admin")) {
       return Log.findFilter({}, 0);

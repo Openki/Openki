@@ -11,7 +11,6 @@ import * as UsersMethods from "/imports/api/users/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
 import { getQueryParam } from "/imports/utils/url-tools";
-import { getUserAsync } from "/imports/api/users/users";
 
 // Try to guess a sensible language
 Meteor.startup(() => {
@@ -129,7 +128,7 @@ Meteor.startup(() => {
 });
 
 Accounts.onLogin(async () => {
-  const user = await getUserAsync();
+  const user = await Meteor.userAsync();
 
   if (user) {
     const locale = user.locale;

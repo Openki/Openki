@@ -7,7 +7,6 @@ import { FindFilter, TenantEntity, Tenants } from "/imports/api/tenants/tenants"
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 import { JoinLinks } from "../joinLinks/joinLinks";
-import { getUser, getUserAsync } from "../users/users";
 
 export const [details, useDetails] = ServerPublishOne(
   "tenant",
@@ -15,7 +14,7 @@ export const [details, useDetails] = ServerPublishOne(
     check(tenantId, String);
 
     if (!joinToken) {
-      const user = await getUserAsync();
+      const user = await Meteor.userAsync();
 
       if (!user) {
         throw new Meteor.Error(401, "please log in");
@@ -50,7 +49,7 @@ export const [details, useDetails] = ServerPublishOne(
   },
   (tenantId, joinToken?) => {
     if (!joinToken) {
-      const user = getUser();
+      const user = Meteor.user();
 
       if (!user) {
         return undefined;
@@ -87,7 +86,7 @@ export const [details, useDetails] = ServerPublishOne(
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Tenants.findFilter",
   async (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Tenants.findFilter(await getUserAsync(), find, limit, skip, sort),
+    Tenants.findFilter(await Meteor.userAsync(), find, limit, skip, sort),
   (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Tenants.findFilter(getUser(), find, limit, skip, sort),
+    Tenants.findFilter(Meteor.user(), find, limit, skip, sort),
 );

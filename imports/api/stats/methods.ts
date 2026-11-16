@@ -1,13 +1,13 @@
+import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 
 import { getRegionStats, Stats } from "/imports/api/stats/stats";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { getUserAsync } from "../users/users";
 
 export const region = ServerMethod("stats.region", async (regionId: string) => {
   check(regionId, String);
 
-  const user = await getUserAsync();
+  const user = await Meteor.userAsync();
   if (!user?.hasPrivilege("admin")) {
     return {} as Stats;
   }

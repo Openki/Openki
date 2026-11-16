@@ -1,10 +1,10 @@
+import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
 import { JoinLinkEntity, JoinLinks } from "/imports/api/joinLinks/joinLinks";
 
 import { ServerPublishOne } from "/imports/utils/ServerPublish";
-import { getUser, getUserAsync } from "../users/users";
 
 export const [details, useDetails] = ServerPublishOne(
   "joinLink",
@@ -15,7 +15,7 @@ export const [details, useDetails] = ServerPublishOne(
       check(token, String);
       return JoinLinks.find({ tenant: tenantId, token }) as Mongo.Cursor<JoinLinkEntity>;
     } else {
-      const user = await getUserAsync();
+      const user = await Meteor.userAsync();
 
       if (!user || !(user.hasPrivilege("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
         return JoinLinks.find({ _id: "-1" }) as Mongo.Cursor<JoinLinkEntity>;
@@ -28,7 +28,7 @@ export const [details, useDetails] = ServerPublishOne(
     if (token) {
       return JoinLinks.findOne({ tenant: tenantId, token });
     } else {
-      const user = getUser();
+      const user = Meteor.user();
 
       if (!user || !(user.hasPrivilege("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
         return undefined;

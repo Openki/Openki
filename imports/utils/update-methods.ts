@@ -5,7 +5,7 @@ import { check } from "meteor/check";
 import { NotEmptyString } from "/imports/utils/CustomChecks";
 
 import { Organizations } from "/imports/api/organizations/organizations";
-import { getUserAsync, UserModel } from "/imports/api/users/users";
+import { UserModel } from "/imports/api/users/users";
 
 // The code to update the organizations and teamOrganizations field must do the same
 // thing for Groups and Events. So we parameterize the methods
@@ -46,7 +46,7 @@ export function promote(collection: OrganizationPromoters) {
       throw new Meteor.Error(404, "Organization not found");
     }
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "not permitted");
     }
@@ -95,7 +95,7 @@ export function editing(collection: OrganizationPromoters) {
       throw new Meteor.Error(404, "Organization not found");
     }
 
-    const user = await getUserAsync();
+    const user = await Meteor.userAsync();
     if (!user || !doc.editableBy(user)) {
       throw new Meteor.Error(401, "Not permitted");
     }

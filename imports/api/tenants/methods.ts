@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 
 import { TenantEntity, Tenants } from "./tenants";
-import { getUserAsync, Users } from "/imports/api/users/users";
+import { Users } from "/imports/api/users/users";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
@@ -44,7 +44,7 @@ async function membershipMutationPreconditionCheck(userId: string, tenantId: str
   }
 
   // Only current tenant admins (or instance admins) can draft other people into it
-  if (!tenant.editableBy(await getUserAsync())) {
+  if (!tenant.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "Not permitted");
   }
 

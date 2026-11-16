@@ -4,7 +4,7 @@ import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
 import * as UsersMethods from "/imports/api/users/methods";
-import { getUserAsync, UserModel, UserProfile } from "/imports/api/users/users";
+import { UserModel, UserProfile } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -210,7 +210,7 @@ Accounts.onCreateUser(
 Accounts.onLogin(async () => {
   await UsersMethods.updateLastLogin();
 
-  const user = await getUserAsync();
+  const user = await Meteor.userAsync();
 
   // generate a avatar color for every new user
   if (user && user.avatar?.color === undefined) {
