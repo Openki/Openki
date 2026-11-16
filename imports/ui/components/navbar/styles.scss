@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index";
 /* stylelint-disable selector-max-compound-selectors */
 
 .navbar {
@@ -98,8 +98,8 @@
   position: relative;
 }
 
-/* 
-  backwards compatibility: a Blaze component to a React component for. 
+/*
+  backwards compatibility: a Blaze component to a React component for.
   Todo: Can be removed after complete migration.
 */
 @media (width <= 991px) {

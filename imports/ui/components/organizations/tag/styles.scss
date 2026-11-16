@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index";
 
 .organization-tag {
   @include tag($organization-bg, $organization-label-color);

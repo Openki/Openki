@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "sass:math";
 @use "sass:color";
-@import "base-colors";
+@use "base-colors";
 
 // Nearly all variables in Bootstrap are written with the `!default` flag.
 // This allows use to override the default values of those variables before
@@ -10,7 +10,7 @@
 // Bootstrap Options
 
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
-@import "{}/node_modules/bootstrap/scss/functions"; // Required
+@use "/node_modules/bootstrap/scss/functions"; // Required
 
 $enable-negative-margins: true;
 
@@ -63,7 +63,7 @@ $hr-color: $blue-lighter;
 
 $modal-sm: 400px;
 
-@import "{}/node_modules/bootstrap/scss/variables"; // Required
+@use "/node_modules/bootstrap/scss/variables"; // Required
 
 // Navbar
 $nav-link-padding-y: 0.822rem;
@@ -88,7 +88,7 @@ $tooltip-bg: $blue;
 $tooltip-opacity: 1;
 $tooltip-font-size: $font-size-base;
 
-@import "{}/node_modules/bootstrap/scss/variables-dark";
+@use "/node_modules/bootstrap/scss/variables-dark";
 
 // Modify Bootstrap maps
 
@@ -117,7 +117,7 @@ $archived-text-emphasis: shade-color($archived-color, 60%) !default;
 $archived-bg-subtle: tint-color($archived-color, 80%) !default;
 $archived-border-subtle: tint-color($archived-color, 60%) !default;
 
-@import "{}/node_modules/bootstrap/scss/maps"; // Optional
+@use "/node_modules/bootstrap/scss/maps"; // Optional
 
 $custom-theme-colors-text: (
   "canceled": $canceled-text-emphasis,
@@ -138,8 +138,8 @@ $theme-colors-border-subtle: map.merge(
   $custom-theme-colors-border-subtle
 );
 
-@import "{}/node_modules/bootstrap/scss/mixins"; // Required
-@import "{}/node_modules/bootstrap/scss/utilities"; // Optional
+@use "/node_modules/bootstrap/scss/mixins"; // Required
+@use "/node_modules/bootstrap/scss/utilities"; // Optional
 
 // Add grid-breakpoints to max-width utilities: mw-sm, mw-md, ...
 

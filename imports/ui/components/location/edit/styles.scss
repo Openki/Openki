@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index";
 
 .location-map .leaflet-attribution-flag {
   display: none !important;
