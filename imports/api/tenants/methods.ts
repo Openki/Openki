@@ -22,7 +22,7 @@ export const create = ServerMethod("tenant.create", async (changes: Pick<TenantE
     admins: [userId],
   };
 
-  const tenantId = await Tenants.insertAsync(set);
+  const tenantId = (await Tenants.insertAsync(set)) as string;
 
   await usersTenantsDenormalizer.afterTenantCreate(userId, tenantId);
 

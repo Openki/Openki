@@ -96,7 +96,7 @@ export const save = ServerMethod(
     }
 
     if (organization.isNew()) {
-      organizationId = await Organizations.insertAsync(assignIn(organization, updates));
+      organizationId = (await Organizations.insertAsync(assignIn(organization, updates))) as string;
       await userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges(user._id);
     } else {
       updates = timeLastEditDenormalizer.beforeUpdate(updates);

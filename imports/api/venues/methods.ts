@@ -134,12 +134,12 @@ export const save = ServerMethod(
 
       set.region = region._id;
 
-      venueId = await Venues.insertAsync({
+      venueId = (await Venues.insertAsync({
         ...set,
         editor: user._id,
         createdby: user._id,
         created: new Date(),
-      });
+      })) as string;
 
       userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
     } else {

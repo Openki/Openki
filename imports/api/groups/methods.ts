@@ -351,7 +351,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     set.time_created = new Date();
     const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
 
-    groupId = await Groups.insertAsync(enrichedSet);
+    groupId = (await Groups.insertAsync(enrichedSet)) as string;
 
     await Notification.Group.record(groupId);
 
