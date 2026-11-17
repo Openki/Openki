@@ -1,0 +1,4 @@
+set default-list
+
+compile-types:
+    meteor types
