@@ -3,7 +3,7 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "paths": {
-      /* Using Core Types */
+      /* Using Core Types (from the parent project) */
       "meteor/*": ["../../.meteor/types/packages/*"]
     },
     "module": "commonjs",
