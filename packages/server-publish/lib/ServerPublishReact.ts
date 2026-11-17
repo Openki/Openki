@@ -1,7 +1,6 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-// TODO: Add npm dependency
 import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 

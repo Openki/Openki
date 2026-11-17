@@ -12,10 +12,12 @@ Package.onUse(function(api) {
   api.use('mongo');
   api.use('react-meteor-data')
 
+  api.depends('es-toolkit')
+
   api.use('lib/ServerPublishUtils.ts')
   api.use('lib/ServerPublishBlaze.ts')
   api.use('lib/ServerPublishReact.ts')
   api.mainModule('lib/ServerPublish.ts', ['client', 'server'], { lazy: true })
 
-  api.types('dist-types/index.d.ts')
+  api.types('types/lib/index.d.ts')
 });

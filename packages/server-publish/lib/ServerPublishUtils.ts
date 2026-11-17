@@ -1,6 +1,6 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { useTracker } from 'meteor/react-meteor-data';
+import { useTracker } from "meteor/react-meteor-data";
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 

@@ -11,7 +11,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+    "rootDir": "./",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "declarationDir": "./types"
   }
 }
