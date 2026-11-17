@@ -1,4 +1,5 @@
 set default-list
 
-compile-types:
-    meteor types
+# NOTE: This command is supposed to be executed from within the `server-publish` directory.
+types:
+    ../../node_modules/.bin/tsc

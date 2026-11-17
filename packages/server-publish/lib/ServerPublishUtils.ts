@@ -1,5 +1,6 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import { useTracker } from 'meteor/react-meteor-data';
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
@@ -16,9 +17,8 @@ export function publish<
   if (Meteor.isServer) {
     // on the server register the publisher / publish the record set
     // wrap the call to handle options
-    Meteor.publish(name, async function (...args) {
+    Meteor.publish(name, async function (...args: A) {
       // everyting is okay, do the work
-      // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
       const result = await publisher.call(this, ...args);
       if (result === undefined) {
         this.ready();
@@ -41,4 +41,19 @@ export function removeCallback<A extends any[]>(args: A) {
     }
   }
   return result;
+}
+
+// see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/captureStackTrace#using_error.capturestacktrace
+export function getStack() {
+  const obj = {} as { stack?: string };
+  if ("captureStackTrace" in Error) {
+    // Avoid getStack itself in the stack trace
+    // @ts-expect-error Not sure why this doesn't work. No problem though.
+    Error.captureStackTrace(obj, getStack);
+  }
+  return obj.stack?.replace("Error", "Call");
+}
+
+export function useUserId() {
+  return useTracker(() => Meteor.userId());
 }

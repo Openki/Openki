@@ -1,5 +1,6 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import { useTracker } from "meteor/react-meteor-data";
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
@@ -40,4 +41,8 @@ export function removeCallback<A extends any[]>(args: A) {
     }
   }
   return result;
+}
+
+export function useUserId() {
+  return useTracker(() => Meteor.userId());
 }

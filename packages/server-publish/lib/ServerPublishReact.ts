@@ -1,12 +1,11 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useUserId } from "/imports/ui/hooks/react-meteor-data";
+// TODO: Add npm dependency
 import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
-import { publish, QueryBuilder } from "./ServerPublishUtils";
-import { getStack } from "/imports/utils/getStack";
+import { publish, QueryBuilder, getStack, useUserId } from "./ServerPublishUtils";
 
 type DeepPartial<T> = T extends object
   ? {

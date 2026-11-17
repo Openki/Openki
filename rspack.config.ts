@@ -7,16 +7,6 @@ export default defineConfig(() => ({
   infrastructureLogging: {
     level: "info",
   },
-
-  // Attempt to enable rspack
-  // resolve: {
-  //   alias: {
-  //     "/": resolve(import.meta.dirname, "imports"),
-  //     "@swc/helpers/_": resolve(import.meta.dirname, "node_modules/@swc/helpers/esm"),
-  //   },
-  //   modules: [resolve(import.meta.dirname, "node_modules"), "node_modules"],
-  //   conditionNames: ["module-sync", "webpack", "import", "default"],
-  // },
   module: {
     rules: [
       // Load SASS
@@ -35,14 +25,16 @@ export default defineConfig(() => ({
             },
           },
         ],
-        type: "css/auto",
-      },
-      // Load PostCSS
-      {
-        test: /\.css$/,
-        use: ["postcss-loader"],
         type: "css",
       },
+      // Load PostCSS
+      // NOTE: Since we don't use any regular CSS files, do we need to have postcss anymore?
+      // TODO: Check how Rspack handles autoprefixer. Maybe it is already included in Rspack itself?
+      // {
+      //   test: /\.css$/,
+      //   use: ["postcss-loader"],
+      //   type: "css",
+      // },
     ],
   },
 }));

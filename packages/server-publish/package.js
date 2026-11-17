@@ -9,11 +9,13 @@ Package.describe({
 Package.onUse(function(api) {
   api.use('ecmascript')
   api.use('typescript')
-  api.use('zodern:types@1.0.13', 'server')
   api.use('mongo');
+  api.use('react-meteor-data')
 
   api.use('lib/ServerPublishUtils.ts')
   api.use('lib/ServerPublishBlaze.ts')
   api.use('lib/ServerPublishReact.ts')
   api.mainModule('lib/ServerPublish.ts', ['client', 'server'], { lazy: true })
+
+  api.types('dist-types/index.d.ts')
 });
