@@ -6,7 +6,7 @@
       /* Using Core Types (from the parent project) */
       "meteor/*": ["../../.meteor/types/packages/*"]
     },
-    "module": "commonjs",
+    "module": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

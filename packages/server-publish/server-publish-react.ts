@@ -2,9 +2,12 @@ import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { isObject } from "es-toolkit/compat";
-import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
+
+// Stub methods on the server side
+const { useFind, useSubscribe, useTracker } = Meteor.isClient ? await import('meteor/react-meteor-data') : { useFind: () => {}, useSubscribe: () => {}, useTracker: () => {} }
 
 import { publish, QueryBuilder, getStack } from "./server-publish-utils";
+
 
 type DeepPartial<T> = T extends object
   ? {
@@ -119,6 +122,10 @@ export function createPublicationOne<A extends any[], T>(
       },
     };
 
+    if (Meteor.isServer) {
+      return [false, () => {}]
+    }
+
     const isLoading = useSubscribe(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
@@ -191,6 +198,20 @@ export function ServerPublishMany<A extends any[], T>(
   ) => Promise<Mongo.Cursor<T>> | Mongo.Cursor<T> | undefined,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
 ): Publication<A, T[]>;
+
+type PublicationRegistry = {
+  [name: string]: {
+    name: string,
+    publisher: (
+      this: Subscription,
+      ...args: any[]
+    ) => Promise<Mongo.Cursor<T>> | Mongo.Cursor<T> | undefined,
+    queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>
+  }
+}
+
+// function publication<A extends any[], T>(name: string) {
+// }
 
 export function ServerPublishMany<A extends any[], T>(
   name: string,
