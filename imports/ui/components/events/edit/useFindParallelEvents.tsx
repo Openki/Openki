@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import * as Events from "/imports/api/events/publications";
-import { useLocalTimeZone } from "/imports/utils/local-time";
+import { useLocalTimeZone } from "/imports/ui/hooks/useLocalTimeZone";
 
 export function useFindParallelEvents(
   regionId: string | undefined,
