@@ -4,7 +4,7 @@ import { Mongo } from "meteor/mongo";
 import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
-import { publish, QueryBuilder, getStack, useUserId } from "./ServerPublishUtils";
+import { publish, QueryBuilder, getStack, useUserId } from "./server-publish-utils";
 
 type DeepPartial<T> = T extends object
   ? {

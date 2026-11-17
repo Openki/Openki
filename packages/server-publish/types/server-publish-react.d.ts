@@ -1,6 +1,6 @@
 import { Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { QueryBuilder } from "./ServerPublishUtils";
+import { QueryBuilder } from "./server-publish-utils";
 type DeepPartial<T> = T extends object ? {
     [P in keyof T]?: DeepPartial<T[P]> | undefined | null;
 } : T;
