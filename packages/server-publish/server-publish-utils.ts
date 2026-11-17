@@ -1,6 +1,5 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { useTracker } from "meteor/react-meteor-data";
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
@@ -52,8 +51,4 @@ export function getStack() {
     Error.captureStackTrace(obj, getStack);
   }
   return obj.stack?.replace("Error", "Call");
-}
-
-export function useUserId() {
-  return useTracker(() => Meteor.userId());
 }

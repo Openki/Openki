@@ -4,7 +4,7 @@ import { check } from "meteor/check";
 
 import { FindFilter, TenantEntity, Tenants } from "/imports/api/tenants/tenants";
 
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
 import { FieldSort } from "/imports/utils/sort-spec";
 import { JoinLinks } from "../joinLinks/joinLinks";
 

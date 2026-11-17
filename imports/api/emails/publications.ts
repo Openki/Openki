@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
-import { ServerPublishMany } from "/imports/utils/ServerPublish";
+import { ServerPublishMany } from "meteor/server-publish";
 import { Log } from "/imports/api/log/log";
 import { type LogEntity } from "/imports/api/log/factory";
 

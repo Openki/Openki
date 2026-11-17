@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 
 import { FindFilter, VenueEntity, Venues } from "/imports/api/venues/venues";
 
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 export const [all, useAll] = ServerPublishMany("venues", (regionId?: string) => {

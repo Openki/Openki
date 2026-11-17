@@ -4,7 +4,7 @@ import { check } from "meteor/check";
 import { Users } from "/imports/api/users/users";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
 import { PasswordResetTokenExpirationInDays } from "/imports/startup/both/UseraccountsConfiguration";
 
 if (Meteor.isServer) {

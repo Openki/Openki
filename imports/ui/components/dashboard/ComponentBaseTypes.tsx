@@ -1,6 +1,6 @@
 import React from "react";
 import { Filtering } from "/imports/utils/filtering";
-import { Publication } from "/imports/utils/ServerPublishReact";
+import { type Publication } from "meteor/server-publish";
 
 export type ListOfEntitiesElementComponent<T> = React.FC<{
   entity: T;

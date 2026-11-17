@@ -1,6 +1,6 @@
 import { Version } from "/imports/api/version/version";
 
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
 
 export const [details, useDetails] = ServerPublishOne(
   "version.details",

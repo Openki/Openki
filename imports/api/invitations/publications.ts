@@ -3,8 +3,8 @@ import { Meteor } from "meteor/meteor";
 import { FindFilter, Invitations } from "/imports/api/invitations/invitations";
 import { Tenants } from "/imports/api/tenants/tenants";
 
-import { ServerPublish as ServerPublishBlaze } from "/imports/utils/ServerPublishBlaze";
-import { ServerPublishMany } from "/imports/utils/ServerPublish";
+import { ServerPublishBlaze } from "meteor/server-publish";
+import { ServerPublishMany } from "meteor/server-publish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 export const details = ServerPublishBlaze(

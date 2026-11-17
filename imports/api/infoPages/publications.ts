@@ -1,4 +1,4 @@
-import { ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishOne } from "meteor/server-publish";
 import { check } from "meteor/check";
 
 import { InfoPages } from "/imports/api/infoPages/infoPages";

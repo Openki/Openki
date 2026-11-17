@@ -118,6 +118,14 @@ reset-rspack:
       node_modules/.cache/rspack \
       _build
 
+# Refresh a local package and test if it compiles with the app
+refresh-package:
+    meteor npx tsc -p packages/server-publish
+    meteor remove server-publish
+    meteor add server-publish
+    just reset-rspack
+    just dev
+
 alias i := install
 alias d := dev
 alias t := test-ui

@@ -4,7 +4,7 @@ import { Mongo } from "meteor/mongo";
 import { isObject } from "es-toolkit/compat";
 import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 
-import { publish, QueryBuilder, getStack, useUserId } from "./server-publish-utils";
+import { publish, QueryBuilder, getStack } from "./server-publish-utils";
 
 type DeepPartial<T> = T extends object
   ? {
@@ -64,7 +64,7 @@ export function createPublicationMany<A extends any[], T>(
       ...(hasCondition ? args.slice(1) : args),
       handleCallback,
     );
-    const userId = useUserId();
+    const userId = useTracker(() => Meteor.userId());
     return [
       isLoading,
       useFind(() => {
@@ -126,7 +126,7 @@ export function createPublicationOne<A extends any[], T>(
       ...(hasCondition ? args.slice(1) : args),
       handleCallback,
     );
-    const userId = useUserId();
+    const userId = useTracker(() => Meteor.userId());
     return [
       isLoading,
       useTracker(() => {

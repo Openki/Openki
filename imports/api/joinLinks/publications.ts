@@ -4,7 +4,7 @@ import { check } from "meteor/check";
 
 import { JoinLinkEntity, JoinLinks } from "/imports/api/joinLinks/joinLinks";
 
-import { ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishOne } from "meteor/server-publish";
 
 export const [details, useDetails] = ServerPublishOne(
   "joinLink",

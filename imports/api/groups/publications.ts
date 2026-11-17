@@ -2,7 +2,7 @@ import { check } from "meteor/check";
 
 import { Groups, FindFilter } from "./groups";
 
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
 import { FieldSort } from "/imports/utils/sort-spec";
 import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";
 
