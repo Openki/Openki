@@ -7,6 +7,15 @@ export default defineConfig(() => ({
   infrastructureLogging: {
     level: "info",
   },
+  resolve: {
+    // Skip resolution for `node:*` built-in modules when building the client
+    fallback: {
+      path: false,
+      util: false,
+      stream: false,
+      assert: false,
+    },
+  },
   module: {
     rules: [
       // Load SASS
