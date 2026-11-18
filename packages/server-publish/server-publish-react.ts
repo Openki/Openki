@@ -199,20 +199,6 @@ export function ServerPublishMany<A extends any[], T>(
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
 ): Publication<A, T[]>;
 
-type PublicationRegistry = {
-  [name: string]: {
-    name: string,
-    publisher: (
-      this: Subscription,
-      ...args: any[]
-    ) => Promise<Mongo.Cursor<T>> | Mongo.Cursor<T> | undefined,
-    queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>
-  }
-}
-
-// function publication<A extends any[], T>(name: string) {
-// }
-
 export function ServerPublishMany<A extends any[], T>(
   name: string,
   publisher: (
