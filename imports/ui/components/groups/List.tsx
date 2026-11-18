@@ -1,11 +1,10 @@
-import React from "react";
-
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { cx } from "/imports/utils/cx";
 
 import { GroupCompact } from "./compact";
 import { CompactPropose } from "./CompactPropose";
 import { GroupModel } from "/imports/api/groups/groups";
+import { Fragment } from "react";
 
 export interface Props {
   groups: GroupModel[];
@@ -42,7 +41,7 @@ export function GroupList({
       className={cx("row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3", !small && "row-cols-xl-4")}
     >
       {groups.map((group, index) => (
-        <React.Fragment key={group._id}>
+        <Fragment key={group._id}>
           {/* The seventh box should always be the propose one, after then every 11 */}
           {PublicSettings.feature.proposeGroupBox &&
             !!containsPropose &&
@@ -61,7 +60,7 @@ export function GroupList({
               categoryTagEvents={categoryTagEvents}
             />
           </div>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

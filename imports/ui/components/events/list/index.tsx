@@ -1,5 +1,3 @@
-import React from "react";
-
 import { EventModel } from "/imports/api/events/events";
 
 import { EventCompact } from "/imports/ui/components/events/compact";

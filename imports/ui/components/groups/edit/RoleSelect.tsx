@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
 import { uniq } from "es-toolkit/compat";

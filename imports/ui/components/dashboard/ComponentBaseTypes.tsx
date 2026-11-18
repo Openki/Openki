@@ -1,4 +1,3 @@
-import React from "react";
 import { Filtering } from "/imports/utils/filtering";
 import { type Publication } from "meteor/server-publish";
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
@@ -80,7 +80,7 @@ export function VenuesMap({ region: regionId, venues }: Props) {
   const children = (
     <>
       {markers.map((mark) => (
-        <React.Fragment key={mark._id}>
+        <Fragment key={mark._id}>
           <Marker
             position={mark.loc as any}
             icon={selectedVenue === mark.venue._id ? venueMarkerIconActive : venueMarkerIcon}
@@ -102,7 +102,7 @@ export function VenuesMap({ region: regionId, venues }: Props) {
               selectedVenue === mark.venue._id ? venueMarkerShadowIconActive : venueMarkerShadowIcon
             }
           ></Marker>
-        </React.Fragment>
+        </Fragment>
       ))}
       <AutoInvalidateSize />
       <FullscreenControl />

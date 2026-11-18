@@ -1,4 +1,3 @@
-import React from "react";
 import { Meteor } from "meteor/meteor";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { textPlain } from "/imports/utils/html-tools";

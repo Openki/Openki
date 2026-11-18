@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 
 import { Avatar } from "../avatar";

@@ -1,5 +1,5 @@
 // oxlint-disable react/no-unstable-nested-components
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -178,7 +178,7 @@ export function KioskTimetablePage(props: Props) {
         )}
       </div>
       {props.grouped.map((groups, index) => (
-        <React.Fragment key={index}>
+        <Fragment key={index}>
           {groups.perRoom.map((event, index2) => {
             return (
               <div
@@ -211,7 +211,7 @@ export function KioskTimetablePage(props: Props) {
               </div>
             );
           })}
-        </React.Fragment>
+        </Fragment>
       ))}
       {!props.future_length && <h3>{t("kiosk.noFutureEvents", "There are no future events")}</h3>}
     </div>

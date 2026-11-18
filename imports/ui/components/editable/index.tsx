@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ValidationError, type ValidationErrorDetail } from "/imports/utils/validation-error";
 import MediumEditor from "medium-editor";

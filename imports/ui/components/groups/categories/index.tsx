@@ -1,6 +1,5 @@
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import React from "react";
 
 import { type GroupEntity } from "/imports/api/groups/groups";
 import "./styles.scss";

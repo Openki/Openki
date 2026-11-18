@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { type GroupRole, type GroupModel } from "/imports/api/groups/groups";
 import { sendGroupChatMessage } from "/imports/api/group-chat-messages/methods";

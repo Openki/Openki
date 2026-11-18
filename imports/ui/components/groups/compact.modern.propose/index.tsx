@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Panel } from "../../panel";
 import { Full } from "./Full";
 import { Thumb } from "./Thumb";

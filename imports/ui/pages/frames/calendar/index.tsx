@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { Fragment, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
@@ -97,12 +97,12 @@ export function CalendarPage() {
       <style>{options.style}</style>
 
       {days().map((day) => (
-        <React.Fragment key={day}>
+        <Fragment key={day}>
           <h4 className="frame-list-title">{day}</h4>
           {eventsOn(day).map((event) => (
             <Event key={event._id} event={event} hideRsvp={options.hideRsvp} />
           ))}
-        </React.Fragment>
+        </Fragment>
       ))}
       {!isLoading() ? (
         <>

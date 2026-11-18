@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Router } from "meteor/iron:router";
 import { Random } from "meteor/random";
 

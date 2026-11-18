@@ -1,4 +1,3 @@
-import React from "react";
 import { Mongo } from "meteor/mongo";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";

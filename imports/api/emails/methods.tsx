@@ -1,4 +1,3 @@
-import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
 import { Email } from "meteor/email";

@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, useEffect, useState } from "react";
+import { FocusEventHandler, useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";

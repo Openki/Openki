@@ -1,7 +1,6 @@
 import moment from "moment";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
-import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { useDetails } from "/imports/api/version/publications";

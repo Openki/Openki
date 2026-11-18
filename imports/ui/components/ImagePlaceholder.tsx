@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { useDetails } from "/imports/api/regions/publications";
 
 export function ImagePlaceholder({

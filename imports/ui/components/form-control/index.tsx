@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, ReactNode } from "react";
+import { FocusEventHandler, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { buildSizeClass, Size } from "/imports/ui/lib/buildSizeClass";

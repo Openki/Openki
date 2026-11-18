@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { cx } from "/imports/utils/cx";

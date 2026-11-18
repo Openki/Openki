@@ -1,5 +1,3 @@
-import React from "react";
-
 import { GroupModel, GroupRole } from "/imports/api/groups/groups";
 
 import { hasRole, hasRoleUser } from "/imports/api/groups/lib/hasRole";

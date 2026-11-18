@@ -1,5 +1,4 @@
 import { Router } from "meteor/iron:router";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { AvatarForm } from "../../components/avatarForm";
 import { Props as EditableProps, Editable } from "/imports/ui/components/editable";

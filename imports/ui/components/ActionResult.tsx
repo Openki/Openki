@@ -1,4 +1,4 @@
-import React, { JSX, ReactNode, useRef } from "react";
+import { JSX, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import scrollIntoView from "scroll-into-view-if-needed";
 import { Meteor } from "meteor/meteor";

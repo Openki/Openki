@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Edit } from "/imports/ui/components/groups/edit";
 
 export function Full({ organization }: { organization: string | undefined }) {

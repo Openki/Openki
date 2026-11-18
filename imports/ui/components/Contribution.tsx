@@ -1,4 +1,3 @@
-import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslation } from "react-i18next";
 

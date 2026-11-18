@@ -1,4 +1,4 @@
-import React, { Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 /**
  * Wrap an array of React nodes with keyed fragments to prevent React key errors.

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDetails } from "/imports/api/groups/publications";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";

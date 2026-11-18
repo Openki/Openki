@@ -1,5 +1,4 @@
 import { Meteor } from "meteor/meteor";
-import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Email } from "meteor/email";
 import { Random } from "meteor/random";

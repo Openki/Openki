@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as InvitationsMethods from "/imports/api/invitations/methods";

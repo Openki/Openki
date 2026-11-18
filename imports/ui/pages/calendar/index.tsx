@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
@@ -90,10 +90,10 @@ export function CalendarPage(props: Record<string, string>) {
         <div className="page-component mt-4">
           {!isLoading() ? (
             days().map((day) => (
-              <React.Fragment key={day.date.toISOString()}>
+              <Fragment key={day.date.toISOString()}>
                 <Day date={day.date} events={day.events} isAttendeeFilterOn={isAttendeeFilterOn} />
                 <hr />
-              </React.Fragment>
+              </Fragment>
             ))
           ) : (
             <LoadingPage />

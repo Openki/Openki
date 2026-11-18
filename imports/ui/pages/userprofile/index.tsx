@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession, useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
@@ -208,7 +208,7 @@ export function LoginFrame({
         {oAuthServices.length > 0 && (
           <div className="d-grid gap-3">
             {oAuthServices.map((service) => (
-              <React.Fragment key={service.key}>
+              <Fragment key={service.key}>
                 <div className="row g-2 align-items-center">
                   <div className="col">
                     <Button
@@ -283,7 +283,7 @@ export function LoginFrame({
                     )}
                   </div>
                 </div>
-              </React.Fragment>
+              </Fragment>
             ))}
           </div>
         )}

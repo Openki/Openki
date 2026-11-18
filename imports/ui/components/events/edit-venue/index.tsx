@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, ReactNode, useState } from "react";
+import { FocusEventHandler, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty } from "es-toolkit/compat";
 

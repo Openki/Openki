@@ -1,5 +1,3 @@
-import React from "react";
-
 import { cx } from "/imports/utils/cx";
 
 import { FormCheck } from "/imports/ui/components/FormCheck";

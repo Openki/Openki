@@ -1,4 +1,4 @@
-import React, { Fragment, type JSX } from "react";
+import { Fragment, type JSX } from "react";
 
 /**
  * Like `Array.prototype.join()`, but used for joining React elements together with a separator.

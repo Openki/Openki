@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 

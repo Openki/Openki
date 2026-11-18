@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
@@ -10,6 +9,7 @@ import { Add } from "./Add";
 import { Remove } from "./Remove";
 import { RemoveTeam } from "./RemoveTeam";
 import { MakeTeam } from "./MakeTeam";
+import { Fragment } from "react";
 
 export interface Props {
   event: EventModel;
@@ -65,7 +65,7 @@ export function OrganizationList({ event }: Props) {
         // Organization can be adopted from the group, these cannot be removed
         const ownOrganization = event.organizations.includes(organizationId);
         return (
-          <React.Fragment key={organizationId}>
+          <Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
             {isTeam && (
               <div className="tag organization-tag addon">
@@ -103,7 +103,7 @@ export function OrganizationList({ event }: Props) {
                   </ul>
                 </div>
               )}
-          </React.Fragment>
+          </Fragment>
         );
       })}
 

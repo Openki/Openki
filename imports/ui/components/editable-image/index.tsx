@@ -1,6 +1,6 @@
 import imageBlobReduce, { pica } from "image-blob-reduce";
 import { extension } from "mime-types";
-import React, { ChangeEvent, DragEvent, useId, useRef, useState } from "react";
+import { ChangeEvent, DragEvent, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { cx } from "/imports/utils/cx";

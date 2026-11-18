@@ -1,5 +1,3 @@
-import React from "react";
-
 import { EventModel } from "/imports/api/events/events";
 
 import { Event } from "./event";

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { GroupModel } from "/imports/api/groups/groups";
 import { isTeamRoleVisible } from "/imports/api/groups/lib/teamPermissions";
 import { isPredefined, isTeam } from "/imports/api/groups/lib/isRole";

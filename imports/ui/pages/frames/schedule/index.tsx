@@ -1,4 +1,3 @@
-import React from "react";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { sortBy, uniq } from "es-toolkit/compat";

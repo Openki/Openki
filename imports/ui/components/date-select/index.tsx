@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { todayOrAfter } from "../../lib/todayOrAfter";
 
