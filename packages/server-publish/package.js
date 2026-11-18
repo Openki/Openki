@@ -24,7 +24,7 @@ Package.onUse(function (api) {
   api.addFiles("./server-publish-blaze.ts", ["client", "server"]);
   api.addFiles("./server-publish-react.ts", ["client", "server"]);
   api.addFiles("./server-publish.ts", ["client", "server"]);
-  api.mainModule("index.ts", ["client", "server"], { lazy: true });
+  api.mainModule("index.ts", ["client", "server"]);
 
   api.types("types/index.d.ts");
 });
