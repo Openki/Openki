@@ -1,5 +1,5 @@
-@use "sass:string";
-@use "sass:color";
+@import "sass:string";
+@import "sass:color";
 
 .checkmark {
   @include td-padding(left, 5px);

@@ -1,4 +1,4 @@
-@use "sass:color";
+@import "sass:color";
 
 .page-component {
   @include clearfix;
@@ -15,8 +15,8 @@
 }
 
 .page-component > .btn:first-child,
-/* 
-  backwards compatibility: a Blaze component to a React component for. 
+/*
+  backwards compatibility: a Blaze component to a React component for.
   Can be removed after complete migration.
 */
 .page-component > div:not([class]) > .btn:first-child {
