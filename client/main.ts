@@ -5,6 +5,10 @@
  * https://guide.meteor.com/structure.html#javascript-structure
  */
 
+import "@fortawesome/fontawesome-free/css/brands.css";
+import "@fortawesome/fontawesome-free/css/regular.css";
+import "@fortawesome/fontawesome-free/css/solid.css";
+
 import "./main.html";
 import "./main.scss";
 import "/imports/startup/both";

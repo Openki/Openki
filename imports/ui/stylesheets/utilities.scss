@@ -1,4 +1,11 @@
 @use "sass:map";
+@use "/imports/ui/stylesheets/variables/index" as *;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
 
 /*
  * Utilities (named like in Tailwind CSS) created with the bootstrap api
@@ -173,4 +180,4 @@ $utilities: map.merge(
 
 // Optional Bootstrap Utilities
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
-@use "/node_modules/bootstrap/scss/utilities/api" as *;
+@import "/node_modules/bootstrap/scss/utilities/api";

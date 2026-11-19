@@ -1,5 +1,8 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
+@use "/imports/ui/stylesheets/variables/index" as *;
+@import "bootstrap/scss/buttons";
+
 .btn {
   transition: border-color 0.15s ease-in-out;
 }

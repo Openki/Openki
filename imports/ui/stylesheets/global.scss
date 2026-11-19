@@ -1,5 +1,6 @@
 @use "sass:string";
 @use "sass:color";
+@use "/imports/ui/stylesheets/variables/index" as *;
 
 .checkmark {
   @include td-padding(left, 5px);

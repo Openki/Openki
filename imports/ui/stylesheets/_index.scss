@@ -1,12 +1,5 @@
 @use "variables/index" as *;
 
-// Styles from packages
-@use "/node_modules/@fortawesome/fontawesome-free/css/all" as *;
-@use "bootstrap" as *;
-@use "bootstrap-datepicker" as *;
-@use "fonts" as *;
-@use "medium-editor" as *;
-
 // Own styles
 @use "global" as *;
 @use "layout" as *;
@@ -30,4 +23,11 @@
 @use "frame-list" as *;
 
 /* Utilities at the end to override other styles */
-@use "utilities" as *;
+@import "utilities";
+
+// Styles from packages
+// `@import` needs to be after all `@use`
+@import "bootstrap";
+@import "bootstrap-datepicker";
+@import "fonts";
+@import "medium-editor";
