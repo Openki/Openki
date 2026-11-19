@@ -45,6 +45,4 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("VenueDetailsPage", () => VenueDetailsPage);

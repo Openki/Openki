@@ -361,6 +361,4 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("OrganizationDetailsPage", () => OrganizationDetailsPage);

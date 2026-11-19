@@ -57,6 +57,4 @@ export function Day({
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("CalendarDay", () => Day);

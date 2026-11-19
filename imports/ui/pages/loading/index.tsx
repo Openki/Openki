@@ -30,7 +30,5 @@ export function LoadingRow() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("LoadingPage", () => LoadingPage);
 Template.registerHelper("LoadingRow", () => LoadingRow);

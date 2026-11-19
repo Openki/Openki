@@ -219,5 +219,4 @@ export function KioskTimetablePage(props: Props) {
 }
 
 // for Blaze
-import "./template.html";
 Template.registerHelper("KioskTimetablePage", () => KioskTimetablePage);

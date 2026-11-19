@@ -113,6 +113,4 @@ export function Alerts() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("Alerts", () => Alerts);

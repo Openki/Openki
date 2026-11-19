@@ -106,6 +106,4 @@ export function CalendarPage(props: Record<string, string>) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("CalendarPage", () => CalendarPage);

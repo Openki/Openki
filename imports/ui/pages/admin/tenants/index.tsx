@@ -36,6 +36,4 @@ export function Tenants({ tenants }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("AdminTenantsPage", () => Tenants);

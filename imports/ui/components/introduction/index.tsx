@@ -127,6 +127,4 @@ export function Introduction({ hasPricePolicy }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("Introduction", () => Introduction);

@@ -78,6 +78,4 @@ export function FeaturedOrganization() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FeaturedOrganization", () => FeaturedOrganization);

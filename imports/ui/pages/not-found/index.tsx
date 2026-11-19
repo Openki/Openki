@@ -77,6 +77,4 @@ export function NotFound() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("NotFound", () => NotFound);

@@ -29,6 +29,4 @@ export function FindPage({ query }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FindPage", () => FindPage);

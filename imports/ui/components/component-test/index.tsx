@@ -24,6 +24,4 @@ export function ComponentTest() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("ComponentTest", () => ComponentTest);

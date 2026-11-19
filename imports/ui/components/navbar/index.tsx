@@ -250,6 +250,4 @@ export function Navbar() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("Navbar", () => Navbar);

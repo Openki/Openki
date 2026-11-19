@@ -20,6 +20,4 @@ export function GroupProposePage(props: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("GroupProposePage", () => GroupProposePage);

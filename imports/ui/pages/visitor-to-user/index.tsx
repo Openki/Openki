@@ -162,6 +162,5 @@ export function VisitorToUserPage({ token, email }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("VisitorToUserPage", () => VisitorToUserPage);

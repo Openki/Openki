@@ -163,6 +163,4 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("EventPage", () => EventPage);

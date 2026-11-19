@@ -139,6 +139,4 @@ export function AdminFeatureOrganizationPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("AdminFeatureOrganizationPage", () => AdminFeatureOrganizationPage);

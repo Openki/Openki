@@ -338,6 +338,4 @@ export function Schedule() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FrameSchedulePage", () => Schedule);

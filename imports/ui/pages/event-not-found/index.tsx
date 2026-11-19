@@ -36,6 +36,4 @@ export function EventNotFound() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("EventNotFound", () => EventNotFound);

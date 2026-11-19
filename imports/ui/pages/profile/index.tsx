@@ -297,6 +297,4 @@ export function ProfilePage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("ProfilePage", () => ProfilePage);

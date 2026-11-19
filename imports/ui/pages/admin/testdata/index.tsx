@@ -50,6 +50,4 @@ export function TestdataPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("AdminTestdataPage", () => TestdataPage);

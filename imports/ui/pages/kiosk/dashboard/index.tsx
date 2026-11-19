@@ -81,6 +81,4 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("KioskDashboardPage", () => KioskDashboardPage);

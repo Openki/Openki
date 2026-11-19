@@ -395,6 +395,4 @@ export function KioskRummagePage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("KioskRummagePage", () => KioskRummagePage);

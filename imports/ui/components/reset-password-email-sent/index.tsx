@@ -21,6 +21,4 @@ export function ResetPasswordEmailSent() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("ResetPasswordEmailSent", () => ResetPasswordEmailSent);

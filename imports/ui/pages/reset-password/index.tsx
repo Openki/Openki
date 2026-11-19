@@ -155,6 +155,4 @@ export function ResetPasswordPage({ token, email }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("ResetPasswordPage", () => ResetPasswordPage);

@@ -63,6 +63,4 @@ export function AdminPanelPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("AdminPanelPage", () => AdminPanelPage);

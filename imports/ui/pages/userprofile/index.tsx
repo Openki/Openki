@@ -436,6 +436,4 @@ export function UserprofilePage({ user }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("UserprofilePage", () => UserprofilePage);

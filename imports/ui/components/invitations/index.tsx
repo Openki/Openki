@@ -25,6 +25,5 @@ export function Invitations({ tenant }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("Invitations", () => Invitations);

@@ -94,6 +94,4 @@ export function GroupListPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("GroupListPage", () => GroupListPage);

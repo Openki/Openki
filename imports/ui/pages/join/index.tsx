@@ -92,5 +92,4 @@ export function JoinPage({ joinLink }: Props) {
 
 // for Blaze
 
-import "./template.html";
 Template.registerHelper("JoinPage", () => JoinPage);

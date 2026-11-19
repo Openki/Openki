@@ -139,6 +139,4 @@ export function EventsPage(props: Record<string, string>) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FrameEventsPage", () => EventsPage);

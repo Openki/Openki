@@ -88,6 +88,4 @@ export function InfoPage({ page }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("InfoPage", () => InfoPage);

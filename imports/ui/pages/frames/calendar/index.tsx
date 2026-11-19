@@ -133,5 +133,4 @@ export function CalendarPage() {
 }
 
 // for Blaze
-import "./template.html";
 Template.registerHelper("FrameCalendarPage", () => CalendarPage);

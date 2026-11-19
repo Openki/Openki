@@ -89,6 +89,4 @@ export function Footer() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("Footer", () => Footer);

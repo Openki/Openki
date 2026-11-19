@@ -268,6 +268,4 @@ export function LogPage({
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("LogPage", () => LogPage);

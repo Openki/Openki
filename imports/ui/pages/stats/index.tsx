@@ -267,6 +267,4 @@ export function StatsPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("StatsPage", () => StatsPage);

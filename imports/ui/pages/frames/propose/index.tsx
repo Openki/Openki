@@ -20,6 +20,4 @@ export function Propose(props: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FrameProposePage", () => Propose);

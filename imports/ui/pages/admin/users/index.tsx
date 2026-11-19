@@ -59,6 +59,4 @@ export function AdminUsersPage() {
 }
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("AdminUsersPage", () => AdminUsersPage);

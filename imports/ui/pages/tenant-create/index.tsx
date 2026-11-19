@@ -144,6 +144,5 @@ export function TenantCreatePage(props: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("TenantCreatePage", () => TenantCreatePage);

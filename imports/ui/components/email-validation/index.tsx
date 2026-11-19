@@ -116,6 +116,4 @@ export function EmailValidation() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("EmailValidation", () => EmailValidation);

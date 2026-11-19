@@ -135,5 +135,4 @@ export function Event({ event, hideRsvp }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 Template.registerHelper("FrameCalendarEvent", () => Event);

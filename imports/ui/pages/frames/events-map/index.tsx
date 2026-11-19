@@ -41,6 +41,4 @@ export function FrameEventsMapPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FrameEventsMapPage", () => FrameEventsMapPage);

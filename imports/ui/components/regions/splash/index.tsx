@@ -101,6 +101,4 @@ export function Splash() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("RegionSplash", () => Splash);

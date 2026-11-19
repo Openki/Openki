@@ -177,6 +177,4 @@ export function ProgramPage(props: Record<string, string>) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("FrameProgramPage", () => ProgramPage);

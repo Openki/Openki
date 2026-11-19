@@ -89,6 +89,4 @@ export function InvitationPage({
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("InvitationPage", () => InvitationPage);

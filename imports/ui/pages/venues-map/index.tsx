@@ -185,6 +185,4 @@ export function VenuesMap({ region: regionId, venues }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("VenuesMapPage", () => VenuesMap);

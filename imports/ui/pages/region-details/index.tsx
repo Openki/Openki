@@ -92,6 +92,4 @@ export function RegionDetailsPage({ isNew, region }: Props) {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("RegionDetailsPage", () => RegionDetailsPage);

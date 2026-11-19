@@ -179,6 +179,4 @@ export function KioskEventsPage({
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("KioskEventsPage", () => KioskEventsPage);

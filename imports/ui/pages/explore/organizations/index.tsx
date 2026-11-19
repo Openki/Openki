@@ -63,6 +63,4 @@ export function OrganizationsPage() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("ExploreOrganizationsPage", () => OrganizationsPage);

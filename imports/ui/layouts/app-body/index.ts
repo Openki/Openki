@@ -23,8 +23,6 @@ import "/imports/ui/components/navbar";
 import "/imports/ui/components/reset-password-email-sent";
 import "/imports/ui/components/regions/splash";
 
-import "./template.html";
-
 const Template = TemplateAny as TemplateStaticTyped<"layout">;
 
 const template = Template.layout;

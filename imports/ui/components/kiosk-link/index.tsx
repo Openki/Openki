@@ -40,6 +40,4 @@ export function KioskLink() {
 
 // for Blaze
 
-import "./template.html";
-
 Template.registerHelper("KioskLink", () => KioskLink);
