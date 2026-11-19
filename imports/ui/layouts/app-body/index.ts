@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "/imports/utils/templating";
+import { type TemplateStaticTyped } from "/imports/utils/templating";
 
 import { Regions } from "/imports/api/regions/regions";
 
@@ -23,48 +23,50 @@ import "/imports/ui/components/navbar";
 import "/imports/ui/components/reset-password-email-sent";
 import "/imports/ui/components/regions/splash";
 
-const Template = TemplateAny as TemplateStaticTyped<"layout">;
+Meteor.startup(async () => {
+  const { Template: TemplateAny } = await import("/imports/utils/templating");
+  const Template = TemplateAny as TemplateStaticTyped<"layout">;
+  const template = Template.layout;
 
-const template = Template.layout;
+  template.helpers({
+    showRegionSplash() {
+      const { route } = Router.current();
+      if (!route) {
+        return false;
+      }
 
-template.helpers({
-  showRegionSplash() {
-    const { route } = Router.current();
-    if (!route) {
-      return false;
-    }
+      return (
+        RegionSelection.regionDependentRoutes.includes(route.getName()) &&
+        Session.equals("showRegionSplash", true)
+      );
+    },
 
-    return (
-      RegionSelection.regionDependentRoutes.includes(route.getName()) &&
-      Session.equals("showRegionSplash", true)
-    );
-  },
+    isResetPasswordEmailSent() {
+      return Router.current().params.query?.action === "resetPasswordEmailSent";
+    },
 
-  isResetPasswordEmailSent() {
-    return Router.current().params.query?.action === "resetPasswordEmailSent";
-  },
+    hasPricePolicy() {
+      return !Regions.currentRegion()?.isPrivate();
+    },
 
-  hasPricePolicy() {
-    return !Regions.currentRegion()?.isPrivate();
-  },
+    isAdminPage() {
+      return Router.current().url.includes("/admin/");
+    },
 
-  isAdminPage() {
-    return Router.current().url.includes("/admin/");
-  },
+    isAdmin() {
+      return Meteor.user()?.hasPrivilege("admin");
+    },
 
-  isAdmin() {
-    return Meteor.user()?.hasPrivilege("admin");
-  },
+    isNotAdminPanel() {
+      const { route } = Router.current();
+      return !(route?.getName() === "adminPanel");
+    },
+  });
 
-  isNotAdminPanel() {
-    const { route } = Router.current();
-    return !(route?.getName() === "adminPanel");
-  },
-});
-
-template.onRendered(() => {
-  Tooltips.enable();
-  FormsValidation.enable();
+  template.onRendered(() => {
+    Tooltips.enable();
+    FormsValidation.enable();
+  });
 });
 
 routerAutoscroll.marginTop = ScssVars.navbarHeight;
