@@ -124,3 +124,4 @@ alias d := dev
 alias t := test-ui
 alias o := outdated
 alias a := audit
+alias r := reset
