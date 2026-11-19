@@ -3,12 +3,24 @@ import { defineConfig } from "@meteorjs/rspack";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.filename);
 
-export default defineConfig(() => ({
+export default defineConfig((Meteor) => ({
   // Enable verbose Rspack logging
   stats: "detailed",
   infrastructureLogging: {
     level: "info",
   },
+  ...Meteor.extendSwcConfig({
+    jsc: {
+      ...Meteor.swcConfigOptions.jsc,
+      transform: {
+        ...Meteor.swcConfigOptions.jsc?.transform,
+        react: {
+          ...Meteor.swcConfigOptions.jsc?.transform?.react,
+          runtime: "automatic",
+        },
+      },
+    },
+  }),
   resolve: {
     // Skip resolution for `node:*` built-in modules when building the client
     fallback: {
