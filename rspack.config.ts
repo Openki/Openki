@@ -20,6 +20,12 @@ export default defineConfig(() => ({
   },
   module: {
     rules: [
+      // Let Rspack handle regular CSS
+      {
+        test: /\.css$/i,
+        type: "css",
+        use: ["builtin:lightningcss-loader"],
+      },
       // Load SASS
       {
         test: /\.scss$/i,
