@@ -1,5 +1,4 @@
 import { defineConfig } from "@meteorjs/rspack";
-// import { resolve } from "node:path";
 
 export default defineConfig(() => ({
   // Enable verbose Rspack logging
@@ -27,8 +26,10 @@ export default defineConfig(() => ({
             // We also need to explicitly refer to variables by prefixing with the module name.
             loader: "sass-loader",
             options: {
-              api: "modern-compiler",
-              implementation: import.meta.resolve("sass-embedded"),
+              // Preserve the old behavior with global variables that are available even in nested modules.
+              // This removes the need for a lot of SCSS code changes.
+              // We anyway plan to change styling solution in the future.
+              api: "legacy",
               // Silence deprecations in bootstrap that we can not change.
               quietDeps: true,
             },
