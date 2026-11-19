@@ -19,7 +19,7 @@ Package.onUse((api) => {
   api.use('typescript')
   api.use('zodern:types@1.0.13', 'server')
 
-  api.mainModule('index.ts', ['client', 'server'], { lazy: true })
+  api.mainModule('index.ts', ['client', 'server'])
 })
 
 Package.onTest((api) => {

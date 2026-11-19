@@ -2,9 +2,10 @@ import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { isObject } from "es-toolkit/compat";
+import { useFind, useSubscribe, useTracker } from 'meteor/react-meteor-data'
 
 // Stub methods on the server side
-const { useFind, useSubscribe, useTracker } = Meteor.isClient ? await import('meteor/react-meteor-data') : { useFind: () => {}, useSubscribe: () => {}, useTracker: () => {} }
+// const { useFind, useSubscribe, useTracker } = Meteor.isClient ? await import('meteor/react-meteor-data') : { useFind: () => {}, useSubscribe: () => {}, useTracker: () => {} }
 
 import { publish, QueryBuilder, getStack } from "./server-publish-utils";
 
