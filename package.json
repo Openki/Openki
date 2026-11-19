@@ -125,11 +125,7 @@
     "mainModule": {
       "client": "client/main.ts",
       "server": "server/main.ts"
-    },
-    "modules": [
-      "client/main.html",
-      "client/main.scss"
-    ]
+    }
   },
   "repository": {
     "type": "git",

@@ -6,5 +6,6 @@
  */
 
 import "./main.html";
+import "./main.scss";
 import "/imports/startup/both";
 import "/imports/startup/client";
