@@ -1,7 +1,7 @@
-@import "css-var";
-@import "buttons";
-@import "editable";
-@import "ellipsis";
-@import "break-word";
-@import "rtl";
-@import "tag";
+@forward "css-var";
+@forward "buttons";
+@forward "editable";
+@forward "ellipsis";
+@forward "break-word";
+@forward "rtl";
+@forward "tag";

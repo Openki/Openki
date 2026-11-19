@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "../variables/bootstrap-variables" as *;
 
 @mixin tag($bg, $color, $bg-hover: color.adjust($bg, $lightness: -5%), $color-hover: $color) {
   background-color: $bg;

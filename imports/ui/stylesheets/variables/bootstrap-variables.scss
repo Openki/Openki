@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "sass:math";
 @use "sass:color";
-@import "base-colors";
+@use "base-colors";
 
 // Nearly all variables in Bootstrap are written with the `!default` flag.
 // This allows use to override the default values of those variables before
@@ -48,16 +48,16 @@ $link-decoration: none;
 $form-label-color: shade-color(base-colors.$blue, 20%);
 $form-group-margin-bottom: 15px !default;
 $form-check-input-checked-bg-color: color.adjust(base-colors.$blue, $lightness: 5%);
-$form-check-input-indeterminate-bg-color: color.adjust($blue, $lightness: 5%);
-$input-placeholder-color: $gray;
+$form-check-input-indeterminate-bg-color: color.adjust(base-colors.$blue, $lightness: 5%);
+$input-placeholder-color: base-colors.$gray;
 
 // Dropdowns
 
 // Dropdown menu container and contents.
 
 // ** Background for the dropdown menu.
-$dropdown-bg: color.adjust($blue-lighter, $lightness: 8.7%) !default;
-$hr-color: $blue-lighter;
+$dropdown-bg: color.adjust(base-colors.$blue-lighter, $lightness: 8.7%) !default;
+$hr-color: base-colors.$blue-lighter;
 
 // Modals
 
@@ -78,13 +78,13 @@ $navbar-dark-color: $white;
 
 // Nav
 $nav-link-color: #000;
-$nav-tabs-link-hover-border-color: $primary;
-$nav-tabs-link-active-border-color: $primary $primary #fff;
-$nav-tabs-border-color: $primary;
+$nav-tabs-link-hover-border-color: base-colors $primary;
+$nav-tabs-link-active-border-color: base-colors $primary base-colors $primary #fff;
+$nav-tabs-border-color: base-colors $primary;
 
 // Tooltips
 
-$tooltip-bg: $blue;
+$tooltip-bg: base-colors.$blue;
 $tooltip-opacity: 1;
 $tooltip-font-size: $font-size-base;
 
