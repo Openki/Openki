@@ -113,17 +113,10 @@ reset-emails:
 delete-old-meteor-packages:
     bash scripts/delete-old-meteor-packages.sh
 
-reset-rspack:
-    rm -rf \
-      node_modules/.cache/rspack \
-      _build
-
-# Refresh a local package and test if it compiles with the app
-refresh-package:
+# Refresh local packages and test if they compile with the app
+refresh-packages:
     meteor npx tsc -p packages/server-publish
-    meteor remove server-publish
-    meteor add server-publish
-    just reset-rspack
+    just reset
     just dev
 
 alias i := install
