@@ -1,4 +1,4 @@
-@import "/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index" as *;
 
 .location-details-header {
   background-color: $venue-bg;

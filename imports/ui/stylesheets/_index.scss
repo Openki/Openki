@@ -1,33 +1,33 @@
-@import "variables/index";
+@use "variables/index" as *;
 
 // Styles from packages
-@import "/node_modules/@fortawesome/fontawesome-free/css/all";
-@import "bootstrap";
-@import "bootstrap-datepicker";
-@import "fonts";
-@import "medium-editor";
+@use "/node_modules/@fortawesome/fontawesome-free/css/all" as *;
+@use "bootstrap" as *;
+@use "bootstrap-datepicker" as *;
+@use "fonts" as *;
+@use "medium-editor" as *;
 
 // Own styles
-@import "global";
-@import "layout";
-@import "theme";
-@import "actions";
-@import "buttons";
-@import "dropdown";
-@import "input-group";
-@import "forms";
-@import "dialog-dropdown";
-@import "icon-text";
-@import "list-group";
-@import "modals";
-@import "responsive-table";
-@import "table";
-@import "event-caption";
-@import "tag";
-@import "nav-tabs";
-@import "detail-pages";
-@import "edit-pages";
-@import "frame-list";
+@use "global" as *;
+@use "layout" as *;
+@use "theme" as *;
+@use "actions" as *;
+@use "buttons" as *;
+@use "dropdown" as *;
+@use "input-group" as *;
+@use "forms" as *;
+@use "dialog-dropdown" as *;
+@use "icon-text" as *;
+@use "list-group" as *;
+@use "modals" as *;
+@use "responsive-table" as *;
+@use "table" as *;
+@use "event-caption" as *;
+@use "tag" as *;
+@use "nav-tabs" as *;
+@use "detail-pages" as *;
+@use "edit-pages" as *;
+@use "frame-list" as *;
 
 /* Utilities at the end to override other styles */
-@import "utilities";
+@use "utilities" as *;

@@ -1,4 +1,4 @@
-@import "/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index" as *;
 
 .categories-select-sub-option {
   border-inline-start: 1px solid $blue-light;

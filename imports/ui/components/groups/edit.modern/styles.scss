@@ -1,4 +1,4 @@
-@import "/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index" as *;
 
 .group-modern-edit-body {
   @include media-breakpoint-up(sm) {

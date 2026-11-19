@@ -1,6 +1,6 @@
-@import "/node_modules/medium-editor/src/sass/medium-editor";
-@import "/node_modules/medium-editor/src/sass/themes/default";
-@import "/imports/ui/stylesheets/variables/base-colors";
+@use "/node_modules/medium-editor/src/sass/medium-editor" as *;
+@use "/node_modules/medium-editor/src/sass/themes/default" as *;
+@use "/imports/ui/stylesheets/variables/base-colors" as *;
 
 .medium-editor-placeholder,
 .medium-editor-placeholder-relative {

@@ -1,5 +1,5 @@
 @use "../variables/bootstrap-variables" as *;
-@use "rtl" as *;
+@use "./rtl" as *;
 
 @mixin editable-popout {
   .editable-wrap {

@@ -3,6 +3,7 @@
 @use "base-colors" as *;
 @forward "base-colors";
 @forward "bootstrap-variables" hide $blue, $green, $red, $yellow, $orange, $black, $white;
+@import "/node_modules/bootstrap/scss/_functions";
 
 /* prettier-ignore */
 /* stylelint-disable */

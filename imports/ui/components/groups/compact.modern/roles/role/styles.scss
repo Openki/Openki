@@ -1,5 +1,5 @@
 @use "sass:color";
-@import "/imports/ui/stylesheets/variables/index";
+@use "/imports/ui/stylesheets/variables/index" as *;
 
 .group-role-btn {
   &[data-bs-toggle="collapse"]:not(.collapsed) {
