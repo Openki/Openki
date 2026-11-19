@@ -1,4 +1,4 @@
-@import "sass:color";
+@use "sass:color";
 @import "/imports/ui/stylesheets/variables/index";
 
 $organization-member-bg: rgba($gray-600, 0.15);
