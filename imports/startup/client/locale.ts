@@ -5,6 +5,7 @@ import { Accounts } from "meteor/accounts-base";
 import { assignIn, range } from "es-toolkit/compat";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
+import $ from "jquery";
 import "bootstrap-datepicker";
 
 import * as UsersMethods from "/imports/api/users/methods";
