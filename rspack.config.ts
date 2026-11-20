@@ -42,6 +42,7 @@ export default defineConfig((Meteor) => ({
               sassOptions: {
                 // Silence deprecations in bootstrap that we can not change.
                 quietDeps: true,
+                silenceDeprecations: ["import"],
               },
             },
           },
