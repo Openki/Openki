@@ -1,4 +1,5 @@
 import { defineConfig } from "@meteorjs/rspack";
+import { toMerged } from "es-toolkit";
 
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.filename);
@@ -9,18 +10,9 @@ export default defineConfig((Meteor) => ({
   infrastructureLogging: {
     level: "info",
   },
-  ...Meteor.extendSwcConfig({
-    jsc: {
-      ...Meteor.swcConfigOptions.jsc,
-      transform: {
-        ...Meteor.swcConfigOptions.jsc?.transform,
-        react: {
-          ...Meteor.swcConfigOptions.jsc?.transform?.react,
-          runtime: "automatic",
-        },
-      },
-    },
-  }),
+  ...Meteor.extendSwcConfig(
+    toMerged(Meteor.swcConfigOptions, { jsc: { transform: { react: { runtime: "automatic" } } } }),
+  ),
   resolve: {
     // Skip resolution for `node:*` built-in modules when building the client
     fallback: {
