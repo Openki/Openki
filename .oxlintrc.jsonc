@@ -21,13 +21,7 @@
     "VERSION": "writable",
   },
   // Global ignores
-  "ignorePatterns": [
-    ".meteor/",
-    "node_modules/",
-    "packages/",
-    "i18next-parser.config.js",
-    "postcss.config.js",
-  ],
+  "ignorePatterns": [".meteor/", "node_modules/", "packages/", "i18next-parser.config.js"],
   "rules": {
     "no-shadow": "warn",
     "no-await-in-loop": "warn",
