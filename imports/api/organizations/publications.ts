@@ -2,7 +2,7 @@ import { check } from "meteor/check";
 
 import { Organizations, FindFilter } from "./organizations";
 
-import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 export const [details, useDetails] = ServerPublishOne(

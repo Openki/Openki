@@ -48,4 +48,3 @@ typescript@5.11.2               # Enable TypeScript syntax in .ts and .tsx modul
 accounts-express@1.0.1                # Only used for tests. Not needed for the production build.
 underscore
 rspack
-server-publish

@@ -113,9 +113,8 @@ reset-emails:
 delete-old-meteor-packages:
     bash scripts/delete-old-meteor-packages.sh
 
-# Refresh local packages and test if they compile with the app
+# Refresh local Meteor packages and refresh the app with their latest changes
 refresh-packages:
-    meteor npx tsc -p packages/server-publish
     just reset
     just dev
 

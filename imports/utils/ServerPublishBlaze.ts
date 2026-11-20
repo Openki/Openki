@@ -1,6 +1,6 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { Record, publish, removeCallback, QueryBuilder } from "./server-publish-utils";
+import { Record, publish, removeCallback, QueryBuilder } from "./ServerPublishUtils";
 
 export interface Subscriber {
   subscribe(name: string, ...args: any[]): Meteor.SubscriptionHandle;

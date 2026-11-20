@@ -6,9 +6,6 @@
     ".meteor/",
     "node_modules/",
     "packages/",
-    // Formatting rules for the server-publish package.
-    "!packages/server-publish/",
-    "packages/server-publish/**/*.d.ts",
 
     // Preserve formatting of Blaze templates for readability
     // NOTE: These ignore rules can be removed after migrating away from Blaze and `iron:router`.

@@ -4,7 +4,7 @@ import { Events, FindFilter } from "/imports/api/events/events";
 
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
 import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";
-import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 export const [all, useAll] = ServerPublishMany(

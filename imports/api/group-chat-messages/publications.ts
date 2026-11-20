@@ -2,7 +2,7 @@ import { check } from "meteor/check";
 
 import { GroupChatMessages } from "./group-chat-messages";
 
-import { ServerPublishMany } from "meteor/server-publish";
+import { ServerPublishMany } from "/imports/utils/ServerPublish";
 import { Meteor } from "meteor/meteor";
 import { Groups } from "../groups/groups";
 

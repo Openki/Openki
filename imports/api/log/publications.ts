@@ -4,7 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { FindFilter } from "/imports/api/log/factory";
 import { Log } from "/imports/api/log/log";
 
-import { ServerPublishMany } from "meteor/server-publish";
+import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "log",

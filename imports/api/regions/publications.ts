@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 
 import { FindFilter, Regions } from "/imports/api/regions/regions";
-import { ServerPublishMany, ServerPublishOne } from "meteor/server-publish";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";

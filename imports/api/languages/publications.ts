@@ -6,7 +6,7 @@ import { serializeError } from "serialize-error";
 import { LanguagesRaw, Languages, LanguageEntity } from "/imports/api/languages/languages";
 
 import { Type } from "/imports/utils/CustomChecks";
-import { ServerPublishMany } from "meteor/server-publish";
+import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
 const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as Record<string, string>;
 
