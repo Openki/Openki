@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .group-member {
   background: $group-page-component-bg;

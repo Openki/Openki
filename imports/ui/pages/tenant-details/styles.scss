@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .tenant-details-titlebar {
   background-color: color.adjust($tenant-bg, $lightness: -20%);

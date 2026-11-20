@@ -1,5 +1,5 @@
-@use "/imports/ui/stylesheets/variables/index" as *;
-@use "/imports/ui/stylesheets/mixins/tag" as *;
+@import "/imports/ui/stylesheets/variables/index";
+@import "/imports/ui/stylesheets/mixins/tag";
 
 .category-tag {
   @include tag($category-bg, $blue);

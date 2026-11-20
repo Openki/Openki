@@ -1,4 +1,4 @@
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .proposed-groups {
   border: 1px solid $primary;

@@ -1,4 +1,4 @@
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .date-select-weekday {
   @include td-padding(right, $input-padding-x);

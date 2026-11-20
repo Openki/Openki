@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .join-link-rebuild-confirmation {
   $background-color: color.adjust($warning, $lightness: 20%);

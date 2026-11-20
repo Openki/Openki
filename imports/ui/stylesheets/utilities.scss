@@ -1,10 +1,4 @@
 @use "sass:map";
-@use "/imports/ui/stylesheets/variables/index" as *;
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
 
 /*
  * Utilities (named like in Tailwind CSS) created with the bootstrap api

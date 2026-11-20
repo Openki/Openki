@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .is-dismissible > .price-policy-content {
   background-color: color.adjust($success, $lightness: 15%);

@@ -1,15 +1,13 @@
 @use "sass:color";
-@use "bootstrap-variables";
-@use "base-colors" as *;
-@forward "base-colors";
-@forward "bootstrap-variables" hide $blue, $green, $red, $yellow, $orange, $black, $white;
+@import "base-colors";
+@import "bootstrap-variables";
 @import "/node_modules/bootstrap/scss/functions";
 
 /* prettier-ignore */
 /* stylelint-disable */
 
 //** Global text color on `<body>`.
-$body-color: bootstrap-variables.$gray-800;
+$body-color: $gray-800;
 
 // ** Tabs
 // ========================================================================================
@@ -18,7 +16,7 @@ $tab-content-border-width: 1px;
 
 // ** Box shadow
 // ========================================================================================
-$default-shadow: rgba(bootstrap-variables.$gray-600, 0.4);
+$default-shadow: rgba($gray-600, 0.4);
 
 $shadow-lg-offset-x: 2px;
 $shadow-lg-offset-y: 5px;
@@ -58,7 +56,7 @@ $has-past-events-border-style: solid;
 $group-page-role-icon-color: #4c4c4c;
 
 $group-compact-next-event-bg: $green;
-$group-compact-next-event-color: bootstrap-variables.$gray-800;
+$group-compact-next-event-color: $gray-800;
 
 $group-page-component-bg: $blue-lighter;
 
@@ -96,7 +94,7 @@ $discussion-thumb-width: 50;
 
 // ** Roles
 // ========================================================================================
-$role-needed-bg: bootstrap-variables.$gray-200;
+$role-needed-bg: $gray-200;
 $role-needed-color: color.adjust($role-needed-bg, $lightness: -38%);
 
 // ** Calendar
@@ -110,7 +108,7 @@ $tenant-label-color: $blue;
 
 // ** Kiosk
 // ========================================================================================
-$kiosk-wrap-padding-horizontal: bootstrap-variables.$grid-gutter-width * 0.25;
+$kiosk-wrap-padding-horizontal: $grid-gutter-width * 0.25;
 $kiosk-wrap-padding-vertical: $kiosk-wrap-padding-horizontal;
 
 // ** Footer

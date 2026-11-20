@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 /* stylelint-disable-next-line selector-no-qualifying-type */
 .profile-grouplist h3[id] {

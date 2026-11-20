@@ -1,6 +1,6 @@
-@use "/imports/ui/stylesheets/variables/index" as *;
-@use "/imports/ui/stylesheets/actions" as *;
-@use "/imports/ui/stylesheets/mixins/rtl" as *;
+@import "/imports/ui/stylesheets/variables/index";
+@import "/imports/ui/stylesheets/actions";
+@import "/imports/ui/stylesheets/mixins/rtl";
 
 .replica-tab-content {
   border-color: $blue;

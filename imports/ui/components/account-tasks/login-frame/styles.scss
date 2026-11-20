@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .login hr {
   border-top: 1px solid color.adjust($gray-400, $lightness: 10%);

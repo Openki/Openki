@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "/imports/ui/stylesheets/variables/index" as *;
+@import "/imports/ui/stylesheets/variables/index";
 
 .venue-edit-additional-info {
   background-color: color.adjust($venue-bg, $lightness: 15%);
