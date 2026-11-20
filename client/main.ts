@@ -5,14 +5,14 @@
  * https://guide.meteor.com/structure.html#javascript-structure
  */
 
-import "@fortawesome/fontawesome-free/css/all.css";
+import "./main.scss";
 
 // @ts-expect-error Load the font
 import "@fontsource/source-sans-pro";
+import "@fortawesome/fontawesome-free/css/all.css";
+
+import "/imports/startup/both";
+import "/imports/startup/client";
 
 // Workaround: Import Blaze templates eagerly so they are processed by Meteor
 import "./templates.imports";
-
-import "./main.scss";
-import "/imports/startup/both";
-import "/imports/startup/client";
