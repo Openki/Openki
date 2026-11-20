@@ -5,9 +5,7 @@
  * https://guide.meteor.com/structure.html#javascript-structure
  */
 
-import "@fortawesome/fontawesome-free/css/brands.css";
-import "@fortawesome/fontawesome-free/css/regular.css";
-import "@fortawesome/fontawesome-free/css/solid.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 // @ts-expect-error Load the font
 import "@fontsource/source-sans-pro";
