@@ -72,7 +72,7 @@ export function DateInput(props: {
       id={id}
       type="text"
       className={cx("form-control", className)}
-      value={toDisplay(value)}
+      defaultValue={toDisplay(value)}
       required={required}
       disabled={disabled}
       onFocus={onFocus}
