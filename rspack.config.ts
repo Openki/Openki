@@ -22,6 +22,8 @@ export default defineConfig((Meteor) => ({
       assert: false,
     },
   },
+  // Use `browserslist` data defined in `package.json` to build compatible JS and CSS.
+  target: "browserslist",
   module: {
     rules: [
       // Let Rspack handle regular CSS.
