@@ -65,13 +65,20 @@ function CustomMenu({
   const { t } = useTranslation();
   const user = useUser();
   const [isLoading, region] = Regions.useDetails(regionId);
+  const {
+    // Remove props that should not be forwarded to the DOM element
+    renderMenuItemChildren: _renderMenuItemChildren,
+    paginationText: _paginationText,
+    newSelectionPrefix: _newSelectionPrefix,
+    ...rest
+  } = menuProps;
 
   const userVenues = filterUserVenues(user, results);
 
   const venues = differenceBy(results, userVenues, (v) => (isEventVenueRef(v) ? v._id : undefined));
 
   return (
-    <Menu {...menuProps} id="event-venue">
+    <Menu {...rest} id="event-venue">
       {venues.length === 0 && (
         <>
           {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
