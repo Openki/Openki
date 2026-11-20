@@ -90,7 +90,8 @@ Meteor.startup(() => {
     document.documentElement.setAttribute("dir", textDirectionality);
     document.documentElement.classList.toggle("rtl", isRTL);
 
-    if (Meteor.userId()) {
+    const user = await Meteor.userAsync();
+    if (user) {
       await UsersMethods.updateLocale(desiredLocale);
     }
 
