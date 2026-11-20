@@ -10,7 +10,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 // @ts-expect-error Load the font
 import "@fontsource/source-sans-pro";
 
-// Workaround: Import Blaze templates eagerly to they are processed by Meteor
+// Workaround: Import Blaze templates eagerly so they are processed by Meteor
 import "./templates.imports";
 
 import "./main.scss";

@@ -24,7 +24,9 @@ export default defineConfig((Meteor) => ({
   },
   module: {
     rules: [
-      // Let Rspack handle regular CSS
+      // Let Rspack handle regular CSS.
+      // LightningCSS is similar to Autoprefixer
+      // https://rspack.rs/guide/builtin-loaders/lightningcss-loader
       {
         test: /\.css$/i,
         type: "css",
@@ -42,6 +44,8 @@ export default defineConfig((Meteor) => ({
               sassOptions: {
                 // Silence deprecations in bootstrap that we can not change.
                 quietDeps: true,
+                // Allow deprecated `@import` syntax to keep the existing Sass code as it is.
+                // It will be supported for a long time until Sass 3.0.
                 silenceDeprecations: ["import"],
               },
             },
