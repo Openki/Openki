@@ -56,6 +56,15 @@ export default defineConfig((Meteor) => ({
         ],
         type: "css",
       },
+      // Include fonts as assets in the built application
+      {
+        test: /\.(woff2?|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name][ext]",
+          publicPath: "/__rspack__/",
+        },
+      },
     ],
   },
 }));
