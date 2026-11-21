@@ -92,7 +92,7 @@ function CustomMenu({
         <>
           {userVenues.map((venue, index) => (
             <MenuItem
-              key={index}
+              key={venue._id}
               option={venue}
               position={index}
               className="bg-venue text-truncate"
