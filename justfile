@@ -103,7 +103,7 @@ reset *ARGS:
 
 # Preview HTML emails in the browser
 preview-emails:
-    python -m http.server --directory .temp/ 8080
+    python -m http.server --directory .temp/ 4321
 
 # Remove emails created by the dev server.
 reset-emails:
