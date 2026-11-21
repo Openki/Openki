@@ -35,7 +35,7 @@ react-template-helper
 react-meteor-accounts
 
 # SEO
-mdg:seo
+mdg:seo                         # Configure Prerender.io
 
 # Build
 es5-shim@4.8.1                  # ECMAScript 5 compatibility for older browsers
