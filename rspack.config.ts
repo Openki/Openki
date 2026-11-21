@@ -9,7 +9,20 @@ export default defineConfig((Meteor) => ({
   infrastructureLogging: {
     level: "info",
   },
-  ...Meteor.extendSwcConfig({ jsc: { transform: { react: { runtime: "automatic" } } } }),
+  ...Meteor.extendSwcConfig({
+    jsc: {
+      transform: { react: { runtime: "automatic" } },
+      // Meteor seems to hard code client code to es2015 which is really bad.
+      // We should use modern targets in order
+      // https://github.com/meteor/meteor/blob/b377f35db21e0f77971fa982f5603a76c08542d8/npm-packages/meteor-rspack/rspack.config.js#L139
+      //
+      // Related: It seems like @meteorjs/rspack doesn't read the browserslist config.
+      // However, we should get good enough browser support as long as we:
+      // 1) Set a modern JS target here.
+      // 2) Using `lightningcss` for CSS.
+      target: Meteor.isClient ? "es2022" : "es2024",
+    },
+  }),
   ...(Meteor.isClient && {
     resolve: {
       // Skip resolution for `node:*` built-in modules when building the client
@@ -23,8 +36,6 @@ export default defineConfig((Meteor) => ({
       },
     },
   }),
-  // Use `browserslist` data defined in `package.json` to build compatible JS and CSS.
-  target: "browserslist",
   module: {
     rules: [
       // Let Rspack handle regular CSS.
