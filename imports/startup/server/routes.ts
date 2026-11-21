@@ -1,56 +1,48 @@
 import { Meteor } from "meteor/meteor";
-import { Router } from "meteor/iron:router";
-import type { ServerResponse } from "node:http";
+import { WebApp } from "meteor/webapp";
+import { check } from "meteor/check";
 
 import * as Profile from "/imports/utils/profile";
 import type { UserEntity } from "/imports/api/users/users";
+import { StringEnum } from "/imports/utils/CustomChecks";
 
 // Server only routes
 
-Router.route("profileNotificationsUnsubscribe", {
-  path: "/profile/notifications/unsubscribe/:token",
-  async action() {
-    const unsubToken = this.params.token as string;
+function getProfileNotificationsUnsubscribeURL(type: NotificationType, accepted: boolean) {
+  const url = new URL(Meteor.absoluteUrl("profile"));
+  url.search = new URLSearchParams([
+    accepted ? ["unsubscribed", type] : ["unsubscribe-error", ""],
+  ]).toString();
 
-    const accepted = await Profile.Notifications.unsubscribe(unsubToken);
+  return url.toString();
+}
 
-    const query: { unsubscribed?: string; "unsubscribe-error"?: string } = {};
-    if (accepted) {
-      query.unsubscribed = "notifications";
-    } else {
-      query["unsubscribe-error"] = "";
-    }
+/**
+ * This defines both valid notification types (keys)
+ * and their respective unsubscribe handlers.
+ */
+const notificationUnsubscribeHandlers = {
+  notifications: Profile.Notifications.unsubscribe,
+  privatemessages: Profile.PrivateMessages.unsubscribe,
+};
 
-    this.response.writeHead(302, {
-      Location: Router.url("profile", {}, { query }),
-    });
+export type NotificationType = keyof typeof notificationUnsubscribeHandlers;
 
-    this.response.end();
-  },
-  where: "server",
-});
+/** Valid types of notifications that can be unsubscribed from */
+const notificationTypes = Object.keys(notificationUnsubscribeHandlers) as NotificationType[];
 
-Router.route("profilePrivateMessagesUnsubscribe", {
-  path: "/profile/privatemessages/unsubscribe/:token",
-  async action() {
-    const unsubToken = this.params.token as string;
+WebApp.handlers.get("/profile/:notificationType/unsubscribe/:token", async (req, res) => {
+  const { token, notificationType } = req.params;
+  check(notificationType, StringEnum(...notificationTypes));
 
-    const accepted = await Profile.PrivateMessages.unsubscribe(unsubToken);
+  const unsubscribeHandler = notificationUnsubscribeHandlers[notificationType];
+  if (!unsubscribeHandler) {
+    throw new Meteor.Error(400, `Unsupported notification type: ${notificationType}`);
+  }
 
-    const query: { unsubscribed?: string; "unsubscribe-error"?: string } = {};
-    if (accepted) {
-      query.unsubscribed = "privatemessages";
-    } else {
-      query["unsubscribe-error"] = "";
-    }
+  const accepted = await unsubscribeHandler(token);
 
-    this.response.writeHead(302, {
-      Location: Router.url("profile", {}, { query }),
-    });
-
-    this.response.end();
-  },
-  where: "server",
+  res.redirect(302, getProfileNotificationsUnsubscribeURL(notificationType, accepted));
 });
 
 // HACK: This TEST ONLY route is needed because we run all Cypress tests from the client side
@@ -62,8 +54,6 @@ if (Meteor.isDevelopment) {
     if (!Meteor.isDevelopment) {
       throw new Error("Test only routes");
     }
-    const { WebApp } = await import("meteor/webapp");
-    const { check } = await import("meteor/check");
     const { createAuthMiddleware } = await import("meteor/accounts-express");
 
     const { NotEmptyString } = await import("/imports/utils/CustomChecks");

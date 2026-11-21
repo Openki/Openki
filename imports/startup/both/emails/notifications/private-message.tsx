@@ -179,7 +179,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         fromAddress: "",
         group: undefined as JSX.Element | undefined,
         event: undefined as JSX.Element | undefined,
-        unsubscribe: { type: "privateMessage" as const, token: unsubToken },
+        unsubscribe: {
+          type: "privateMessage",
+          token: unsubToken,
+        } as const,
         campaign,
       };
 

@@ -88,6 +88,7 @@
     "no-unused-expressions": "error",
     "no-useless-constructor": "error",
     "no-empty-function": "error",
+    "no-async-endpoint-handlers": "off",
     "react/display-name": "error",
     "react/jsx-key": "error",
     "react/jsx-no-comment-textnodes": "error",

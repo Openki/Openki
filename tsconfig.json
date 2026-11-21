@@ -44,7 +44,8 @@
       "sanitize-html",
       "seedrandom",
       "tinycolor2",
-      "uuid"
+      "uuid",
+      "express"
     ],
     "resolveJsonModule": true,
     "preserveSymlinks": true,
