@@ -4,7 +4,13 @@ import { ReactNode } from "react";
 export async function renderToEmail(element: ReactNode) {
   if (Meteor.isServer) {
     const { renderToStaticMarkup } = await import("react-dom/server");
-    const juice = (await import("juice")).default;
+    // NOTE: `webpackIgnore: true` ensures that Rspack only resolves `juice` during runtime.
+    // Otherwise, the server runtime crashes, because Meteor can not handle the
+    // import attributes syntax. Example: `import * from "" with { type: "json" }`
+    //
+    // This workaround can be removed when Meteor replaces Babel or adds the relevant Babel plugin.
+    const juice = (await import(/* webpackIgnore: true */ "juice")).default;
+
     // react can't handle DOCTYPE header, so we add the thing here.
     return juice(
       `<!DOCTYPE html>

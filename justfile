@@ -31,7 +31,7 @@ install *ARGS:
 [no-exit-message]
 dev:
     meteor npm run dev:startup
-    meteor run --inspect --settings settings/local.json
+    meteor run --exclude-archs "web.browser.legacy" --inspect --settings settings/local.json
 
 # Main docker compose wrapper with common config
 compose *ARGS:

@@ -1,7 +1,6 @@
 import { defineConfig } from "@meteorjs/rspack";
-import { toMerged } from "es-toolkit";
-
 import { createRequire } from "node:module";
+
 const require = createRequire(import.meta.filename);
 
 export default defineConfig((Meteor) => ({
@@ -10,18 +9,20 @@ export default defineConfig((Meteor) => ({
   infrastructureLogging: {
     level: "info",
   },
-  ...Meteor.extendSwcConfig(
-    toMerged(Meteor.swcConfigOptions, { jsc: { transform: { react: { runtime: "automatic" } } } }),
-  ),
-  resolve: {
-    // Skip resolution for `node:*` built-in modules when building the client
-    fallback: {
-      path: false,
-      util: false,
-      stream: false,
-      assert: false,
+  ...Meteor.extendSwcConfig({ jsc: { transform: { react: { runtime: "automatic" } } } }),
+  ...(Meteor.isClient && {
+    resolve: {
+      // Skip resolution for `node:*` built-in modules when building the client
+      fallback: {
+        path: false,
+        util: false,
+        "fs/promises": false,
+        async_hooks: false,
+        stream: false,
+        assert: false,
+      },
     },
-  },
+  }),
   // Use `browserslist` data defined in `package.json` to build compatible JS and CSS.
   target: "browserslist",
   module: {

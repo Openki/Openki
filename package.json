@@ -35,7 +35,7 @@
     "image-blob-reduce": "5.0.1",
     "intl-messageformat": "12.1.5",
     "jquery": "3.7.0",
-    "juice": "11.0.1",
+    "juice": "12.2.6",
     "leaflet": "1.9.4",
     "leaflet.fullscreen": "5.3.3",
     "medium-editor": "5.23.3",
@@ -103,7 +103,7 @@
   "scripts": {
     "dev:startup": "npm run extract-translations && npm run type-check",
     "debug": "npm run dev:startup && npm run debug:dev",
-    "debug:dev": "meteor --inspect --settings settings/dev.json",
+    "debug:dev": "meteor --exclude-archs 'web.browser.legacy' --inspect --settings settings/dev.json",
     "debug:ssl": "npm run dev:startup && OPENKI_LOCALHOST_SSL=1 meteor --extra-packages storyteller:ssl --inspect --settings settings/dev.json",
     "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
@@ -117,7 +117,8 @@
   },
   "meteor": {
     "modern": {
-      "verbose": true
+      "webArchOnly": true,
+      "verbose": false
     },
     "mainModule": {
       "client": "client/main.ts",
