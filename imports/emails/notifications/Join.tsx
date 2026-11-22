@@ -70,7 +70,8 @@ export function Join({
         campaign={campaign}
         lng={lng}
       >
-        {t("email.base.receiveNote.otherRecipients", { OTHERRECIPIENTS: otherRecipients })}
+        {!!otherRecipients.length &&
+          t("email.base.receiveNote.otherRecipients", { OTHERRECIPIENTS: otherRecipients })}
       </Footer>
     </>
   );
