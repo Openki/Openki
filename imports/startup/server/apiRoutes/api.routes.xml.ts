@@ -1,8 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { v5 as uuidv5, validate as isValidUUID } from "uuid";
 import { create } from "xmlbuilder2";
-import { ApiEvent } from "/imports/Api";
 import { Router } from "meteor/iron:router";
+import type { Response } from "express";
+
+import { ApiEvent } from "/imports/Api";
 import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 import { textPlain } from "/imports/utils/html-tools";
@@ -41,16 +43,14 @@ function sortByTimeAndRoom(regionZone: Zone, results: ApiEvent[]) {
   );
 }
 
-async function xmlSendResponder(res: any, process: any) {
+async function xmlSendResponder(res: Response, process: () => Promise<string>) {
   try {
     const body = await process();
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/xml");
-    res.end(body);
+    res.status(200).type("application/xml").send(body);
   } catch (e) {
     const body: any = {};
     if (e instanceof FilteringReadError || e instanceof NoActionError) {
-      res.statusCode = 400;
+      res.status(400);
       body.status = "fail";
       body.data = {};
       if ((e as any).name) {
@@ -60,11 +60,11 @@ async function xmlSendResponder(res: any, process: any) {
       }
     } else {
       console.log(e, e instanceof Error && e.stack);
-      res.statusCode = 500;
+      res.status(500);
       body.status = "error";
       body.message = "Server error";
     }
-    res.end(JSON.stringify(body, null, "\t"));
+    res.json(body);
   }
 }
 
