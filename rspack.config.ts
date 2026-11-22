@@ -48,18 +48,16 @@ export default defineConfig((Meteor) => ({
   }),
   module: {
     rules: [
-      // Let Rspack handle regular CSS.
-      // LightningCSS is similar to Autoprefixer
-      // https://rspack.rs/guide/builtin-loaders/lightningcss-loader
+      // Rspack executes loaders right to left (which is bottom up in this file):
+      // 1) Transform Sass into CSS using `sass-loader`.
+      // 2) Improve CSS browser compatibility with LightningCSS (similar to Autoprefixer).
+      // Learn more: https://rspack.rs/guide/features/loader#combining-multiple-loaders
       {
-        test: /\.css$/i,
+        test: /\.s?css$/i,
         type: "css",
-        use: ["builtin:lightningcss-loader"],
-      },
-      // Load SASS
-      {
-        test: /\.scss$/i,
         use: [
+          // https://rspack.rs/guide/builtin-loaders/lightningcss-loader
+          "builtin:lightningcss-loader",
           {
             loader: "sass-loader",
             options: {
@@ -75,9 +73,8 @@ export default defineConfig((Meteor) => ({
             },
           },
         ],
-        type: "css",
       },
-      // Include fonts as assets in the built application
+      // Include fonts imported into TS/JS modules as assets in the built application.
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: "asset/resource",
