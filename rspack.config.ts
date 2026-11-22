@@ -1,14 +1,51 @@
 import { defineConfig } from "@meteorjs/rspack";
+import { DefinePlugin } from "@rspack/core";
+import { readFileSync } from "node:fs";
+import type { ServerOptions } from "node:https";
 import { createRequire } from "node:module";
+import { resolve } from "node:path";
 
 const require = createRequire(import.meta.filename);
 
+const isLocalhostSSLEnabled = process.env.OPENKI_LOCALHOST_SSL === "1";
+const serverOptions: ServerOptions = {};
+
+if (isLocalhostSSLEnabled) {
+  try {
+    serverOptions.cert = readFileSync(resolve(import.meta.dirname, "localhost.pem"));
+    serverOptions.key = readFileSync(resolve(import.meta.dirname, "localhost-key.pem"));
+  } catch (error) {
+    console.error(error);
+    console.warn(
+      "Unable to load local SSL configuration. Please generate a local SSL certificate with `just setup-localhost-ssl`",
+    );
+  }
+}
+
 export default defineConfig((Meteor) => ({
   // Enable verbose Rspack logging
-  stats: "detailed",
-  infrastructureLogging: {
-    level: "info",
-  },
+  // Uncomment if you need to debug something related to Rspack.
+  // To debug Meteor SWC compilation, set `meteor.modern.verbose` in `package.json` to `true`.
+  // stats: "detailed",
+  // infrastructureLogging: {
+  //   level: "info",
+  // },
+  plugins: [
+    // Static compile-time variables. Boolean values allow dead-code elimination in production.
+    new DefinePlugin({
+      __IS_LOCALHOST_SSL_ENABLED__: isLocalhostSSLEnabled,
+    }),
+  ],
+  ...(isLocalhostSSLEnabled
+    ? {
+        devServer: {
+          server: {
+            type: "https",
+            options: serverOptions,
+          },
+        },
+      }
+    : {}),
   ...Meteor.extendSwcConfig({
     jsc: {
       transform: { react: { runtime: "automatic" } },

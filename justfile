@@ -33,6 +33,11 @@ dev:
     meteor npm run dev:startup
     meteor run --exclude-archs "web.browser.legacy" --inspect --settings settings/local.json
 
+# Start the Meteor development server with SSL (HTTPS) enabled. This requires the Caddy reverse proxy to be running.
+[no-exit-message]
+ssl-dev:
+    meteor npm run debug:ssl
+
 # Main docker compose wrapper with common config
 compose *ARGS:
     docker compose -f {{ COMPOSE_FILE }} --env-file {{ ENV_FILE }} {{ ARGS }}
