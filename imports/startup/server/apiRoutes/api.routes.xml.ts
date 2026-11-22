@@ -48,8 +48,7 @@ async function xmlSendResponder(res: Response, process: () => Promise<string>) {
     const body = await process();
     res.status(200).type("application/xml").send(body);
   } catch (e) {
-    const body: { data?: Record<string, unknown>; status?: "error" | "fail"; message?: string } =
-      {};
+    const body: { data?: Record<string, unknown>; status?: string; message?: string } = {};
     if (e instanceof FilteringReadError || e instanceof NoActionError) {
       res.status(400);
       body.status = "fail";
@@ -58,6 +57,12 @@ async function xmlSendResponder(res: Response, process: () => Promise<string>) {
         body.data[(e as any).name] = e.message;
       } else {
         body.data.error = e.message;
+      }
+    } else if (e instanceof Meteor.Error) {
+      res.status(400);
+      body.status = e.error.toString();
+      if (e.reason) {
+        body.message = e.reason;
       }
     } else {
       console.log(e, e instanceof Error && e.stack);
