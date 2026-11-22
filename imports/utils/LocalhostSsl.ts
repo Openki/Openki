@@ -6,8 +6,14 @@ import { Meteor } from "meteor/meteor";
  * By using a static variable, all code only used for localhost SSL
  * can be removed from the production bundle.
  */
-declare const __IS_LOCALHOST_SSL_ENABLED__: boolean;
+declare const isLocalhostSSLEnabled: boolean;
 
 export const LocalhostSsl =
-  __IS_LOCALHOST_SSL_ENABLED__ &&
+  isLocalhostSSLEnabled &&
   (Meteor.isServer || (Meteor.isClient && document.location.host === "localhost:3443"));
+
+if (isLocalhostSSLEnabled) {
+  if (Meteor.isServer) {
+    console.log("\n\nLocalhost SSL enabled: https://localhost:3443\n\n");
+  }
+}

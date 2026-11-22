@@ -34,9 +34,28 @@ services:
       - garage-meta:/var/lib/garage/meta
     restart: "no"
 
+  # Caddy reverse proxy used to enable localhost SSL for development and testing
+  # NOTE: Before the first run, use `just setup-localhost-ssl` to generate a SSL certificate.
+  ssl-proxy:
+    # By using a profile, this service will only download its image, build and get started
+    # when running `docker compose --profile ssl up`.
+    # This keeps the regular dev workflow simple, and only enables the proxy when needed.
+    profiles:
+      - ssl
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "3443:3443"
+    volumes:
+      - ./docker/caddy:/etc/caddy
+      - caddy-data:/data
+      - caddy-config:/config
+
 volumes:
   garage-meta:
   garage-data:
+  caddy-data:
+  caddy-config:
 
 networks:
   app-network:
