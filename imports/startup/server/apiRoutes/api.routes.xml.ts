@@ -92,6 +92,8 @@ function asUuid(value: string) {
   return uuidv5(value, OPENKI_UUID_NAMESPACE);
 }
 
+const allowedMethods = new Set(["GET", "HEAD", "OPTIONS"]);
+
 WebApp.handlers.use(
   "/api/0/xml/schedule",
   async (
@@ -103,7 +105,7 @@ WebApp.handlers.use(
     >,
     res,
   ) => {
-    if (req.method !== "GET" && req.method !== "HEAD") {
+    if (!allowedMethods.has(req.method.toUpperCase())) {
       res.sendStatus(405);
       return;
     }

@@ -18,7 +18,7 @@ const jsonSendResponder = async function (res: Response, process: () => Promise<
     };
     res.status(200).json(body);
   } catch (e) {
-    const body: any = {};
+    const body: { data?: Record<string, unknown>; status?: string; message?: string } = {};
     if (e instanceof FilteringReadError || e instanceof NoActionError) {
       res.status(400);
       body.status = "fail";
@@ -38,8 +38,10 @@ const jsonSendResponder = async function (res: Response, process: () => Promise<
   }
 };
 
+const allowedMethods = new Set(["GET", "HEAD", "OPTIONS"]);
+
 WebApp.handlers.use("/api/0/json/:handler", async (req, res) => {
-  if (req.method !== "GET" && req.method !== "HEAD") {
+  if (!allowedMethods.has(req.method.toUpperCase())) {
     res.sendStatus(405);
     return;
   }
