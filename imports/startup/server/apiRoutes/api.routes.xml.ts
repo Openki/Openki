@@ -1,8 +1,8 @@
 import { Meteor } from "meteor/meteor";
+import { WebApp } from "meteor/webapp";
 import { v5 as uuidv5, validate as isValidUUID } from "uuid";
 import { create } from "xmlbuilder2";
-import { Router } from "meteor/iron:router";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
 import { ApiEvent } from "/imports/Api";
 import { FilteringReadError } from "/imports/utils/filtering";
@@ -48,7 +48,8 @@ async function xmlSendResponder(res: Response, process: () => Promise<string>) {
     const body = await process();
     res.status(200).type("application/xml").send(body);
   } catch (e) {
-    const body: any = {};
+    const body: { data?: Record<string, unknown>; status?: "error" | "fail"; message?: string } =
+      {};
     if (e instanceof FilteringReadError || e instanceof NoActionError) {
       res.status(400);
       body.status = "fail";
@@ -86,12 +87,24 @@ function asUuid(value: string) {
   return uuidv5(value, OPENKI_UUID_NAMESPACE);
 }
 
-Router.route("api.0.xml", {
-  path: "/api/0/xml/schedule",
-  where: "server",
-  async action() {
-    await xmlSendResponder(this.response, async () => {
-      const region = await Regions.findOneAsync({ _id: this.params.query.region });
+WebApp.handlers.use(
+  "/api/0/xml/schedule",
+  async (
+    req: Request<
+      unknown,
+      unknown,
+      unknown,
+      { region: string; canceled: string; sort?: string; limit?: string; skip?: string }
+    >,
+    res,
+  ) => {
+    if (req.method !== "GET" && req.method !== "HEAD") {
+      res.sendStatus(405);
+      return;
+    }
+
+    await xmlSendResponder(res, async () => {
+      const region = await Regions.findOneAsync({ _id: req.query.region });
 
       if (!region) {
         throw new Meteor.Error("region requried", "The region param must be given.");
@@ -99,8 +112,8 @@ Router.route("api.0.xml", {
       const regionZone = await LocalTime.zoneAsync(region._id);
 
       // Hide canceled events in schedule
-      this.params.query.canceled = this.params.query.canceled ?? "0";
-      const results = await orderedResults(this.params, "events");
+      req.query.canceled = req.query.canceled ?? "0";
+      const results = await orderedResults({ query: req.query }, "events");
 
       const resultsByTimeAndRoom = sortByTimeAndRoom(regionZone, results);
 
@@ -244,4 +257,4 @@ Router.route("api.0.xml", {
       return scheduleNode.end({ prettyPrint: true });
     });
   },
-});
+);
