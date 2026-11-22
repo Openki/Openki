@@ -15,7 +15,7 @@ import * as join from "./notifications/join";
 import * as group from "./notifications/group";
 import * as organizationGroup from "./notifications/organization.group";
 import * as privateMessage from "./notifications/private-message";
-import { NotificationUnsubscribeType } from "/imports/emails/notifications/components/UnsubscribeLink";
+import type { NotificationUnsubscribeType } from "/imports/startup/server/emails/unsubscribe-helpers";
 
 export interface Model<T> {
   accepted(user: UserModel): void;

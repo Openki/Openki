@@ -3,6 +3,8 @@
 // ```bash
 // find imports/ -name '*.html' | sed 's|^|import "|; s|$|";|' >> client/templates.imports.ts
 // ```
+//
+// NOTE: This should be removed when Blaze and iron:router have been removed.
 
 import "/imports/startup/client/translations.html";
 import "/imports/ui/components/account-tasks/template.html";
