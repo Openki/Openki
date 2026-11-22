@@ -23,7 +23,7 @@ export default defineConfig((Meteor) => ({
     jsc: {
       transform: { react: { runtime: "automatic" } },
       // Meteor seems to hard code client code to es2015 which is really bad.
-      // We should use modern targets in order
+      // We should use modern targets in order to ship performant and efficient JS to browsers.
       // https://github.com/meteor/meteor/blob/b377f35db21e0f77971fa982f5603a76c08542d8/npm-packages/meteor-rspack/rspack.config.js#L139
       //
       // Related: It seems like @meteorjs/rspack doesn't read the browserslist config.
