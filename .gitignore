@@ -46,3 +46,7 @@ private/build-chunks/
 */build-assets*
 */build-chunks*
 .rsdoctor
+
+# Local certificates used to support HTTPS for localhost development
+*.cert
+*.pem

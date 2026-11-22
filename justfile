@@ -119,6 +119,29 @@ refresh-packages:
     just reset
     just dev
 
+[doc("""
+Run this script once to make it possible to run the local dev server with HTTPS.
+
+This is useful for testing in production-like circumstances, and required for
+developing and testing OAuth integrations.
+
+Requirements: Install `mkcert` - https://github.com/FiloSottile/mkcert
+""")]
+setup-localhost-ssl:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    # 1) Ensure mkcert is installed
+    command -v mkcert >/dev/null 2>&1 || {
+      printf >&2 "\nError: Please install mkcert - https://github.com/FiloSottile/mkcert\n\n"
+      exit 1
+    }
+    # 2) Install a local certificate authority (CA) in the system trust store.
+    #    This will prompt you for sudo access.
+    #    Only need to be done once per computer, but included here for simplicity.
+    mkcert -install
+    # 3) Create a certificate and private key for https://localhost
+    mkcert localhost
+
 alias i := install
 alias d := dev
 alias t := test-ui
