@@ -3,7 +3,7 @@ import { SortSpec } from "/imports/utils/sort-spec";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Api, ApiEvent } from "/imports/Api";
 
-type HandlerType = "organizations" | "venues" | "events" | "groups";
+type HandlerType = keyof typeof Api;
 
 export class NoActionError {
   message: string;
@@ -13,8 +13,15 @@ export class NoActionError {
   }
 }
 
-export const orderedResults = async (params: any, handler: HandlerType): Promise<ApiEvent[]> => {
-  if (!Object.hasOwn(Api, handler)) {
+export function isHandler(handler: string): handler is HandlerType {
+  return Object.hasOwn(Api, handler);
+}
+
+export const orderedResults = async (
+  params: { query: { sort?: string; limit?: string; skip?: string } },
+  handler: string,
+): Promise<ApiEvent[]> => {
+  if (!isHandler(handler)) {
     throw new NoActionError("Invalid action");
   }
 

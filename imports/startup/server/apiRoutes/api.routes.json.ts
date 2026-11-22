@@ -1,4 +1,3 @@
-import { Router } from "meteor/iron:router";
 import { WebApp } from "meteor/webapp";
 import type { Response } from "express";
 
@@ -39,10 +38,12 @@ const jsonSendResponder = async function (res: Response, process: () => Promise<
   }
 };
 
-Router.route("api.0.json", {
-  path: "/api/0/json/:handler",
-  where: "server",
-  async action() {
-    await jsonSendResponder(this.response, () => orderedResults(this.params, this.params.handler));
-  },
+WebApp.handlers.use("/api/0/json/:handler", async (req, res) => {
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    res.sendStatus(405);
+    return;
+  }
+  await jsonSendResponder(res, () =>
+    orderedResults({ ...req.params, query: req.query }, req.params.handler),
+  );
 });
