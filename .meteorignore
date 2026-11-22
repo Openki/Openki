@@ -23,3 +23,4 @@ LICENSES/
 ci/
 README.md
 example.env.local
+.temp

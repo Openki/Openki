@@ -102,8 +102,9 @@ reset *ARGS:
     meteor reset {{ ARGS }}
 
 # Preview HTML emails in the browser
+[no-exit-message]
 preview-emails:
-    python -m http.server --directory .temp/ 4321
+    python scripts/preview-emails.py .temp/ 4000
 
 # Remove emails created by the dev server.
 reset-emails:
