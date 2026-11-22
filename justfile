@@ -53,7 +53,11 @@ ssl-dev:
         exit 1
     fi
     meteor npm run dev:startup
-    OPENKI_LOCALHOST_SSL=1 meteor run --exclude-archs "web.browser.legacy" --inspect --settings settings/local.json
+    ROOT_URL=https://localhost:3443 OPENKI_LOCALHOST_SSL=1 meteor run \
+      --exclude-archs "web.browser.legacy" \
+      --inspect \
+      --settings settings/local.json \
+      --port 3000
 
 # Main docker compose wrapper with common config
 compose *ARGS:

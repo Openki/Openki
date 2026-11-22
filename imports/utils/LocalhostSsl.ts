@@ -11,9 +11,3 @@ declare const isLocalhostSSLEnabled: boolean;
 export const LocalhostSsl =
   isLocalhostSSLEnabled &&
   (Meteor.isServer || (Meteor.isClient && document.location.host === "localhost:3443"));
-
-if (isLocalhostSSLEnabled) {
-  if (Meteor.isServer) {
-    console.log("\n\nLocalhost SSL enabled: https://localhost:3443\n\n");
-  }
-}
