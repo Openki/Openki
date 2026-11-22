@@ -104,8 +104,8 @@
   "scripts": {
     "dev:startup": "npm run extract-translations && npm run type-check",
     "debug": "npm run dev:startup && npm run debug:dev",
-    "debug:dev": "meteor --exclude-archs 'web.browser.legacy' --inspect --settings settings/dev.json",
-    "debug:ssl": "npm run dev:startup && ROOT_URL=https://localhost:3443 OPENKI_LOCALHOST_SSL=1 meteor --exclude-archs 'web.browser.legacy' --inspect --settings settings/local.json --port 3000",
+    "debug:dev": "meteor --inspect --settings settings/dev.json",
+    "debug:ssl": "npm run dev:startup && ROOT_URL=https://localhost:3443 OPENKI_LOCALHOST_SSL=1 meteor --inspect --settings settings/local.json --port 3000",
     "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
@@ -117,10 +117,7 @@
     "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
-    "modern": {
-      "webArchOnly": true,
-      "verbose": false
-    },
+    "modern": true,
     "mainModule": {
       "client": "client/main.ts",
       "server": "server/main.ts"

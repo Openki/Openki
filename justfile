@@ -33,7 +33,7 @@ install *ARGS:
 [no-exit-message]
 dev:
     meteor npm run dev:startup
-    meteor run --exclude-archs "web.browser.legacy" --inspect --settings settings/local.json
+    meteor run --inspect --settings settings/local.json
 
 [doc("""
 Start the Meteor development server and enable localhost SSL features.
@@ -54,7 +54,6 @@ ssl-dev:
     fi
     meteor npm run dev:startup
     ROOT_URL=https://localhost:3443 OPENKI_LOCALHOST_SSL=1 meteor run \
-      --exclude-archs "web.browser.legacy" \
       --inspect \
       --settings settings/local.json \
       --port 3000
