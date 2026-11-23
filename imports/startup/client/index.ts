@@ -48,7 +48,6 @@ import "./client-error";
 import "./locale";
 import "./templates";
 import "./template-helpers";
-import "./translations.html";
 import "./useraccounts-configuration";
 import "./c3-oauth";
 

@@ -10,6 +10,5 @@
     // Preserve formatting of Blaze templates for readability
     // NOTE: These ignore rules can be removed after migrating away from Blaze and `iron:router`.
     "*.html",
-    "imports/startup/client/translations.html",
   ],
 }
