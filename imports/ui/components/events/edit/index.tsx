@@ -255,21 +255,17 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       startInPast: {
         field: "start",
         isValid: () => {
-          if (isNew) {
-            const start = LocalTime.fromString(changes.startLocal);
-            if (!start.isValid()) {
-              // checked with a other validation
-              return true;
-            }
-            return start.isAfter(LocalTime.now());
-          } else {
+          const start = LocalTime.fromString(changes.startLocal);
+          if (!start.isValid()) {
+            // checked with a other validation
             return true;
           }
+          return start.isAfter(LocalTime.now());
         },
         text: () =>
           t(
             "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?",
+            "The event starts in the past.",
           ),
       },
       noDescription: {
