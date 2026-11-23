@@ -56,7 +56,7 @@ export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
               <label className="form-label whitespace-pre-line" htmlFor="reportMessage">
                 {t(
                   "report.textShort",
-                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.",
+                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of this platform.",
                 )}
                 {showGroupHint && (
                   <>

@@ -9,6 +9,8 @@ set -euo pipefail
 LOG_FILE=/tmp/meteor-packages-to-delete.txt
 
 {
+  # Reset the log from the previous run.
+  echo "" > $LOG_FILE
   # 1) List what will be removed and save to a LOG_FILE so it can be reviewed in a text editor.
   # This sorts version numbers and only keeps the newest version (highest number).
   # It assumes that packages include their version number in the directory name
@@ -16,7 +18,10 @@ LOG_FILE=/tmp/meteor-packages-to-delete.txt
 } &>/dev/null
 
 # Only proceed it there are packages that should be deleted
-[ -s $LOG_FILE ] || printf "\nAlready cleaned. No old packages to delete.\n\n" && exit 0
+if [ -s $LOG_FILE ]; then
+  printf "\nAlready cleaned. No old packages to delete.\n\n"
+  exit 0
+fi
 
 echo ""
 echo "Warning: This will delete all cached meteor packages from older Meteor versions."

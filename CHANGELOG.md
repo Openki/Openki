@@ -1,3 +1,13 @@
+# v0.14.6 - 2026-11-23
+
+## Highlights
+
+- **Meteor update**: Update meteor to version 3.6.1.
+
+## Fixes
+
+- **Roles removing one removes all**: Fixed a problem when one custom role was removed all other custom roles get removed in the role select.
+
 # v0.14.5 - 2026-11-16
 
 ## Highlights

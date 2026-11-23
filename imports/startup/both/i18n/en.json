@@ -1042,7 +1042,7 @@
   "report.placeholder": "My hovercraft is full of eels.",
   "report.report": "Send report",
   "report.sending": "Report is being sent…",
-  "report.textShort": "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.",
+  "report.textShort": "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of this platform.",
   "report.warning.tooShort": "The report message is too short! Please write more than 5 characters.",
   "resetPassword.confirm": "Set my password",
   "resetPassword.confirmPasswordByTyping": "Confirm by typing it again",

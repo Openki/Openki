@@ -74,7 +74,11 @@ test-ui:
 test:
     meteor npm run test
 
-# Run only specific tests in a headless browser. For example, `tests/component/Navbar.spec.ts`
+[doc("""
+Run only specific tests in a headless browser.
+
+For example, a glob like `**/Api*` or a full path like `tests/component/Navbar.spec.ts`
+""")]
 test-only *ARGS:
     meteor npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
 
