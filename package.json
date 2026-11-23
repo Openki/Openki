@@ -88,7 +88,6 @@
     "core-js": "3.51.0",
     "cypress": "16.3.0",
     "i18next-cli": "1.94.2",
-    "i18next-parser": "9.3.0",
     "oxfmt": "0.78.0",
     "oxlint": "1.93.0",
     "react-refresh": "0.19.0",

@@ -1,7 +1,7 @@
 cypress.config.ts
 tests/screenshots
 scripts/
-i18next-parser.config.js
+i18next.config.*
 
 .dockerignore
 Dockerfile
