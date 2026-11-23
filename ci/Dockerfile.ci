@@ -3,7 +3,7 @@ FROM node:26-trixie-slim
 
 # Set version label
 ARG BUILD_DATE
-LABEL build_version="TestingDocker version:- 0.3 Build-date:- ${BUILD_DATE}"
+LABEL build_version="TestingDocker version:- 0.4 Build-date:- ${BUILD_DATE}"
 LABEL maintainer="1u"
 
 # The Meteor version should match what we use in the rest of the project
