@@ -13,13 +13,17 @@ Npm.depends({
 })
 
 Package.onUse((api) => {
-  api.versionsFrom(['1.8.2', '1.12', '2.0', '2.3', '3.0'])
+  api.versionsFrom(['3.6'])
   api.use('tracker')
   api.use('ecmascript')
   api.use('typescript')
-  api.use('zodern:types@1.0.13', 'server')
 
   api.mainModule('index.ts', ['client', 'server'])
+  api.types('index.ts', {
+    modules: {
+      suspense: './suspense/index.ts'
+    }
+  })
 })
 
 Package.onTest((api) => {
