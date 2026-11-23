@@ -9,7 +9,7 @@ Package.describe({
 })
 
 Npm.depends({
-  'fast-equals': '5.2.2'
+  'fast-equals': '6.4.1'
 })
 
 Package.onUse((api) => {
