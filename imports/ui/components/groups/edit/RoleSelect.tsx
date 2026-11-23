@@ -36,30 +36,29 @@ interface RoleOption {
   label: React.JSX.Element;
 }
 
-const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
-  const { t } = useTranslation();
-
-  const { role } = props.data;
-
-  let id;
+function buildId(role: GroupRole) {
   switch (role.type) {
     case RoleType.Predefined:
-      id = `role-select-${role.id}-${role.type}`;
-      break;
+      return `${role.id}-${role.type}`;
+
     case RoleType.Custom:
-      id = `role-select-${slug(role.label)}-${role.type}`;
-      break;
+      return `${slug(role.label)}-${role.type}`;
 
     default:
       throw new Error("Unexpected value for role.type");
   }
+}
+
+const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
+  const { t } = useTranslation();
+  const { role } = props.data;
 
   return (
     <components.MultiValueRemove
       {...props}
       innerProps={{
         ...props.innerProps,
-        id,
+        id: `role-select-${buildId(role)}`,
         "aria-label": t("group.edit.needs.role.ariaLabel", 'Remove "{ROLE}"', {
           ROLE: props.data.ariaLabel,
         }),
@@ -143,7 +142,7 @@ export function RoleSelect({
     .filter((r) => !value.some((v) => isSameRole(r, v)))
     .map((r) => ({
       role: r,
-      value: `${r.id}-${r.type}`,
+      value: buildId(r),
       ariaLabel: roleShort(r),
       label: (
         <>
@@ -156,7 +155,7 @@ export function RoleSelect({
     .filter((r) => isCustom(r) || availableRoles().some((o) => isSameRole(r, o)))
     .map((r) => ({
       role: r,
-      value: `${r.id}-${r.type}`,
+      value: buildId(r),
       ariaLabel: roleShort(r),
       label: (
         <>

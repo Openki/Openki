@@ -131,5 +131,9 @@
   "bugs": {
     "url": "https://gitlab.com/Openki/Openki/issues"
   },
-  "homepage": "https://about.openki.net"
+  "homepage": "https://about.openki.net",
+  "allowScripts": {
+    "cypress": true,
+    "esbuild": true
+  }
 }
