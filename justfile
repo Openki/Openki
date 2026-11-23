@@ -33,7 +33,7 @@ install *ARGS:
 [no-exit-message]
 dev:
     meteor npm run dev:startup
-    meteor run --inspect --settings settings/local.json
+    NODE_OPTIONS="--no-experimental-webstorage" meteor run --inspect --settings settings/local.json
 
 [doc("""
 Start the Meteor development server and enable localhost SSL features.
