@@ -277,7 +277,7 @@ if (Meteor.isClient) {
       })((props) => {
         self.data = props;
         return <div>{
-          _.map(props.docs, (doc) => <span key={doc._id}>{doc._id}</span>)
+          props.docs.map((doc) => <span key={doc._id}>{doc._id}</span>)
         }</div>;
       });
 

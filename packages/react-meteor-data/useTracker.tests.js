@@ -516,7 +516,7 @@ if (Meteor.isClient) {
         });
         self.data = data;
         return <div>{
-          _.map(data.docs, (doc) => <span key={doc._id}>{doc._id}</span>)
+          data.docs.map((doc) => <span key={doc._id}>{doc._id}</span>)
         }</div>;
       };
 
@@ -621,7 +621,7 @@ if (Meteor.isClient) {
         }, []);
         self.data = data;
         return <div>{
-          _.map(data.docs, (doc) => <span key={doc._id}>{doc._id}</span>)
+          data.docs.map((doc) => <span key={doc._id}>{doc._id}</span>)
         }</div>;
       };
 
