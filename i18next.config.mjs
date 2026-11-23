@@ -28,7 +28,7 @@ export default defineConfig({
 
     messageFormat: "icu",
     // Enable warnings to catch and fix errors
-    // warnOnConflicts: "error",
+    warnOnConflicts: "error",
 
     // Preserve existing dynamically generated translation keys.
     // This allows the source code to construct i18n keys during runtime,
