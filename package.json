@@ -87,6 +87,7 @@
     "@types/uuid": "10.0.0",
     "core-js": "3.51.0",
     "cypress": "16.3.0",
+    "i18next-cli": "1.94.2",
     "i18next-parser": "9.3.0",
     "oxfmt": "0.78.0",
     "oxlint": "1.93.0",
@@ -112,7 +113,7 @@
     "lint:fix": "oxlint --fix && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' --fix && echo 'Formatting and applying fixes...' && oxfmt --write '**/*.{ts,tsx,scss,json*,js,md}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
     "type-check": "echo 'Checking types...' && meteor types && tsc",
-    "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
+    "extract-translations": "echo 'Extracting translations...' && i18next-cli extract --quiet"
   },
   "meteor": {
     "modern": true,
