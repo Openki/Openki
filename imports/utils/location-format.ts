@@ -19,10 +19,7 @@ export function locationFormat(location: { coordinates: [number, number] }) {
   });
 }
 
-export function format(
-  t: TFunction<"translation", undefined>,
-  location: { coordinates: [number, number] },
-) {
+export function format(t: TFunction<"", undefined>, location: { coordinates: [number, number] }) {
   if (!location?.coordinates) {
     return undefined;
   }

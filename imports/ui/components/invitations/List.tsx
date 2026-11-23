@@ -12,7 +12,7 @@ import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
-function statusFormat(t: TFunction<"translation", undefined>, status: Status) {
+function statusFormat(t: TFunction<"", undefined>, status: Status) {
   switch (status) {
     case "created":
       return t("invitations.status.created", "Created");
