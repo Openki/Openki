@@ -8,7 +8,7 @@ export async function renderToEmail(element: ReactNode) {
     // Otherwise, the server runtime crashes, because Meteor can not handle the
     // import attributes syntax. Example: `import * from "" with { type: "json" }`
     //
-    // This workaround can be removed when Meteor replaces Babel or adds the relevant Babel plugin.
+    // This workaround can be removed when Meteor replaces Babel internally or adds the relevant plugin.
     const juice = (await import(/* webpackIgnore: true */ "juice")).default;
 
     // react can't handle DOCTYPE header, so we add the thing here.
