@@ -209,7 +209,6 @@
   "homepage": "https://about.openki.net",
   "allowScripts": {
     "cypress": true,
-    "esbuild": true,
     "@parcel/watcher": true,
     "@swc/core": true,
     "core-js": false
