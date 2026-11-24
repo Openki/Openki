@@ -116,6 +116,10 @@ oxlint-errors:
 translations:
     npm run extract-translations
 
+# Find errors in translations and print warnings and errors
+check-translations:
+    npm run lint:translations
+
 # Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
 test-ui:
