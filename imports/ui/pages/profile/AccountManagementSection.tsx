@@ -18,7 +18,7 @@ function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) 
         type="button"
         className="btn btn-outline-secondary text-dark rounded-0"
         onClick={onToggle}
-        aria-label={t("_button.toggleVisibility", "Toggle visibility")}
+        aria-label={t("_button.toggleVisibility")}
       >
         <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
       </button>

@@ -67,6 +67,7 @@ export default defineConfig({
       "_button.close",
       "_button.open",
       "_button.clear",
+      "_button.toggleVisibility",
       "_selection.pleaseSelect",
       "_inputField.password",
       "_button.more",
