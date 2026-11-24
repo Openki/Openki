@@ -32,7 +32,7 @@ install *ARGS:
 # Start the Meteor development server
 [no-exit-message]
 dev:
-    meteor npm run dev:startup
+    npm run dev:startup
     NODE_OPTIONS="--no-experimental-webstorage" meteor run --inspect --settings settings/local.json
 
 [doc("""
@@ -102,28 +102,28 @@ delete-docker-dev *ARGS:
 
 # Fix linting and formatting errors and warn for serious problems.
 fix:
-    meteor npm run lint:fix || just oxlint-errors
+    npm run lint:fix || just oxlint-errors
 
 # Run linting and type checking
 check:
-    meteor npm run lint || just oxlint-errors && meteor npm run type-check
+    npm run lint || just oxlint-errors && npm run type-check
 
 # Only print the oxlint errors so they are easier to find and fix.
 oxlint-errors:
-    meteor npx oxlint --quiet
+    npx oxlint --quiet
 
 # Extract translations into i18n files
 translations:
-    meteor npm run extract-translations
+    npm run extract-translations
 
 # Start the Cypress UI for running tests, debugging and interactively recording new tests
 [no-exit-message]
 test-ui:
-    meteor npm run test:ui
+    npm run test:ui
 
 # Run all tests with a headless browser
 test:
-    meteor npm run test
+    npm run test
 
 [doc("""
 Run only specific tests in a headless browser.
@@ -131,12 +131,12 @@ Run only specific tests in a headless browser.
 For example, a glob like `**/Api*` or a full path like `tests/component/Navbar.spec.ts`
 """)]
 test-only *ARGS:
-    meteor npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
+    npx start-test 'npm run test:env' :3000 'cypress run --spec {{ ARGS }}'
 
 # List npm dependencies that have new versions available
 [no-exit-message]
 outdated:
-    meteor npm outdated
+    npm outdated
 
 [doc("""
 Audit dependencies against known security vulnerabilities.
@@ -165,10 +165,8 @@ reset-emails:
 delete-old-meteor-packages:
     bash scripts/delete-old-meteor-packages.sh
 
-# Refresh local Meteor packages and refresh the app with their latest changes
-refresh-packages:
-    just reset
-    just dev
+# Refresh local Meteor packages and restart the app with their latest changes
+refresh-packages: reset dev
 
 [doc("""
 Run this script once to make it possible to run the local dev server with HTTPS.
