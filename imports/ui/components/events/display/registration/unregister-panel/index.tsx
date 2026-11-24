@@ -18,7 +18,7 @@ function ButtonUnregister(props: { onClick: () => void | Promise<void> }) {
       size="large"
       onClick={props.onClick}
       needsLogin
-      busyText={t("_button.unregistering", "Unregistering…")}
+      busyText={t("_button.unregistering")}
     >
       {t("event.details.unregister-withdraw", "Withdraw")}
     </Button>

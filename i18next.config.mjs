@@ -1,9 +1,27 @@
-import { defineConfig } from "i18next-cli";
+import { defineConfig, recommendedAcceptedAttributes } from "i18next-cli";
 
 export default defineConfig({
   // The English source strings are extracted from the source code.
   // Other locales are managed via Weblate and the JSON files.
   locales: ["en"],
+
+  lint: {
+    // Add custom attributes that should be linted to catch potential hardcoded strings
+    acceptedAttributes: ["data-bs-title", ...recommendedAcceptedAttributes],
+    checkConcatenation: "warn",
+    checkPunctuationConcatenation: "warn",
+    checkInterpolationParams: true,
+    checkTranslationPlaceholders: "warn",
+    checkTransIndices: "warn",
+
+    ignore: [
+      // Ignore emails and UI only supposed to be used by admins.
+      // We might want to translate this at some point, but for now let's ignore it explicitly.
+      "imports/emails/Report.tsx",
+      "imports/emails/Alert.tsx",
+      "imports/ui/pages/log/index.tsx",
+    ],
+  },
 
   extract: {
     // Source files to scan
@@ -61,6 +79,9 @@ export default defineConfig({
       "_inputField.optional",
       "_button.cancel",
       "_button.save",
+      "_button.saving",
+      "_button.registering",
+      "_button.unregistering",
       "_button.delete",
       "_button.deleting",
       "_button.edit",
@@ -68,6 +89,7 @@ export default defineConfig({
       "_button.open",
       "_button.clear",
       "_button.toggleVisibility",
+      "_button.toggleNavigation",
       "_selection.pleaseSelect",
       "_inputField.password",
       "_button.more",

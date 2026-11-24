@@ -20,7 +20,7 @@ function ButtonRegister(props: { forTwo: boolean; onClick: () => Promise<void> }
       size="large"
       className="btn-add fw-bold"
       onClick={props.onClick}
-      busyText={t("_button.registering", "Registering…")}
+      busyText={t("_button.registering")}
     >
       {!props.forTwo
         ? t("event.details.register-register", "Register")
