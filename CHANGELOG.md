@@ -1,3 +1,16 @@
+# Unreleased
+
+## Highlights
+
+- **Performance**: Page data now loads faster, making the app feel snappier to use than before.
+- **Technical modernization**: Major technical upgrade to enable upcoming improvements.
+
+## Fixes
+
+- **Group propose**: Fixed a bug causing an empty page.
+- **Rummage page**: Fixed a bug causing an empty group propose dialog.
+- **Bug fixes**: Several other bug fixes and improvements.
+
 # v0.14.6 - 2026-11-23
 
 ## Highlights
