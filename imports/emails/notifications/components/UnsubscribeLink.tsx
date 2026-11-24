@@ -1,10 +1,12 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { Accounts } from "meteor/accounts-base";
+import {
+  getUnsubscribeURL,
+  type NotificationUnsubscribeType,
+} from "/imports/startup/server/emails/unsubscribe-helpers";
 
 export interface Props {
-  type: "automatedNotifications" | "privateMessage";
+  type: NotificationUnsubscribeType;
   token: string;
   lng: string;
 }
@@ -13,17 +15,19 @@ export function UnsubscribeLink({ token, type, lng }: Props) {
   const { t } = useTranslation(undefined, { lng });
   const { siteName } = Accounts.emailTemplates;
 
+  const unsubscribeURL = getUnsubscribeURL(type, token);
+
   switch (type) {
     case "automatedNotifications":
       return (
-        <a href={Router.url("profileNotificationsUnsubscribe", { token })}>
+        <a href={unsubscribeURL}>
           {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
         </a>
       );
 
     case "privateMessage":
       return (
-        <a href={Router.url("profilePrivateMessagesUnsubscribe", { token })}>
+        <a href={unsubscribeURL}>
           {t(
             "email.base.unsubscribeLink.privateMessage",
             "Unsubscribe from email notifications for all direct messages from other users.",

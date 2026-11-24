@@ -1,4 +1,3 @@
-import React from "react";
 import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -89,7 +88,5 @@ export function InvitationPage({
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("InvitationPage", () => InvitationPage);

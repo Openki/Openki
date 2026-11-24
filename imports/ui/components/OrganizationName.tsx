@@ -1,4 +1,3 @@
-import React from "react";
 import { useDetails } from "/imports/api/organizations/publications";
 
 export function OrganizationName({ id }: { id: string }) {

@@ -1,0 +1,5 @@
+https://localhost:3443 {
+	tls /etc/caddy/localhost.pem /etc/caddy/localhost-key.pem
+
+	reverse_proxy host.docker.internal:3000
+}

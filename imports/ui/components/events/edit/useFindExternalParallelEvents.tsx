@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocalTimeZone } from "/imports/utils/local-time";
+import { useLocalTimeZone } from "/imports/ui/hooks/useLocalTimeZone";
 
 export function useFindExternalParallelEvents(
   regionId: string | undefined,

@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import React from "react";
 
 import "./styles.scss";
 
@@ -30,8 +29,6 @@ export function LoadingRow() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("LoadingPage", () => LoadingPage);
 Template.registerHelper("LoadingRow", () => LoadingRow);

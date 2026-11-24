@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 import { UserModel } from "/imports/api/users/users";
@@ -91,7 +91,7 @@ export function GroupListSection({
                   .map((regionRole) => {
                     const role = predefinedRole(regionRole.id);
                     return (
-                      <React.Fragment key={role.id}>
+                      <Fragment key={role.id}>
                         <a
                           className="badge role-label"
                           href={`#section-${region?._id}-${role.id}`}
@@ -113,7 +113,7 @@ export function GroupListSection({
                           <i className="fa-solid fa-arrow-down fa-fw" />
                           {groupsByRoleCount(role.id, false)}
                         </a>{" "}
-                      </React.Fragment>
+                      </Fragment>
                     );
                   })}
               </div>
@@ -122,7 +122,7 @@ export function GroupListSection({
                 .map((regionRole) => {
                   const role = predefinedRole(regionRole.id);
                   return (
-                    <React.Fragment key={role.id}>
+                    <Fragment key={role.id}>
                       <h3 id={`section-${region?._id}-${role.id}`}>
                         <div className="badge">
                           <RoleIcon role={role} regionRoles={regionRoles} />
@@ -132,7 +132,7 @@ export function GroupListSection({
                           : roleProfileUserGroupListCurrent(role, user.getDisplayName())}
                       </h3>
                       <GroupList groups={groupsByRole(role.id, false)} small={true} />
-                    </React.Fragment>
+                    </Fragment>
                   );
                 })}
 
@@ -144,7 +144,7 @@ export function GroupListSection({
                 .map((regionRole) => {
                   const role = predefinedRole(regionRole.id);
                   return (
-                    <React.Fragment key={role.id}>
+                    <Fragment key={role.id}>
                       <h3 id={`section-${region?._id}-${role.id}-archived`}>
                         <div className="badge is-archived">
                           <RoleIcon role={role} regionRoles={regionRoles} />
@@ -154,7 +154,7 @@ export function GroupListSection({
                           : roleProfileUserGroupListPast(role, user.getDisplayName())}
                       </h3>
                       <GroupList groups={groupsByRole(role.id, true)} small={true} />
-                    </React.Fragment>
+                    </Fragment>
                   );
                 })}
             </>

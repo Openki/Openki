@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
@@ -93,5 +92,4 @@ export function JoinPage({ joinLink }: Props) {
 
 // for Blaze
 
-import "./template.html";
 Template.registerHelper("JoinPage", () => JoinPage);

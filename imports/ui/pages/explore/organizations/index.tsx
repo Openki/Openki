@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -63,7 +62,5 @@ export function OrganizationsPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("ExploreOrganizationsPage", () => OrganizationsPage);

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Arrow, Direction, Unit, units } from "../Arrow";
 

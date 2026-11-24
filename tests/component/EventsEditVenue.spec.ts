@@ -28,20 +28,20 @@ describe("Events Venue Edit", () => {
   it("should show parallel event hint", function () {
     setStartTimeNextDay("22:00");
     // Wait for the typeahead to finish searching and rendering
-    cy.get("#event-edit-venue-search").focus().wait(1000).type("asz").wait(2000);
+    cy.get("#event-edit-venue-search").focus().wait(1000).type("asz", { delay: 100 }).wait(4000);
     cy.allSubscriptionsReady();
     cy.get("#edit-venue-typeahead-item-1").click().wait(1000);
-    cy.allSubscriptionsReady();
+    cy.wait(4000);
     cy.getById("events-edit-venue-hint-contact-host").should("be.visible");
     cy.get("#events-edit-save").click();
 
-    cy.visit("/event/create?groupId=cbda598713");
+    cy.visitOpenki("/event/create?groupId=cbda598713", { username: "sb" });
     setStartTimeNextDay("22:00");
     // Wait for the typeahead to finish searching and rendering
-    cy.get("#event-edit-venue-search").focus().wait(1000).type("asz").wait(2000);
+    cy.get("#event-edit-venue-search").focus().wait(1000).type("asz", { delay: 100 }).wait(4000);
     cy.allSubscriptionsReady();
     cy.get("#edit-venue-typeahead-item-1").click().wait(1000);
-    cy.allSubscriptionsReady();
+    cy.wait(4000);
     cy.getById("events-edit-venue-hint-parallel-events").should("be.visible");
   });
 });

@@ -1,4 +1,3 @@
-import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { QRCode } from "react-qr-code";
@@ -23,6 +22,7 @@ import { EventsMap } from "../events/map";
 import { CompactPropose } from "../groups/CompactPropose";
 import { CompactPropose as CompactModernPropose } from "../groups/compact.modern.propose";
 import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
+import { Fragment } from "react";
 
 /* This file contains the entities that an admin can use to configure a dashboard. Look at the mapping at the end of the file. */
 
@@ -31,7 +31,7 @@ const group: ListOfEntities<GroupModel> = {
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
   element: ({ entity, index, params }) => (
-    <React.Fragment key={entity._id}>
+    <Fragment key={entity._id}>
       {/* The seventh box should always be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <div style={{ inlineSize: "300px", minInlineSize: "300px" }}>
@@ -41,7 +41,7 @@ const group: ListOfEntities<GroupModel> = {
       <div style={{ inlineSize: "300px", minInlineSize: "300px" }}>
         <GroupCompact group={entity} />
       </div>
-    </React.Fragment>
+    </Fragment>
   ),
 };
 
@@ -50,13 +50,13 @@ const groupModern: ListOfEntities<GroupModel> = {
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
   element: ({ entity, index, params }) => (
-    <React.Fragment key={entity._id}>
+    <Fragment key={entity._id}>
       {/* The seventh box should always be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <CompactModernPropose organization={params.organization} />
       )}
       <GroupCompactModern group={entity} />
-    </React.Fragment>
+    </Fragment>
   ),
 };
 

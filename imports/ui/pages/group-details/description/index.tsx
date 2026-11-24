@@ -1,4 +1,3 @@
-import React from "react";
 import { GroupModel } from "/imports/api/groups/groups";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { PublicSettings } from "/imports/utils/PublicSettings";

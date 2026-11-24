@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 

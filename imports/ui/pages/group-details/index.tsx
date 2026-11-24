@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
@@ -346,6 +346,5 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

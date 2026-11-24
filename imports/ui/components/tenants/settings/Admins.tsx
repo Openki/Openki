@@ -1,6 +1,5 @@
 import { Router } from "meteor/iron:router";
 import { useTracker } from "meteor/react-meteor-data";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import * as TenantsMethods from "/imports/api/tenants/methods";

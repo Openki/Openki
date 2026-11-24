@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import { useDetails } from "/imports/api/organizations/publications";
@@ -82,7 +80,5 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("KioskDashboardPage", () => KioskDashboardPage);

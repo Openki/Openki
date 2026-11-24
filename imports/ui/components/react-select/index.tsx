@@ -1,4 +1,3 @@
-import React from "react";
 import ReactSelectBase, { GroupBase, Props } from "react-select";
 
 import { getBootstrapStyles } from "/imports/ui/components/react-select/getBootstrapStyles";

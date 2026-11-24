@@ -1,5 +1,5 @@
 // oxlint-disable react/no-unstable-nested-components
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
@@ -179,7 +179,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         fromAddress: "",
         group: undefined as JSX.Element | undefined,
         event: undefined as JSX.Element | undefined,
-        unsubscribe: { type: "privateMessage" as const, token: unsubToken },
+        unsubscribe: {
+          type: "privateMessage",
+          token: unsubToken,
+        } as const,
         campaign,
       };
 

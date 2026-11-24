@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Session } from "meteor/session";
 
@@ -100,7 +100,5 @@ export function Splash() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("RegionSplash", () => Splash);

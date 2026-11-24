@@ -21,13 +21,7 @@
     "VERSION": "writable",
   },
   // Global ignores
-  "ignorePatterns": [
-    ".meteor/",
-    "node_modules/",
-    "packages/",
-    "i18next-parser.config.js",
-    "postcss.config.js",
-  ],
+  "ignorePatterns": [".meteor/", "node_modules/", "packages/", "i18next-parser.config.js"],
   "rules": {
     "no-shadow": "warn",
     "no-await-in-loop": "warn",
@@ -94,6 +88,7 @@
     "no-unused-expressions": "error",
     "no-useless-constructor": "error",
     "no-empty-function": "error",
+    "no-async-endpoint-handlers": "off",
     "react/display-name": "error",
     "react/jsx-key": "error",
     "react/jsx-no-comment-textnodes": "error",
@@ -109,7 +104,7 @@
     "react/no-string-refs": "error",
     "react/no-unescaped-entities": "error",
     "react/no-unknown-property": "error",
-    "react/react-in-jsx-scope": "error",
+    "react/react-in-jsx-scope": "off",
     "react/require-render-return": "error",
     "react/rules-of-hooks": "error",
     "react/exhaustive-deps": "warn",

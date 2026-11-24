@@ -8,7 +8,7 @@ import { isEmpty } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/hooks/useValidation";

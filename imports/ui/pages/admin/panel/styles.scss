@@ -1,5 +1,5 @@
 @use "sass:color";
-@import "{}/imports/ui/stylesheets/variables/index";
+@import "/imports/ui/stylesheets/variables/index";
 
 .admin-task {
   border: 1px solid color.adjust($blue-light, $lightness: 5%);

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Tooltip } from "/imports/startup/client/bootstrap";
 import { useEventListener } from "/imports/ui/hooks/useEventListener";
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useAll } from "/imports/api/regions/publications";
 import { FormControl } from "/imports/ui/components/form-control";

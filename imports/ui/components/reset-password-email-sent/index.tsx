@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { ActionResult } from "../ActionResult";
 
@@ -21,7 +20,5 @@ export function ResetPasswordEmailSent() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("ResetPasswordEmailSent", () => ResetPasswordEmailSent);

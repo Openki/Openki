@@ -1,7 +1,6 @@
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
-import React from "react";
 
 import "./styles.scss";
 
@@ -40,7 +39,5 @@ export function KioskLink() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("KioskLink", () => KioskLink);

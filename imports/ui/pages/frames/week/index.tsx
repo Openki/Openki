@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { take } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -23,7 +23,6 @@ import {
 import { EventList } from "/imports/ui/components/events/list";
 import { LoadingRow } from "../../loading";
 
-import "./template.html";
 import "./styles.scss";
 
 const DefaultLimit = 200;
@@ -194,7 +193,5 @@ export function WeekPage(props: Record<string, string>) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("FrameWeekPage", () => WeekPage);

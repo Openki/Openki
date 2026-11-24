@@ -24,6 +24,7 @@ meteor npm run lint
 
 echo -e "${YELLOW}${BOLD}If you have random errors and problems inside the gitlab runner, try to click "Clear runner caches" button in https://gitlab.com/Openki/Openki/-/pipelines.${RESET}"
 
+meteor lint
 meteor npm run type-check
 
 echo -e "${HINT}"

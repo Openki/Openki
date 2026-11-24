@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";

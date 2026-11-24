@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -266,7 +266,5 @@ export function StatsPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("StatsPage", () => StatsPage);

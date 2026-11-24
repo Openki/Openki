@@ -1,12 +1,12 @@
 import { sumBy, min as minInArray, max as maxInArray, groupBy, orderBy } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
-import React, { useEffect, useMemo, useRef } from "react";
+import { Fragment, useEffect, useMemo, useRef } from "react";
 
 import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
-import { useLocalTimeZone } from "/imports/utils/local-time";
+import { useLocalTimeZone } from "/imports/ui/hooks/useLocalTimeZone";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 import { useData } from "/imports/ui/hooks/useData";
@@ -279,7 +279,7 @@ export function Timetable({
 
       {/* Room & Events */}
       {Object.values(rooms).map((r, id) => (
-        <React.Fragment key={id}>
+        <Fragment key={id}>
           <div
             className="position-sticky bg-white text-truncate px-1"
             data-bs-title={r[0].room}
@@ -346,7 +346,7 @@ export function Timetable({
               </div>
             )),
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

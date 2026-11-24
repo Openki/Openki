@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Avatar } from "/imports/ui/components/avatar";
 
 import "./styles.scss";

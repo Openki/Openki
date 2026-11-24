@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "/imports/ui/hooks/react-meteor-router";
 import ReactMarkdown from "react-markdown";
 import $ from "jquery";
@@ -87,7 +87,5 @@ export function InfoPage({ page }: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("InfoPage", () => InfoPage);

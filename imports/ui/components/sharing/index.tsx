@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Shareon from "shareon";
 import { useCurrentRegion } from "/imports/ui/hooks/useCurrentRegion";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import "shareon/dist/shareon.min.css";
+import "shareon/css";
 import "./styles.scss";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 

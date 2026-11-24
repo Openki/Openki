@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { geoLocationLink } from "/imports/utils/geoLocationLink";
 import { format } from "/imports/utils/location-format";

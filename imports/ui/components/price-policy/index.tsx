@@ -1,6 +1,5 @@
 import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useTracker } from "meteor/react-meteor-data";
 

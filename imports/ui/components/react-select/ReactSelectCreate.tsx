@@ -1,4 +1,3 @@
-import React from "react";
 import CreatableSelect, { CreatableProps } from "react-select/creatable";
 import { type GroupBase } from "react-select";
 

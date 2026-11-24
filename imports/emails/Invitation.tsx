@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { TenantModel } from "/imports/api/tenants/tenants";
 import { UserModel } from "/imports/api/users/users";

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 

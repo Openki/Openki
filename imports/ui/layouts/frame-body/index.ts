@@ -9,8 +9,6 @@ import { observeSize } from "../../lib/observeHeight";
 import "/imports/ui/layouts/root.html";
 import "/imports/ui/components/alerts";
 
-import "./template.html";
-
 const Template = TemplateAny as TemplateStaticTyped<"frameLayout">;
 
 const template = Template.frameLayout;

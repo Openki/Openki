@@ -1,4 +1,3 @@
-import React from "react";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { EventModel } from "/imports/api/events/events";

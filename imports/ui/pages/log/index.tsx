@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -267,7 +267,5 @@ export function LogPage({
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("LogPage", () => LogPage);

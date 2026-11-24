@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Meteor } from "meteor/meteor";
 
 import { EventModel } from "/imports/api/events/events";

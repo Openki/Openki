@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { ButtonDelete } from "./Buttons";
 import { DeleteConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";

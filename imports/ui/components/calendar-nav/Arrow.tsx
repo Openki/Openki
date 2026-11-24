@@ -1,4 +1,3 @@
-import React from "react";
 import { useSessionEquals } from "/imports/ui/hooks/react-meteor-data";
 
 export const units = ["week", "month", "year"] as const;

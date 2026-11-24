@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { TenantEntity } from "/imports/api/tenants/tenants";
@@ -26,6 +25,5 @@ export function Invitations({ tenant }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("Invitations", () => Invitations);

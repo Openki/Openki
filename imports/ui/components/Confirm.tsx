@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { cx } from "/imports/utils/cx";
 
 export function Confirm({

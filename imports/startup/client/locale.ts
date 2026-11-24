@@ -5,6 +5,7 @@ import { Accounts } from "meteor/accounts-base";
 import { assignIn, range } from "es-toolkit/compat";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
+import $ from "jquery";
 import "bootstrap-datepicker";
 
 import * as UsersMethods from "/imports/api/users/methods";
@@ -89,7 +90,8 @@ Meteor.startup(() => {
     document.documentElement.setAttribute("dir", textDirectionality);
     document.documentElement.classList.toggle("rtl", isRTL);
 
-    if (Meteor.userId()) {
+    const user = await Meteor.userAsync();
+    if (user) {
       await UsersMethods.updateLocale(desiredLocale);
     }
 

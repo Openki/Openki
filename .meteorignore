@@ -1,4 +1,5 @@
 cypress.config.ts
+tests/screenshots
 scripts/
 i18next-parser.config.js
 
@@ -22,3 +23,4 @@ LICENSES/
 ci/
 README.md
 example.env.local
+.temp

@@ -1,4 +1,3 @@
-import React from "react";
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import i18next from "i18next";

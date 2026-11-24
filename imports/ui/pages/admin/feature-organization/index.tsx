@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -138,7 +138,5 @@ export function AdminFeatureOrganizationPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("AdminFeatureOrganizationPage", () => AdminFeatureOrganizationPage);

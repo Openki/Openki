@@ -1,6 +1,5 @@
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import React from "react";
 
 import { useDetails } from "/imports/api/organizations/publications";
 
@@ -78,7 +77,5 @@ export function FeaturedOrganization() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("FeaturedOrganization", () => FeaturedOrganization);

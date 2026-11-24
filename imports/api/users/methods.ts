@@ -411,12 +411,12 @@ export const updateLocale = ServerMethod(
   async (locale: string) => {
     check(locale, String);
 
-    const userId = Meteor.userId();
-    if (!userId) {
-      throw new Meteor.Error(401, "please log in");
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "updateLocale please log in");
     }
 
-    await Users.updateAsync(userId, {
+    await Users.updateAsync(user._id, {
       $set: { locale },
     });
   },

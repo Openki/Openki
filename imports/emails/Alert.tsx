@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Accounts } from "meteor/accounts-base";
 import moment from "moment";
 import { VersionEntity } from "/imports/api/version/version";

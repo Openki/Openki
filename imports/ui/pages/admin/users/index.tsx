@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Router } from "meteor/iron:router";
 
 import { useTranslation } from "react-i18next";
@@ -58,7 +58,5 @@ export function AdminUsersPage() {
   );
 }
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("AdminUsersPage", () => AdminUsersPage);

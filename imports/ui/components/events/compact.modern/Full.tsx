@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { isEmpty, omitBy, isNil } from "es-toolkit/compat";

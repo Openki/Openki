@@ -1,5 +1,3 @@
-import React from "react";
-
 import { RoleEntity } from "/imports/utils/PublicSettings";
 import { cx } from "/imports/utils/cx";
 import { RoleType } from "/imports/api/groups/lib/Role";

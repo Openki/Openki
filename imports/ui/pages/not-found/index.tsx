@@ -1,4 +1,3 @@
-import React from "react";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -77,7 +76,5 @@ export function NotFound() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("NotFound", () => NotFound);

@@ -11,11 +11,13 @@ describe("Visitor", () => {
     // NOTE: Once we replace `iron:router`, we should try to remove this artificial delay.
     cy.wait(4000);
 
+    const name = `visitor-${Date.now()}`;
+
     cy.get("#register-panel-reserve").click();
     cy.get("#events-display-registration").click();
     cy.get("#account-tasks-login-frame-visitor").click();
-    cy.get("#visitor-frame-username").type("no name");
-    cy.get("#visitor-frame-email").type("no-name@openki.example");
+    cy.get("#visitor-frame-username").type(name);
+    cy.get("#visitor-frame-email").type(`${name}@openki.example`);
     cy.get("#visitor-frame-submit").click();
     cy.get(".alert-success").should("be.visible");
 

@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
 

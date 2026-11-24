@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -49,7 +48,5 @@ export function DashboardPage({ query }: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("DashboardPage", () => DashboardPage);

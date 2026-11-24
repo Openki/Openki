@@ -1,4 +1,3 @@
-import React from "react";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
@@ -17,6 +16,7 @@ import { EventList } from "/imports/ui/components/events/list";
 import { Venue, VenueTag } from "../../venues/link";
 
 import "./styles.scss";
+import { Fragment } from "react";
 
 export interface Props {
   events: EventModel[];
@@ -110,7 +110,7 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
   const children = (
     <>
       {markers.map((mark) => (
-        <React.Fragment key={mark.key}>
+        <Fragment key={mark.key}>
           <Marker
             position={mark.loc}
             icon={isEventVenueRef(mark.venue) ? venueMarkerIcon : eventMarkerIcon}
@@ -134,7 +134,7 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
             position={mark.loc}
             icon={isEventVenueRef(mark.venue) ? venueMarkerShadowIcon : eventMarkerShadowIcon}
           ></Marker>
-        </React.Fragment>
+        </Fragment>
       ))}
       {!!fullscreenControl && <FullscreenControl />}
     </>

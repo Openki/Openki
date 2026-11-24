@@ -1,9 +1,9 @@
 import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useUserId } from "/imports/ui/hooks/react-meteor-data";
+import { useSubscribeWithDeps, useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { isObject } from "es-toolkit/compat";
-import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
+import { useFind, useTracker } from "meteor/react-meteor-data";
 
 import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { getStack } from "/imports/utils/getStack";
@@ -59,7 +59,7 @@ export function createPublicationMany<A extends any[], T>(
       },
     };
 
-    const isLoading = useSubscribe(
+    const isLoading = useSubscribeWithDeps(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
@@ -121,7 +121,7 @@ export function createPublicationOne<A extends any[], T>(
       },
     };
 
-    const isLoading = useSubscribe(
+    const isLoading = useSubscribeWithDeps(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { EventModel } from "/imports/api/events/events";
 import { isEventVenueRef } from "/imports/api/events/lib/isEventVenueRef";
 import { Regions } from "/imports/api/regions/regions";
@@ -135,5 +135,4 @@ export function Event({ event, hideRsvp }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 Template.registerHelper("FrameCalendarEvent", () => Event);

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { GroupCustomField } from "/imports/api/groups/groups";
 import { OrganizationCustomGroupFields } from "/imports/api/organizations/organizations";
 
