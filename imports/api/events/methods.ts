@@ -362,7 +362,7 @@ export const save = ServerMethod(
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
 
-      eventId = await Events.insertAsync(enrichedEvent);
+      eventId = (await Events.insertAsync(enrichedEvent)) as string;
 
       if (editFields.groupId) {
         await groupTimeLastEditDenormalizer.afterEventInsert(editFields.groupId);

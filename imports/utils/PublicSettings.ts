@@ -641,18 +641,20 @@ const defaults = {
   categories: {},
 };
 
-const publicSettings = merge(defaults, Meteor.settings.public);
+const rawPublicSettings = Meteor.settings.public as PublicSettings;
+
+const publicSettings = merge(defaults, Meteor.settings.public) as PublicSettings;
 
 // separate merge of matomo to make jsPath and phpPath optional
-publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
+publicSettings.matomo = { ...defaults.matomo, ...rawPublicSettings.matomo };
 
 // override default from socialMediaButtons
 publicSettings.feature.socialMediaButtons =
-  Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
+  rawPublicSettings.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
 
 publicSettings.defaultRoles =
   // oxlint-disable-next-line no-map-spread
-  Meteor.settings.public.defaultRoles.map((role: RoleEntity) => ({
+  rawPublicSettings.defaultRoles.map((role: RoleEntity) => ({
     // set default value for undefined props
     ...RoleEntityDefault,
     ...role,

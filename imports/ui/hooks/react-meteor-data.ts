@@ -12,11 +12,14 @@ export function useUserId() {
   return useTracker(() => Meteor.userId());
 }
 
-export function useSession(key: string) {
-  return useTracker(() => Session.get(key));
+export function useSession<T extends keyof Session.SessionData>(key: T) {
+  return useTracker(() => Session.get<T>(key));
 }
 
-export function useSessionEquals<T>(key: string, value: T) {
+export function useSessionEquals<
+  K extends keyof Session.SessionData,
+  V extends Parameters<(typeof Session)["equals"]>[1],
+>(key: K, value: V) {
   return useTracker(() => Session.equals(key, value));
 }
 

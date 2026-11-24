@@ -1,7 +1,7 @@
-import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
+import { Session } from "meteor/session";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Template as TemplateAny, TemplateStaticTyped } from "/imports/utils/templating";
 
 import { Regions } from "/imports/api/regions/regions";
 

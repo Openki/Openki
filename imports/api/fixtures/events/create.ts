@@ -1,3 +1,4 @@
+import { Mongo } from "meteor/mongo";
 import { Events, EventEntity } from "../../events/events";
 import { Log } from "../../log/log";
 import { ensure } from "../ensureFixture";

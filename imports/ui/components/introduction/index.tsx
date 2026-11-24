@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import React from "react";
-import { Template } from "meteor/templating";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import {

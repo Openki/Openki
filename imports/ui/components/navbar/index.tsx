@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";

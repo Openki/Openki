@@ -69,6 +69,7 @@ if (Meteor.isDevelopment) {
     const { NotEmptyString } = await import("/imports/utils/CustomChecks");
     const { GroupChatMessages } =
       await import("/imports/api/group-chat-messages/group-chat-messages");
+    const { Users } = await import("/imports/api/users/users");
 
     WebApp.handlers.use(
       "/_test_only/group-chat-messages/reset/:groupId/:roleId",
@@ -76,7 +77,7 @@ if (Meteor.isDevelopment) {
       (_req: any, _res: any, next: any) =>
         Promise.resolve(
           (async (req: any, res: ServerResponse) => {
-            const user = (await Meteor.users.findOneAsync(req.userId, {
+            const user = (await Users.findOneAsync(req.userId, {
               projection: { privileges: 1 },
             })) as undefined | Pick<UserEntity, "privileges">;
 

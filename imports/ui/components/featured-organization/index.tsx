@@ -1,7 +1,6 @@
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
-import { Template } from "meteor/templating";
 
 import { useDetails } from "/imports/api/organizations/publications";
 

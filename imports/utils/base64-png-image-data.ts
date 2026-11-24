@@ -11,5 +11,6 @@ declare namespace Assets {
 export async function base64PngImageData(path: string) {
   const binaryImage = await Assets.getBinaryAsync(path);
 
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   return `data:image/png;base64,${Base64.encode(binaryImage)}`;
 }

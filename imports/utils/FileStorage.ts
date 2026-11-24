@@ -1,6 +1,7 @@
 import path from "node:path";
 import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
+import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match } from "meteor/check";
 

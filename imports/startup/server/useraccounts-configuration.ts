@@ -81,7 +81,16 @@ Meteor.startup(async () => {
   }
 });
 
-Accounts.validateNewUser((user) => {
+declare module "meteor/accounts-base" {
+  // oxlint-disable-next-line no-shadow no-namespace
+  namespace Accounts {
+    function removeDefaultRateLimit(): void;
+
+    export class LoginCancelledError extends Meteor.Error {}
+  }
+}
+
+Accounts.validateNewUser((user: UserModel) => {
   if (NotAllowedCharacters.some((c) => user.username.includes(c))) {
     throw new Meteor.Error(403, "Not allowed character");
   }
@@ -123,10 +132,11 @@ Accounts.onCreateUser(
     } else {
       user.profile = {} as UserProfile;
     }
+    type NameProviders = ({ name?: string; username?: string } | undefined)[];
     // Collect info where a username could possibly be found
-    let nameProviders = [user, user.profile];
+    let nameProviders: NameProviders = [user, user.profile];
     if (user.services) {
-      nameProviders = [...nameProviders, ...toArray(proposedUser.services)];
+      nameProviders = [...nameProviders, ...(toArray(proposedUser.services) as NameProviders)];
     }
 
     // Try to glean a username

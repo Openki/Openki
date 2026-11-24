@@ -1,16 +1,25 @@
 import { Meteor } from "meteor/meteor";
+import { ReactiveVar } from "meteor/reactive-var";
 import i18next from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LocalStorageBackend from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
-import { Blaze, Handlebars } from "meteor/blaze";
+// @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
+import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
-import { Template } from "meteor/templating";
 import { initReactI18next } from "react-i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
+
+// Wrap to override types
+const { Blaze, Handlebars } = {
+  Handlebars: OriginalHandlebars as any,
+  Blaze: OriginalBlaze as unknown as {
+    _escape(str: string): string;
+  },
+};
 
 // oxlint-disable-next-line no-constant-condition
 if (false) {

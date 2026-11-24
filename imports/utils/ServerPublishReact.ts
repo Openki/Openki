@@ -1,4 +1,4 @@
-import { Subscription } from "meteor/meteor";
+import { Meteor, Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";

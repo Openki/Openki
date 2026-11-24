@@ -318,5 +318,6 @@ export function AccountTasks() {
 
 // for Blaze
 import "./template.html";
+import { Session } from "meteor/session";
 
 Template.registerHelper("AccountTasks", () => AccountTasks);

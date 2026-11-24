@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Template as TemplateAny, TemplateStaticTyped } from "/imports/utils/templating";
 import moment from "moment";
 
 import * as Tooltips from "/imports/utils/Tooltips";

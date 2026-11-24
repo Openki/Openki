@@ -10,7 +10,6 @@ email@3.2.1
 iron:router
 shell-server@0.7.2                  # Server-side component of the `meteor shell` command
 session@1.2.4
-mdg:validation-error
 dynamic-import@0.8.1
 ostrio:cookies
 
@@ -47,7 +46,6 @@ standard-minifier-js@3.3.0            # JS minifier run for production mode
 mys:fonts
 
 # DEV
-zodern:types                    # Pull in type declarations from other Meteor packages
 typescript@5.11.2               # Enable TypeScript syntax in .ts and .tsx modules
 accounts-express@1.0.1                # Only used for tests. Not needed for the production build.
 underscore

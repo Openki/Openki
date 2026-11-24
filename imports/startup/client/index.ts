@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Tracker } from "meteor/tracker";
+import "./session";
 
 declare global {
   /** NOTE: This should be removed when the HMR is properly fixed */

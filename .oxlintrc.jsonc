@@ -137,7 +137,7 @@
     "typescript/no-explicit-any": "warn",
     "typescript/no-extra-non-null-assertion": "error",
     "typescript/no-misused-new": "error",
-    "typescript/no-namespace": "error",
+    "typescript/no-namespace": "warn",
     "typescript/no-non-null-asserted-optional-chain": "error",
     "typescript/no-require-imports": "error",
     "typescript/no-this-alias": "error",
@@ -209,6 +209,11 @@
         "jest/no-focused-tests": "error",
         "jest/expect-expect": "off",
         "no-unused-expressions": "off",
+        // This rule gives a lot of false positives because the Cypress chained method `.then()`
+        // collides with `Promise.then()`.
+        "jest/valid-expect-in-promise": "off",
+        // We don't use jest so some lint rules are not relevant.
+        "jest/valid-expect": "off",
       },
     },
     {

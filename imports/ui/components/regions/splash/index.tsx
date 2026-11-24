@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Session } from "meteor/session";
 
 import { Select } from "../select/select";
 

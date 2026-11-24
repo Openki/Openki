@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import moment from "moment";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
