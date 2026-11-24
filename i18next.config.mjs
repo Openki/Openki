@@ -76,28 +76,15 @@ export default defineConfig({
       // They get their values from the translation files instead.
       // We need to allowlist their keys so they don't get overwritten.
 
+      "_button.*",
+      "_inputField.maxlength",
       "_inputField.optional",
-      "_button.cancel",
-      "_button.save",
-      "_button.saving",
-      "_button.registering",
-      "_button.unregistering",
-      "_button.delete",
-      "_button.deleting",
-      "_button.edit",
-      "_button.close",
-      "_button.open",
-      "_button.clear",
-      "_button.toggleVisibility",
-      "_button.toggleNavigation",
-      "_selection.pleaseSelect",
       "_inputField.password",
-      "_button.more",
+      "_selection.pleaseSelect",
       "_label.internal",
       "_label.singleEvent",
       "_event.state.canceled",
       "_event.state.fullyBooked",
-      "_inputField.maxlength",
 
       // --------------------------------
       // 3) Keys used in Blaze templates
@@ -105,6 +92,7 @@ export default defineConfig({
       //
       // Used in Blaze templates.
       // NOTE: Many of these should be handled by i18next-cli once we fully migrate to React.
+      // These should ideally remain exact i18n keys so we can remove unused i18n keys. Do not create `preservePatterns` for them.
 
       "footer.aboutOpenki",
       "navigation.footer.about.title",
