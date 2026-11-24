@@ -21,7 +21,13 @@
     "VERSION": "writable",
   },
   // Global ignores
-  "ignorePatterns": [".meteor/", "node_modules/", "packages/"],
+  "ignorePatterns": [
+    ".meteor/",
+    "node_modules/",
+    "packages/",
+    // i18next generated types for resources
+    "types/resources.d.ts",
+  ],
   "rules": {
     "no-shadow": "warn",
     "no-await-in-loop": "warn",

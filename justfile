@@ -197,6 +197,8 @@ setup-localhost-ssl:
 
 alias i := install
 alias d := dev
+alias f := fix
+alias c := check
 alias t := test-ui
 alias o := outdated
 alias a := audit

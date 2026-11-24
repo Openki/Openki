@@ -50,3 +50,6 @@ private/build-chunks/
 # Local certificates used to support HTTPS for localhost development
 *.cert
 *.pem
+
+# i18next generated types for resources
+types/resources.d.ts

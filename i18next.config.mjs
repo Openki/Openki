@@ -23,12 +23,21 @@ export default defineConfig({
     ],
   },
 
+  types: {
+    // Include the top-level `common` namespace and explicitly named namespaces.
+    // Only include `en` locale since it's the source language
+    input: ["imports/startup/both/i18n/en.json", "imports/startup/both/i18n/roles/en.json"],
+    basePath: "imports/startup/both/i18n",
+    output: "types/i18next.d.ts",
+    resourcesFile: "types/resources.d.ts",
+  },
+
   extract: {
     // Source files to scan
     input: ["./imports/**/*.{ts,tsx}"],
 
     // Output path for locale files
-    // This is the default, global namespace.
+    // This is the `common` namespace.
     output: "imports/startup/both/i18n/{{language}}.json",
 
     // Keep translations flat, without namespaces
