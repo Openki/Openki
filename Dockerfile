@@ -3,7 +3,7 @@
 # Uses the official Meteor base image to install
 # dependencies and produce a self-contained bundle.
 # ─────────────────────────────────────────────
-FROM geoffreybooth/meteor-base:3.5.4 AS builder
+FROM geoffreybooth/meteor-base:3.6.1 AS builder
 
 # Copy the full source into the image
 WORKDIR /app
