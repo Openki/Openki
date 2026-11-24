@@ -2,13 +2,13 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "ES2020",
-    "module": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "incremental": true,
     "noEmit": true,
     /* Strict Type-Checking Options */
-    "alwaysStrict": true, // Parse in strict mode and emit "use strict" for each source file.
     // If you have wrong casing in referenced files e.g. the filename is Global.ts and you have a /// <reference path="global.ts" /> to reference this file, then this can cause to unexpected errors. Visite: http://stackoverflow.com/questions/36628612/typescript-transpiler-casing-issue
     "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
     // "allowUnreachableCode": false, // Do not report errors on unreachable code. (Default: False)
@@ -30,9 +30,24 @@
       /* Using Core Types */
       "meteor/*": ["./node_modules/@types/meteor/*", "./.meteor/local/types/packages.d.ts"]
     },
-    "moduleResolution": "node",
+    "types": [
+      "@types/bootstrap",
+      "@types/bootstrap-datepicker",
+      "@types/es6-promisify",
+      "@types/jquery",
+      "@types/leaflet",
+      "@types/medium-editor",
+      "@types/meteor-mdg-validation-error",
+      "@types/mime-types",
+      "@types/node-schedule",
+      "@types/react",
+      "@types/react-dom",
+      "@types/sanitize-html",
+      "@types/seedrandom",
+      "@types/tinycolor2",
+      "@types/uuid"
+    ],
     "resolveJsonModule": true,
-    "esModuleInterop": true,
     "preserveSymlinks": true,
 
     "skipLibCheck": true // because of a error in ./node_modules/i18next-chained-backend/ and ./node_modules/i18next-localstorage-backend/

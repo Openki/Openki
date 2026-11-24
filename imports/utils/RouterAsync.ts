@@ -72,6 +72,7 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
 
     options.waitOn = function () {
       // prevent loading multiple times the same data;
+      // @ts-expect-error Ignore type error since we will replace iron:router
       handlers = subscriptions.call(this);
       if (currentRequestId !== JSON.stringify(Object.entries(this.params))) {
         currentRequestId = JSON.stringify(Object.entries(this.params));

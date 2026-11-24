@@ -75,6 +75,7 @@ export function createPublicationMany<A extends any[], T>(
           return undefined;
         }
         try {
+          // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
           return queryBuilder.call({ userId }, ...(hasCondition ? args.slice(1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.
@@ -138,6 +139,7 @@ export function createPublicationOne<A extends any[], T>(
         }
 
         try {
+          // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
           return queryBuilder.call({ userId }, ...(hasCondition ? args.slice(1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.

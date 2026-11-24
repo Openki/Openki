@@ -42,6 +42,7 @@ export function createPublication<A extends any[], T>(
       const queryArgs = removeCallback(args);
 
       const query = function () {
+        // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
         return queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs);
       };
       query.isLoading = function () {

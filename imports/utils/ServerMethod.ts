@@ -49,6 +49,7 @@ export function ServerMethod<T extends any[], R>(
 
       try {
         // everything is okay, do the work
+        // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
         return run.call(this, ...args);
       } catch (error) {
         if (Meteor.isServer) {

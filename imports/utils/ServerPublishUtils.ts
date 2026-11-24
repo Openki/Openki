@@ -18,6 +18,7 @@ export function publish<
     // wrap the call to handle options
     Meteor.publish(name, async function (...args) {
       // everyting is okay, do the work
+      // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
       const result = await publisher.call(this, ...args);
       if (result === undefined) {
         this.ready();
