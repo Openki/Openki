@@ -3,9 +3,11 @@ import { ReactiveVar } from "meteor/reactive-var";
 import i18next from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
+import { setDefaults } from "react-i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LocalStorageBackend from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
+
 // @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
 import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
@@ -122,6 +124,10 @@ backends.push(
   }),
 );
 
+// Set default config for all react-i18next instances using the recommended approach since version 18.
+// This needs to be configured before `initReactI18next` is called by the main i18next instance.
+setDefaults({ useSuspense: false });
+
 i18next
   .use(ICU)
   .use(ChainedBackend)
@@ -138,9 +144,6 @@ i18next
           expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
         },
       ],
-    },
-    react: {
-      useSuspense: false,
     },
   });
 
