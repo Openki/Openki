@@ -89,7 +89,7 @@ export default defineConfig((Meteor) => {
           type: "asset/resource",
           generator: {
             filename: "fonts/[name][ext]",
-            publicPath: "/__rspack__/",
+            publicPath: Meteor.isDevelopment ? "/__rspack__/" : "/",
           },
         },
       ],
