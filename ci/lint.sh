@@ -18,7 +18,7 @@ echo -e "${HINT}"
 set -xe
 
 meteor npm ci
-meteor node -v && meteor npm version
+meteor --version && meteor node -v && meteor npm version
 
 meteor npm run lint
 
