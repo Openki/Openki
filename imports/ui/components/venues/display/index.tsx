@@ -29,9 +29,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
 
   const [verifyDelete, setVerifyDelete] = useState(false);
 
-  function facilityNames() {
-    return Object.keys(venue.facilities);
-  }
+  const facilityNames = Object.keys(venue.facilities) as (keyof typeof venue.facilities)[];
 
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
@@ -103,13 +101,13 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     {venue.maxWorkplaces}
                   </p>
                 )}
-                {facilityNames().length > 0 && (
+                {facilityNames.length > 0 && (
                   <>
                     <span className="venue-property-title">
                       {t("venue.details.availableInfrastructure", "Available infrastructure:")}
                     </span>
                     <ul>
-                      {facilityNames().map((facilityName) => (
+                      {facilityNames.map((facilityName) => (
                         <li key={facilityName}>{t(`venue.facility.${facilityName}`)}</li>
                       ))}
                     </ul>

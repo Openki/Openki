@@ -1,7 +1,7 @@
 import { Match } from "meteor/check";
 import { useTranslation } from "react-i18next";
 import { IntlMessageFormat, PrimitiveType } from "intl-messageformat";
-import { i18n, type TOptions } from "i18next";
+import { i18n } from "i18next";
 import { ReactElement } from "react";
 
 /** allows localized value eg. with `getLocalizedValue(...)` to have a string per language. */
@@ -52,7 +52,8 @@ export function getLocalizedValue(
   if (typeof setting === "string") {
     // check if translated key exist otherwise use setting
     if (i18n.exists(setting)) {
-      return i18n.t(setting, variables as TOptions);
+      // @ts-expect-error We could add better types for variables
+      return i18n.t(setting, variables);
     }
     return format(setting);
   }

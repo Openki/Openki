@@ -1,5 +1,5 @@
+import type i18next from "i18next";
 import { i18n } from "/imports/startup/both/i18next";
-import { TFunction } from "i18next";
 
 function coordinateToString(coordinate: number) {
   if (coordinate < 0) {
@@ -19,7 +19,7 @@ export function locationFormat(location: { coordinates: [number, number] }) {
   });
 }
 
-export function format(t: TFunction<"", undefined>, location: { coordinates: [number, number] }) {
+export function format(t: typeof i18next.t, location: { coordinates: [number, number] }) {
   if (!location?.coordinates) {
     return undefined;
   }

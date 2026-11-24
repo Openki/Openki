@@ -55,8 +55,10 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
           const roleKey = `${role.id}.${key}`;
           if (i18n.exists(`roles:${roleKey}`)) {
             return variables
-              ? i18n.t(`roles:${roleKey}`, variables as TOptions)
-              : i18n.t(`roles:${roleKey}`);
+              ? // @ts-expect-error We could add better types for variables
+                i18n.t(`roles:${roleKey}`, variables as TOptions)
+              : // @ts-expect-error This roleKey could be narrowed to only include the keys that should not have variables.
+                i18n.t(`roles:${roleKey}`);
           }
 
           // (3) No translation found, just fallback to a generic string. Using short to build the

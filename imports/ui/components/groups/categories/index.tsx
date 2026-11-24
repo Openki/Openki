@@ -10,7 +10,10 @@ export interface CategoryLabelProps {
 
 export function CategoryLabel({ category }: CategoryLabelProps) {
   const { t } = useTranslation();
-  return <div className="tag category-tag">{t(`category.${category}`)}</div>;
+  return (
+    // @ts-expect-error Disable type checking since we don't know the key at compile time
+    <div className="tag category-tag">{t(`category.${category}`)}</div>
+  );
 }
 
 function CategoryLabelLinked({
@@ -31,6 +34,7 @@ function CategoryLabelLinked({
         className={`category-${category}`}
         data-category={category}
         data-bs-title={t("categories.showGroups", "Show all in {CATEGORY}", {
+          // @ts-expect-error Disable type checking since we don't know the key at compile time
           CATEGORY: t(`category.${category}`),
         })}
         onMouseOver={onMouseOver}
@@ -45,6 +49,7 @@ function CategoryLabelLinked({
         }}
         href={Router.url("search", {}, { query: { categories: category } })}
       >
+        {/* @ts-expect-error Disable type checking since we don't know the key at compile time */}
         {t(`category.${category}`)}
       </a>
     </div>
