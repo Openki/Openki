@@ -262,11 +262,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           }
           return start.isAfter(LocalTime.now());
         },
-        text: () =>
-          t(
-            "event.edit.startInPast",
-            "The event starts in the past.",
-          ),
+        text: () => t("event.edit.startInPast", "The event starts in the past."),
       },
       noDescription: {
         field: "description",
