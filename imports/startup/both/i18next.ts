@@ -7,7 +7,6 @@ import { setDefaults } from "react-i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LocalStorageBackend from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
-
 // @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
 import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
