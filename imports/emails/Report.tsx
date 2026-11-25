@@ -38,7 +38,7 @@ export function Report({
     const deployDate = moment(version.activation).format("lll");
     const restart = moment(version.lastStart).format("lll");
     versionElement = t(
-      "email.admin.versionElement",
+      "email.admin.footer.version",
       "\nThe running version is [{SITENAME}] {FULLVERSION} @ commit {COMMIT}\nIt was deployed on {DEPLOYDATE},\nand last restarted on {RESTART}.",
       {
         SITENAME: siteName,
@@ -54,7 +54,7 @@ export function Report({
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting.anoym", "Hi")}</h5>
+          <h5 className="title">{t("email.base.greeting.anoym")}</h5>
           <Trans
             i18nKey="email.admin.userReport.intro"
             defaults='User <userLink>{user}</userLink> reports a problem on the page <pageLink>"{title}"</pageLink>'
@@ -86,15 +86,21 @@ export function Report({
         <td>
           <table className="footer">
             <tr className="pre">
+              {/* i18next-instrument-ignore */}
               <td>
                 {versionElement}
                 <Trans
-                  i18nKey="email.admin.environmentInfo"
-                  defaults="<br /><br />Now it's {now}.<br />User Agent: <code>{userAgent}</code>"
-                  values={{
-                    now: now.toString(),
-                    userAgent,
+                  i18nKey="email.admin.footer.now"
+                  defaults="<br /><br />Now it's {now}."
+                  values={{ now: now.toString() }}
+                  components={{
+                    br: <br />,
                   }}
+                />
+                <Trans
+                  i18nKey="email.admin.footer.userAgent"
+                  defaults="<br />User Agent: <code>{userAgent}</code>"
+                  values={{ userAgent }}
                   components={{
                     br: <br />,
                     code: <code />,

@@ -13,12 +13,6 @@ export default defineConfig({
     checkInterpolationParams: true,
     checkTranslationPlaceholders: "warn",
     checkTransIndices: "warn",
-
-    ignore: [
-      // Ignore emails and UI only supposed to be used by admins.
-      // We might want to translate this at some point, but for now let's ignore it explicitly.
-      "imports/emails/Alert.tsx",
-    ],
   },
 
   types: {
