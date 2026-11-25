@@ -41,7 +41,7 @@ export function Full({ group }: { group: GroupModel }) {
   const locationPreview = group.nextEvent?.venue?.name || group.nextEvent?.venue?.address;
 
   return (
-    <div className="card">
+    <div className="card border-none">
       {group?.publicUrlForDetailsImage() ? (
         <div
           className="position-relative card-header bg-img-cover border-bottom"

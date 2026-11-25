@@ -11,6 +11,8 @@
     "@aws-sdk/lib-storage": "3.1178.0",
     "@fontsource/source-sans-pro": "5.3.0",
     "@fortawesome/fontawesome-free": "6.7.2",
+    "@hugeicons/core-free-icons": "4.4.0",
+    "@hugeicons/react": "1.1.10",
     "@jimp/core": "1.6.0",
     "@jimp/js-bmp": "1.6.0",
     "@jimp/js-gif": "1.6.0",

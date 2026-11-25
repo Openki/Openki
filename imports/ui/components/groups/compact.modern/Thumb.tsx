@@ -5,6 +5,10 @@ import { useViewportSize } from "../../../hooks/useViewportSize";
 
 import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 import { cx } from "/imports/utils/cx";
+import { IdeaIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+const DododoYellowColor = "#E4FF6B";
 
 export interface Props {
   group: GroupModel;
@@ -16,10 +20,7 @@ export function Thumb({ group }: Props) {
 
   return (
     <div
-      className={cx(
-        "card border-2",
-        group.hasState("proposal") ? "border-dashed" : "border-dark-subtle",
-      )}
+      className="card border-none"
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
       {group?.publicUrlForCompactImage() ? (
@@ -30,6 +31,21 @@ export function Thumb({ group }: Props) {
       ) : (
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
+
+      {group.hasState("proposal") && (
+        <span
+          className="position-absolute top-0 start-100 translate-middle"
+          style={{
+            opacity: 0.8,
+            color: DododoYellowColor,
+            top: "-10px",
+            left: "calc(100% + -30px)",
+          }}
+        >
+          <HugeiconsIcon icon={IdeaIcon} size={90} />
+        </span>
+      )}
+
       <div
         className={cx("card-body rounded-bottom-1", group.hasState("upcomingEvent") && "bg-group")}
       >
