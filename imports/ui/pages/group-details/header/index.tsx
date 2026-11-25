@@ -40,23 +40,16 @@ export function Header({ group }: { group: GroupModel }) {
     },
   };
 
-  function detailsHeaderAttr() {
-    const src = group?.publicUrlForDetailsImage();
-    if (!src) {
-      return {};
-    }
-
-    return {
-      style: {
-        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}')`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      },
-    };
-  }
-
   return (
-    <div className="details-header" {...detailsHeaderAttr()}>
+    <div className="details-header">
+      {group?.publicUrlForDetailsImage() && (
+        <div
+          className="bg-img-cover h-[150px] md:h-[300px]"
+          style={{
+            backgroundImage: `url('${group?.publicUrlForDetailsImage()}')`,
+          }}
+        />
+      )}
       {group.internal && <InternalIndicator />}
       {group.singleEvent && <SingleEventIndicator />}
       <div className="details-header-tags">
