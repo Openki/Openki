@@ -2,7 +2,7 @@ import { defineConfig } from "@meteorjs/rspack";
 import { DefinePlugin, type SwcLoaderJscConfig } from "@rspack/core";
 import { createRequire } from "node:module";
 
-import { I18nextExtractorPlugin } from "./scripts/i18next-extractor-plugin.mts";
+import { I18nextExtractorPlugin } from "./rspack/i18next-extractor-plugin.mts";
 import i18nextConfig from "./i18next.config.mjs";
 import pkg from "./package.json" with { type: "json" };
 
