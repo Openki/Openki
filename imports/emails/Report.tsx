@@ -57,12 +57,12 @@ export function Report({
           <h5 className="title">{t("email.base.greeting.anoym")}</h5>
           <Trans
             i18nKey="email.admin.userReport.intro"
-            defaults='User <userLink>{user}</userLink> reports a problem on the page <pageLink>"{title}"</pageLink>'
+            defaults='User <userLink>{USER}</userLink> reports a problem on the page <pageLink>"{TITLE}"</pageLink>'
             values={{
-              user: user
+              USER: user
                 ? user.getDisplayName()
                 : t("email.admin.userReport.visitor", "A fellow visitor"),
-              title,
+              TITLE: title,
             }}
             components={{
               // oxlint-disable jsx-a11y/anchor-has-content jsx-a11y/control-has-associated-label
@@ -91,16 +91,16 @@ export function Report({
                 {versionElement}
                 <Trans
                   i18nKey="email.admin.footer.now"
-                  defaults="<br /><br />Now it's {now}."
-                  values={{ now: now.toString() }}
+                  defaults="<br /><br />Now it's {NOW}."
+                  values={{ NOW: now.toString() }}
                   components={{
                     br: <br />,
                   }}
                 />
                 <Trans
                   i18nKey="email.admin.footer.userAgent"
-                  defaults="<br />User Agent: <code>{userAgent}</code>"
-                  values={{ userAgent }}
+                  defaults="<br />User Agent: <code>{USERAGENT}</code>"
+                  values={{ USERAGENT: userAgent }}
                   components={{
                     br: <br />,
                     code: <code />,

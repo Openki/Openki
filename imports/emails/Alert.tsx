@@ -54,8 +54,8 @@ export function Alert({
                 {versionElement}
                 <Trans
                   i18nKey="email.admin.footer.now"
-                  defaults="<br /><br />Now it's {now}."
-                  values={{ now: now.toString() }}
+                  defaults="<br /><br />Now it's {NOW}."
+                  values={{ NOW: now.toString() }}
                   components={{
                     br: <br />,
                   }}
