@@ -22,6 +22,12 @@ const { Blaze, Handlebars } = {
   },
 };
 
+/**
+ * i18n namespace loaders.
+ *
+ * By importing the glob pattern dynamically, we tell Rspack to watch these
+ * files for changes and reload the i18next module and its importers when something changes.
+ */
 const namespaceLoaders = Object.fromEntries(
   Object.entries(
     import.meta.glob<Record<string, unknown>>("/imports/startup/both/**/*.json", {

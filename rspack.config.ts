@@ -2,6 +2,8 @@ import { defineConfig } from "@meteorjs/rspack";
 import { DefinePlugin, type SwcLoaderJscConfig } from "@rspack/core";
 import { createRequire } from "node:module";
 
+import { I18nextExtractorPlugin } from "./scripts/i18next-extractor-plugin.mts";
+import i18nextConfig from "./i18next.config.mjs";
 import pkg from "./package.json" with { type: "json" };
 
 const require = createRequire(import.meta.filename);
@@ -36,6 +38,10 @@ export default defineConfig((Meteor) => {
     //   level: "info",
     // },
     plugins: [
+      // The i18n plugin extracts translation strings and regenerates i18n resource types.
+      // This plugin can be disabled if you want faster rebuilds.
+      Meteor.isDevelopment &&
+        new I18nextExtractorPlugin({ config: i18nextConfig, initial: false, quiet: true }),
       // Static compile-time variables. Boolean values allow dead-code elimination in production.
       new DefinePlugin({
         isLocalhostSSLEnabled,
