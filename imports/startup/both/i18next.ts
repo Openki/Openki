@@ -1,11 +1,11 @@
 import { Meteor } from "meteor/meteor";
 import { ReactiveVar } from "meteor/reactive-var";
-import i18next from "i18next";
+import i18next, { BackendModule } from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
 import { setDefaults } from "react-i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
-import LocalStorageBackend from "i18next-localstorage-backend";
+import LocalStorageBackend, { LocalStorageBackendOptions } from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 // @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
 import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
@@ -89,15 +89,23 @@ try {
   localStorageSupported = false;
 }
 
-const backends = [];
+// Initialize backends and their configurations at the same time to make sure they are used in the correct order.
+const backendConfig = {
+  backends: [] as (BackendModule | typeof LocalStorageBackend)[],
+  backendOptions: [] as unknown[],
+};
 
 if (localStorageSupported) {
-  // we use localstorage to cache translations for 1 hour  (see: backendOptions:expirationTime below)
-  backends.push(LocalStorageBackend);
+  // We use localStorage to cache translations for 1h in production.
+  backendConfig.backends.push(LocalStorageBackend);
+  backendConfig.backendOptions.push({
+    // Disable translation caching during development
+    expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
+  } satisfies LocalStorageBackendOptions);
 }
 
 // and only load translations for the languages and namespaces we need
-backends.push(
+backendConfig.backends.push(
   resourcesToBackend(async (language: string, namespace: string) => {
     if (namespace === "common") {
       // NOTE: We simulate a "common" namespace to make it consistent with newer, namespaced
@@ -122,6 +130,7 @@ backends.push(
     return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
   }),
 );
+backendConfig.backendOptions.push(undefined);
 
 // Set default config for all react-i18next instances using the recommended approach since version 18.
 // This needs to be configured before `initReactI18next` is called by the main i18next instance.
@@ -135,19 +144,11 @@ i18next
     fallbackLng: "en",
     ns: ["common", "roles"],
     defaultNS: "common",
-    backend: {
-      backends,
-      backendOptions: [
-        {
-          // Disable translation caching during development
-          expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
-        },
-      ],
-    },
+    backend: backendConfig,
   });
 
 if (Meteor.isServer) {
-  // on the server we pre load all languages.
+  // On the server we preload all languages.
   i18next.loadLanguages(Object.keys(LanguagesRaw));
 }
 
