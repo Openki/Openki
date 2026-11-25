@@ -120,7 +120,7 @@ export function EmailSection() {
                 submit
                 className="btn-cancel"
                 isBusy={isBusy}
-                busyText={t("_button.saving", "Saving…")}
+                busyText={t("_button.saving")}
               >
                 {t("_button.save")}
               </Button>

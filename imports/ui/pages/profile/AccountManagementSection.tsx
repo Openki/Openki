@@ -18,7 +18,7 @@ function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) 
         type="button"
         className="btn btn-outline-secondary text-dark rounded-0"
         onClick={onToggle}
-        aria-label={t("_button.toggleVisibility", "Toggle visibility")}
+        aria-label={t("_button.toggleVisibility")}
       >
         <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
       </button>
@@ -209,7 +209,7 @@ export function AccountManagementSection() {
                     submit
                     className="btn-cancel"
                     isBusy={isBusy}
-                    busyText={t("_button.saving", "Saving…")}
+                    busyText={t("_button.saving")}
                   >
                     {t("_button.save")}
                   </Button>

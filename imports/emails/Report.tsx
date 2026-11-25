@@ -1,10 +1,12 @@
-import { JSX } from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { UserModel } from "/imports/api/users/users";
 import { VersionEntity } from "/imports/api/version/version";
 import { useReactiveNow } from "../utils/reactive-now";
+import { Trans, useTranslation } from "react-i18next";
+
+export type TransInterpolation = Record<string, string | number>;
 
 export function Report({
   user,
@@ -13,6 +15,7 @@ export function Report({
   title,
   report,
   userAgent,
+  lng,
 }: {
   user: UserModel | null;
   version: VersionEntity | undefined;
@@ -20,31 +23,30 @@ export function Report({
   title: string;
   report: string;
   userAgent: string;
+  lng: string;
 }) {
+  const { t } = useTranslation(undefined, { lng });
   const { siteName } = Accounts.emailTemplates;
-
-  let reporter: string | JSX.Element = "A fellow visitor";
-  if (user) {
-    reporter = <a href={Router.url("userprofile", user)}>{user.getDisplayName()}</a>;
-  }
 
   const now = useReactiveNow();
 
-  moment.locale("en");
+  moment.locale(lng);
   let versionElement;
   if (version) {
     const fullVersion = version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
     const commit = version.commitShort;
     const deployDate = moment(version.activation).format("lll");
     const restart = moment(version.lastStart).format("lll");
-    versionElement = (
-      <>
-        <br />
-        The running version is [{siteName}] {fullVersion} @ commit {commit}
-        <br />
-        It was deployed on {deployDate},<br />
-        and last restarted on {restart}.
-      </>
+    versionElement = t(
+      "email.admin.footer.version",
+      "\nThe running version is [{SITENAME}] {FULLVERSION} @ commit {COMMIT}\nIt was deployed on {DEPLOYDATE},\nand last restarted on {RESTART}.",
+      {
+        SITENAME: siteName,
+        FULLVERSION: fullVersion,
+        COMMIT: commit,
+        DEPLOYDATE: deployDate,
+        RESTART: restart,
+      },
     );
   }
 
@@ -52,11 +54,24 @@ export function Report({
     <>
       <tr>
         <td>
-          <h5 className="title">Hi</h5>
-          <p>
-            User {reporter} reports a problem on the page <a href={location}>&quot;{title}&quot;</a>
-          </p>
-          <p className="gap-md">Their report:</p>
+          <h5 className="title">{t("email.base.greeting.anoym")}</h5>
+          <Trans
+            i18nKey="email.admin.userReport.intro"
+            defaults='User <userLink>{user}</userLink> reports a problem on the page <pageLink>"{title}"</pageLink>'
+            values={{
+              user: user
+                ? user.getDisplayName()
+                : t("email.admin.userReport.visitor", "A fellow visitor"),
+              title,
+            }}
+            components={{
+              // oxlint-disable jsx-a11y/anchor-has-content jsx-a11y/control-has-associated-label
+              userLink: user ? <a href={Router.url("userprofile", user)} /> : <></>,
+              pageLink: <a href={location} />,
+              // oxlint-enable jsx-a11y/anchor-has-content jsx-a11y/control-has-associated-label
+            }}
+          />
+          <p className="gap-md">{t("email.admin.userReport.report", "Their report:")}</p>
           <table className="comment-box">
             <tr>
               <td>
@@ -64,18 +79,33 @@ export function Report({
               </td>
             </tr>
           </table>
-          <p>See you! bye.</p>
+          <p>{t("email.admin.userReport.bye", "See you! bye.")}</p>
         </td>
       </tr>
       <tr>
         <td>
           <table className="footer">
-            <tr>
+            <tr className="pre">
+              {/* i18next-instrument-ignore */}
               <td>
                 {versionElement}
-                <br />
-                Now it&apos;s {now.toString()}.<br />
-                User Agent: <code>{userAgent}</code>
+                <Trans
+                  i18nKey="email.admin.footer.now"
+                  defaults="<br /><br />Now it's {now}."
+                  values={{ now: now.toString() }}
+                  components={{
+                    br: <br />,
+                  }}
+                />
+                <Trans
+                  i18nKey="email.admin.footer.userAgent"
+                  defaults="<br />User Agent: <code>{userAgent}</code>"
+                  values={{ userAgent }}
+                  components={{
+                    br: <br />,
+                    code: <code />,
+                  }}
+                />
               </td>
             </tr>
           </table>

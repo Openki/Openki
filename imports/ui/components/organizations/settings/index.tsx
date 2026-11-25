@@ -399,6 +399,7 @@ export function OrganizationSettings({ organization }: Props) {
             <i className="fa-solid fa-copy fa-fw" />
           </button>
         </p>
+        {/* i18next-instrument-ignore */}
         <ul className="list-unstyled">
           <li>
             Infoscreen-Link:{" "}

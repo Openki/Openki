@@ -528,7 +528,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       <div className="edit-page">
         <h3>
           {isNew
-            ? t("group.event.edit.add", "Create an event")
+            ? t("group.event.edit.add", "Create event")
             : t("group.event.edit.edit", "Edit event")}
         </h3>
         {isNew && !event.groupId && (

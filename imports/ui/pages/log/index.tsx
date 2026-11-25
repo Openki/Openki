@@ -170,7 +170,7 @@ export function LogPage({
   }, []);
 
   if (!privileged()) {
-    return <h1>PLZ login as admin!</h1>;
+    return <h1>{t("admin.pleaseLogin", "Please login as admin!")}</h1>;
   }
 
   return (
@@ -180,7 +180,7 @@ export function LogPage({
       <div className="page-component">
         <div>
           <div className="input-group">
-            <span className="input-group-text">ID</span>
+            <span className="input-group-text">{t("log.list.column.id", "ID")}</span>
             <input
               className="form-control"
               type="text"
@@ -190,7 +190,7 @@ export function LogPage({
             />
           </div>
           <div className="input-group">
-            <span className="input-group-text">Track</span>
+            <span className="input-group-text">{t("log.list.column.track", "Track")}</span>
             <input
               className="form-control"
               type="text"
@@ -200,7 +200,7 @@ export function LogPage({
             />
           </div>
           <div className="input-group">
-            <span className="input-group-text">Date</span>
+            <span className="input-group-text">{t("log.list.column.date", "Date")}</span>
             <input
               className="form-control"
               type="text"
@@ -215,19 +215,20 @@ export function LogPage({
         {isLoading() && (
           <div className="loading">
             <h1>
+              {/* oxlint-disable jsx-a11y/no-distracting-elements*/}
               {/* @ts-expect-error react do not known marquee*/}
-              <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
+              <marquee>{t("log.list.loading", "LOADING! BE PATIENT! ENJOY THE SUN!")}</marquee>
             </h1>
           </div>
         )}
         <table className="table">
           <tbody>
             <tr>
-              <th>ID</th>
-              <th>Track</th>
-              <th>Timestamp</th>
-              <th>Rel</th>
-              <th>Body</th>
+              <th>{t("log.list.column.id", "ID")}</th>
+              <th>{t("log.list.column.track", "Track")}</th>
+              <th>{t("log.list.column.timestamp", "Timestamp")}</th>
+              <th>{t("log.list.column.rel", "Rel")}</th>
+              <th>{t("log.list.column.body", "Body")}</th>
             </tr>
 
             {results().map((entry, i) => (
@@ -242,7 +243,7 @@ export function LogPage({
 
             {!results().length && !isLoading() && (
               <tr>
-                <td>Nothing found.</td>
+                <td>{t("log.list.nothingFound", "Nothing found.")}</td>
               </tr>
             )}
           </tbody>
@@ -257,7 +258,7 @@ export function LogPage({
                 setLimit(limit + 100);
               }}
             >
-              Show more
+              {t("_button.more")}
             </button>
           </div>
         )}

@@ -960,7 +960,7 @@
   "region.stats.noOrganization": "Ohne AO",
   "region.stats.organization": "Gruppe",
   "region.stats.organization.members": "Members\n(Admins)",
-  "region.stats.plzLogin": "Bitte als Administrator anmelden!",
+  "admin.pleaseLogin": "Bitte als Administrator anmelden!",
   "regionDetails.coordinates": "Kordinaten:",
   "regionDetails.goToOverview": "Gehe zu allen Regionen",
   "regionDetails.timezone": "Zeitzone:",

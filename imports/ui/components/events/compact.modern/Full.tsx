@@ -171,6 +171,7 @@ export function Full({
         {!hideCategories && !!event.categories?.length && (
           <p className="card-text">
             <span className="fw-bold">{t("event.details.categories", "Categories:")}</span>{" "}
+            {/* @ts-expect-error Disable type checking since we don't know the key at compile time */}
             {event.categories.map((category) => t(`category.${category}`)).join(", ")}
           </p>
         )}

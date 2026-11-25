@@ -274,7 +274,7 @@ export function ButtonSave(
   const { t } = useTranslation();
 
   return (
-    <Button {...props} className="btn-save" busyText={t("_button.saving", "Saving…")}>
+    <Button {...props} className="btn-save" busyText={t("_button.saving")}>
       {t("_button.save")}
     </Button>
   );

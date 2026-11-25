@@ -1007,7 +1007,7 @@
   "region.stats.noOrganization": "Nicht gruppiert",
   "region.stats.organization": "Organisation",
   "region.stats.organization.members": "Mitglieder",
-  "region.stats.plzLogin": "Bitte als Administrator_in anmelden!",
+  "admin.pleaseLogin": "Bitte als Administrator_in anmelden!",
   "regionDetails.coordinates": "Kordinaten:",
   "regionDetails.goToOverview": "Gehe zu allen Regionen",
   "regionDetails.timezone": "Zeitzone:",

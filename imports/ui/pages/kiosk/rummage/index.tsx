@@ -296,6 +296,7 @@ export function KioskRummagePage() {
                       style={{ maxWidth: "200px" }}
                     />
                     <br />
+                    {/* i18next-instrument-ignore */}
                     by Openki
                   </h5>
                 </div>

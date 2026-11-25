@@ -6,7 +6,6 @@
 //
 // NOTE: This should be removed when Blaze and iron:router have been removed.
 
-import "/imports/startup/client/translations.html";
 import "/imports/ui/components/account-tasks/template.html";
 import "/imports/ui/components/alerts/template.html";
 import "/imports/ui/components/component-test/template.html";

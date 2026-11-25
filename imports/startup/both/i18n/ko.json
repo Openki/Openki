@@ -744,7 +744,7 @@
   "region.stats.groups.total": "전체 수",
   "region.stats.noOrganization": "그룹 해제됨",
   "region.stats.organization": "그룹",
-  "region.stats.plzLogin": "관리자 계정으로 로그인해주세요!",
+  "admin.pleaseLogin": "관리자 계정으로 로그인해주세요!",
   "regionDetails.coordinates": "지역 좌표:",
   "regionDetails.goToOverview": "전체 지역 개요로 이동",
   "regionDetails.timezone": "시간대:",

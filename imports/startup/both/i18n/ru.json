@@ -905,7 +905,7 @@
   "region.stats.noOrganization": "Разгруппировано",
   "region.stats.organization": "Группа",
   "region.stats.organization.members": "Участники",
-  "region.stats.plzLogin": "Пожалуйста, войдите как администратор!",
+  "admin.pleaseLogin": "Пожалуйста, войдите как администратор!",
   "regionDetails.coordinates": "Координаты:",
   "regionDetails.goToOverview": "Перейти ко всем регионам",
   "regionDetails.timezone": "Часовой пояс:",

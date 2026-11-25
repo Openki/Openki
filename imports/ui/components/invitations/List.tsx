@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TFunction } from "i18next";
+import type i18next from "i18next";
 
 import { InvitationEntity, Status } from "/imports/api/invitations/invitations";
 import { useFindFilter } from "/imports/api/invitations/publications";
@@ -12,7 +12,7 @@ import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
-function statusFormat(t: TFunction<"translation", undefined>, status: Status) {
+function statusFormat(t: typeof i18next.t, status: Status) {
   switch (status) {
     case "created":
       return t("invitations.status.created", "Created");
