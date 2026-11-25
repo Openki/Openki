@@ -17,7 +17,7 @@ import { OrganizationName } from "../../OrganizationName";
 import { useDetails } from "/imports/api/groups/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
 import { ImagePlaceholder } from "../../ImagePlaceholder";
 
 function DisplayDiscussion({ eventId, groupId }: { eventId: string; groupId: string }) {
@@ -158,7 +158,7 @@ export function Full({
         {!isRegionLoading() && !!organizedByOrganizations?.length && (
           <p className="card-text">
             <span className="fw-bold">{t("event.details.organizedBy", "Organized by:")}</span>{" "}
-            {ReactJoin(
+            {reactJoin(
               organizedByOrganizations.map((organization) => (
                 <OrganizationName key={organization} id={organization} />
               )),

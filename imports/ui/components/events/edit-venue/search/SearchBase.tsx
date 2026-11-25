@@ -20,7 +20,7 @@ import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../../utils/reactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
 import { VenueEntity } from "/imports/api/venues/venues";
 import { cx } from "/imports/utils/cx";
@@ -98,7 +98,7 @@ function CustomMenu({
               className="bg-venue text-truncate"
             >
               <i className="fa-solid fa-house-user fa-fw" />{" "}
-              {ReactJoin([
+              {reactJoin([
                 !!venue.name && (
                   <span className="fw-bold" key={venue.name}>
                     {venue.name}
@@ -129,7 +129,7 @@ function CustomMenu({
                   <VenueIcon id={venue._id} restrictedUse={venue.restrictedUse} />{" "}
                 </>
               )}
-              {ReactJoin([
+              {reactJoin([
                 !!venue.name && (
                   <>
                     <span className="fw-bold">{venue.name}</span>

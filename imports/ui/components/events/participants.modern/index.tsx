@@ -5,7 +5,7 @@ import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import { EventModel, EventParticipant } from "/imports/api/events/events";
 
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
 import { cx } from "/imports/utils/cx";
 
 import { UserName } from "/imports/ui/components/UserName";
@@ -88,7 +88,7 @@ export function EventParticipants({ event }: Props) {
       </h4>
       {!!event.participants && (
         <p className="card-text">
-          {ReactJoin(
+          {reactJoin(
             sortedParticipants()?.map((participant) => (
               <EventParticipant key={participant.user} participant={participant} />
             )),

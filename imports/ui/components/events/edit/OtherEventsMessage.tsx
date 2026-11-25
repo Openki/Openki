@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
 import { Fragment } from "react";
 
 export function OtherEventsMessage({
@@ -9,7 +9,7 @@ export function OtherEventsMessage({
 }) {
   const { t } = useTranslation();
 
-  return ReactJoin(
+  return reactJoin(
     events.map((e) => (
       <Fragment key={e._id}>
         {e.room

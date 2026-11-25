@@ -14,7 +14,7 @@ import { Model as NotificationModel } from "../notification";
 import { OrganizationGroup, Props } from "../../../../emails/notifications/OrganizationGroup";
 
 import { getSiteName } from "/imports/utils/getSiteName";
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
 
 export const ModelName = "Organization.Group";
 
@@ -112,7 +112,7 @@ export async function Model({ body }: { body: Body }): Promise<NotificationModel
       return {
         group: <a href={groupLink}>{group.name}</a>,
         groupDescription: group.description || "",
-        organizations: ReactJoin(
+        organizations: reactJoin(
           recipientsOrganizations.map((organization) => (
             <a
               key={organization._id}
