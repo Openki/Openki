@@ -455,7 +455,7 @@
   "group.edit.needs.role.ariaLabel": "\"{ROLE}\" entfernen",
   "group.edit.needs.role.create": "\"{ROLE}\" hinzufügen",
   "group.edit.needs.role.help": "Wähle Rollen, um die Verantwortlichkeiten unter den Gruppenmitgliedern aufzuteilen.",
-  "group.edit.needs.role.noOptions": "Tippe eine beliebige Rolle ein...",
+  "group.edit.needs.role.hint": "Fehlt eine Rolle? Schlage eine neue vor, die andere übernehmen können.",
   "group.edit.needs.role.placeholder": "Auswählen oder tippen",
   "group.edit.needs.role.selectOnly.noOptions": "Keine Rollen",
   "group.edit.needs.role.selectOnly.placeholder": "Auswählen",
