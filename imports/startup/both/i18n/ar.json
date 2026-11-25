@@ -720,7 +720,7 @@
   "region.stats.groups.total": "مجموع",
   "region.stats.noOrganization": "غير مصنف",
   "region.stats.organization": "مجموعة",
-  "region.stats.plzLogin": "يرجى تسجيل الدخول كمسؤول!",
+  "admin.pleaseLogin": "يرجى تسجيل الدخول كمسؤول!",
   "regionDetails.coordinates": "احداثيات:",
   "regionDetails.goToOverview": "انتقل إلى جميع المناطق",
   "regionDetails.timezone": "المنطقة الزمنية:",

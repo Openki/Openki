@@ -170,7 +170,7 @@ export function LogPage({
   }, []);
 
   if (!privileged()) {
-    return <h1>PLZ login as admin!</h1>;
+    return <h1>{t("admin.pleaseLogin", "Please login as admin!")}</h1>;
   }
 
   return (
@@ -215,6 +215,7 @@ export function LogPage({
         {isLoading() && (
           <div className="loading">
             <h1>
+              {/* oxlint-disable jsx-a11y/no-distracting-elements*/}
               {/* @ts-expect-error react do not known marquee*/}
               <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
             </h1>

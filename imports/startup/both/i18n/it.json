@@ -761,7 +761,7 @@
   "region.stats.groups.total": "Totale",
   "region.stats.noOrganization": "Non raggruppati",
   "region.stats.organization": "Gruppo",
-  "region.stats.plzLogin": "Effettua il login come amministratore!",
+  "admin.pleaseLogin": "Effettua il login come amministratore!",
   "regionDetails.coordinates": "Coordinate:",
   "regionDetails.goToOverview": "Vai a tutte le località",
   "regionDetails.timezone": "Fuso orario:",

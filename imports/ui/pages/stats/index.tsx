@@ -174,7 +174,7 @@ export function StatsPage() {
   return (
     <div className="container">
       {!isAdmin() ? (
-        <h1>{t("region.stats.plzLogin", "PLZ login as admin!")}</h1>
+        <h1>{t("admin.pleaseLogin", "Please login as admin!")}</h1>
       ) : !isLoadingCurrent() && !isLoadingAll() && stats ? (
         <>
           <div>
