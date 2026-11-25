@@ -152,6 +152,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
    */
   rummageLogoBig: { src: String },
   rummageLogoSmall: { src: String },
+  rummageLogoLink: String,
 
   /**
    * Can be a logo from the `/private/*` folder, from our s3 file storage (must
@@ -568,6 +569,7 @@ const defaults = {
   ogLogo: { src: "openki_logo_2018.png" },
   rummageLogoBig: { src: "" },
   rummageLogoSmall: { src: "" },
+  rummageLogoLink: "",
   theme: {
     brand: "#38829c",
   },

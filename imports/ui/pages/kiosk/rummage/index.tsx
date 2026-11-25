@@ -290,11 +290,21 @@ export function KioskRummagePage() {
                 <div className={cx("p-4", !userId && "mt-n5")}>
                   <h5>
                     {/* a decorative logo */}
-                    <img
-                      src={PublicSettings.rummageLogoSmall.src}
-                      alt=""
-                      style={{ maxWidth: "200px" }}
-                    />
+                    {PublicSettings.rummageLogoLink ? (
+                      <a href={PublicSettings.rummageLogoLink}>
+                        <img
+                          src={PublicSettings.rummageLogoSmall.src}
+                          alt=""
+                          style={{ maxWidth: "200px" }}
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        src={PublicSettings.rummageLogoSmall.src}
+                        alt=""
+                        style={{ maxWidth: "200px" }}
+                      />
+                    )}
                     <br />
                     {/* i18next-instrument-ignore */}
                     by Openki
