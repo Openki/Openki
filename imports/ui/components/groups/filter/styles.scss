@@ -23,26 +23,6 @@
   padding-bottom: 10px;
 }
 
-.filter-active-tag {
-  display: none;
-}
-
-.filter.active .filter-active-tag {
-  @include td-margin(left, 5px);
-
-  background-color: color.adjust($green, $lightness: -35%);
-  color: $white;
-  display: inline;
-  font-size: smaller;
-  padding: 3px 5px;
-}
-
-.filter-captions-header-buttons {
-  @include td-float(right);
-
-  display: block;
-}
-
 .filter-remove-btn-text {
   display: inline;
 }

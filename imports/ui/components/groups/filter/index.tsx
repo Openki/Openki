@@ -88,10 +88,7 @@ export function Filter(props: Props) {
   return (
     <div className={cx("filter", filterClasses())}>
       {showingFilters && (
-        <h4 className="filter-heading">
-          <i className="fa-solid fa-filter fa-fw" />
-          {t("find.search_filter.title", "Filter search")}
-          <span className="filter-active-tag">{t("find.filter.isActive", "active")}</span>
+        <h4 className="filter-heading text-end">
           <div className="filter-captions-header-buttons">
             <button
               className="btn btn-lg btn-link p-0"
