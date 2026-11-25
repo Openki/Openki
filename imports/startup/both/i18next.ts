@@ -22,62 +22,16 @@ const { Blaze, Handlebars } = {
   },
 };
 
-// oxlint-disable-next-line no-constant-condition
-if (false) {
-  // Allowlist: This is needed for meteor's dynamic-import module, to allow dynamic loading of modules
-  // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
-  import("/imports/startup/both/i18n/en.json");
-  import("/imports/startup/both/i18n/roles/en.json");
-
-  // common namespace
-  import("/imports/startup/both/i18n/en-ccc.json");
-  import("/imports/startup/both/i18n/af.json");
-  import("/imports/startup/both/i18n/am.json");
-  import("/imports/startup/both/i18n/ar.json");
-  import("/imports/startup/both/i18n/da.json");
-  import("/imports/startup/both/i18n/de.json");
-  import("/imports/startup/both/i18n/de-ccc.json");
-  import("/imports/startup/both/i18n/de-ZH.json");
-  import("/imports/startup/both/i18n/de-zuerich-lernt.json");
-  import("/imports/startup/both/i18n/el.json");
-  import("/imports/startup/both/i18n/es.json");
-  import("/imports/startup/both/i18n/fa.json");
-  import("/imports/startup/both/i18n/fr.json");
-  import("/imports/startup/both/i18n/hu.json");
-  import("/imports/startup/both/i18n/it.json");
-  import("/imports/startup/both/i18n/ja.json");
-  import("/imports/startup/both/i18n/ko.json");
-  import("/imports/startup/both/i18n/nb.json");
-  import("/imports/startup/both/i18n/nl.json");
-  import("/imports/startup/both/i18n/pt.json");
-  import("/imports/startup/both/i18n/rm.json");
-  import("/imports/startup/both/i18n/ru.json");
-  import("/imports/startup/both/i18n/sv.json");
-  import("/imports/startup/both/i18n/tr.json");
-  import("/imports/startup/both/i18n/zh-CN.json");
-  import("/imports/startup/both/i18n/zh-TW.json");
-
-  // roles namespace
-  import("/imports/startup/both/i18n/roles/en-ccc.json");
-  import("/imports/startup/both/i18n/roles/ar.json");
-  import("/imports/startup/both/i18n/roles/da.json");
-  import("/imports/startup/both/i18n/roles/de.json");
-  import("/imports/startup/both/i18n/roles/de-ccc.json");
-  import("/imports/startup/both/i18n/roles/de-ZH.json");
-  import("/imports/startup/both/i18n/roles/de-zuerich-lernt.json");
-  import("/imports/startup/both/i18n/roles/el.json");
-  import("/imports/startup/both/i18n/roles/es.json");
-  import("/imports/startup/both/i18n/roles/fa.json");
-  import("/imports/startup/both/i18n/roles/fr.json");
-  import("/imports/startup/both/i18n/roles/hu.json");
-  import("/imports/startup/both/i18n/roles/it.json");
-  import("/imports/startup/both/i18n/roles/ko.json");
-  import("/imports/startup/both/i18n/roles/nb.json");
-  import("/imports/startup/both/i18n/roles/pt.json");
-  import("/imports/startup/both/i18n/roles/ru.json");
-  import("/imports/startup/both/i18n/roles/sv.json");
-  import("/imports/startup/both/i18n/roles/tr.json");
-}
+const namespaceLoaders = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<Record<string, unknown>>("/imports/startup/both/**/*.json", {
+      import: "default",
+    }),
+  ).map(([path, loader]) => [
+    path.replace("/imports/startup/both/i18n/", "").replace(".json", ""),
+    loader,
+  ]),
+);
 
 let localStorageSupported;
 try {
@@ -113,21 +67,19 @@ backendConfig.backends.push(
       const customLanguageCode = PublicSettings.i18nMapping?.[language];
       if (customLanguageCode) {
         // when there is a mapping we use the original language as fallback
-        const customLanguageFile = await import(
-          `/imports/startup/both/i18n/${customLanguageCode}.json`
-        );
-        const fallbackLanguageFile = await import(`/imports/startup/both/i18n/${language}.json`);
+        const customLanguageFile = await namespaceLoaders[customLanguageCode]();
+        const fallbackLanguageFile = await namespaceLoaders[language]();
         return {
           default: {
-            ...fallbackLanguageFile.default,
-            ...customLanguageFile.default,
+            ...fallbackLanguageFile,
+            ...customLanguageFile,
           },
         };
       } else {
-        return import(`/imports/startup/both/i18n/${language}.json`);
+        return namespaceLoaders[language]();
       }
     }
-    return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
+    return namespaceLoaders[`${namespace}/${language}.json`]();
   }),
 );
 backendConfig.backendOptions.push(undefined);
