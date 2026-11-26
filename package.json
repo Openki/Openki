@@ -111,8 +111,8 @@
     "lint": "oxlint --report-unused-disable-directives && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' && oxfmt --check '**/*.{ts,tsx,scss,json*,js,md}'",
     "lint:fix": "oxlint --fix && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' --fix && echo 'Formatting and applying fixes...' && oxfmt --write '**/*.{ts,tsx,scss,json*,js,md}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
-    "type-check": "echo 'Checking types...' && meteor types && i18next-cli types --quiet && tsc",
-    "type-check:dev": "echo 'Checking types...' && meteor types && i18next-cli types --quiet && tsc --noUnusedLocals false --noUnusedParameters false",
+    "type-check": "meteor types && i18next-cli types --quiet && echo 'Checking types...' && tsc",
+    "type-check:dev": "meteor types && i18next-cli types --quiet && echo 'Checking types...' && tsc --noUnusedLocals false --noUnusedParameters false",
     "extract-translations": "echo 'Extracting translations...' && i18next-cli extract --sync-primary --with-types --quiet",
     "watch-translations": "i18next-cli extract --sync-primary --with-types --watch",
     "lint:translations": "i18next-cli lint"
