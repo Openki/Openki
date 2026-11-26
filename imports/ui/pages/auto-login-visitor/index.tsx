@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Router } from "meteor/iron:router";
 import { Random } from "meteor/random";
 
@@ -34,6 +34,5 @@ export function AutoLoginVisitorPage({ token, email }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("AutoLoginVisitorPage", () => AutoLoginVisitorPage);

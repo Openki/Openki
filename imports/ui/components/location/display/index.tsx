@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
 import { DivIcon } from "leaflet";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";

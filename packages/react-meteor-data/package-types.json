@@ -1,0 +1,6 @@
+{
+  "typesEntry": "react-meteor-data.d.ts",
+  "modules": {
+    "suspense": "./suspense/react-meteor-data.d.ts"
+  }
+}

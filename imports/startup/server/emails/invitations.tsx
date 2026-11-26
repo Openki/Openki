@@ -1,6 +1,7 @@
-import React from "react";
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
+import { Accounts } from "meteor/accounts-base";
+import { Email } from "meteor/email";
 
 import { InvitationEntity, Invitations } from "/imports/api/invitations/invitations";
 import { Tenants } from "/imports/api/tenants/tenants";

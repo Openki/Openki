@@ -1,6 +1,4 @@
 import { useTranslation } from "react-i18next";
-import React from "react";
-import { Template } from "meteor/templating";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import {
@@ -128,7 +126,5 @@ export function Introduction({ hasPricePolicy }: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("Introduction", () => Introduction);

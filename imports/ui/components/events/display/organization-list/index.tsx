@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
@@ -10,6 +9,31 @@ import { Add } from "./Add";
 import { Remove } from "./Remove";
 import { RemoveTeam } from "./RemoveTeam";
 import { MakeTeam } from "./MakeTeam";
+import { difference } from "es-toolkit";
+import { cx } from "/imports/utils/cx";
+
+function Tools({ organizationId, event }: { organizationId: string; event: EventModel }) {
+  const user = useUser();
+
+  return (
+    <>
+      {(!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
+        <li className="dialog-dropdown-btn">
+          <Remove event={event} organizationId={organizationId} />
+        </li>
+      )}
+      {event.editableBy(user) && (
+        <li className="dialog-dropdown-btn">
+          {event.teamOrganizations.includes(organizationId) ? (
+            <RemoveTeam event={event} organizationId={organizationId} />
+          ) : (
+            <MakeTeam event={event} organizationId={organizationId} />
+          )}
+        </li>
+      )}
+    </>
+  );
+}
 
 export interface Props {
   event: EventModel;
@@ -21,93 +45,136 @@ export function OrganizationList({ event }: Props) {
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
 
-  function tools(organizationId: string, event: EventModel) {
-    // Organizations can be adopted from the group, these cannot be removed
-    const ownOrganization = event.organizations.includes(organizationId);
-
-    return (
-      <>
-        {ownOrganization && (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
-          <li className="dialog-dropdown-btn">
-            <Remove event={event} organizationId={organizationId} />
-          </li>
-        )}
-        {ownOrganization && event.editableBy(user) && (
-          <li className="dialog-dropdown-btn">
-            {event.teamOrganizations.includes(organizationId) ? (
-              <RemoveTeam event={event} organizationId={organizationId} />
-            ) : (
-              <MakeTeam event={event} organizationId={organizationId} />
-            )}
-          </li>
-        )}
-      </>
-    );
+  if (isRegionLoading()) {
+    return null;
   }
 
-  if (isRegionLoading()) return null;
+  const organizations =
+    event.allOrganizations?.filter(
+      (organizationId) =>
+        !(
+          // hide organization where are from the region set
+          (
+            region?.defaultTeamOrganizations?.includes(organizationId) &&
+            // when user ist not member of the organization or a admin
+            !user?.canPromoteWith(organizationId) &&
+            !event.editableBy(user)
+          )
+        ),
+    ) || [];
 
-  const organizations = event.allOrganizations?.filter(
-    (organizationId) =>
-      !(
-        // hide organization where are from the region set
-        region?.defaultTeamOrganizations?.includes(organizationId) &&
-        // when user ist not member of the organization or a admin
-        !user?.canPromoteWith(organizationId) &&
-        !event.editableBy(user)
-      ),
-  );
+  const supportedBy = organizations.filter((o) => event.editors.includes(o));
+  const featuredBy = organizations.filter((o) => !event.editors.includes(o));
+  const organizationsToAdd = user && difference(user.organizations, event.allOrganizations || []);
 
   return (
     <div className="tag-group multiline">
-      {organizations?.map((organizationId) => {
-        const isTeam = event.editors.includes(organizationId);
-        // Organization can be adopted from the group, these cannot be removed
-        const ownOrganization = event.organizations.includes(organizationId);
-        return (
-          <React.Fragment key={organizationId}>
-            <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
-            {isTeam && (
-              <div className="tag organization-tag addon">
-                <i
-                  className="fa-solid fa-bullhorn fa-fw"
-                  title={t("group.organizationList.title.organizedBy", {
-                    GROUP: event.title,
-                  })}
-                />
-              </div>
-            )}
+      {supportedBy.length > 0 && (
+        <>
+          <div className="tag">{t("group.organizationList.supportedBy", "Supported by:")}</div>
+          {supportedBy.map((organizationId) => {
+            // Organization can be adopted from the group, these cannot be removed
+            const ownOrganization = event.organizations.includes(organizationId);
+            return (
+              <div key={organizationId} className="tag-group-addon-unit">
+                <OrganizationTag organizationId={organizationId} isTeam />
 
-            {ownOrganization &&
-              (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
-                <div className="btn-group tag-btn organization-tag-btn addon align-top">
-                  <button
-                    type="button"
-                    className="dropdown-toggle"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    data-bs-toggle="dropdown"
-                  ></button>
-                  <ul className="dropdown-menu dialog-dropdown">
-                    <li className="dropdown-header">
-                      {t(
-                        "group.organizationList.dropdownTitle.editOrganization",
-                        "Edit organization",
-                      )}
-                      <button type="button" className="btn-close"></button>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    {tools(organizationId, event)}
-                  </ul>
+                <div className="tag organization-tag addon">
+                  <i
+                    className="fa-solid fa-bullhorn fa-fw"
+                    title={t("group.organizationList.title.organizedBy", {
+                      GROUP: event.title,
+                    })}
+                  />
                 </div>
-              )}
-          </React.Fragment>
-        );
-      })}
 
-      <Add event={event} />
+                {ownOrganization &&
+                  (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
+                    <div className="btn-group tag-btn organization-tag-btn addon align-top">
+                      <button
+                        type="button"
+                        className="dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-bs-toggle="dropdown"
+                        aria-label={t("_button.open")}
+                      />
+                      <ul className="dropdown-menu dialog-dropdown">
+                        <li className="dropdown-header">
+                          {t(
+                            "group.organizationList.dropdownTitle.editOrganization",
+                            "Edit organization",
+                          )}
+                          <button
+                            type="button"
+                            className="btn-close"
+                            aria-label={t("_button.close")}
+                          />
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <Tools organizationId={organizationId} event={event} />
+                      </ul>
+                    </div>
+                  )}
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {(!!organizationsToAdd?.length || featuredBy.length > 0) && (
+        <>
+          <div className={cx("tag", supportedBy.length > 0 && "ms-4")}>
+            {t("group.organizationList.featuredBy", "Featured by:")}
+          </div>
+          {featuredBy.map((organizationId) => {
+            // Organization can be adopted from the group, these cannot be removed
+            const ownOrganization = event.organizations.includes(organizationId);
+            return (
+              <div key={organizationId} className="tag-group-addon-unit">
+                <OrganizationTag organizationId={organizationId} />
+
+                {ownOrganization &&
+                  (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
+                    <div className="btn-group tag-btn organization-tag-btn addon align-top">
+                      <button
+                        type="button"
+                        className="dropdown-toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-bs-toggle="dropdown"
+                        aria-label={t("_button.open")}
+                      />
+                      <ul className="dropdown-menu dialog-dropdown">
+                        <li className="dropdown-header">
+                          {t(
+                            "group.organizationList.dropdownTitle.editOrganization",
+                            "Edit organization",
+                          )}
+                          <button
+                            type="button"
+                            className="btn-close"
+                            aria-label={t("_button.close")}
+                          />
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <Tools organizationId={organizationId} event={event} />
+                      </ul>
+                    </div>
+                  )}
+              </div>
+            );
+          })}
+
+          {!!organizationsToAdd?.length && (
+            <Add event={event} organizationsToAdd={organizationsToAdd} />
+          )}
+        </>
+      )}
     </div>
   );
 }

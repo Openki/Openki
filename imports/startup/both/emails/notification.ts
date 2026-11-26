@@ -15,6 +15,7 @@ import * as join from "./notifications/join";
 import * as group from "./notifications/group";
 import * as organizationGroup from "./notifications/organization.group";
 import * as privateMessage from "./notifications/private-message";
+import type { NotificationUnsubscribeType } from "/imports/startup/server/emails/unsubscribe-helpers";
 
 export interface Model<T> {
   accepted(user: UserModel): void;
@@ -26,6 +27,7 @@ export interface Model<T> {
     {
       fromAddress?: string | undefined;
       customEmailLogo?: string | undefined;
+      unsubscribe?: { type: NotificationUnsubscribeType; token: string };
     } & Omit<RootProps, "logo"> &
       // Remove some props
       Omit<T, "siteName" | "customSiteName" | "username" | "lng" | "icalEvent">

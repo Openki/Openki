@@ -1,4 +1,3 @@
-import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
 import { Email } from "meteor/email";
@@ -101,6 +100,9 @@ export const sendReport = ServerMethod(
     const subjectPrefix = `[${siteName}] `;
     const subject = `Report: ${title}`;
 
+    // Currently hard coded to English only. Related issue: https://gitlab.com/Openki/Openki/-/work_items/2591
+    const locale = "en";
+
     const message = await renderToEmail(
       <Root subject={subject} logo={await toEmailLogo(PublicSettings.emailLogo)}>
         <Report
@@ -110,6 +112,7 @@ export const sendReport = ServerMethod(
           title={title}
           report={reportMessage}
           userAgent={userAgent}
+          lng={locale}
         />
       </Root>,
     );

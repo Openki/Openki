@@ -1,4 +1,3 @@
-import React from "react";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 

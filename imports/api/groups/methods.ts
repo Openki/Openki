@@ -31,7 +31,7 @@ import { HtmlString, NotEmptyString, StringEnum, Type } from "/imports/utils/Cus
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError } from "/imports/utils/validation-error";
 import { isSameRole, isTeam } from "/imports/api/groups/lib/isRole";
 import { canAddToTeam, canRemoveFromTeam, canSubscribeToTeam } from "./lib/teamPermissions";
 import { predefinedRole, Role, RoleType, SystemRoles } from "/imports/api/groups/lib/Role";
@@ -351,7 +351,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     set.time_created = new Date();
     const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
 
-    groupId = await Groups.insertAsync(enrichedSet);
+    groupId = (await Groups.insertAsync(enrichedSet)) as string;
 
     await Notification.Group.record(groupId);
 
@@ -364,6 +364,9 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     await editorsDenormalizer.updateEditors(groupId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
+    // This error happens because the `meteor/mongo` types only allow `string` and not `Mongo.ObjectId`
+    // for the `$set` operator. This is supported by Mongo, but not by Meteor's wrapped type.
+    // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
     await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
 
     await historyDenormalizer.afterUpdate(groupId, user._id);

@@ -1,8 +1,5 @@
-import React from "react";
-import { difference } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
@@ -47,17 +44,11 @@ function OrganizationToAdd({
 
 export interface Props {
   event: EventModel;
+  organizationsToAdd: string[];
 }
 
-export function Add({ event }: Props) {
+export function Add({ event, organizationsToAdd }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
-
-  const organizationsToAdd = user && difference(user.organizations, event.allOrganizations || []);
-
-  if (!organizationsToAdd) {
-    return null;
-  }
 
   return (
     <div className="btn-group tag-btn organization-tag-btn align-top">
@@ -74,7 +65,7 @@ export function Add({ event }: Props) {
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
           {t("groups.organizationList.add.addOrganization")}
-          <button type="button" className="btn-close" />
+          <button type="button" className="btn-close" aria-label={t("_button.close")} />
         </li>
         <li>
           <hr className="dropdown-divider" />

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
+import { Meteor } from "meteor/meteor";
 
 import type { DirectMessage } from "/imports/api/emails/publications";
 import { cx } from "/imports/utils/cx";

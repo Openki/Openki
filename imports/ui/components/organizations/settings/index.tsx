@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -399,6 +399,7 @@ export function OrganizationSettings({ organization }: Props) {
             <i className="fa-solid fa-copy fa-fw" />
           </button>
         </p>
+        {/* i18next-instrument-ignore */}
         <ul className="list-unstyled">
           <li>
             Infoscreen-Link:{" "}

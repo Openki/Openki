@@ -1,5 +1,3 @@
-import React from "react";
-
 import { GroupModel } from "/imports/api/groups/groups";
 
 import { useRegionRoles } from "../../../../hooks/useRegionRoles";

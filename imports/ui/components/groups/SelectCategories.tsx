@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { uniq, difference } from "es-toolkit/compat";
 
@@ -6,6 +5,7 @@ import { Categories } from "/imports/api/categories/categories";
 
 import { CategoryLabel } from "./categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
+import { Fragment } from "react";
 
 export interface Props {
   onChange: (selectedCategories: string[]) => void;
@@ -60,7 +60,7 @@ export function SelectCategories(props: Props) {
       </div>
       {availableCategories().map((category) => {
         return (
-          <React.Fragment key={category}>
+          <Fragment key={category}>
             <div className="mt-2">
               <FormCheck
                 id={`groups-select-categories-${category}`}
@@ -86,7 +86,7 @@ export function SelectCategories(props: Props) {
                 />
               </div>
             ))}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </>

@@ -26,7 +26,7 @@ Xvfb "${DISPLAY}" -screen 0 1024x768x24 > /dev/null 2>&1 &
 # dpkg -l
 
 meteor npm ci
-meteor node -v && meteor npm version
+meteor --version && meteor node -v && meteor npm version
 
 # Ensure the DB is fully reset between test runs.
 # This makes test runs more reliable, which is what we want for the CI environment.

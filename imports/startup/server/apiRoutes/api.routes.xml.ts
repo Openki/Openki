@@ -1,7 +1,10 @@
+import { Meteor } from "meteor/meteor";
+import { WebApp } from "meteor/webapp";
 import { v5 as uuidv5, validate as isValidUUID } from "uuid";
 import { create } from "xmlbuilder2";
+import type { Request, Response } from "express";
+
 import { ApiEvent } from "/imports/Api";
-import { Router } from "meteor/iron:router";
 import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 import { textPlain } from "/imports/utils/html-tools";
@@ -40,16 +43,14 @@ function sortByTimeAndRoom(regionZone: Zone, results: ApiEvent[]) {
   );
 }
 
-async function xmlSendResponder(res: any, process: any) {
+async function xmlSendResponder(res: Response, process: () => Promise<string>) {
   try {
     const body = await process();
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/xml");
-    res.end(body);
+    res.status(200).type("application/xml").send(body);
   } catch (e) {
-    const body: any = {};
+    const body: { data?: Record<string, unknown>; status?: string; message?: string } = {};
     if (e instanceof FilteringReadError || e instanceof NoActionError) {
-      res.statusCode = 400;
+      res.status(400);
       body.status = "fail";
       body.data = {};
       if ((e as any).name) {
@@ -57,13 +58,19 @@ async function xmlSendResponder(res: any, process: any) {
       } else {
         body.data.error = e.message;
       }
+    } else if (e instanceof Meteor.Error) {
+      res.status(400);
+      body.status = e.error.toString();
+      if (e.reason) {
+        body.message = e.reason;
+      }
     } else {
-      console.log(e, e.stack);
-      res.statusCode = 500;
+      console.log(e, e instanceof Error && e.stack);
+      res.status(500);
       body.status = "error";
       body.message = "Server error";
     }
-    res.end(JSON.stringify(body, null, "\t"));
+    res.json(body);
   }
 }
 
@@ -85,12 +92,26 @@ function asUuid(value: string) {
   return uuidv5(value, OPENKI_UUID_NAMESPACE);
 }
 
-Router.route("api.0.xml", {
-  path: "/api/0/xml/schedule",
-  where: "server",
-  async action() {
-    await xmlSendResponder(this.response, async () => {
-      const region = await Regions.findOneAsync({ _id: this.params.query.region });
+const allowedMethods = new Set(["GET", "HEAD", "OPTIONS"]);
+
+WebApp.handlers.use(
+  "/api/0/xml/schedule",
+  async (
+    req: Request<
+      unknown,
+      unknown,
+      unknown,
+      { region: string; canceled: string; sort?: string; limit?: string; skip?: string }
+    >,
+    res,
+  ) => {
+    if (!allowedMethods.has(req.method.toUpperCase())) {
+      res.sendStatus(405);
+      return;
+    }
+
+    await xmlSendResponder(res, async () => {
+      const region = await Regions.findOneAsync({ _id: req.query.region });
 
       if (!region) {
         throw new Meteor.Error("region requried", "The region param must be given.");
@@ -98,8 +119,8 @@ Router.route("api.0.xml", {
       const regionZone = await LocalTime.zoneAsync(region._id);
 
       // Hide canceled events in schedule
-      this.params.query.canceled = this.params.query.canceled ?? "0";
-      const results = await orderedResults(this.params, "events");
+      req.query.canceled = req.query.canceled ?? "0";
+      const results = await orderedResults({ query: req.query }, "events");
 
       const resultsByTimeAndRoom = sortByTimeAndRoom(regionZone, results);
 
@@ -243,4 +264,4 @@ Router.route("api.0.xml", {
       return scheduleNode.end({ prettyPrint: true });
     });
   },
-});
+);

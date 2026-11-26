@@ -1,4 +1,4 @@
-import React, { type Ref, useEffect, useRef } from "react";
+import { type Ref, useEffect, useRef } from "react";
 
 function LegacyAutoGrowTextArea(
   props: Omit<

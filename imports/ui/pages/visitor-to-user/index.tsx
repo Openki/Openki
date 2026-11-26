@@ -1,5 +1,6 @@
+import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useSiteName } from "/imports/utils/getSiteName";
@@ -161,6 +162,5 @@ export function VisitorToUserPage({ token, email }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("VisitorToUserPage", () => VisitorToUserPage);

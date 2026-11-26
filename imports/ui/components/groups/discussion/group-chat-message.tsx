@@ -1,5 +1,5 @@
-import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
 
 import { getUserName } from "/imports/ui/lib/getUserName";
 import { GroupChatMessageEntity } from "/imports/api/group-chat-messages/group-chat-messages";

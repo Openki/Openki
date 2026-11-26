@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { numberOf } from "/imports/api/events/lib/numberOf";
 

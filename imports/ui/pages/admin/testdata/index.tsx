@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { cleanFixtures, createFixtures } from "/imports/api/fixtures/methods";
@@ -50,7 +49,5 @@ export function TestdataPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("AdminTestdataPage", () => TestdataPage);

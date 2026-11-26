@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Arrow, Direction, Unit, units } from "../Arrow";
 
@@ -13,7 +12,8 @@ export function Control({ unit: currentUnit, direction, onChangeDate, onChangeUn
   const { t } = useTranslation();
 
   function text(unit: string, length: string) {
-    return t(`calendar.${direction}.${unit}.${length}`);
+    // @ts-expect-error Disable type checking since we don't know the key at compile time
+    return t(`calendar.${direction}.${unit}.${length}`) as string;
   }
 
   return (

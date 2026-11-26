@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
 import { random } from "es-toolkit/compat";
-import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError } from "/imports/utils/validation-error";
 
 import { Log } from "/imports/api/log/log";
 import { Users } from "/imports/api/users/users";
@@ -411,12 +411,12 @@ export const updateLocale = ServerMethod(
   async (locale: string) => {
     check(locale, String);
 
-    const userId = Meteor.userId();
-    if (!userId) {
-      throw new Meteor.Error(401, "please log in");
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "updateLocale please log in");
     }
 
-    await Users.updateAsync(userId, {
+    await Users.updateAsync(user._id, {
       $set: { locale },
     });
   },

@@ -1,40 +1,42 @@
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { Meteor } from "meteor/meteor";
 import { WebApp } from "meteor/webapp";
-import type { ServerResponse } from "node:http";
 
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { serverError } from "/imports/api/log/methods";
 
-WebApp.handlers.use("/robots.txt", (_req, response) => {
-  // We need this because there is an error in the Types of meteor. This may be removed in future.
-  const res = response as unknown as ServerResponse;
-
+WebApp.handlers.use("/robots.txt", (_req, res) => {
   try {
-    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.type("text/plain");
 
-    res.write(`Sitemap: ${Meteor.absoluteUrl("sitemap.xml")}\n`);
+    let body = `Sitemap: ${Meteor.absoluteUrl("sitemap.xml")}\n`;
+
     if (PrivateSettings.robots === false) {
-      res.write("User-agent: *\n");
-      res.write("Disallow: /\n");
+      body += `
+User-agent: *
+Disallow: /
+`.trimStart();
     } else {
-      res.write("User-agent: *\n");
-      res.write("Disallow: /api/\n");
-      res.write("Disallow: /admin/\n");
-      res.write("Disallow: /kiosk/\n");
-      res.write("Disallow: /cal/\n");
-      res.write("Disallow: /tenant/\n");
-      res.write("Disallow: /region/\n");
-      res.write("Disallow: /*?categories=\n");
-      res.write("Disallow: /verify-email/\n");
-      res.write("Disallow: /reset-password/\n");
+      body += `
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /kiosk/
+Disallow: /cal/
+Disallow: /tenant/
+Disallow: /region/
+Disallow: /*?categories=
+Disallow: /verify-email/
+Disallow: /reset-password/
+`.trimStart();
       if (PrivateSettings.hideProfiles === true) {
-        res.write("Disallow: /user/\n");
+        body += "Disallow: /user/\n";
       } else {
-        res.write("Disallow: \n");
+        body += "Disallow: \n";
       }
     }
-    res.end();
+    res.status(200).send(body);
   } catch (e) {
-    res.writeHead(500).end();
+    res.sendStatus(500);
     serverError(e);
   }
 });

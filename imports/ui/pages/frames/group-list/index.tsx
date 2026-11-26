@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { take } from "es-toolkit/compat";
@@ -93,7 +93,5 @@ export function GroupListPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("GroupListPage", () => GroupListPage);

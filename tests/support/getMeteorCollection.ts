@@ -1,3 +1,5 @@
+import { Mongo } from "meteor/mongo";
+
 export function getMeteorCollection<T = Mongo.Collection<unknown>>(name: string, Meteor: unknown) {
   // @ts-expect-error We don't have a proper Meteor global type in this context
   // since the TS declaration merging only happens in the app code and not for tests.

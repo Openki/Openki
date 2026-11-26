@@ -155,6 +155,18 @@ $utilities: map.merge(
   width: 1em;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
+.h-\[150px\] {
+  height: 150px;
+}
+
+@include media-breakpoint-up(md) {
+  /* stylelint-disable-next-line selector-class-pattern */
+  .md\:h-\[300px\] {
+    height: 300px;
+  }
+}
+
 .shadow-md {
   box-shadow: 0.1rem 0.1rem 0.6rem rgb(0 0 0 / 25%);
 }
@@ -173,4 +185,4 @@ $utilities: map.merge(
 
 // Optional Bootstrap Utilities
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
-@import "{}/node_modules/bootstrap/scss/utilities/api";
+@import "/node_modules/bootstrap/scss/utilities/api";

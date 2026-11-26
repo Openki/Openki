@@ -34,3 +34,22 @@ tests/screenshots
 
 .env*
 .env.local
+
+# Rspack reserved output directories
+_build
+public/build-assets/
+public/build-chunks/
+private/build-assets/
+private/build-chunks/
+
+# Meteor Modern-Tools build context directories
+*/build-assets*
+*/build-chunks*
+.rsdoctor
+
+# Local certificates used to support HTTPS for localhost development
+*.cert
+*.pem
+
+# i18next generated types for resources
+types/resources.d.ts

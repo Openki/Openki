@@ -1,4 +1,5 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import { Meteor } from "meteor/meteor";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -157,12 +158,12 @@ export function Navbar() {
             data-bs-target="#bs-navbar-collapse"
             aria-controls="bs-navbar-collapse"
             aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label={t("_button.toggleNavigation")}
           >
             <i className="fa-solid fa-bars text-white" />
             <i className="fa-solid fa-x text-white" />
           </button>
-          <div ref={collapseRef} className="collapse navbar-collapse" id="bs-navbar-collapse">
+          <nav ref={collapseRef} className="collapse navbar-collapse" id="bs-navbar-collapse">
             <ul className="navbar-nav flex-row me-auto mb-lg-0">
               {PublicSettings.nav.search && (
                 <li className="nav-item text-center col col-lg-auto">
@@ -236,7 +237,7 @@ export function Navbar() {
                 </div>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </nav>
       <div
@@ -248,7 +249,5 @@ export function Navbar() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("Navbar", () => Navbar);

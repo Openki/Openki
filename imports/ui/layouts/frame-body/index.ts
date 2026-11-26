@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Template as TemplateAny, TemplateStaticTyped } from "/imports/utils/templating";
 import moment from "moment";
 
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -8,8 +8,6 @@ import { observeSize } from "../../lib/observeHeight";
 
 import "/imports/ui/layouts/root.html";
 import "/imports/ui/components/alerts";
-
-import "./template.html";
 
 const Template = TemplateAny as TemplateStaticTyped<"frameLayout">;
 

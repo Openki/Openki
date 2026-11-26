@@ -1,5 +1,5 @@
-import { check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
 
 import { getRegionStats, Stats } from "/imports/api/stats/stats";
 import { ServerMethod } from "/imports/utils/ServerMethod";

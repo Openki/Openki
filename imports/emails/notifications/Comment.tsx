@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { useTranslation } from "react-i18next";

@@ -1,4 +1,5 @@
 import { isEqual } from "es-toolkit/compat";
+import { Meteor } from "meteor/meteor";
 import { useEffect, useState } from "react";
 
 /**

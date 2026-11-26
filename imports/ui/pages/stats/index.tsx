@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "/imports/ui/hooks/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -174,7 +174,7 @@ export function StatsPage() {
   return (
     <div className="container">
       {!isAdmin() ? (
-        <h1>{t("region.stats.plzLogin", "PLZ login as admin!")}</h1>
+        <h1>{t("admin.pleaseLogin", "Please login as admin!")}</h1>
       ) : !isLoadingCurrent() && !isLoadingAll() && stats ? (
         <>
           <div>
@@ -266,7 +266,5 @@ export function StatsPage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("StatsPage", () => StatsPage);

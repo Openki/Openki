@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -20,7 +19,5 @@ export function Propose(props: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("FrameProposePage", () => Propose);

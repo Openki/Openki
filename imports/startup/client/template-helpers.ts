@@ -1,5 +1,3 @@
-import { Template } from "meteor/templating";
-
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { buildCssVariableColor } from "/imports/utils/getColor";
 

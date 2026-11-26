@@ -1,4 +1,4 @@
-import React, { FocusEventHandler, useEffect, useState } from "react";
+import { FocusEventHandler, useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,7 @@ import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../../utils/reactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
 import { VenueEntity } from "/imports/api/venues/venues";
 import { cx } from "/imports/utils/cx";
@@ -65,13 +65,20 @@ function CustomMenu({
   const { t } = useTranslation();
   const user = useUser();
   const [isLoading, region] = Regions.useDetails(regionId);
+  const {
+    // Remove props that should not be forwarded to the DOM element
+    renderMenuItemChildren: _renderMenuItemChildren,
+    paginationText: _paginationText,
+    newSelectionPrefix: _newSelectionPrefix,
+    ...rest
+  } = menuProps;
 
   const userVenues = filterUserVenues(user, results);
 
   const venues = differenceBy(results, userVenues, (v) => (isEventVenueRef(v) ? v._id : undefined));
 
   return (
-    <Menu {...menuProps} id="event-venue">
+    <Menu {...rest} id="event-venue">
       {venues.length === 0 && (
         <>
           {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
@@ -85,13 +92,13 @@ function CustomMenu({
         <>
           {userVenues.map((venue, index) => (
             <MenuItem
-              key={index}
+              key={venue._id}
               option={venue}
               position={index}
               className="bg-venue text-truncate"
             >
               <i className="fa-solid fa-house-user fa-fw" />{" "}
-              {ReactJoin([
+              {reactJoin([
                 !!venue.name && (
                   <span className="fw-bold" key={venue.name}>
                     {venue.name}
@@ -122,7 +129,7 @@ function CustomMenu({
                   <VenueIcon id={venue._id} restrictedUse={venue.restrictedUse} />{" "}
                 </>
               )}
-              {ReactJoin([
+              {reactJoin([
                 !!venue.name && (
                   <>
                     <span className="fw-bold">{venue.name}</span>

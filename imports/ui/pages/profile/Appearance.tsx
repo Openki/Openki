@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
 import * as Alert from "/imports/api/alerts/alert";

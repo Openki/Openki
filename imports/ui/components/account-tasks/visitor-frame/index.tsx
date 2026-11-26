@@ -1,6 +1,8 @@
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import { Random } from "meteor/random";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";

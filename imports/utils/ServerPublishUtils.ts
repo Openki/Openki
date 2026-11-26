@@ -16,7 +16,7 @@ export function publish<
   if (Meteor.isServer) {
     // on the server register the publisher / publish the record set
     // wrap the call to handle options
-    Meteor.publish(name, async function (...args) {
+    Meteor.publish(name, async function (...args: A) {
       // everyting is okay, do the work
       const result = await publisher.call(this, ...args);
       if (result === undefined) {

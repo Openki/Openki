@@ -1,6 +1,9 @@
-import React, { ReactNode } from "react";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { ReactNode } from "react";
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import { ICalCalendarMethod } from "ical-generator";
+
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export interface Props {
   subject: string | undefined;
@@ -284,7 +287,7 @@ export function Root({
                 <tr>
                   <td className="logo-wrapper">
                     <a href={url}>
-                      <img className="logo" src={logo} />
+                      <img className="logo" src={logo} alt="" />
                     </a>
                   </td>
                   <td className="site-name-wrapper">

@@ -1,5 +1,4 @@
 import { MomentInput } from "moment";
-import React from "react";
 
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 

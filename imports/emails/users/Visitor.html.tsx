@@ -1,4 +1,3 @@
-import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { useTranslation } from "react-i18next";

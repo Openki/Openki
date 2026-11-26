@@ -25,8 +25,8 @@
     ".meteor/",
     "node_modules/",
     "packages/",
-    "i18next-parser.config.js",
-    "postcss.config.js",
+    // i18next generated types for resources
+    "types/resources.d.ts",
   ],
   "rules": {
     "no-shadow": "warn",
@@ -94,6 +94,7 @@
     "no-unused-expressions": "error",
     "no-useless-constructor": "error",
     "no-empty-function": "error",
+    "no-async-endpoint-handlers": "off",
     "react/display-name": "error",
     "react/jsx-key": "error",
     "react/jsx-no-comment-textnodes": "error",
@@ -109,7 +110,7 @@
     "react/no-string-refs": "error",
     "react/no-unescaped-entities": "error",
     "react/no-unknown-property": "error",
-    "react/react-in-jsx-scope": "error",
+    "react/react-in-jsx-scope": "off",
     "react/require-render-return": "error",
     "react/rules-of-hooks": "error",
     "react/exhaustive-deps": "warn",
@@ -137,7 +138,7 @@
     "typescript/no-explicit-any": "warn",
     "typescript/no-extra-non-null-assertion": "error",
     "typescript/no-misused-new": "error",
-    "typescript/no-namespace": "error",
+    "typescript/no-namespace": "warn",
     "typescript/no-non-null-asserted-optional-chain": "error",
     "typescript/no-require-imports": "error",
     "typescript/no-this-alias": "error",
@@ -209,6 +210,11 @@
         "jest/no-focused-tests": "error",
         "jest/expect-expect": "off",
         "no-unused-expressions": "off",
+        // This rule gives a lot of false positives because the Cypress chained method `.then()`
+        // collides with `Promise.then()`.
+        "jest/valid-expect-in-promise": "off",
+        // We don't use jest so some lint rules are not relevant.
+        "jest/valid-expect": "off",
       },
     },
     {

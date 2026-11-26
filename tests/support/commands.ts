@@ -1,3 +1,6 @@
+import { Meteor } from "meteor/meteor";
+import { DDP } from "meteor/ddp-client";
+
 // Custom Cypress Commands for Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
 
 // Add types for our custom Cypress commands
@@ -43,6 +46,11 @@ declare global {
       ): Chainable<void>;
       mount(component: string, props?: Record<string, any>): Chainable<void>;
     }
+  }
+
+  interface Window {
+    Meteor: typeof Meteor;
+    DDP: typeof DDP;
   }
 }
 
@@ -262,5 +270,5 @@ Cypress.Commands.add("mount", (component: string, props: Record<string, any> = {
 });
 
 // Mark this as an ES module
-// oxlint-disable-next-line unicorn/require-module-specifiers
+// oxlint-disable-next-line unicorn/require-module-specifiers typescript/no-useless-empty-export
 export {};

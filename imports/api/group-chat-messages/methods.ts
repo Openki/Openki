@@ -73,6 +73,6 @@ export const sendGroupChatMessage = ServerMethod(
       updatedAt: now,
     });
 
-    await Notification.GroupChatMessage.record(messageId);
+    await Notification.GroupChatMessage.record(messageId as string);
   },
 );

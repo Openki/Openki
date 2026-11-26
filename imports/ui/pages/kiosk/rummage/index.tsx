@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactSelect, { components, GroupBase, InputProps, StylesConfig } from "react-select";
 import { uniq } from "es-toolkit";
@@ -34,7 +34,7 @@ const NoneKeyboardInput = (
   props: React.JSX.IntrinsicAttributes & InputProps<unknown, boolean, GroupBase<unknown>>,
 ) => <components.Input {...props} readOnly />;
 
-const DododoColor = "#2E0D74";
+const DododoVioletColor = "#2E0D74";
 
 export function Background({ organizationId }: { organizationId?: string | undefined }) {
   const { t } = useTranslation();
@@ -198,7 +198,7 @@ export function KioskRummagePage() {
   const customStyles: StylesConfig<unknown, boolean, GroupBase<unknown>> | undefined = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: DododoColor,
+      backgroundColor: DododoVioletColor,
       border: "2px solid white",
       borderRadius: "50px",
       minHeight: "60px",
@@ -215,8 +215,8 @@ export function KioskRummagePage() {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? DododoColor : "white",
-      color: state.isFocused ? "white" : DododoColor,
+      backgroundColor: state.isFocused ? DododoVioletColor : "white",
+      color: state.isFocused ? "white" : DododoVioletColor,
       textAlign: "center",
       fontSize: "1.25rem",
     }),
@@ -260,14 +260,14 @@ export function KioskRummagePage() {
           <div
             className="position-fixed top-0 end-0 bottom-0 col-3 text-white d-flex"
             style={{
-              backgroundColor: DododoColor,
+              backgroundColor: DododoVioletColor,
               /* special case for draggable: 86400000 is the top z-index over all cards  */
               zIndex: 86400001,
             }}
           >
             <div
               className="d-flex text-white flex-column flex-grow-1"
-              style={{ backgroundColor: DododoColor }}
+              style={{ backgroundColor: DododoVioletColor }}
             >
               <div
                 className="d-flex justify-content-end align-items-center pt-3 gap-4 px-2"
@@ -290,12 +290,23 @@ export function KioskRummagePage() {
                 <div className={cx("p-4", !userId && "mt-n5")}>
                   <h5>
                     {/* a decorative logo */}
-                    <img
-                      src={PublicSettings.rummageLogoSmall.src}
-                      alt=""
-                      style={{ maxWidth: "200px" }}
-                    />
+                    {PublicSettings.rummageLogoLink ? (
+                      <a href={PublicSettings.rummageLogoLink}>
+                        <img
+                          src={PublicSettings.rummageLogoSmall.src}
+                          alt=""
+                          style={{ maxWidth: "200px" }}
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        src={PublicSettings.rummageLogoSmall.src}
+                        alt=""
+                        style={{ maxWidth: "200px" }}
+                      />
+                    )}
                     <br />
+                    {/* i18next-instrument-ignore */}
                     by Openki
                   </h5>
                 </div>
@@ -376,7 +387,7 @@ export function KioskRummagePage() {
               "position-absolute top-0 start-0 end-0 bottom-0 text-white fs-1 overflow-hidden",
               slideOut && "slide-out",
             )}
-            style={{ backgroundColor: DododoColor }}
+            style={{ backgroundColor: DododoVioletColor }}
             onClick={handleSlideOut}
           >
             <div className="position-absolute top-50 start-50 translate-middle fs-1 fw-bold text-center">
@@ -394,7 +405,5 @@ export function KioskRummagePage() {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("KioskRummagePage", () => KioskRummagePage);

@@ -1,4 +1,3 @@
-import React from "react";
 import { Mongo } from "meteor/mongo";
 import moment from "moment";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
@@ -179,7 +178,5 @@ export function KioskEventsPage({
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("KioskEventsPage", () => KioskEventsPage);

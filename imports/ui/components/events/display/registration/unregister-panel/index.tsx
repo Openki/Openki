@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
 import { EventModel } from "/imports/api/events/events";
@@ -18,7 +18,7 @@ function ButtonUnregister(props: { onClick: () => void | Promise<void> }) {
       size="large"
       onClick={props.onClick}
       needsLogin
-      busyText={t("_button.unregistering", "Unregistering…")}
+      busyText={t("_button.unregistering")}
     >
       {t("event.details.unregister-withdraw", "Withdraw")}
     </Button>

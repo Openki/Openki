@@ -134,15 +134,18 @@ export const save = ServerMethod(
 
       set.region = region._id;
 
-      venueId = await Venues.insertAsync({
+      venueId = (await Venues.insertAsync({
         ...set,
         editor: user._id,
         createdby: user._id,
         created: new Date(),
-      });
+      })) as string;
 
       userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
     } else {
+      // This error happens because the `meteor/mongo` types only allow `string` and not `Mongo.ObjectId`
+      // for the `$set` operator. This is supported by Mongo, but not by Meteor's wrapped type.
+      // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
       await Venues.updateAsync({ _id: venueId }, { $set: set });
 
       await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });

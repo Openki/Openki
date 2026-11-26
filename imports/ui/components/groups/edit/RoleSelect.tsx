@@ -1,6 +1,12 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { components, createFilter, MultiValueRemoveProps, InputProps } from "react-select";
+import {
+  components,
+  createFilter,
+  InputProps,
+  MenuProps,
+  MultiValueRemoveProps,
+} from "react-select";
 import { uniq } from "es-toolkit/compat";
 
 import { GroupRole } from "/imports/api/groups/groups";
@@ -49,7 +55,7 @@ function buildId(role: GroupRole) {
   }
 }
 
-const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
+function CustomMultiValueRemove(props: MultiValueRemoveProps<RoleOption>) {
   const { t } = useTranslation();
   const { role } = props.data;
 
@@ -65,16 +71,26 @@ const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
       }}
     />
   );
-};
+}
 
-const CustomInput = (props: InputProps<RoleOption, true>) => {
+function CustomInput(props: InputProps<RoleOption, true>) {
   return (
     <components.Input
       {...props}
       aria-describedby={`group-edit-role-help ${props["aria-describedby"]}`}
     />
   );
-};
+}
+
+const buildMenuWithHint = (show: boolean, hint: string) =>
+  (function CustomMenu(props: MenuProps<RoleOption, true>) {
+    return (
+      <components.Menu {...props}>
+        {show && <div className="form-text px-3 py-2">{hint}</div>}
+        {props.children}
+      </components.Menu>
+    );
+  });
 
 export function RoleSelect({
   regionId,
@@ -85,6 +101,7 @@ export function RoleSelect({
 }: Props) {
   const { t } = useTranslation();
   const [isLoadingRegionRoles, regionRoles, region] = useRegionRoles(regionId);
+  const [inputValue, setInputValue] = useState("");
 
   const { roleShort, roleDescription } = useRoleDisplay(regionRoles);
 
@@ -178,6 +195,25 @@ export function RoleSelect({
     value: selectValue,
   } as const;
 
+  // Mirrors the filtering react-select applies to the rendered menu, so the hint
+  // can be hidden exactly when no option is left and noOptionsMessage is shown.
+  const roleFilter = createFilter<RoleOption>({
+    stringify: (option) =>
+      `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
+  });
+
+  const hasVisibleOptions = options.some((roleOption) =>
+    roleFilter(
+      { data: roleOption, value: roleOption.value, label: roleOption.ariaLabel },
+      inputValue,
+    ),
+  );
+
+  const hint = t(
+    "group.edit.needs.role.hint",
+    "Missing a role? Propose a new one for others to take on.",
+  );
+
   return (
     <div className="col-md">
       <label className="form-label" htmlFor="group-edit-role-select">
@@ -186,18 +222,21 @@ export function RoleSelect({
       </label>
       {region?.allowUserCustomRoleCreation ? (
         <ReactSelectCreate
+          createOptionPosition="first"
           {...commonSelectProps}
-          placeholder={t("group.edit.needs.role.placeholder", "Select or type")}
+          components={{
+            ...commonSelectProps.components,
+            Menu: buildMenuWithHint(hasVisibleOptions, hint),
+          }}
+          placeholder={t("group.edit.needs.role.placeholder", "Create roles or select")}
           formatCreateLabel={(inputValue) =>
-            t("group.edit.needs.role.create", 'Add "{ROLE}"', {
+            t("group.edit.needs.role.create", 'Create role "{ROLE}"', {
               ROLE: inputValue,
             })
           }
-          noOptionsMessage={() => t("group.edit.needs.role.noOptions", "Type in any role...")}
-          filterOption={createFilter({
-            stringify: (option) =>
-              `${roleDescription(option.data.role)} ${roleShort(option.data.role)} ${option.value}`,
-          })}
+          noOptionsMessage={() => hint}
+          onInputChange={(newValue) => setInputValue(newValue)}
+          filterOption={roleFilter}
           onCreateOption={(newValue) =>
             onChange(uniqGroupRole([...value, { id: "", label: newValue, type: "custom" }]))
           }
@@ -214,7 +253,7 @@ export function RoleSelect({
       <div id="group-edit-role-help" className="form-text">
         {t(
           "group.edit.needs.role.help",
-          "Choose roles to share responsibilities among group members.",
+          "Define roles to share responsibilities among group members.",
         )}
       </div>
     </div>

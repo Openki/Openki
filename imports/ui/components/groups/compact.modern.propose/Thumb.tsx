@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/hooks/useViewportSize";
@@ -12,7 +12,7 @@ export function Thumb() {
 
   return (
     <div
-      className="card border-2 border-dashed h-100"
+      className="card h-100"
       ref={elementRef}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >

@@ -31,9 +31,10 @@ export function ServerMethod<T extends any[], R>(
   } = { simulation: true },
 ) {
   // register
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   Meteor.methods({
     // wrap the call to handle options
-    [name](...args) {
+    [name](...args: any[]) {
       // this runs on the server (and is simulated on the client)
 
       if (Meteor.isDevelopment && Meteor.isClient) {
@@ -49,6 +50,7 @@ export function ServerMethod<T extends any[], R>(
 
       try {
         // everything is okay, do the work
+        // @ts-expect-error Since the runtime behavior is correct, let's fix this type error another time.
         return run.call(this, ...args);
       } catch (error) {
         if (Meteor.isServer) {

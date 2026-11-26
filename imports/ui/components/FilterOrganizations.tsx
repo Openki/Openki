@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ReactSelect } from "/imports/ui/components/react-select";

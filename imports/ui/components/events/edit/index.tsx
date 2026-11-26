@@ -6,8 +6,9 @@
 
 import { isEmpty } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
+import { Meteor } from "meteor/meteor";
 import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/hooks/useValidation";
@@ -255,22 +256,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       startInPast: {
         field: "start",
         isValid: () => {
-          if (isNew) {
-            const start = LocalTime.fromString(changes.startLocal);
-            if (!start.isValid()) {
-              // checked with a other validation
-              return true;
-            }
-            return start.isAfter(LocalTime.now());
-          } else {
+          const start = LocalTime.fromString(changes.startLocal);
+          if (!start.isValid()) {
+            // checked with a other validation
             return true;
           }
+          return start.isAfter(LocalTime.now());
         },
-        text: () =>
-          t(
-            "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?",
-          ),
+        text: () => t("event.edit.startInPast", "The event starts in the past."),
       },
       noDescription: {
         field: "description",
@@ -535,7 +528,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       <div className="edit-page">
         <h3>
           {isNew
-            ? t("group.event.edit.add", "Create an event")
+            ? t("group.event.edit.add", "Create event")
             : t("group.event.edit.edit", "Edit event")}
         </h3>
         {isNew && !event.groupId && (

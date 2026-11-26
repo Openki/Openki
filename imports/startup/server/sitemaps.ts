@@ -2,7 +2,7 @@ import { WebApp } from "meteor/webapp";
 import { Router } from "meteor/iron:router";
 import { SitemapStream } from "sitemap";
 import { createGzip } from "node:zlib";
-import type { ServerResponse } from "node:http";
+import type { Writable } from "node:stream";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";
 import { Events } from "/imports/api/events/events";
@@ -101,12 +101,9 @@ function appendLanguage(urlStr: string, languageCode: string) {
   return url.toString();
 }
 
-WebApp.handlers.use("/sitemap.xml", async (_req, response) => {
-  // We need this because there is an error in the Types of meteor. This may be removed in future.
-  const res = response as unknown as ServerResponse;
-
-  res.setHeader("Content-Type", "application/xml");
-  res.setHeader("Content-Encoding", "gzip");
+WebApp.handlers.use("/sitemap.xml", async (_req, res) => {
+  res.type("application/xml");
+  res.header("Content-Encoding", "gzip");
 
   const languages = Object.entries(LanguagesRaw)
     .filter((l) => l[1].visible)
@@ -128,12 +125,13 @@ WebApp.handlers.use("/sitemap.xml", async (_req, response) => {
 
     // make sure to attach a write stream such as streamToPromise before ending
     smStream.end();
+
     // stream write the response
-    pipeline.pipe(res).on("error", (e) => {
+    pipeline.pipe(res as unknown as Writable).on("error", (e) => {
       throw e;
     });
   } catch (e) {
-    res.writeHead(500).end();
+    res.sendStatus(500);
     serverError(e);
   }
 });

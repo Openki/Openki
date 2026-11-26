@@ -1,4 +1,4 @@
-import React, { type FocusEventHandler } from "react";
+import { type FocusEventHandler } from "react";
 import { filter } from "es-toolkit/compat";
 
 import { EventEntity, EventVenue } from "/imports/api/events/events";

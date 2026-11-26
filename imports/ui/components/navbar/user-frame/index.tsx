@@ -1,4 +1,3 @@
-import React from "react";
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";

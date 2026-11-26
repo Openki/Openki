@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
+import { OAuth } from "meteor/oauth";
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { Random } from "meteor/random";
-// @ts-expect-error Some error in the types of the cookies meteor package.
 import { Cookies } from "meteor/ostrio:cookies";
 import { Accounts } from "meteor/accounts-base";
 
@@ -51,6 +51,7 @@ function requestCredential(
     return;
   }
 
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works though.
   const loginStyle = OAuth._loginStyle("c3", config, options);
 
   // set the verifier for use on the server (Proof Key for Code Exchange, https://oauth.net/2/pkce/)
@@ -72,6 +73,7 @@ function requestCredential(
     loginService: "c3",
     loginStyle,
     loginUrl,
+    // @ts-expect-error This type error was silently dropped before. Worth looking into, but for now let's preserve the same runtime behavior.
     credentialRequestCompleteCallback,
     credentialToken: verifier,
   });
@@ -91,4 +93,30 @@ function loginWithC3(options: any, callback: any) {
   requestCredential(options, credentialRequestCompleteCallback);
 }
 Accounts.registerClientLoginFunction("c3", loginWithC3);
+/** This function is called dynamically via `Meteor[`loginWith${service.serviceName}`]` */
 Meteor.loginWithC3 = (...args: any) => Accounts.applyLoginFunction("c3", args);
+
+// oxlint-disable no-shadow no-namespace
+
+declare module "meteor/accounts-base" {
+  namespace Accounts {
+    function registerClientLoginFunction(name: string, handler: any): void;
+    function applyLoginFunction(name: string, args: any): void;
+    function addAutopublishFields(opts: any): void;
+  }
+}
+
+declare module "meteor/meteor" {
+  namespace Meteor {
+    function loginWithC3(
+      options?:
+        | (Meteor.LoginWithExternalServiceOptions & {
+            loginUrlParameters?: {
+              include_granted_scopes: boolean;
+            };
+          })
+        | undefined,
+      callback?: (error?: global_Error | Meteor.Error | Meteor.TypedError) => void,
+    ): void;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { components, OptionProps } from "react-select";
 import { useTranslation } from "react-i18next";
 
@@ -51,11 +51,13 @@ export function FilterCategories({ categories, onChange }: Props) {
       allCategories.flatMap((category) => [
         {
           value: category,
-          label: t(`category.${category}`),
+          // @ts-expect-error Disable type checking since we don't know the key at compile time
+          label: t(`category.${category}`) as string,
         },
         ...Categories[category].map((subcategory) => ({
           value: subcategory,
-          label: t(`category.${subcategory}`),
+          // @ts-expect-error Disable type checking since we don't know the key at compile time
+          label: t(`category.${subcategory}`) as string,
           isSubcategory: true,
         })),
       ]),

@@ -1,4 +1,4 @@
-import React, { SubmitEvent, useState } from "react";
+import { SubmitEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -154,7 +154,5 @@ export function ResetPasswordPage({ token, email }: Props) {
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("ResetPasswordPage", () => ResetPasswordPage);

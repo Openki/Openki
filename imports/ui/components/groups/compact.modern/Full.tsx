@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -7,7 +6,7 @@ import { GroupModel } from "/imports/api/groups/groups";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 import { cx } from "/imports/utils/cx";
 
@@ -42,7 +41,7 @@ export function Full({ group }: { group: GroupModel }) {
   const locationPreview = group.nextEvent?.venue?.name || group.nextEvent?.venue?.address;
 
   return (
-    <div className="card">
+    <div className="card border-none">
       {group?.publicUrlForDetailsImage() ? (
         <div
           className="position-relative card-header bg-img-cover border-bottom"
@@ -106,7 +105,7 @@ export function Full({ group }: { group: GroupModel }) {
         {!isRegionLoading() && !!organizedByOrganizations?.length && (
           <p className="card-text">
             <strong>{t("groups.details.organizedBy", "Organized by:")}</strong>{" "}
-            {ReactJoin(
+            {reactJoin(
               organizedByOrganizations.map((organization) => (
                 <OrganizationName key={organization} id={organization} />
               )),

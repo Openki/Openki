@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import "/imports/ui/stylesheets/variables/index";
 
 .regions-splash .modal-header {
   background-color: $primary;
@@ -43,8 +43,8 @@
   vertical-align: top;
 }
 
-/* 
-  backwards compatibility: a Blaze component to a React component for. 
+/*
+  backwards compatibility: a Blaze component to a React component for.
   Todo: Can be removed after complete migration.
 */
 .regions-splash-selection > div > * {

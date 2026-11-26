@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect, ReactNode } from "react";
+import { useRef, useState, useLayoutEffect, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { observeSize } from "../../../lib/observeHeight";

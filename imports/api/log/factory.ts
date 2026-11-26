@@ -128,7 +128,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
       console.log(entry);
     }
 
-    const id = await this.insertAsync(entry);
+    const id = (await this.insertAsync(entry)) as string;
 
     return new ResultLogger(id, this);
   }

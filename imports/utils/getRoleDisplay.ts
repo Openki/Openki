@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { i18n, type TOptions } from "i18next";
+import type i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { upperFirst } from "es-toolkit/compat";
 
@@ -13,7 +13,7 @@ export type Role =
   | { id: RoleEntity["id"]; type: typeof RoleType.Predefined }
   | { label: string; type: typeof RoleType.Custom };
 
-export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
+export function getRoleDisplay(i18n: typeof i18next, roles: RoleEntity[]) {
   function getTranslation(
     role: Role,
     key: keyof NonNullable<RoleEntity["translations"]>,
@@ -55,8 +55,10 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
           const roleKey = `${role.id}.${key}`;
           if (i18n.exists(`roles:${roleKey}`)) {
             return variables
-              ? i18n.t(`roles:${roleKey}`, variables as TOptions)
-              : i18n.t(`roles:${roleKey}`);
+              ? // @ts-expect-error We could add better types for variables
+                i18n.t(`roles:${roleKey}`, variables as TOptions)
+              : // @ts-expect-error This roleKey could be narrowed to only include the keys that should not have variables.
+                i18n.t(`roles:${roleKey}`);
           }
 
           // (3) No translation found, just fallback to a generic string. Using short to build the

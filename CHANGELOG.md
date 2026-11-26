@@ -1,3 +1,17 @@
+# v0.15.0 - 2026-11-26
+
+## Highlights
+
+- **Performance**: Page data now loads faster, making the app feel snappier to use than before.
+- **Technical modernization**: Major technical upgrade to enable upcoming improvements.
+- **UI improvements**: Changes to make the detail view of a group clearer.
+
+## Fixes
+
+- **Group propose**: Fixed a bug causing an empty page.
+- **Rummage page**: Fixed a bug causing an empty group propose dialog.
+- **Bug fixes**: Several other bug fixes and improvements.
+
 # v0.14.6 - 2026-11-23
 
 ## Highlights

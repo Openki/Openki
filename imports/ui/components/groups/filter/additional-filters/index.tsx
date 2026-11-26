@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCurrentRegionId } from "/imports/ui/hooks/useCurrentRegion";
@@ -78,8 +77,14 @@ export function AdditionalFilters(props: Props) {
         role-based filtering when "All regions is selected".
       */}
       {!!currentRegionId && (
-        <div aria-label="filter-group-roles" className="col-md-3 filter-component" role="group">
-          <h4 className="filter-component-header">{t("find.filter.groupRoles", "Roles")}</h4>
+        <div
+          aria-labelledby="find-filter-groups"
+          className="col-md-3 filter-component"
+          role="group"
+        >
+          <h4 className="filter-component-header" id="find-filter-groups">
+            {t("find.filter.groupRoles", "Roles")}
+          </h4>
           <RolesButton
             currentRegionId={currentRegionId}
             needsRole={props.needsRole}

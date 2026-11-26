@@ -1,0 +1,71 @@
+// Command to re-generate all html imports:
+//
+// ```bash
+// find imports/ -name '*.html' | sed 's|^|import "|; s|$|";|' >> client/templates.imports.ts
+// ```
+//
+// NOTE: This should be removed when Blaze and iron:router have been removed.
+
+import "/imports/ui/components/account-tasks/template.html";
+import "/imports/ui/components/alerts/template.html";
+import "/imports/ui/components/component-test/template.html";
+import "/imports/ui/components/email-validation/template.html";
+import "/imports/ui/components/footer/template.html";
+import "/imports/ui/components/introduction/template.html";
+import "/imports/ui/components/invitations/template.html";
+import "/imports/ui/components/kiosk-link/template.html";
+import "/imports/ui/components/navbar/template.html";
+import "/imports/ui/components/regions/splash/template.html";
+import "/imports/ui/components/featured-organization/template.html";
+import "/imports/ui/components/reset-password-email-sent/template.html";
+import "/imports/ui/layouts/app-body/template.html";
+import "/imports/ui/layouts/component-test-body/template.html";
+import "/imports/ui/layouts/frame-body/template.html";
+import "/imports/ui/layouts/kiosk-body/template.html";
+import "/imports/ui/layouts/root.html";
+import "/imports/ui/pages/admin/panel/template.html";
+import "/imports/ui/pages/admin/tenants/template.html";
+import "/imports/ui/pages/admin/testdata/template.html";
+import "/imports/ui/pages/admin/users/template.html";
+import "/imports/ui/pages/admin/feature-organization/template.html";
+import "/imports/ui/pages/auto-login-visitor/template.html";
+import "/imports/ui/pages/calendar/day/template.html";
+import "/imports/ui/pages/calendar/template.html";
+import "/imports/ui/pages/dashboard/template.html";
+import "/imports/ui/pages/event-details/template.html";
+import "/imports/ui/pages/event-not-found/template.html";
+import "/imports/ui/pages/events-map/template.html";
+import "/imports/ui/pages/find/template.html";
+import "/imports/ui/pages/frames/calendar/event/template.html";
+import "/imports/ui/pages/frames/calendar/template.html";
+import "/imports/ui/pages/frames/events-map/template.html";
+import "/imports/ui/pages/frames/events/template.html";
+import "/imports/ui/pages/frames/program/template.html";
+import "/imports/ui/pages/frames/propose/template.html";
+import "/imports/ui/pages/frames/schedule/template.html";
+import "/imports/ui/pages/frames/week/template.html";
+import "/imports/ui/pages/frames/group-list/template.html";
+import "/imports/ui/pages/group-details/template.html";
+import "/imports/ui/pages/info/template.html";
+import "/imports/ui/pages/invitation/template.html";
+import "/imports/ui/pages/join/template.html";
+import "/imports/ui/pages/kiosk/events/template.html";
+import "/imports/ui/pages/kiosk/timetable/template.html";
+import "/imports/ui/pages/kiosk/dashboard/template.html";
+import "/imports/ui/pages/kiosk/rummage/template.html";
+import "/imports/ui/pages/loading/template.html";
+import "/imports/ui/pages/log/template.html";
+import "/imports/ui/pages/not-found/template.html";
+import "/imports/ui/pages/profile/template.html";
+import "/imports/ui/pages/region-details/template.html";
+import "/imports/ui/pages/reset-password/template.html";
+import "/imports/ui/pages/stats/template.html";
+import "/imports/ui/pages/tenant-create/template.html";
+import "/imports/ui/pages/tenant-details/template.html";
+import "/imports/ui/pages/userprofile/template.html";
+import "/imports/ui/pages/venue-details/template.html";
+import "/imports/ui/pages/venues-map/template.html";
+import "/imports/ui/pages/visitor-to-user/template.html";
+import "/imports/ui/pages/explore/organizations/template.html";
+import "/imports/ui/pages/group-create/template.html";
+import "/imports/ui/pages/organization-details/template.html";

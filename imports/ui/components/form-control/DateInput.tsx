@@ -1,5 +1,7 @@
 import moment from "moment";
-import React, { FocusEventHandler, useEffect, useRef } from "react";
+import { FocusEventHandler, useEffect, useRef } from "react";
+import $ from "jquery";
+
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
@@ -70,7 +72,7 @@ export function DateInput(props: {
       id={id}
       type="text"
       className={cx("form-control", className)}
-      value={toDisplay(value)}
+      defaultValue={toDisplay(value)}
       required={required}
       disabled={disabled}
       onFocus={onFocus}

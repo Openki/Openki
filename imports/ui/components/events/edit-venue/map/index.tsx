@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Marker } from "react-leaflet";
 
 import { Geodata } from "/imports/api/Geodata";

@@ -1,5 +1,5 @@
-import { ValidationError, type ValidationErrorDetail } from "meteor/mdg:validation-error";
-import React, { useState } from "react";
+import { ValidationError, type ValidationErrorDetail } from "/imports/utils/validation-error";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Buttons";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
@@ -120,7 +120,7 @@ export function EmailSection() {
                 submit
                 className="btn-cancel"
                 isBusy={isBusy}
-                busyText={t("_button.saving", "Saving…")}
+                busyText={t("_button.saving")}
               >
                 {t("_button.save")}
               </Button>

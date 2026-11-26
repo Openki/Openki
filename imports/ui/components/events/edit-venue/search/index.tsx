@@ -1,4 +1,4 @@
-import React, { type FocusEventHandler } from "react";
+import { type FocusEventHandler } from "react";
 
 import { EventEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";

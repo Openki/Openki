@@ -1,8 +1,5 @@
-import React from "react";
-import { difference } from "es-toolkit/compat";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/ui/hooks/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
@@ -50,17 +47,11 @@ function OrganizationToAdd({
 
 export interface Props {
   group: GroupModel;
+  organizationsToAdd: string[];
 }
 
-export function Add({ group }: Props) {
+export function Add({ group, organizationsToAdd }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
-
-  const organizationsToAdd = user && difference(user.organizations, group.organizations);
-
-  if (!organizationsToAdd) {
-    return null;
-  }
 
   return (
     <div className="btn-group tag-btn organization-tag-btn align-top">
@@ -77,7 +68,7 @@ export function Add({ group }: Props) {
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
           {t("groups.organizationList.add.addOrganization", "Add organization")}
-          <button type="button" className="btn-close"></button>
+          <button type="button" className="btn-close" aria-label={t("_button.close")} />
         </li>
         <li>
           <hr className="dropdown-divider" />

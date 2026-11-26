@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { VenueModel } from "/imports/api/venues/venues";
@@ -44,7 +44,5 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("VenueDetailsPage", () => VenueDetailsPage);

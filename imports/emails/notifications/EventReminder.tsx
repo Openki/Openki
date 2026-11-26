@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";

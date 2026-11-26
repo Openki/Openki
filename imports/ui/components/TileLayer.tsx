@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { TileLayer } from "react-leaflet";
 
 export const TileLayers: Record<string, JSX.Element> = {

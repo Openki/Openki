@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";
 
@@ -20,7 +20,7 @@ function ButtonRegister(props: { forTwo: boolean; onClick: () => Promise<void> }
       size="large"
       className="btn-add fw-bold"
       onClick={props.onClick}
-      busyText={t("_button.registering", "Registering…")}
+      busyText={t("_button.registering")}
     >
       {!props.forTwo
         ? t("event.details.register-register", "Register")

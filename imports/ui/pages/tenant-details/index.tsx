@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useUser } from "/imports/ui/hooks/react-meteor-data";
@@ -44,6 +43,5 @@ export function TenantDetailsPage({ tenant }: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("TenantDetailsPage", () => TenantDetailsPage);

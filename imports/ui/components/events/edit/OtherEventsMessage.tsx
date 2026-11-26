@@ -1,6 +1,6 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
-import { ReactJoin } from "/imports/utils/ReactJoin";
+import { reactJoin } from "../../../../utils/reactJoin";
+import { Fragment } from "react";
 
 export function OtherEventsMessage({
   events,
@@ -9,9 +9,9 @@ export function OtherEventsMessage({
 }) {
   const { t } = useTranslation();
 
-  return ReactJoin(
+  return reactJoin(
     events.map((e) => (
-      <React.Fragment key={e._id}>
+      <Fragment key={e._id}>
         {e.room
           ? t(
               "event.edit.venue.parallelEvents.otherEventInRoom",
@@ -32,7 +32,7 @@ export function OtherEventsMessage({
                 </a>
               ),
             })}
-      </React.Fragment>
+      </Fragment>
     )),
     <> </>,
   );

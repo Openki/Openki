@@ -1,5 +1,5 @@
 import { type LatLngBoundsExpression, type LatLngExpression, CRS, type Map } from "leaflet";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { MapContainer, LayersControl, TileLayer, useMapEvent } from "react-leaflet";
 import { TileLayers } from "../../TileLayer";
 import { useDetails } from "/imports/api/regions/publications";

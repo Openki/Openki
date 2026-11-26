@@ -1,73 +1,42 @@
 import { Meteor } from "meteor/meteor";
-import i18next from "i18next";
+import { ReactiveVar } from "meteor/reactive-var";
+import i18next, { BackendModule } from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
 import resourcesToBackend from "i18next-resources-to-backend";
-import LocalStorageBackend from "i18next-localstorage-backend";
+import LocalStorageBackend, { LocalStorageBackendOptions } from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
-import { Blaze, Handlebars } from "meteor/blaze";
+// @ts-expect-error types for Handlebars are not visible, but the runtime code works. This can be removed after replacing Blaze and iron:router.
+import { Blaze as OriginalBlaze, Handlebars as OriginalHandlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
-import { Template } from "meteor/templating";
-import { initReactI18next } from "react-i18next";
+import { initReactI18next, setDefaults } from "react-i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-// oxlint-disable-next-line no-constant-condition
-if (false) {
-  // Allowlist: This is needed for meteor's dynamic-import module, to allow dynamic loading of modules
-  // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
-  import("/imports/startup/both/i18n/en.json");
-  import("/imports/startup/both/i18n/roles/en.json");
+// Wrap to override types
+const { Blaze, Handlebars } = {
+  Handlebars: OriginalHandlebars as any,
+  Blaze: OriginalBlaze as unknown as {
+    _escape(str: string): string;
+  },
+};
 
-  // common namespace
-  import("/imports/startup/both/i18n/en-ccc.json");
-  import("/imports/startup/both/i18n/af.json");
-  import("/imports/startup/both/i18n/am.json");
-  import("/imports/startup/both/i18n/ar.json");
-  import("/imports/startup/both/i18n/da.json");
-  import("/imports/startup/both/i18n/de.json");
-  import("/imports/startup/both/i18n/de-ccc.json");
-  import("/imports/startup/both/i18n/de-ZH.json");
-  import("/imports/startup/both/i18n/de-zuerich-lernt.json");
-  import("/imports/startup/both/i18n/el.json");
-  import("/imports/startup/both/i18n/es.json");
-  import("/imports/startup/both/i18n/fa.json");
-  import("/imports/startup/both/i18n/fr.json");
-  import("/imports/startup/both/i18n/hu.json");
-  import("/imports/startup/both/i18n/it.json");
-  import("/imports/startup/both/i18n/ja.json");
-  import("/imports/startup/both/i18n/ko.json");
-  import("/imports/startup/both/i18n/nb.json");
-  import("/imports/startup/both/i18n/nl.json");
-  import("/imports/startup/both/i18n/pt.json");
-  import("/imports/startup/both/i18n/rm.json");
-  import("/imports/startup/both/i18n/ru.json");
-  import("/imports/startup/both/i18n/sv.json");
-  import("/imports/startup/both/i18n/tr.json");
-  import("/imports/startup/both/i18n/zh-CN.json");
-  import("/imports/startup/both/i18n/zh-TW.json");
-
-  // roles namespace
-  import("/imports/startup/both/i18n/roles/en-ccc.json");
-  import("/imports/startup/both/i18n/roles/ar.json");
-  import("/imports/startup/both/i18n/roles/da.json");
-  import("/imports/startup/both/i18n/roles/de.json");
-  import("/imports/startup/both/i18n/roles/de-ccc.json");
-  import("/imports/startup/both/i18n/roles/de-ZH.json");
-  import("/imports/startup/both/i18n/roles/de-zuerich-lernt.json");
-  import("/imports/startup/both/i18n/roles/el.json");
-  import("/imports/startup/both/i18n/roles/es.json");
-  import("/imports/startup/both/i18n/roles/fa.json");
-  import("/imports/startup/both/i18n/roles/fr.json");
-  import("/imports/startup/both/i18n/roles/hu.json");
-  import("/imports/startup/both/i18n/roles/it.json");
-  import("/imports/startup/both/i18n/roles/ko.json");
-  import("/imports/startup/both/i18n/roles/nb.json");
-  import("/imports/startup/both/i18n/roles/pt.json");
-  import("/imports/startup/both/i18n/roles/ru.json");
-  import("/imports/startup/both/i18n/roles/sv.json");
-  import("/imports/startup/both/i18n/roles/tr.json");
-}
+/**
+ * i18n namespace loaders.
+ *
+ * By importing the glob pattern dynamically, we tell Rspack to watch these
+ * files for changes and reload the i18next module and its importers when something changes.
+ */
+const namespaceLoaders = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<Record<string, unknown>>("/imports/startup/both/**/*.json", {
+      import: "default",
+    }),
+  ).map(([path, loader]) => [
+    path.replace("/imports/startup/both/i18n/", "").replace(".json", ""),
+    loader,
+  ]),
+);
 
 let localStorageSupported;
 try {
@@ -79,15 +48,23 @@ try {
   localStorageSupported = false;
 }
 
-const backends = [];
+// Initialize backends and their configurations at the same time to make sure they are used in the correct order.
+const backendConfig = {
+  backends: [] as (BackendModule | typeof LocalStorageBackend)[],
+  backendOptions: [] as unknown[],
+};
 
 if (localStorageSupported) {
-  // we use localstorage to cache translations for 1 hour  (see: backendOptions:expirationTime below)
-  backends.push(LocalStorageBackend);
+  // We use localStorage to cache translations for 1h in production.
+  backendConfig.backends.push(LocalStorageBackend);
+  backendConfig.backendOptions.push({
+    // Disable translation caching during development
+    expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
+  } satisfies LocalStorageBackendOptions);
 }
 
 // and only load translations for the languages and namespaces we need
-backends.push(
+backendConfig.backends.push(
   resourcesToBackend(async (language: string, namespace: string) => {
     if (namespace === "common") {
       // NOTE: We simulate a "common" namespace to make it consistent with newer, namespaced
@@ -95,23 +72,26 @@ backends.push(
       const customLanguageCode = PublicSettings.i18nMapping?.[language];
       if (customLanguageCode) {
         // when there is a mapping we use the original language as fallback
-        const customLanguageFile = await import(
-          `/imports/startup/both/i18n/${customLanguageCode}.json`
-        );
-        const fallbackLanguageFile = await import(`/imports/startup/both/i18n/${language}.json`);
+        const customLanguageFile = await namespaceLoaders[customLanguageCode]();
+        const fallbackLanguageFile = await namespaceLoaders[language]();
         return {
           default: {
-            ...fallbackLanguageFile.default,
-            ...customLanguageFile.default,
+            ...fallbackLanguageFile,
+            ...customLanguageFile,
           },
         };
       } else {
-        return import(`/imports/startup/both/i18n/${language}.json`);
+        return namespaceLoaders[language]();
       }
     }
-    return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
+    return namespaceLoaders[`${namespace}/${language}`]();
   }),
 );
+backendConfig.backendOptions.push(undefined);
+
+// Set default config for all react-i18next instances using the recommended approach since version 18.
+// This needs to be configured before `initReactI18next` is called by the main i18next instance.
+setDefaults({ useSuspense: false });
 
 i18next
   .use(ICU)
@@ -121,22 +101,11 @@ i18next
     fallbackLng: "en",
     ns: ["common", "roles"],
     defaultNS: "common",
-    backend: {
-      backends,
-      backendOptions: [
-        {
-          // Disable translation caching during development
-          expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
-        },
-      ],
-    },
-    react: {
-      useSuspense: false,
-    },
+    backend: backendConfig,
   });
 
 if (Meteor.isServer) {
-  // on the server we pre load all languages.
+  // On the server we preload all languages.
   i18next.loadLanguages(Object.keys(LanguagesRaw));
 }
 

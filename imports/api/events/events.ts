@@ -310,6 +310,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
   }
 
+  // This type error happens because the `meteor/mongo` type for `Mongo.Collection.insertAsync()`
+  // defines its second argument as `callback: Function` which is very unspecific and doesn't match
+  // what Mongo actually expects.
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   async insertAsync(
     event: Omit<Mongo.OptionalId<EventEntity>, "tenant">,
     callback?: (err?: unknown, _id?: string) => void,

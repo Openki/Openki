@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession } from "/imports/ui/hooks/react-meteor-data";
 
@@ -12,6 +12,7 @@ import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+import { Session } from "meteor/session";
 
 export interface Props {
   inNavbar?: boolean | undefined;

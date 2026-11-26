@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 
 export interface Props {
   search: string;
@@ -17,10 +17,10 @@ export function MarkedName({ search, name }: Props) {
     return (
       <>
         {parts.map((part, i) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {part}
             {i + 1 < parts.length && <span className="fw-bold">{term}</span>}
-          </React.Fragment>
+          </Fragment>
         ))}
       </>
     );

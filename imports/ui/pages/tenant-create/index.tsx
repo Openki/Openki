@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { omit } from "es-toolkit/compat";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -143,6 +144,5 @@ export function TenantCreatePage(props: Props) {
 }
 
 // for Blaze
-import "./template.html";
 
 Template.registerHelper("TenantCreatePage", () => TenantCreatePage);

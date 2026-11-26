@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 

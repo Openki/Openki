@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import "/imports/ui/stylesheets/variables/index";
 
 .navbar .region-select .dropdown-menu {
   @include media-breakpoint-down(lg) {

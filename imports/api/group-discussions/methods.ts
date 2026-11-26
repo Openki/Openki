@@ -95,7 +95,7 @@ export const postComment = ServerMethod(
 
     const commentId = await GroupDiscussions.insertAsync(saneComment);
 
-    await Notification.Comment.record(commentId);
+    await Notification.Comment.record(commentId as string);
 
     return commentId;
   },

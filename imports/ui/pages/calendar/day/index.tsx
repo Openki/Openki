@@ -1,4 +1,3 @@
-import React from "react";
 import moment from "moment";
 import { useUserId } from "/imports/ui/hooks/react-meteor-data";
 import { useTranslation } from "react-i18next";
@@ -57,7 +56,5 @@ export function Day({
 }
 
 // for Blaze
-
-import "./template.html";
 
 Template.registerHelper("CalendarDay", () => Day);

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { getUserName } from "/imports/ui/lib/getUserName";
@@ -22,9 +21,9 @@ export function RemoveDropdown({ userId, onClick }: Props) {
         className="btn btn-link px-0"
         aria-expanded="false"
         data-bs-toggle="dropdown"
-        /* 
-          HACK: Is not possible to combine dropdown and tooltip. 
-          So we add aria-description to describe the button. 
+        /*
+          HACK: Is not possible to combine dropdown and tooltip.
+          So we add aria-description to describe the button.
         */
         aria-description={t("eventParticipant.remove", "Remove user")}
       >

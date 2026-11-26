@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
@@ -158,7 +158,7 @@ export function Panel({
           ref={fullRef}
           className="position-relative"
           style={{
-            /* special case for draggable: 86400000 is the top z-index over all cards and 
+            /* special case for draggable: 86400000 is the top z-index over all cards and
                add some extra 10 so there some index between.
             */
             zIndex: 86400010,

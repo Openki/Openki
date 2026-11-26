@@ -1,4 +1,3 @@
-import React from "react";
 import { StatePanel } from "./StatePanel";
 import { EventModel } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/ui/hooks/useDateTimeFormat";

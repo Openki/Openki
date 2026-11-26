@@ -270,6 +270,10 @@ class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
     }
   }
 
+  // This type error happens because the `meteor/mongo` type for `Mongo.Collection.insertAsync()`
+  // defines its second argument as `callback: Function` which is very unspecific and doesn't match
+  // what Mongo actually expects.
+  // @ts-expect-error Newly surfaced type error. Keeping the runtime behavior unchanged since it works.
   async insertAsync(
     group: Mongo.OptionalId<GroupEntity>,
     callback?: (err: unknown | undefined, id?: string) => void,
