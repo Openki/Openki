@@ -55,7 +55,7 @@ function buildId(role: GroupRole) {
   }
 }
 
-const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
+function CustomMultiValueRemove(props: MultiValueRemoveProps<RoleOption>) {
   const { t } = useTranslation();
   const { role } = props.data;
 
@@ -71,23 +71,26 @@ const CustomMultiValueRemove = (props: MultiValueRemoveProps<RoleOption>) => {
       }}
     />
   );
-};
+}
 
-const CustomInput = (props: InputProps<RoleOption, true>) => {
+function CustomInput(props: InputProps<RoleOption, true>) {
   return (
     <components.Input
       {...props}
       aria-describedby={`group-edit-role-help ${props["aria-describedby"]}`}
     />
   );
-};
+}
 
-const menuWithHint = (show: boolean, hint: string) => (props: MenuProps<RoleOption, true>) => (
-  <components.Menu {...props}>
-    {show && <div className="form-text px-3 py-2">{hint}</div>}
-    {props.children}
-  </components.Menu>
-);
+const buildMenuWithHint = (show: boolean, hint: string) =>
+  (function CustomMenu(props: MenuProps<RoleOption, true>) {
+    return (
+      <components.Menu {...props}>
+        {show && <div className="form-text px-3 py-2">{hint}</div>}
+        {props.children}
+      </components.Menu>
+    );
+  });
 
 export function RoleSelect({
   regionId,
@@ -223,7 +226,7 @@ export function RoleSelect({
           {...commonSelectProps}
           components={{
             ...commonSelectProps.components,
-            Menu: menuWithHint(hasVisibleOptions, hint),
+            Menu: buildMenuWithHint(hasVisibleOptions, hint),
           }}
           placeholder={t("group.edit.needs.role.placeholder", "Create roles or select")}
           formatCreateLabel={(inputValue) =>
