@@ -100,7 +100,7 @@
     "typescript": "7.0.2"
   },
   "scripts": {
-    "dev:startup": "npm run extract-translations && npm run type-check",
+    "dev:startup": "npm run extract-translations && npm run type-check:dev",
     "debug": "npm run dev:startup && npm run debug:dev",
     "debug:dev": "meteor --inspect --settings settings/dev.json",
     "debug:ssl": "npm run dev:startup && ROOT_URL=https://localhost:3443 OPENKI_LOCALHOST_SSL=1 meteor --inspect --settings settings/local.json --port 3000",
@@ -112,6 +112,7 @@
     "lint:fix": "oxlint --fix && stylelint --cache --cache-location .temp/.stylelintcache '**/*.scss' --fix && echo 'Formatting and applying fixes...' && oxfmt --write '**/*.{ts,tsx,scss,json*,js,md}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
     "type-check": "echo 'Checking types...' && meteor types && i18next-cli types --quiet && tsc",
+    "type-check:dev": "echo 'Checking types...' && meteor types && i18next-cli types --quiet && tsc --noUnusedLocals false --noUnusedParameters false",
     "extract-translations": "echo 'Extracting translations...' && i18next-cli extract --sync-primary --with-types --quiet",
     "watch-translations": "i18next-cli extract --sync-primary --with-types --watch",
     "lint:translations": "i18next-cli lint"
