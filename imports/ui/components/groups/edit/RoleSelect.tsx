@@ -83,14 +83,14 @@ function CustomInput(props: InputProps<RoleOption, true>) {
 }
 
 const buildMenuWithHint = (show: boolean, hint: string) =>
-  (function CustomMenu(props: MenuProps<RoleOption, true>) {
+  function CustomMenu(props: MenuProps<RoleOption, true>) {
     return (
       <components.Menu {...props}>
         {show && <div className="form-text px-3 py-2">{hint}</div>}
         {props.children}
       </components.Menu>
     );
-  });
+  };
 
 export function RoleSelect({
   regionId,
