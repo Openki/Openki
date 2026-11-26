@@ -1,9 +1,10 @@
-# Unreleased
+# v0.15.0
 
 ## Highlights
 
 - **Performance**: Page data now loads faster, making the app feel snappier to use than before.
 - **Technical modernization**: Major technical upgrade to enable upcoming improvements.
+- **UI improvements**: Changes to make the detail view of a group clearer.
 
 ## Fixes
 
