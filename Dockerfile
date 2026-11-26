@@ -42,7 +42,7 @@ USER node
 
 
 # Install server-side npm dependencies that Meteor bundled
-RUN cd programs/server && npm install --omit=dev
+RUN cd programs/server && npm ci --omit=dev
 
 EXPOSE 3000
 
