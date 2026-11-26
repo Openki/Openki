@@ -287,7 +287,7 @@ export function Root({
                 <tr>
                   <td className="logo-wrapper">
                     <a href={url}>
-                      <img className="logo" src={logo} />
+                      <img className="logo" src={logo} alt="" />
                     </a>
                   </td>
                   <td className="site-name-wrapper">
