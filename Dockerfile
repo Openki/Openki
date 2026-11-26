@@ -42,7 +42,8 @@ USER node
 
 
 # Install server-side npm dependencies that Meteor bundled
-RUN cd programs/server && npm ci --omit=dev
+# NOTE: We need to use `npm install` because Meteor builds the project with `npm-shrinkwrap.json`
+RUN cd programs/server && npm install --omit=dev
 
 EXPOSE 3000
 
