@@ -1,10 +1,11 @@
 import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
+import { IcuTrans, useTranslation } from "react-i18next";
 import moment from "moment";
+
 import { UserModel } from "/imports/api/users/users";
 import { VersionEntity } from "/imports/api/version/version";
 import { useReactiveNow } from "../utils/reactive-now";
-import { Trans, useTranslation } from "react-i18next";
 
 export type TransInterpolation = Record<string, string | number>;
 
@@ -55,21 +56,26 @@ export function Report({
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting.anoym")}</h5>
-          <Trans
+          <IcuTrans
             i18nKey="email.admin.userReport.intro"
-            defaults='User <userLink>{USER}</userLink> reports a problem on the page <pageLink>"{TITLE}"</pageLink>'
+            defaultTranslation='User <0>{USER}</0> reports a problem on the page <1>"{TITLE}"</1>'
             values={{
               USER: user
                 ? user.getDisplayName()
                 : t("email.admin.userReport.visitor", "A fellow visitor"),
               TITLE: title,
             }}
-            components={{
-              // oxlint-disable jsx-a11y/anchor-has-content jsx-a11y/control-has-associated-label
-              userLink: user ? <a href={Router.url("userprofile", user)} /> : <></>,
-              pageLink: <a href={location} />,
-              // oxlint-enable jsx-a11y/anchor-has-content jsx-a11y/control-has-associated-label
-            }}
+            content={[
+              user ? (
+                {
+                  type: "a",
+                  props: { href: Router.url("userprofile", user) },
+                }
+              ) : (
+                <></>
+              ),
+              { type: "a", props: { href: location } },
+            ]}
           />
           <p className="gap-md">{t("email.admin.userReport.report", "Their report:")}</p>
           <table className="comment-box">
@@ -86,25 +92,22 @@ export function Report({
         <td>
           <table className="footer">
             <tr className="pre">
-              {/* i18next-instrument-ignore */}
               <td>
                 {versionElement}
-                <Trans
+                <br />
+                <br />
+                <IcuTrans
                   i18nKey="email.admin.footer.now"
-                  defaults="<br /><br />Now it's {NOW}."
+                  defaultTranslation="Now it's {NOW}."
                   values={{ NOW: now.toString() }}
-                  components={{
-                    br: <br />,
-                  }}
+                  content={[]}
                 />
-                <Trans
+                <br />
+                <IcuTrans
                   i18nKey="email.admin.footer.userAgent"
-                  defaults="<br />User Agent: <code>{USERAGENT}</code>"
+                  defaultTranslation="User Agent: <0>{USERAGENT}</0>"
                   values={{ USERAGENT: userAgent }}
-                  components={{
-                    br: <br />,
-                    code: <code />,
-                  }}
+                  content={[{ type: "code" }]}
                 />
               </td>
             </tr>

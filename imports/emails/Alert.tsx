@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import { Accounts } from "meteor/accounts-base";
 import moment from "moment";
+import { IcuTrans, useTranslation } from "react-i18next";
+
 import { VersionEntity } from "/imports/api/version/version";
 import { useReactiveNow } from "../utils/reactive-now";
-import { Trans, useTranslation } from "react-i18next";
 
 export function Alert({
   version,
@@ -52,13 +53,13 @@ export function Alert({
             <tr className="pre">
               <td>
                 {versionElement}
-                <Trans
+                <br />
+                <br />
+                <IcuTrans
                   i18nKey="email.admin.footer.now"
-                  defaults="<br /><br />Now it's {NOW}."
+                  defaultTranslation="Now it's {NOW}."
                   values={{ NOW: now.toString() }}
-                  components={{
-                    br: <br />,
-                  }}
+                  content={[]}
                 />
               </td>
             </tr>
