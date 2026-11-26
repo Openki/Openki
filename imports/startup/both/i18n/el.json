@@ -106,7 +106,6 @@
   "find.proposeNewGroup?": "Γιατί δεν προτείνεις ένα νέο μάθημα για \"{TERM}\";",
   "find.searchAllRegions": "Αναζήτηση σε όλες τις περιοχές",
   "find.searchCategories.placeholder": "Επιλογή κατηγορίας",
-  "find.search_filter.title": "Φίλτρο αναζήτησης",
   "find.search_go": "Go!",
   "find.search_placeholder": "Όλα",
   "find.windowtitle": "Αναζήτηση για \"{SEARCH}\"",
